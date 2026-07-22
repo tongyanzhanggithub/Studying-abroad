@@ -1,0 +1,819 @@
+[
+  {
+    "school_name_en": "University of Toronto",
+    "school_name_zh": "多伦多大学",
+    "school_short": "Rotman",
+    "region": "CA",
+    "program_name_en": "Master of Financial Risk Management (MFRM)",
+    "program_name_zh": "金融风险管理硕士",
+    "faculty": "Rotman School of Management",
+    "direction": "finance",
+    "duration_months": 10,
+    "tuition": "Total program fee (class beginning 2026, not per-year): Domestic CAD 39,850; International CAD 74,650",
+    "campus": "Toronto, Ontario (105 St. George Street), in-person",
+    "requirements": {
+      "undergrad_background": "Four-year undergraduate degree (or equivalent) in a relevant field: Business/Commerce/Management, Finance, Mathematics/Statistics, Economics, Engineering, Computer Science, Actuarial Science, Accounting, or Physical Sciences",
+      "china_university_list": null,
+      "gpa_requirement": "Minimum mid-B average, equivalent to 3.0/4.0 at University of Toronto, in final year of study; admitted students typically exceed this",
+      "ielts": { "overall": 7.0, "subscores": "minimum 6.5 across all bands (Academic test)" },
+      "toefl": { "overall": 100, "subscores": "minimum 22 in Writing and Speaking; site also lists a newer '4.5 overall / 4.5 writing / 4.0 speaking' threshold effective 2026-01-21, likely reflecting an ETS scoring-scale change" },
+      "gmat_gre": "Not required; optional. May be requested if quantitative proficiency is not otherwise evident from transcripts; no official average/score range published.",
+      "prerequisites": "Minimum B grade in quantitative courses (statistics, calculus, linear algebra, econometrics). Four subject-matter prerequisites (min B each) required before program start: Foundations of Finance, Financial Accounting, Financial Derivatives, Investments — satisfiable via prior coursework or qualifying exams. Mandatory 4-week 'Python for Business' course before program start.",
+      "work_experience": "Not mandatory; program targets recent graduates/early-career professionals, typically 1-2 years of experience",
+      "interview": "By invitation only for short-listed candidates: two recorded video questions plus a timed written response. Not explicitly branded 'Kira Talent' on the official site."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20 官网显示 'Applications are now closed',2027 intake 为 TBA,尚未公布轮次日期(项目将于 2027 年 9 月开学)。仅供参考(非当前周期):上一轮 Fall 2026 入学为 Round 1 2025-10-15、Round 2 2026-01-21、仅本地生 final round 2026-04-15。"
+    },
+    "materials": ["transcript", "cv", "essays", "two_references", "english_test"],
+    "source_urls": [
+      "https://www.rotman.utoronto.ca/programs/specialized-programs/master-of-financial-risk-management/admissions/",
+      "https://www.rotman.utoronto.ca/programs/specialized-programs/master-of-financial-risk-management/finances/",
+      "https://www.rotman.utoronto.ca/programs/specialized-programs/master-of-financial-risk-management/"
+    ],
+    "confidence": "medium",
+    "notes": "另需提交录制视频测评(video assessment),不在标准 materials 枚举内故未列入。GMAT/GRE 为可选,与 UBC Sauder 的强制要求形成对比。官网未见中国院校分档名单。"
+  },
+  {
+    "school_name_en": "University of Toronto",
+    "school_name_zh": "多伦多大学",
+    "school_short": "Rotman",
+    "region": "CA",
+    "program_name_en": "Master of Finance (MFin)",
+    "program_name_zh": "金融学硕士",
+    "faculty": "Rotman School of Management",
+    "direction": "finance",
+    "duration_months": 15,
+    "tuition": "Total program fee (Fall 2026 cohort, not per-year): Canadian citizens/PR CAD 48,960; International CAD 80,972",
+    "campus": "Toronto, Ontario; hybrid delivery for working professionals with 3 mandatory in-person weeks over the 15 months",
+    "requirements": {
+      "undergrad_background": "Recognized four-year undergraduate degree; preferred fields business, commerce, economics, mathematics, engineering, or actuarial science; other backgrounds considered with demonstrated quantitative skill and finance/accounting knowledge",
+      "china_university_list": null,
+      "gpa_requirement": "Minimum 3.0 GPA / B average in final year",
+      "ielts": { "overall": 7.0, "subscores": "minimum 6.5 across all bands (Academic); exemption if undergraduate degree was from an English-language institution" },
+      "toefl": { "overall": 100, "subscores": "minimum 22 in Writing and Speaking; site also references a newer '4.5 overall' scale effective 2026-01-21" },
+      "gmat_gre": "One of: B or higher in university-level calculus/linear algebra/statistics/econometrics, OR a 'satisfactory' GMAT/GRE score (specific threshold not published). GMAT code BTD-KS-41, GRE code 0853.",
+      "prerequisites": "B or higher in university-level finance and accounting coursework, OR completion of CFA Level I or higher",
+      "work_experience": "实质上必需 —— 面向在职人士;强烈建议 2 年以上金融相关全职经验,申请时须在职;录取者平均约 5 年经验",
+      "interview": "By invitation only for short-listed candidates"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20 官网称本地申请者按 rolling 受理,未列具体日期;国际生截止日未找到明确说明。第三方聚合站引用的上一周期日期已过期且无法在官网核实,故不采纳。"
+    },
+    "materials": ["transcript", "cv", "two_references"],
+    "source_urls": [
+      "https://www.rotman.utoronto.ca/programs/specialized-programs/master-of-finance/admissions/",
+      "https://www.rotman.utoronto.ca/programs/specialized-programs/master-of-finance/tuition-and-scholarships/"
+    ],
+    "confidence": "medium",
+    "notes": "面向在职金融从业者而非应届生,与多数中国申请者情况不符 —— 更适合已在加拿大或已有行业经验者。另需录制视频测评。截止日期存在不确定性,建议直接联系 mfin@rotman.utoronto.ca 核实。"
+  },
+  {
+    "school_name_en": "University of Toronto",
+    "school_name_zh": "多伦多大学",
+    "school_short": "Rotman",
+    "region": "CA",
+    "program_name_en": "Master of Management Analytics (MMA)",
+    "program_name_zh": "管理分析硕士",
+    "faculty": "Rotman School of Management",
+    "direction": "business_analytics",
+    "duration_months": 15,
+    "tuition": "Total program fee (class beginning 2026, not per-year): Domestic CAD 55,200; International CAD 85,000。2027 届学费官网显示 TBA",
+    "campus": "Toronto, Ontario, in-person; 11 个月课程 + 4 个月实践项目",
+    "requirements": {
+      "undergrad_background": "Four-year degree with significant quantitative/computational component; preferred fields Computer Science, Statistics, Mathematics, Engineering, Physical Science, Economics, or Commerce",
+      "china_university_list": null,
+      "gpa_requirement": "Minimum mid-B average (3.0 equivalent) across final-year courses",
+      "ielts": { "overall": 7.0, "subscores": "minimum 6.5 across all bands" },
+      "toefl": { "overall": 100, "subscores": "minimum 22 Writing/Speaking; site also references newer '4.5 overall' scale effective 2026-01-21" },
+      "gmat_gre": "Optional — 'a strong GMAT or GRE score is encouraged but not required'; no official average published",
+      "prerequisites": "Minimum B average in calculus, linear algebra, probability, statistics; demonstrated programming proficiency (min B in CS coursework). Mandatory online prerequisite assessments in Statistics and Python. Foundations of Finance and Financial Accounting demonstrable via coursework or CFA Level I.",
+      "work_experience": "Not required; program targets recent graduates",
+      "interview": "By invitation only after initial application review; all admitted students are interviewed"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20 官网显示申请已关闭,2027 intake 为 TBA,项目将于 2027 年 9 月开学。"
+    },
+    "materials": ["transcript", "cv", "two_references"],
+    "source_urls": [
+      "https://www.rotman.utoronto.ca/programs/specialized-programs/master-of-management-analytics/admissions/",
+      "https://www.rotman.utoronto.ca/programs/specialized-programs/master-of-management-analytics/",
+      "https://www.rotman.utoronto.ca/programs/specialized-programs/master-of-management-analytics/tuition-scholarships/"
+    ],
+    "confidence": "medium",
+    "notes": "官网营销文案称其 QS 加拿大商业分析硕士排名第一(校方自述,未独立核实)。下一周期日期未公布;所列学费为 2026 届,2027 届未确认。"
+  },
+  {
+    "school_name_en": "University of Toronto",
+    "school_name_zh": "多伦多大学",
+    "school_short": "Rotman",
+    "region": "CA",
+    "program_name_en": "Master of Management (MMgt)",
+    "program_name_zh": "管理学硕士",
+    "faculty": "Rotman School of Management",
+    "direction": "management",
+    "duration_months": 11,
+    "tuition": "Total program tuition (Class of 2027, not per-year): Domestic CAD 40,000; International CAD 71,000",
+    "campus": "Toronto, Ontario, in-person",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree from a recognized university in a non-business field(专为无商科背景者设计)",
+      "china_university_list": null,
+      "gpa_requirement": "Minimum mid-B average (3.0/4.0 UofT equivalent) across final-year courses",
+      "ielts": { "overall": 7.0, "subscores": "minimum 6.5 across all bands" },
+      "toefl": { "overall": 100, "subscores": "minimum 22 Writing/Speaking; site also references a newer '4.5 overall / 4.5 writing / 4.0 speaking' scale effective 2026-01-21" },
+      "gmat_gre": "Not required as primary path; can substitute for quant-course requirement — GMAT Focus minimum quantitative section score of 77, or GRE minimum quantitative score of 160",
+      "prerequisites": "Quantitative proficiency shown via one of: undergraduate statistics/calculus course (min B), an approved third-party certification, or the GMAT/GRE quant thresholds above",
+      "work_experience": "Not required; maximum permissible is 2.5 years of full-time work experience after undergraduate graduation",
+      "interview": "Recorded video interview required: 3 questions, 90 seconds each, for selected candidates"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [
+        { "name": "Round 1", "deadline": "2026-09-16", "decision_by": null },
+        { "name": "Round 2", "deadline": "2026-11-18", "decision_by": null },
+        { "name": "Round 3", "deadline": "2027-01-20", "decision_by": null }
+      ],
+      "final_deadline": "2027-01-20",
+      "notes": "2026-2027 申请周期,对应 2027 年 5 月开学。采集日 2026-07-20 已在官网确认为当前开放周期。"
+    },
+    "materials": ["transcript", "cv", "two_references"],
+    "source_urls": [
+      "https://www.rotman.utoronto.ca/programs/master-of-management/admissions/",
+      "https://www.rotman.utoronto.ca/programs/master-of-management/",
+      "https://www.rotman.utoronto.ca/programs/master-of-management/tuition-scholarships/"
+    ],
+    "confidence": "high",
+    "notes": "Rotman 几个项目中唯一在采集日已公布完整当前轮次的。⚠️ 仅招收非商科本科背景者 —— 商科/管理本科的中国申请者不符合资格,这是重要的资格筛选条件。另需录制视频面试。"
+  },
+  {
+    "school_name_en": "University of British Columbia",
+    "school_name_zh": "英属哥伦比亚大学",
+    "school_short": "UBC Sauder",
+    "region": "CA",
+    "program_name_en": "Master of Management (UBC MM)",
+    "program_name_zh": "管理学硕士",
+    "faculty": "Sauder School of Business, Robert H. Lee Graduate School",
+    "direction": "management",
+    "duration_months": 9,
+    "tuition": "2027 intake 全程费用(非每年): Domestic tuition CAD 34,693 + 杂费约 6,722; International tuition CAD 63,376 + 杂费约 6,927(含 iMED 保险)。分 3 期支付(9月/1月/5月)",
+    "campus": "Vancouver, British Columbia",
+    "requirements": {
+      "undergrad_background": "三年或四年制学士学位,专业不限,但**商科/商学/管理类除外**(含商科辅修、或与 UBC MM 课程重叠 21 学分/7 门以上者亦不符合资格)",
+      "china_university_list": null,
+      "gpa_requirement": "B+ average or recognized equivalent",
+      "ielts": { "overall": 7.0, "subscores": "based on Academic Reading and Writing modules; 本项目页面未列单项最低分" },
+      "toefl": { "overall": 100, "subscores": "亦接受 1-6 分制的 5.0;未列单项最低分。Test code 0965" },
+      "gmat_gre": "必需(二选一): GRE 语文与数学各不低于 155(合计 320+ 有竞争力); GMAT 不低于 515 且语文、数学、Data Insights 三项均达 50 百分位(合计 605+ 有竞争力);旧版 GMAT 接受 550+ 且 V/Q 达 50 百分位。符合条件者可申请豁免。",
+      "prerequisites": "无强制先修课,但强烈建议具备定量方法、统计与经济学基础;录取后提供免费预备课程",
+      "work_experience": "不要求全职工作经验;但本科毕业后全职工作经验**不得超过 2 年**,超过者不符合资格,会被引导至 MBA",
+      "interview": "进入考虑范围的候选人必须面试,线下或视频形式;官网未明确使用 Kira Talent"
+    },
+    "deadlines": {
+      "opens_at": "2026-07-20",
+      "rolling": true,
+      "rounds": [
+        { "name": "Early Bird", "deadline": "2026-08-04", "decision_by": "2026-09-25" },
+        { "name": "Round 1", "deadline": "2026-10-06", "decision_by": "2026-12-04" },
+        { "name": "Round 2(国际生建议截止,考虑签证时间)", "deadline": "2027-01-08", "decision_by": "2027-03-05" },
+        { "name": "Round 3(国际生最终截止)", "deadline": "2027-03-02", "decision_by": "2027-04-23" },
+        { "name": "Final Round(仅加拿大公民/PR)", "deadline": "2027-05-04", "decision_by": "2027-06-11" }
+      ],
+      "final_deadline": "2027-05-04",
+      "notes": "采集日 2026-07-20 官网确认:'Applications are now open for August 2027 entry',为当前开放周期。⚠️ 国际生不能申请最后一轮(5月)。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "essays", "two_references", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://www.sauder.ubc.ca/master-management/application-process/master-management-admission-requirements",
+      "https://www.sauder.ubc.ca/master-management/application-process/mm-application-deadlines",
+      "https://www.sauder.ubc.ca/master-management/application-process/master-management-fees-and-expenses"
+    ],
+    "confidence": "high",
+    "notes": "⚠️ 两个硬性资格门槛:必须非商科背景 + 工作经验不超过 2 年。GMAT/GRE 强制(除非获批豁免),与 Rotman 的可选政策不同,是加拿大申请中需要特别注意的差异。"
+  },
+  {
+    "school_name_en": "University of British Columbia",
+    "school_name_zh": "英属哥伦比亚大学",
+    "school_short": "UBC Sauder",
+    "region": "CA",
+    "program_name_en": "Master of Business Analytics (MBAN)",
+    "program_name_zh": "商业分析硕士",
+    "faculty": "Sauder School of Business, Robert H. Lee Graduate School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "2027 intake 全程学费(非每年): Domestic CAD 46,322 + 杂费约 1,431; International CAD 75,436 + 杂费约 1,636(含 iMED)。分 3 期支付",
+    "campus": "Vancouver, British Columbia",
+    "requirements": {
+      "undergrad_background": "三年或四年制学士学位,专业不限,须来自认可院校",
+      "china_university_list": null,
+      "gpa_requirement": "B+ average or recognized equivalent",
+      "ielts": { "overall": 7.0, "subscores": "本项目页面未列单项最低分" },
+      "toefl": { "overall": 100, "subscores": "亦接受 1-6 分制的 5.0;未列单项最低分" },
+      "gmat_gre": "必需(二选一): GRE 语文与数学各不低于 155; GMAT 不低于 515 且语文、数学、Data Insights 三项均达 50 百分位。符合条件者可申请豁免。",
+      "prerequisites": "强烈建议具备大学层次的统计、微积分与线性代数基础;无强制先修课",
+      "work_experience": "无最低工作经验要求",
+      "interview": "进入认真考虑范围的申请者均会被联系面试,线下或视频形式"
+    },
+    "deadlines": {
+      "opens_at": "2026-07-20",
+      "rolling": true,
+      "rounds": [
+        { "name": "Early Bird", "deadline": "2026-08-04", "decision_by": "2026-09-25" },
+        { "name": "Round 1", "deadline": "2026-10-06", "decision_by": "2026-12-04" },
+        { "name": "Round 2(国际生建议截止,考虑签证时间)", "deadline": "2027-01-08", "decision_by": "2027-03-05" },
+        { "name": "Round 3(国际生最终截止)", "deadline": "2027-03-02", "decision_by": "2027-04-23" },
+        { "name": "Final Round(仅加拿大公民/PR)", "deadline": "2027-05-04", "decision_by": "2027-06-11" }
+      ],
+      "final_deadline": "2027-05-04",
+      "notes": "采集日 2026-07-20 官网确认为 August 2027 entry 的当前开放周期,轮次结构与 UBC MM 相同。⚠️ 国际生不能申请最后一轮。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "essays", "two_references", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://www.sauder.ubc.ca/master-business-analytics/application-process/mban-admission-requirements",
+      "https://www.sauder.ubc.ca/master-business-analytics/application-process/mban-application-deadlines",
+      "https://www.sauder.ubc.ca/master-business-analytics/application-process/mban-fees-and-expenses"
+    ],
+    "confidence": "high",
+    "notes": "与 UBC MM 不同,本项目**无本科专业限制、无工作经验上限**,商科本科的中国申请者可以申请。GMAT/GRE 同样强制(或获批豁免)。"
+  },
+  {
+    "school_name_en": "McGill University",
+    "school_name_zh": "麦吉尔大学",
+    "school_short": "McGill",
+    "region": "CA",
+    "program_name_en": "Master of Management in Finance (MMF) - Montreal",
+    "program_name_zh": "金融管理硕士",
+    "faculty": "Desautels Faculty of Management",
+    "direction": "finance",
+    "duration_months": 16,
+    "tuition": "CAD 72,524(官网学费页给出的单一项目级数字,未明确标注每年还是全程;项目时长 12-16 个月,应理解为全程学费)。本地生与国际生同价;符合学费豁免条件的加拿大公民/PR 净付 CAD 53,517。可选国际游学另需约 CAD 3,000(不含机票)",
+    "campus": "Montreal, Quebec(线下;另有 Luxembourg 校区项目,不在本次范围)",
+    "requirements": {
+      "undergrad_background": "任何专业的学士学位,须具备定量与定性能力;接受三年制国际学位;可在本科最后一年申请,录取以完成学位为条件",
+      "china_university_list": null,
+      "gpa_requirement": "MMF 招生页未列项目专属最低 GPA。McGill 研究生通用最低为 CGPA 3.0/4.0(或最后两年全日制 3.2/4.0)。官方公布的录取者平均 GPA 为 3.74/4.0",
+      "ielts": { "overall": null, "subscores": null },
+      "toefl": { "overall": null, "subscores": null },
+      "gmat_gre": "除持有加拿大大学本科或研究生学位者外,**所有申请者必需**。FAQ 说明无固定最低分(GPA、考试成绩与课程综合考量)。官方公布录取者平均 GMAT 为 690",
+      "prerequisites": "未列具体先修课程要求;项目看重较强的定量能力",
+      "work_experience": "未列为强制要求;项目定位为 pre-experience(面向应届生与本科最后一年学生)",
+      "interview": "初审后可能受邀面试;国际/非蒙特利尔申请者线上面试,本地申请者线下。所查官网页面未提及 Kira Talent"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20 官网仍展示已关闭的 Summer 2026 周期: Round 1 2025-11-15、国际生最终截止 2026-01-15、加拿大公民/PR 最终截止 2026-04-15,均已过期。Summer 2027 周期日期尚未公布,请关注 mcgill.ca/desautels/programs/mmf/montreal/admissions。"
+    },
+    "materials": ["transcript", "cv", "gmat_gre", "english_test", "two_references"],
+    "source_urls": [
+      "https://www.mcgill.ca/desautels/programs/mmf",
+      "https://www.mcgill.ca/desautels/programs/mmf/admissions",
+      "https://www.mcgill.ca/desautels/programs/mmf/montreal/admissions",
+      "https://www.mcgill.ca/desautels/programs/mmf/montreal/admissions/tuition-and-financial-aid",
+      "https://www.mcgill.ca/desautels/programs/mmf/admissions/mmf-faq",
+      "https://www.mcgill.ca/desautels/programs/mmf/admissions/class-profile"
+    ],
+    "confidence": "medium",
+    "notes": "官网未列明雅思托福具体分数要求,故留空。GMAT 对多数非加拿大学位持有者(含中国申请者)实质强制,与同校 MMA 已取消该要求形成对比。中国申请者中以量化金融方向为目标者较多。"
+  },
+  {
+    "school_name_en": "McGill University",
+    "school_name_zh": "麦吉尔大学",
+    "school_short": "McGill",
+    "region": "CA",
+    "program_name_en": "Master of Management in Analytics (MMA)",
+    "program_name_zh": "管理分析硕士",
+    "faculty": "Desautels Faculty of Management",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "Online Winter 2026 入学: CAD 72,600(国际生/无豁免),加拿大公民/PR 豁免后净付 CAD 46,530。In-Person Summer 2026 入学: CAD 77,600(国际生),加拿大公民/PR 净付 CAD 46,530。均为全程学费",
+    "campus": "Montreal, Quebec(In-Person 轨道)或全线上(Online 轨道,非全日制异步授课)",
+    "requirements": {
+      "undergrad_background": "通常要求四年制学士学位;偏好较强定量训练背景(工程、计算机、统计、经济、商科);面向应届生与职业早期人士;可在本科最后一年申请",
+      "china_university_list": null,
+      "gpa_requirement": "MMA 招生页未公布具体最低 GPA。官方班级概况显示录取者平均 cGPA 为 3.59/4.0",
+      "ielts": { "overall": null, "subscores": null },
+      "toefl": { "overall": null, "subscores": null },
+      "gmat_gre": "不要求(Desautels 已取消本项目的 GMAT/GRE 要求)。提交为可选,'may enhance your profile';因已改为可选故未公布平均分",
+      "prerequisites": "无正式先修课程要求,但偏好定量背景(统计、编程)",
+      "work_experience": "未列为强制要求;面向应届生与职业早期人士",
+      "interview": "入选者受邀参加线上面试,考察定量能力、编程/技术能力、问题解决与职业规划。所查官网页面未提及 Kira Talent"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [
+        { "name": "Round 1(采集日已过)", "deadline": "2026-06-15", "decision_by": null },
+        { "name": "Round 2", "deadline": "2026-09-15", "decision_by": null }
+      ],
+      "final_deadline": "2026-11-15",
+      "notes": "上列日期对应 **MMA Online 项目的 Winter 2027 入学**,是采集日 2026-07-20 当前开放的周期;MMA 无秋季入学。In-Person 轨道为夏季入学,Summer 2026 已关闭,Summer 2027 日期采集日尚未公布。"
+    },
+    "materials": ["transcript", "cv", "essays", "two_references", "english_test"],
+    "source_urls": [
+      "https://www.mcgill.ca/desautels/programs/mma",
+      "https://www.mcgill.ca/desautels/programs/mma/admissions",
+      "https://www.mcgill.ca/desautels/programs/mma/admissions/mma-faq",
+      "https://www.mcgill.ca/desautels/programs/mma/admissions/tuition-financial-aid",
+      "https://www.mcgill.ca/desautels/mma-delivery-comparison"
+    ],
+    "confidence": "medium",
+    "notes": "⚠️ 本条对应的开放周期是 **Online(全线上)轨道**,该形式通常不支持学生签证,与出国留学诉求不同,选择前务必确认。In-Person 与 Online 两种形式的学费、授课方式甚至截止日期都不同。GMAT/GRE 非强制,是与同校 MMF 的关键差异。"
+  },
+  {
+    "school_name_en": "McGill University",
+    "school_name_zh": "麦吉尔大学",
+    "school_short": "McGill",
+    "region": "CA",
+    "program_name_en": "Master of Management in Retailing (MMR)",
+    "program_name_zh": "零售管理硕士",
+    "faculty": "Desautels Faculty of Management / Bensadoun School of Retail Management",
+    "direction": "marketing",
+    "duration_months": 16,
+    "tuition": "CAD 60,761 全程学费(本地生与国际生同一标价);符合豁免条件的加拿大公民/PR 净付 CAD 48,807。入学奖学金: 魁北克居民最高 CAD 15,000、其他加拿大公民/PR CAD 10,000、国际生 CAD 5,000,竞争性发放",
+    "campus": "Montreal, Quebec",
+    "requirements": {
+      "undergrad_background": "文科、商科、经济、工程或理科学士学位,须具备定量能力;接受三年制国际学位;可在本科最后一年申请",
+      "china_university_list": null,
+      "gpa_requirement": "官方 MMR 招生页未公布具体最低 GPA",
+      "ielts": { "overall": null, "subscores": null },
+      "toefl": { "overall": null, "subscores": null },
+      "gmat_gre": "除持有加拿大或美国大学本科/研究生学位者外,所有申请者必需。未公布平均分或分数区间",
+      "prerequisites": "无正式先修课程;需具备一般数学能力及一定的问题解决/技术工具熟悉度",
+      "work_experience": "不要求 —— 官网明确 'no prior work experience is required',但有零售经验会被正面看待",
+      "interview": "入选者可能受邀面试(官网称通过 Skype 进行)"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20 官网展示的是 Fall 2026 周期: Round 1 2025-11-15、Round 2 2026-01-15、国际生最终 2026-03-15、加拿大公民/PR 最终 2026-05-15,均已过期,该周期已关闭。Fall 2027 周期日期尚未公布。"
+    },
+    "materials": ["transcript", "cv", "gmat_gre", "english_test", "two_references"],
+    "source_urls": [
+      "https://www.mcgill.ca/desautels/programs/master-management-retailing-mmr/admissions",
+      "https://www.mcgill.ca/desautels/programs/master-management-retailing-mmr/admissions/tuition-and-financial-aid",
+      "https://www.mcgill.ca/bensadoun-school/programs/master-management-retailing-mmr"
+    ],
+    "confidence": "medium",
+    "notes": "零售管理方向硕士。枚举中无 'retail' 选项,归入最接近的 marketing,此归类为近似处理。官网未列明语言成绩要求。对中国申请者而言比 MMF/MMA 小众。"
+  },
+  {
+    "school_name_en": "Western University",
+    "school_name_zh": "西安大略大学",
+    "school_short": "Ivey",
+    "region": "CA",
+    "program_name_en": "MSc in Management - International Business (with optional CEMS MIM)",
+    "program_name_zh": "管理学理学硕士(国际商务方向)",
+    "faculty": "Ivey Business School",
+    "direction": "international_business",
+    "duration_months": 16,
+    "tuition": "January 2027 入学,标准 International Business 方向: 本地生 CAD 39,015 / 国际生 CAD 93,765(全程)。含 CEMS MIM: 本地生 CAD 44,064 / 国际生 CAD 100,926(全程)。录取后需付 CAD 2,000 不可退定金,余额分 4 学期。国际生另需预算约 CAD 1,010 UHIP 医保与约 CAD 2,600 教材费",
+    "campus": "London, Ontario",
+    "requirements": {
+      "undergrad_background": "本科学位须在过去两年内完成(适用于 International Business / CEMS / Digital Management 方向);可在本科最后一年申请",
+      "china_university_list": null,
+      "gpa_requirement": "未公布具体数值门槛;官网表述为最近两年学习需有 'strong academic record'",
+      "ielts": { "overall": 7.0, "subscores": "官网列出总分最低 7.0,未公布单项最低分" },
+      "toefl": { "overall": 100, "subscores": "2026 年 1 月前申请最低总分 100;官网称自 2026 年 1 月起改用新计分制的 4.5 总分。未公布单项" },
+      "gmat_gre": "非严格强制:若申请者缺乏分析类/商科类大学课程,'may be required to help strengthen your application';委员会审核后可豁免。接受 GRE 并折算为 GMAT 等值分。官网未公布平均分",
+      "prerequisites": "CEMS MIM 方向另需:第二语言高度流利,以及第三语言初级水平",
+      "work_experience": "官方要求页未列为强制(项目面向应届生/最后一年学生)",
+      "interview": "在线申请含书面 essay 与视频 essay 题目;完成后约 2-3 周内可能收到面试邀请。所查 Ivey 官网页面未明确点名 Kira Talent"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [
+        { "name": "Round 5", "deadline": "2026-08-25", "decision_by": null },
+        { "name": "Round 6", "deadline": "2026-10-20", "decision_by": null }
+      ],
+      "final_deadline": "2026-10-20",
+      "notes": "对应 January 2027 入学(项目周期 2027年1月至2028年4月)。采集日 2026-07-20 时 Round 1-4 已关闭,Round 5、Round 6 为剩余开放轮次。Ivey 建议国际申请者尽早申请以留出签证处理时间。"
+    },
+    "materials": ["transcript", "cv", "essays", "two_references", "english_test"],
+    "source_urls": [
+      "https://www.ivey.uwo.ca/msc/",
+      "https://www.ivey.uwo.ca/msc/admission/",
+      "https://www.ivey.uwo.ca/msc/admission/requirements/",
+      "https://www.ivey.uwo.ca/msc/admission/apply/",
+      "https://www.ivey.uwo.ca/msc/admission/cost/"
+    ],
+    "confidence": "medium",
+    "notes": "简历限 2 页,视频 essay 是在线申请的**必答部分**而非可选项。GMAT/GRE 视背景而定,不在标准 materials 中固定列出。"
+  },
+  {
+    "school_name_en": "Western University",
+    "school_name_zh": "西安大略大学",
+    "school_short": "Ivey",
+    "region": "CA",
+    "program_name_en": "MSc in Management - Business Analytics",
+    "program_name_zh": "管理学理学硕士(商业分析方向)",
+    "faculty": "Ivey Business School",
+    "direction": "business_analytics",
+    "duration_months": 16,
+    "tuition": "September 2026 入学: 本地生 CAD 39,015 / 国际生 CAD 93,765(全程)。录取后 CAD 2,000 不可退定金,余额分 4 学期。国际生另需约 CAD 1,010 UHIP 医保与约 CAD 2,600 教材费",
+    "campus": "London, Ontario",
+    "requirements": {
+      "undergrad_background": "本科学位须在过去四年内完成(比 IB/CEMS/Digital Management 方向的两年窗口更宽松);偏好工程、计算机/数据科学、统计、数学、经济背景",
+      "china_university_list": null,
+      "gpa_requirement": "官方要求页未公布具体数值门槛",
+      "ielts": { "overall": 7.0, "subscores": null },
+      "toefl": { "overall": 100, "subscores": "官网称自 2026 年 1 月起改用新计分制的 4.5 总分" },
+      "gmat_gre": "不要求。官网称成绩 'not required',但若学术背景定量成分较弱,提交成绩 'may be recommended'。未公布官方平均分",
+      "prerequisites": "偏好具备微积分、线性代数、统计/概率、计算机/编程方面的扎实课程基础",
+      "work_experience": "官方要求页未列为强制",
+      "interview": "在线申请含书面与视频 essay 题目;委员会审核后发出面试邀请"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "对应 September 2026 入学(项目周期 2026年9月至2027年12月)。采集日 2026-07-20 官网 apply 页显示仍在接受申请,呈 rolling 状态,未公布剩余固定轮次日期。因 2026 年 9 月开学在即,该入学季可能很快关闭,建议直接向 msc@ivey.ca 确认;若已关闭则需等 September 2027,日期尚未公布。"
+    },
+    "materials": ["transcript", "cv", "essays", "two_references", "english_test"],
+    "source_urls": [
+      "https://www.ivey.uwo.ca/msc/",
+      "https://www.ivey.uwo.ca/msc/admission/requirements/",
+      "https://www.ivey.uwo.ca/msc/admission/apply/",
+      "https://www.ivey.uwo.ca/msc/admission/cost/"
+    ],
+    "confidence": "medium",
+    "notes": "Ivey 另有 'Master of Management and Data Analytics'(MM-A)项目,但其官方要求明确规定申请时须在加拿大居住并工作,直接从中国大陆申请者不符合资格,故未收录,改以无此居住限制的 MSc Business Analytics 方向替代。"
+  },
+  {
+    "school_name_en": "Western University",
+    "school_name_zh": "西安大略大学",
+    "school_short": "Ivey",
+    "region": "CA",
+    "program_name_en": "MSc in Management - Digital Management",
+    "program_name_zh": "管理学理学硕士(数字化管理方向)",
+    "faculty": "Ivey Business School",
+    "direction": "management",
+    "duration_months": 16,
+    "tuition": "September 2026 入学: 本地生 CAD 39,015 / 国际生 CAD 93,765(全程)。CAD 2,000 定金 + 4 学期分期。国际生另需约 CAD 1,010 医保与约 CAD 2,600 教材费",
+    "campus": "London, Ontario",
+    "requirements": {
+      "undergrad_background": "本科学位须在过去两年内完成;可在本科最后一年申请",
+      "china_university_list": null,
+      "gpa_requirement": "官方要求页未公布具体数值门槛",
+      "ielts": { "overall": 7.0, "subscores": null },
+      "toefl": { "overall": 100, "subscores": "官网称自 2026 年 1 月起改用新计分制的 4.5 总分" },
+      "gmat_gre": "非严格强制:若缺乏分析类/商科课程,'may be required to help strengthen your application';委员会审核后可豁免。未公布官方平均分",
+      "prerequisites": "需展现对技术如何影响商业的准备度与兴趣;项目含与 CIBC Digital Innovation Studio 的合作环节",
+      "work_experience": "官方要求页未列为强制",
+      "interview": "在线申请含书面与视频 essay 题目;委员会审核后发出面试邀请"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "对应 September 2026 入学。采集日 2026-07-20 官网显示仍在接受申请但无剩余固定轮次日期。鉴于 2026 年 9 月开学在即,建议直接确认;若已关闭则需等 September 2027,日期尚未公布。"
+    },
+    "materials": ["transcript", "cv", "essays", "two_references", "english_test"],
+    "source_urls": [
+      "https://www.ivey.uwo.ca/msc/",
+      "https://www.ivey.uwo.ca/msc/admission/requirements/",
+      "https://www.ivey.uwo.ca/msc/admission/apply/",
+      "https://www.ivey.uwo.ca/msc/admission/cost/"
+    ],
+    "confidence": "medium",
+    "notes": "作为 Ivey 非 MBA 硕士中最接近 management 方向者收录;属带技术/数字化商业侧重的通用管理学位,而非纯分析或国际商务项目。"
+  },
+  {
+    "school_name_en": "McMaster University",
+    "school_name_zh": "麦克马斯特大学",
+    "school_short": "DeGroote",
+    "region": "CA",
+    "program_name_en": "Master of Finance (MFin)",
+    "program_name_zh": "金融硕士",
+    "faculty": "DeGroote School of Business",
+    "direction": "finance",
+    "duration_months": 16,
+    "tuition": "本地生 CAD 2,625/门,全程约 CAD 39,375;国际生 CAD 4,223.13/门,全程约 CAD 63,347。均不含杂费及 CAD 3,500 不可退定金;国际生另付 UHIP 医保",
+    "campus": "Hamilton, Ontario",
+    "requirements": {
+      "undergrad_background": "任何专业的荣誉(四年制)学士学位或同等学历,须已修读大学层次的金融或经济、数学、统计课程(最好在近 5 年内)",
+      "china_university_list": null,
+      "gpa_requirement": "最低 B+ 平均分(相当于 McMaster GPA 8.5/12)",
+      "ielts": { "overall": 6.5, "subscores": "官网仅列总分 6.5,未列单项最低分(学术类)" },
+      "toefl": { "overall": 92, "subscores": "官网仅列总分 92(iBT),未列单项最低分" },
+      "gmat_gre": "需证明定量能力,可通过 GMAT/GRE 或相关课程二选一。GMAT(第10版)总分不低于 600 且数学达 60 百分位;GMAT Focus(第11版)总分不低于 555 且数学达 60 百分位;GRE 数学推理达 60 百分位以上。不提交考试成绩者须提供等效数学/统计课程证明",
+      "prerequisites": "大学层次的金融或经济、数学、统计课程",
+      "work_experience": "不要求",
+      "interview": "必需的线上面试:提交申请后回答并上传预录制问题"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20 官网仍展示 Fall 2026 周期: Round 1 2025-11-30(保证入学奖学金)、Round 2 2026-03-14、Round 3 2026-05-31,均已关闭。Fall 2027 周期日期尚未公布。"
+    },
+    "materials": ["transcript", "cv", "two_references", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://mfin.degroote.mcmaster.ca/admissions/",
+      "https://mfin.degroote.mcmaster.ca/apply/how-to-apply/",
+      "https://mfin.degroote.mcmaster.ca/finances/",
+      "https://mfin.degroote.mcmaster.ca/master-of-finance-at-mcmaster/"
+    ],
+    "confidence": "high",
+    "notes": "数据对应采集日官网展示的最新周期(Fall 2026),Fall 2027 尚未公布。尽管官方给出「课程替代」的表述,实践中 GMAT/GRE 基本是预期项。"
+  },
+  {
+    "school_name_en": "McMaster University",
+    "school_name_zh": "麦克马斯特大学",
+    "school_short": "DeGroote",
+    "region": "CA",
+    "program_name_en": "Master of Management in AI and Analytics (full-time)",
+    "program_name_zh": "人工智能与分析管理硕士(全日制)",
+    "faculty": "DeGroote School of Business",
+    "direction": "business_analytics",
+    "duration_months": 16,
+    "tuition": "本地生全程 CAD 45,000;国际生全程 CAD 65,000(官网未提供分学期/分年拆分)",
+    "campus": "Burlington, Ontario - Ron Joyce Centre(部分协作课程在 Hamilton 主校区)",
+    "requirements": {
+      "undergrad_background": "偏好工程、理科、计算机、统计、数学、商科或经济学位;须各修过一门大学层次的数学、统计与计算机编程课程(最好在近 5 年内);其他背景可通过 essay/CV 综合考量",
+      "china_university_list": null,
+      "gpa_requirement": "建议 B 平均分(相当于 McMaster GPA 8.0/12)或以上,基于最近两年学习(或 20 门课/60 学分)",
+      "ielts": { "overall": 6.5, "subscores": "官网仅列总分 6.5" },
+      "toefl": { "overall": 92, "subscores": "官网仅列总分 92" },
+      "gmat_gre": "不要求;可提交以增强申请,但申请者须以其它方式证明定量课程能力(未公布最低分)",
+      "prerequisites": "各一门大学层次的数学、统计与计算机编程课程",
+      "work_experience": "不要求;面向 0-4 年经验的职业早期人士与应届生",
+      "interview": "提交前须通过 Kira 平台完成线上面试;部分申请者可能另有一对一面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20 官网仍展示 September 2026 周期: Round 1 2025-11-26、Round 2 2026-02-28(国际生最终截止)、Round 3 2026-05-31(本地生最终截止),均已关闭。September 2027 周期日期尚未公布。"
+    },
+    "materials": ["transcript", "cv", "two_references", "english_test"],
+    "source_urls": [
+      "https://mmai.degroote.mcmaster.ca/full-time-master-of-management-in-ai-and-analytics/",
+      "https://mmai.degroote.mcmaster.ca/full-time-master-of-management-in-ai-and-analytics/admissions/",
+      "https://degroote.mcmaster.ca/programs/"
+    ],
+    "confidence": "high",
+    "notes": "DeGroote 较新的分析方向硕士,面向应届生;作为 MFin 之外的商业分析选择,在中国申请者中关注度上升。数据对应已关闭的 Fall 2026 周期。"
+  },
+  {
+    "school_name_en": "McMaster University",
+    "school_name_zh": "麦克马斯特大学",
+    "school_short": "DeGroote",
+    "region": "CA",
+    "program_name_en": "Master of Management in Applied AI and Data-Driven Decision-Making (part-time)",
+    "program_name_zh": "应用人工智能与数据驱动决策管理硕士(非全日制)",
+    "faculty": "DeGroote School of Business",
+    "direction": "business_analytics",
+    "duration_months": 20,
+    "tuition": "本地生全程 CAD 40,000(官网数字)。国际生学费官网未列明",
+    "campus": "Burlington, Ontario - Ron Joyce Centre(周末住宿式授课,每学期三次)",
+    "requirements": {
+      "undergrad_background": "认可院校的荣誉学士学位",
+      "china_university_list": null,
+      "gpa_requirement": "建议 B 平均分(相当于 McMaster GPA 8.0/12),基于最近两年学习或 20 门课",
+      "ielts": { "overall": 6.5, "subscores": "官网仅列总分 6.5" },
+      "toefl": { "overall": 92, "subscores": "官网仅列总分 92" },
+      "gmat_gre": "不要求;GPA 低于 B 平均分者可能被建议补充 GMAT(最低 555)或 GRE 成绩",
+      "prerequisites": "除荣誉学士学位外未明确列出",
+      "work_experience": "建议至少 4 年本科毕业后工作经验(面向在职人士的非全日制项目)",
+      "interview": "提交申请前须完成 Kira 线上面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [
+        { "name": "Round 3", "deadline": "2026-09-14", "decision_by": null },
+        { "name": "Round 4(最终)", "deadline": "2026-10-30", "decision_by": null }
+      ],
+      "final_deadline": "2026-10-30",
+      "notes": "对应 January 2027 入学。Round 1(2026-03-28)与 Round 2(2026-06-30)在采集日 2026-07-20 已过期;上列 Round 3、4 为当前开放轮次。"
+    },
+    "materials": ["cv", "two_references"],
+    "source_urls": [
+      "https://mmai.degroote.mcmaster.ca/part-time-master-of-management-in-applied-ai-and-data-driven-decision-making/",
+      "https://mmai.degroote.mcmaster.ca/part-time-master-of-management-in-applied-ai-and-data-driven-decision-making/admissions/"
+    ],
+    "confidence": "medium",
+    "notes": "⚠️ 非全日制、周末住宿式,建议 4 年工作经验 —— 对典型应届中国申请者不适用,收录仅因其为 DeGroote 另一个商业分析方向硕士。官网招生页未明确列出成绩单要求(实践中应需要),按不臆造原则未列入 materials。国际生学费官网未公布。"
+  },
+  {
+    "school_name_en": "York University",
+    "school_name_zh": "约克大学",
+    "school_short": "Schulich",
+    "region": "CA",
+    "program_name_en": "Master of Business Analytics (MBAN)",
+    "program_name_zh": "商业分析硕士",
+    "faculty": "Schulich School of Business",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "本地生 CAD 18,114/学期,3 学期约 CAD 54,342;国际生 CAD 30,985/学期,约 CAD 92,954。基于 Summer 2026 收费框架,可能调整",
+    "campus": "Keele Campus, Toronto, Ontario",
+    "requirements": {
+      "undergrad_background": "认可院校四年制本科学位,最后两学年最低 B+ 平均分;偏好数学、商科、计算机、经济、工程或理科专业。其他背景需具备数学/统计、计算机、商科中至少两类的相关课程",
+      "china_university_list": null,
+      "gpa_requirement": "最后两个完整学年最低 B+ 平均分",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.5" },
+      "toefl": { "overall": 100, "subscores": "2026-01-21 前考试各单项最低 23;之后新计分制为总分 5、各单项最低 4.5" },
+      "gmat_gre": "不要求",
+      "prerequisites": "非偏好专业申请者建议具备统计、微积分、编程、数据库或商业智能相关课程",
+      "work_experience": "建议但不要求本科毕业后工作经验",
+      "interview": "部分申请者受邀参加 30 分钟线上招生面试;官网未点名所用平台"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [
+        { "name": "Round 1(采集日已过)", "deadline": "2026-07-08", "decision_by": null },
+        { "name": "Round 2", "deadline": "2026-09-23", "decision_by": null },
+        { "name": "Round 3", "deadline": "2026-11-04", "decision_by": null },
+        { "name": "Round 4(仅本地生)", "deadline": "2027-02-10", "decision_by": null }
+      ],
+      "final_deadline": "2027-02-10",
+      "notes": "对应 May 2027 入学(每年仅夏季一次入学)。Round 1(2026-07-08)在采集日 2026-07-20 已过;Round 2 为下一个开放截止日,官网明确建议国际申请者选择此轮。⚠️ Round 4 仅限本地申请者。"
+    },
+    "materials": ["transcript", "cv", "two_references", "essays", "english_test"],
+    "source_urls": [
+      "https://schulich.yorku.ca/programs/mban/",
+      "https://schulich.yorku.ca/admissions/admissions-requirements/mban/"
+    ],
+    "confidence": "high",
+    "notes": "官方申请格式为 2 篇书面 essay、1 篇限时书面 essay 与 2 段视频 essay。无 GMAT/GRE 要求,是该校在中国申请者中较受欢迎的原因之一。"
+  },
+  {
+    "school_name_en": "York University",
+    "school_name_zh": "约克大学",
+    "school_short": "Schulich",
+    "region": "CA",
+    "program_name_en": "Master of Finance (MF)",
+    "program_name_zh": "金融硕士",
+    "faculty": "Schulich School of Business",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "本地生 CAD 18,464/学期,约 CAD 55,393 全程;国际生 CAD 30,985/学期,约 CAD 92,954。基于 Fall 2026 收费框架,可能调整",
+    "campus": "Keele Campus, Toronto, Ontario",
+    "requirements": {
+      "undergrad_background": "认可院校四年制本科学位,最后两学年最低 B+ 平均分;三年制学位持有者需另加一年本科毕业后工作经验",
+      "china_university_list": null,
+      "gpa_requirement": "最后两个完整学年最低 B+ 平均分",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.5" },
+      "toefl": { "overall": 100, "subscores": "2026-01-21 前各单项最低 23;之后新计分制总分 5、各单项最低 4.5" },
+      "gmat_gre": "必需,除非获豁免。豁免条件: 已完成 CFA Level I 以上、已完成 FRM Part I 以上、大学层次微积分/统计/代数/概率课程达 B+ 以上,或 Schulich BBA 毕业且最后两年 B+ 以上。非豁免者官网未公布最低分",
+      "prerequisites": "至少两门 3 学分定量课程(2000 级以上,每门不少于 36 学时): 微积分、统计、经济、线性代数或概率论",
+      "work_experience": "建议但不要求;三年制学位持有者必需 1 年",
+      "interview": "部分申请者受邀参加 30 分钟线上招生面试,面试不保证录取"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [
+        { "name": "Round 5(最终)", "deadline": "2026-07-22", "decision_by": null }
+      ],
+      "final_deadline": "2026-07-22",
+      "notes": "对应 September 2026 入学。Round 1-4(2025-10-15、2026-01-21、2026-03-18、2026-05-20)在采集日 2026-07-20 已全部过期。⚠️ Round 5 为最终轮,2026-07-22 截止,距采集日仅两天。官网强烈建议国际生在 Round 2 前申请以留出学签处理时间,Round 5 申请的国际生存在签证时间风险。"
+    },
+    "materials": ["transcript", "cv", "two_references", "essays", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://schulich.yorku.ca/programs/mf/",
+      "https://schulich.yorku.ca/admissions/admissions-requirements/mf/"
+    ],
+    "confidence": "high",
+    "notes": "在中国申请者中因 CFA/FRM 对接而受欢迎。⚠️ 采集时最终轮即将截止,国际申请者时间窗口极窄,现阶段研究者应考虑等待 Fall 2027 周期公布。"
+  },
+  {
+    "school_name_en": "York University",
+    "school_name_zh": "约克大学",
+    "school_short": "Schulich",
+    "region": "CA",
+    "program_name_en": "Master of Accounting (MAcc)",
+    "program_name_zh": "会计硕士",
+    "faculty": "Schulich School of Business",
+    "direction": "accounting",
+    "duration_months": 16,
+    "tuition": "本地生 CAD 9,102/学期,约 CAD 36,409 全程;国际生 CAD 24,118/学期,约 CAD 96,472。基于 Summer 2026 收费框架的常规全日制 16 个月/4 学期方案。Advanced Standing(12个月)与 Accelerated(8个月,仅限 Schulich BBA 会计方向)总额不同,官网未单独拆分",
+    "campus": "Keele Campus, Toronto, Ontario",
+    "requirements": {
+      "undergrad_background": "认可院校四年制本科学位,最后两学年最低 B 平均分;三年制印度学位(NAAC A 级、first class)及其它非加拿大三年制学位有专门规则(需 WES 认证)",
+      "china_university_list": null,
+      "gpa_requirement": "最后两个完整学年最低 B 平均分",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.5" },
+      "toefl": { "overall": 100, "subscores": "2026-01-21 前各单项最低 23;之后新计分制总分 5、各单项最低 4.5" },
+      "gmat_gre": "必需(各科目成绩需达标),除非申请者在近 5 年内毕业于加拿大大学。官网未公布最低分",
+      "prerequisites": "本科需修过微观经济学、宏观经济学、统计学,以及公司金融或加拿大商法",
+      "work_experience": "建议但不要求本科毕业后工作经验",
+      "interview": "部分申请者受邀参加 30 分钟线上招生面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20 官网将常规全日制/Advanced Standing 入学轮次标为 TBD,并说明项目正在改版。仅 Accelerated 方向(限 Schulich BBA 会计方向毕业生,一般不适用于中国申请者)公布了日期: Round 1 2027-01-20、Round 2 2027-02-10。常规方向的 2026 年 5 月/9 月入学已过期。"
+    },
+    "materials": ["transcript", "cv", "two_references", "essays", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://schulich.yorku.ca/programs/macc/",
+      "https://schulich.yorku.ca/admissions/admissions-requirements/macc/"
+    ],
+    "confidence": "medium",
+    "notes": "CPA 认证项目,毕业生具备参加 CFE 考试资格。⚠️ 周期数据确定性低于该校其它项目 —— 官网常规方向显示 TBD 且提到项目正在改版,中国申请者应临近申请时重新核对官网。"
+  },
+  {
+    "school_name_en": "York University",
+    "school_name_zh": "约克大学",
+    "school_short": "Schulich",
+    "region": "CA",
+    "program_name_en": "Master of Management (MMgt)",
+    "program_name_zh": "管理硕士",
+    "faculty": "Schulich School of Business",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "本地生 CAD 9,272/学期,约 CAD 27,817 全程;国际生 CAD 24,118/学期,约 CAD 72,354。基于 Fall 2026 收费框架,可能调整",
+    "campus": "Keele Campus, Toronto, Ontario",
+    "requirements": {
+      "undergrad_background": "⚠️ 须为**非商科**本科学位(BBA、BAS、BCom、BMOS、HBA、BAcc 等商科学位不符合资格),来自认可院校,最后两学年最低 B+ 平均分",
+      "china_university_list": null,
+      "gpa_requirement": "最后两个完整学年最低 B+ 平均分",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.5" },
+      "toefl": { "overall": 100, "subscores": "2026-01-21 前各单项最低 23;之后新计分制总分 5、各单项最低 4.5" },
+      "gmat_gre": "不要求",
+      "prerequisites": "除非商科本科学位要求外未列具体先修课",
+      "work_experience": "面向本科毕业后工作经验不足 2 年者(2 年以上者会被引导至 MBA);三年制学位持有者需 1 年本科毕业后工作经验",
+      "interview": "部分申请者受邀参加 30 分钟线上招生面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [
+        { "name": "Round 5(最终)", "deadline": "2026-07-22", "decision_by": null }
+      ],
+      "final_deadline": "2026-07-22",
+      "notes": "对应 September 2026 入学。Round 1-4(2025-10-01、2025-12-03、2026-02-11、2026-04-29)在采集日 2026-07-20 已过期。Round 5 为最终轮,2026-07-22 截止,距采集日仅两天。"
+    },
+    "materials": ["transcript", "cv", "two_references", "essays", "english_test"],
+    "source_urls": [
+      "https://schulich.yorku.ca/programs/mmgt/",
+      "https://schulich.yorku.ca/admissions/admissions-requirements/mmgt/"
+    ],
+    "confidence": "high",
+    "notes": "⚠️ 仅招收非商科本科、且工作经验不足 2 年者 —— 商科/商学本科的中国申请者**不符合资格**,这是重要的资格筛选条件。Fall 2027 周期日期尚未公布。"
+  },
+  {
+    "school_name_en": "York University",
+    "school_name_zh": "约克大学",
+    "school_short": "Schulich",
+    "region": "CA",
+    "program_name_en": "Master of Marketing (MMKG)",
+    "program_name_zh": "市场营销硕士",
+    "faculty": "Schulich School of Business",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "全日制本地生 CAD 12,823/学期,约 CAD 38,469 全程;全日制国际生 CAD 30,985/学期,约 CAD 92,954。非全日制(2026 秋季起提供,24 个月)本地生 CAD 6,414/学期,约 CAD 38,485;非全日制国际生学费未列明(官网称需另行审核移民规定)。基于 Fall 2026 收费框架",
+    "campus": "Keele Campus, Toronto, Ontario",
+    "requirements": {
+      "undergrad_background": "认可院校本科学位,最后两学年最低 B+ 平均分;三年制学位持有者需一年工作经验",
+      "china_university_list": null,
+      "gpa_requirement": "最后两个完整学年最低 B+ 平均分",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.5" },
+      "toefl": { "overall": 100, "subscores": "2026-01-21 前各单项最低 23;之后新计分制总分 5、各单项最低 4.5" },
+      "gmat_gre": "不要求",
+      "prerequisites": "除本科学位要求外未列具体先修课",
+      "work_experience": "非商科本科者强烈建议 1 年全职工作经验;商科本科者建议但不要求;三年制学位持有者必需",
+      "interview": "部分申请者受邀参加 30 分钟线上招生面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20,官网所列 September 2026 入学的全部轮次(Round 1 2025-10-01、Round 2 2025-12-03、Round 3 2026-02-11、Round 4 2026-04-29、Round 5/最终 2026-07-01)均已过期 —— 最终轮在采集日约三周前已关闭。September 2027 周期日期尚未公布。"
+    },
+    "materials": ["transcript", "cv", "two_references", "essays", "english_test"],
+    "source_urls": [
+      "https://schulich.yorku.ca/programs/mmkg/",
+      "https://schulich.yorku.ca/admissions/admissions-requirements/mmkg/"
+    ],
+    "confidence": "high",
+    "notes": "项目页自称 QS 加拿大市场营销排名第一(校方宣传语,未独立核实)。与该校其它项目不同,本项目当前周期已无开放轮次,需等待 September 2027 周期公布。"
+  }
+]

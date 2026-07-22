@@ -1,0 +1,631 @@
+[
+  {
+    "school_name_en": "University of New South Wales",
+    "school_name_zh": "新南威尔士大学",
+    "school_short": "UNSW",
+    "region": "AU",
+    "program_name_en": "Master of Commerce",
+    "program_name_zh": "商科硕士",
+    "faculty": "UNSW Business School",
+    "direction": "management",
+    "duration_months": 20,
+    "tuition": "International: 首年 AUD 62,000;全程约 AUD 96,000(2026 indicative,官网注明每年复核)",
+    "campus": "Kensington, Sydney",
+    "requirements": {
+      "undergrad_background": "任何认可院校的学士学位",
+      "china_university_list": "211 院校按标准 credit average 线;**非 211 院校要求总均分不低于 88**",
+      "gpa_requirement": "credit average,WAM 65%+;WAM 60-64% 可凭 GMAT 600+ 或 GMAT Focus 565+ 补足",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.0" },
+      "toefl": { "overall": 94, "subscores": "写作 25;阅读/听力/口语 23" },
+      "gmat_gre": "仅在 WAM 60-64% 时作为替代通道要求 GMAT 600(或 GMAT Focus 565);WAM 达 65% 则不要求",
+      "prerequisites": "最多可申请 24 UOC(4 门课)学分减免",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20:2027 各入学季申请已开放。UNSW 采用通用研究生 offer round 排期而非项目专属排期,官网明确警告本项目为高需求限额项目,**可能因招满而早于公布日期关闭**,建议尽早申请。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": [
+      "https://www.unsw.edu.au/study/postgraduate/master-of-commerce",
+      "https://www.unsw.edu.au/study/how-to-apply/english-language-requirements",
+      "https://www.unsw.edu.au/study/international-students/admissions-info"
+    ],
+    "confidence": "medium",
+    "notes": "UNSW 最灵活的商科学位,含 15 个专业方向(Marketing、Marketing Analytics、Business Analytics、Finance、International Business、Accounting 等)。⚠️ 中国学生常申的市场营销、商业分析在 UNSW **没有独立学位**,只能通过本项目的方向选择实现。官网未给出逐项材料清单,仅要求通过 Applicant Portal 上传,故 materials 只列可确认项。"
+  },
+  {
+    "school_name_en": "University of New South Wales",
+    "school_name_zh": "新南威尔士大学",
+    "school_short": "UNSW",
+    "region": "AU",
+    "program_name_en": "Master of Finance",
+    "program_name_zh": "金融硕士",
+    "faculty": "UNSW Business School",
+    "direction": "finance",
+    "duration_months": 24,
+    "tuition": "International: 首年 AUD 62,000;全程约 AUD 129,000(2026 indicative)",
+    "campus": "Kensington, Sydney",
+    "requirements": {
+      "undergrad_background": "两年制通道:任何专业学士学位;**一年加速通道**:本科为金融主修(至少 7 门相关课程)",
+      "china_university_list": "非 211 院校要求总均分不低于 88;211 院校按标准 credit average",
+      "gpa_requirement": "credit average 65%+",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.0" },
+      "toefl": { "overall": 94, "subscores": "写作 25;其余 23" },
+      "gmat_gre": "官网未提及本项目要求 GMAT/GRE",
+      "prerequisites": "完成 CFA Level 3 可豁免 12 UOC",
+      "work_experience": "官网未提及为必需",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20:Term 3 2026 与 Term 1 2027 申请开放中。沿用 UNSW 通用研究生 offer round 排期。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": ["https://www.unsw.edu.au/study/postgraduate/master-of-finance"],
+    "confidence": "high",
+    "notes": "⚠️ 一年制 vs 两年制通道是本科金融背景中国申请者最该关注的差异 —— 直接决定学制长度与总花费(约 AUD 96,000 vs 129,000 的量级差)。学费、通道结构、CFA 豁免、非 211 的 88 分线均为官网明示。"
+  },
+  {
+    "school_name_en": "University of New South Wales",
+    "school_name_zh": "新南威尔士大学",
+    "school_short": "UNSW",
+    "region": "AU",
+    "program_name_en": "Master of Professional Accounting",
+    "program_name_zh": "专业会计硕士",
+    "faculty": "UNSW Business School",
+    "direction": "accounting",
+    "duration_months": 20,
+    "tuition": "International: 首年 AUD 62,000;全程约 AUD 96,000(2026 indicative)",
+    "campus": "Kensington, Sydney",
+    "requirements": {
+      "undergrad_background": "面向**无会计背景或会计基础有限**的毕业生,任何专业学士学位均可",
+      "china_university_list": "非 211 院校要求总均分不低于 88",
+      "gpa_requirement": "credit average,以 UNSW Postgraduate Coursework Entry Score Calculator 判定",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.0" },
+      "toefl": { "overall": 94, "subscores": "写作 25;其余 23" },
+      "gmat_gre": "官网未提及",
+      "prerequisites": "无(项目本身假设申请者无会计背景)",
+      "work_experience": "不要求",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "沿用 UNSW 通用研究生 offer round 排期,采集日 2026-07-20 时 2027 入学季开放中。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": ["https://www.unsw.edu.au/study/postgraduate/master-of-professional-accounting"],
+    "confidence": "high",
+    "notes": "毕业生可对接 CPA Australia 与 CA ANZ 认证路径,是中国申请者冲会计执业资格的常见选择。另有更长的 Extension 版本(面向无商科相关本科者),本次未单独核实。"
+  },
+  {
+    "school_name_en": "University of New South Wales",
+    "school_name_zh": "新南威尔士大学",
+    "school_short": "UNSW",
+    "region": "AU",
+    "program_name_en": "Master of International Business",
+    "program_name_zh": "国际商务硕士",
+    "faculty": "UNSW Business School",
+    "direction": "international_business",
+    "duration_months": 24,
+    "tuition": "International: 首年 AUD 62,000;全程约 AUD 129,000(2026 indicative)",
+    "campus": "Kensington, Sydney",
+    "requirements": {
+      "undergrad_background": "任何认可院校的学士学位",
+      "china_university_list": "非 211 院校要求总均分不低于 88",
+      "gpa_requirement": "credit average 65%+",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.0" },
+      "toefl": { "overall": 94, "subscores": "写作 25;其余 23" },
+      "gmat_gre": "GMAT 600+ 可作为替代录取通道,非硬性要求",
+      "prerequisites": "亦可通过 UNSW Business School Graduate Certificate(credit average 65%+)或相关专业资格入读",
+      "work_experience": "官网未提及为强制",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "采集日 2026-07-20 官网提示:部分项目 2026 入学季已招满,2027 各入学季申请全部开放。建议申请前先确认名额状态。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": ["https://www.unsw.edu.au/study/postgraduate/master-of-international-business"],
+    "confidence": "high",
+    "notes": "含四个方向:International Marketing、Entrepreneurship & Innovation、International Human Resource Management、Societal Impact。"
+  },
+  {
+    "school_name_en": "University of New South Wales",
+    "school_name_zh": "新南威尔士大学",
+    "school_short": "UNSW",
+    "region": "AU",
+    "program_name_en": "Master of Management (Online)",
+    "program_name_zh": "管理学硕士(在线)",
+    "faculty": "UNSW Business School / UNSW Online (AGSM)",
+    "direction": "management",
+    "duration_months": 24,
+    "tuition": "AUD 5,130 每门课(2026);全程约 AUD 62,500(随选修与学分减免浮动)",
+    "campus": "100% online,无线下校区要求",
+    "requirements": {
+      "undergrad_background": "任何专业的认可学士学位",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": { "overall": null, "subscores": null },
+      "toefl": { "overall": null, "subscores": null },
+      "gmat_gre": "不要求",
+      "prerequisites": "Graduate Certificate in Business 可作为替代入读/退出通道",
+      "work_experience": "持学士学位直接入读不要求;无学士学位者需 3 年相关经验并经 Graduate Certificate 通道",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "2026 年有多次入学:1月、3月、5月、7月、8月、10月。频次高于线下学期制。"
+    },
+    "materials": [],
+    "source_urls": ["https://studyonline.unsw.edu.au/online-programs/master-management"],
+    "confidence": "medium",
+    "notes": "⚠️ 100% 在线、非全日制,无任何线下环节 —— **不支持澳洲学生签证**,不属于真正意义上的出国留学路径。适合打算在国内远程读学位者,不适合以出境为目标的申请者。本项目页面未列明中国院校要求与雅思托福具体分数,故留空。"
+  },
+  {
+    "school_name_en": "University of New South Wales",
+    "school_name_zh": "新南威尔士大学",
+    "school_short": "UNSW",
+    "region": "AU",
+    "program_name_en": "Master of Analytics (Online)",
+    "program_name_zh": "分析学硕士(在线)",
+    "faculty": "UNSW Business School / UNSW Online",
+    "direction": "business_analytics",
+    "duration_months": 24,
+    "tuition": "AUD 5,130 每门课(2026);全程约 AUD 62,500",
+    "campus": "100% online,无线下校区要求",
+    "requirements": {
+      "undergrad_background": "任何专业的认可学士学位",
+      "china_university_list": null,
+      "gpa_requirement": "最低 WAM 65",
+      "ielts": { "overall": null, "subscores": null },
+      "toefl": { "overall": null, "subscores": null },
+      "gmat_gre": "不要求",
+      "prerequisites": "Graduate Certificate in Analytics 可作为替代通道",
+      "work_experience": "持学士学位直接入读不要求;无学士学位者需 3 年相关经验",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "2026 年入学月份:1月、3月、5月、7月、8月、10月。"
+    },
+    "materials": [],
+    "source_urls": ["https://studyonline.unsw.edu.au/online-programs/master-analytics"],
+    "confidence": "medium",
+    "notes": "⚠️ 100% 在线,**不支持学生签证**。⚠️ 重要:UNSW **没有线下的独立商业分析硕士** —— 线下只能通过 Master of Commerce 的 Business Analytics 方向实现。以出国为目标的申请者应优先考虑 Master of Commerce,本项目仅作为远程读学位的备选。"
+  },
+  {
+    "school_name_en": "Australian National University",
+    "school_name_zh": "澳大利亚国立大学",
+    "school_short": "ANU",
+    "region": "AU",
+    "program_name_en": "Master of Finance",
+    "program_name_zh": "金融硕士",
+    "faculty": "ANU College of Business and Economics",
+    "direction": "finance",
+    "duration_months": 24,
+    "tuition": "International AUD 57,640/年(2027 indicative);2026 为 56,120/年",
+    "campus": "Canberra",
+    "requirements": {
+      "undergrad_background": "任何专业学士学位(未列专业先修限制)",
+      "china_university_list": "ANU 官方中国换算表(适用全校研究生): ANU GPA 4.0 对应 211 院校 65% / 非 211 院校 70%;4.5 对应 70%/75%;5.0 对应 75%/80%;5.5 对应 80%/85%;6.0 对应 85%+/90%+。官网注明实际换算可能因院校评级、评分制与及格线而异",
+      "gpa_requirement": "学士学位最低 GPA 5.0/7.0;或 ANU Graduate Certificate of Finance 最低 4.5/7.0;或 10 年以上 ANZSCO Skill Level 1 相关全职经验",
+      "ielts": { "overall": 6.5, "subscores": "各单项不低于 6.0(ANU 研究生授课类通用政策 ANUP_000408,项目页未单独重申)" },
+      "toefl": { "overall": 80, "subscores": "2027-01-01 前:阅读 20/写作 20/听力 18/口语 18;之后总分 81 且单项调整为阅读 16/写作 19/听力 16/口语 19" },
+      "gmat_gre": "本项目未提供 GMAT/GRE 替代通道",
+      "prerequisites": "无;但升入后段课程需前段加权平均不低于 60%",
+      "work_experience": "仅在以 10 年经验替代学位的通道下需要",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-12-15",
+      "notes": "对应 Semester 1, 2027 入学(2027年2月开学),为采集日 2026-07-20 的当前开放周期。Semester 2 2026 的国际生截止日 2026-06-14 已过期。国际生通用截止日 2026-12-15。"
+    },
+    "materials": ["transcript", "english_test"],
+    "source_urls": [
+      "https://programsandcourses.anu.edu.au/program/7418xmfin",
+      "https://programsandcourses.anu.edu.au/2027/program/7418xmfin",
+      "https://study.anu.edu.au/apply/postgraduate-program-indicative-entry-requirements/china",
+      "https://policies.anu.edu.au/ppl/document/ANUP_000408"
+    ],
+    "confidence": "medium",
+    "notes": "⚠️ 与 ANU 其它商科硕士不同,本项目**没有 GMAT/GRE 替代通道**,GPA 不达标的中国申请者只能走 10 年工作经验路线。相关本科/荣誉学位最多可减免 48 学分(最短可缩至 1 年)。ANU 不接受在家考的线上语言考试,成绩需 2 年内。申请费 AUD 150。雅思分数来自全校通用政策而非项目页明示,故 confidence 标为 medium。"
+  },
+  {
+    "school_name_en": "Australian National University",
+    "school_name_zh": "澳大利亚国立大学",
+    "school_short": "ANU",
+    "region": "AU",
+    "program_name_en": "Master of Professional Accounting",
+    "program_name_zh": "专业会计硕士",
+    "faculty": "ANU College of Business and Economics",
+    "direction": "accounting",
+    "duration_months": 18,
+    "tuition": "International AUD 57,640/年(2027 indicative);2026 为 56,120/年",
+    "campus": "Canberra",
+    "requirements": {
+      "undergrad_background": "任何专业;官网明确面向**无会计背景**的毕业生",
+      "china_university_list": "同 ANU 全校中国换算表(见 Master of Finance 条目)",
+      "gpa_requirement": "学士学位最低 GPA 5.0/7.0;或 ANU Graduate Certificate of Accounting 最低 4.5/7.0;或 10 年以上 Skill Level 1 相关经验",
+      "ielts": { "overall": 6.5, "subscores": "各单项不低于 6.0(全校通用政策)" },
+      "toefl": { "overall": 80, "subscores": "2027-01-01 起改为总分 81 及新单项要求" },
+      "gmat_gre": "官网未提及",
+      "prerequisites": "无;但申请 CPA/CA 会员资格需修满官网指定的 12 门特定课程",
+      "work_experience": "仅在 10 年经验替代通道下需要",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-12-15",
+      "notes": "对应 Semester 1, 2027 入学,为当前开放周期。国际生须保持全日制注册(每学期 24 学分)。"
+    },
+    "materials": ["transcript", "english_test"],
+    "source_urls": [
+      "https://programsandcourses.anu.edu.au/program/7413xmpacc",
+      "https://programsandcourses.anu.edu.au/2027/program/7413xmpacc"
+    ],
+    "confidence": "medium",
+    "notes": "在寻求 CPA Australia / CA ANZ 路径的非会计背景中国申请者中很常见。⚠️ 想拿职业认证必须修满官网指定的 12 门课,选课时要留意。语言分数来自全校通用政策。"
+  },
+  {
+    "school_name_en": "Australian National University",
+    "school_name_zh": "澳大利亚国立大学",
+    "school_short": "ANU",
+    "region": "AU",
+    "program_name_en": "Master of Management",
+    "program_name_zh": "管理硕士",
+    "faculty": "Research School of Management, ANU College of Business and Economics",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "International AUD 57,640/年(2027 indicative);2026 为 56,120/年",
+    "campus": "Canberra",
+    "requirements": {
+      "undergrad_background": "基础通道需相关(cognate)专业学士学位;其它通道可凭经验或考试成绩入读",
+      "china_university_list": "同 ANU 全校中国换算表",
+      "gpa_requirement": "相关专业学士最低 GPA 5.0/7.0;或荣誉学士最低 4.0/7.0;或 10 年以上 Skill Level 1 专业经验",
+      "ielts": { "overall": 6.5, "subscores": "各单项不低于 6.0(全校通用政策)" },
+      "toefl": { "overall": 80, "subscores": "2027-01-01 起改为总分 81" },
+      "gmat_gre": "GMAT 最低 550 + 分析性写作最低 5.0 + 8 年经验;或 GRE 语文 155 + 数学 155 + 分析性写作 4.0 + 8 年经验",
+      "prerequisites": "未列额外先修课",
+      "work_experience": "多条非学位/低 GPA 通道需要 3-10 年经验;走 GMAT/GRE 通道需 8 年",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-12-15",
+      "notes": "对应 Semester 1, 2027 入学,为当前开放周期。"
+    },
+    "materials": ["transcript", "english_test"],
+    "source_urls": [
+      "https://programsandcourses.anu.edu.au/program/mmgnt",
+      "https://programsandcourses.anu.edu.au/2027/program/mmgnt"
+    ],
+    "confidence": "medium",
+    "notes": "ANU 商学院最短的硕士(1 年),作为快速通道有吸引力。另有独立的 Master of Management (Advanced) 两年制项目(代码 vmgnt),本条不含。相关未完成研究生资历最多可减免 24 学分。"
+  },
+  {
+    "school_name_en": "Australian National University",
+    "school_name_zh": "澳大利亚国立大学",
+    "school_short": "ANU",
+    "region": "AU",
+    "program_name_en": "Master of Marketing Management",
+    "program_name_zh": "市场营销管理硕士",
+    "faculty": "ANU College of Business and Economics",
+    "direction": "marketing",
+    "duration_months": 24,
+    "tuition": "International AUD 57,640/年(2027 indicative);2026 为 56,120/年",
+    "campus": "Canberra",
+    "requirements": {
+      "undergrad_background": "任何专业(以循证管理为导向,对非相关背景开放)",
+      "china_university_list": "同 ANU 全校中国换算表",
+      "gpa_requirement": "多条通道:学士 GPA 5.0/7.0 单独达标;或 4.0/7.0 + 3 年专业经验;或荣誉学士 4.0/7.0;或 Graduate Certificate/Diploma 4.0/7.0(部分需加经验);或 EdX 循证管理 MicroMasters 期末 70%+;或 48 学分相关研究生课程达 4.0/7.0;或 10 年以上 Skill Level 1 经验",
+      "ielts": { "overall": 6.5, "subscores": "各单项不低于 6.0(全校通用政策)" },
+      "toefl": { "overall": 80, "subscores": "2027-01-01 起改为总分 81" },
+      "gmat_gre": "GMAT 550+(5 年内)+ 3 年以上经验;或 GRE 语文/数学各 155+ 与分析性写作 4.0+(5 年内)+ 3 年以上经验",
+      "prerequisites": "无额外先修课",
+      "work_experience": "多条非顶格通道需 3-10 年不等",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-12-15",
+      "notes": "对应 Semester 1, 2027 入学,为当前开放周期。"
+    },
+    "materials": ["transcript", "english_test"],
+    "source_urls": [
+      "https://programsandcourses.anu.edu.au/program/mmkmt",
+      "https://programsandcourses.anu.edu.au/2027/program/mmkmt"
+    ],
+    "confidence": "medium",
+    "notes": "在本次核实的 ANU 项目中**替代录取通道最多**,对 GPA 处于边缘或本科非相关背景的中国申请者较友好。相关资历最多可减免 48 学分(缩短一年)。"
+  },
+  {
+    "school_name_en": "Australian National University",
+    "school_name_zh": "澳大利亚国立大学",
+    "school_short": "ANU",
+    "region": "AU",
+    "program_name_en": "Master of Business Information Systems",
+    "program_name_zh": "商业信息系统硕士",
+    "faculty": "ANU College of Business and Economics",
+    "direction": "business_analytics",
+    "duration_months": 24,
+    "tuition": "International AUD 57,640/年(2027 indicative);2026 为 56,120/年",
+    "campus": "Canberra",
+    "requirements": {
+      "undergrad_background": "对有无信息系统背景者均开放",
+      "china_university_list": "同 ANU 全校中国换算表",
+      "gpa_requirement": "学士 GPA 5.0/7.0;或 4.0/7.0 + 3 年专业经验;或荣誉学士 4.0/7.0;或 Graduate Certificate 4.0/7.0;或 48 学分相关研究生课程达 4.0/7.0;或 10 年以上 Skill Level 1 经验",
+      "ielts": { "overall": 6.5, "subscores": "各单项不低于 6.0(全校通用政策)" },
+      "toefl": { "overall": 80, "subscores": "2027-01-01 起改为总分 81" },
+      "gmat_gre": "GMAT 550+(5 年内)+ 3 年以上经验;或 GRE 语文 155 + 数学 155 + 分析性写作 4.0 + 3 年以上经验",
+      "prerequisites": "无额外先修课",
+      "work_experience": "多条通道需 3-10 年",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-12-15",
+      "notes": "对应 Semester 1, 2027 入学,为当前开放周期。"
+    },
+    "materials": ["transcript", "english_test"],
+    "source_urls": [
+      "https://programsandcourses.anu.edu.au/program/mbins",
+      "https://programsandcourses.anu.edu.au/2027/program/mbins"
+    ],
+    "confidence": "medium",
+    "notes": "获澳大利亚计算机协会(ACS)专业认证,对 485 工签/技术移民路径有意义。⚠️ ANU **没有名为 Master of Business Analytics 的项目**,本项目是最接近商业分析方向的选择。相关资历最多可减免 48 学分。"
+  },
+  {
+    "school_name_en": "Australian National University",
+    "school_name_zh": "澳大利亚国立大学",
+    "school_short": "ANU",
+    "region": "AU",
+    "program_name_en": "Master of International Management",
+    "program_name_zh": "国际管理硕士",
+    "faculty": "ANU College of Business and Economics",
+    "direction": "international_business",
+    "duration_months": 24,
+    "tuition": "International AUD 57,640/年(2027 indicative);2026 为 56,120/年",
+    "campus": "Canberra",
+    "requirements": {
+      "undergrad_background": "任何专业",
+      "china_university_list": "同 ANU 全校中国换算表",
+      "gpa_requirement": "学士 GPA 5.0/7.0;或 4.0/7.0 + 3 年专业经验;或荣誉学士 4.0/7.0;或 Graduate Certificate 4.0/7.0 + 3 年经验;或 ANU Graduate Certificate of Management 5.0/7.0;或 Graduate Diploma 4.0/7.0;或 10 年以上 Skill Level 1 经验",
+      "ielts": { "overall": 6.5, "subscores": "各单项不低于 6.0(全校通用政策)" },
+      "toefl": { "overall": 80, "subscores": "2027-01-01 起改为总分 81" },
+      "gmat_gre": "GMAT 550+(5 年内)+ 3 年以上经验;或 GRE 语文 155 + 数学 155 + 分析性写作 4.0 + 3 年以上经验",
+      "prerequisites": "无额外先修课",
+      "work_experience": "多条通道需 3-10 年",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-12-15",
+      "notes": "对应 Semester 1, 2027 入学,为当前开放周期。"
+    },
+    "materials": ["transcript", "english_test"],
+    "source_urls": [
+      "https://programsandcourses.anu.edu.au/program/mimgt",
+      "https://programsandcourses.anu.edu.au/2027/program/mimgt"
+    ],
+    "confidence": "medium",
+    "notes": "⚠️ ANU **没有名为 Master of International Business 的项目**,本项目是最接近国际商务方向的选择。可选修 CBE 实习课程。"
+  },
+  {
+    "school_name_en": "University of Sydney",
+    "school_name_zh": "悉尼大学",
+    "school_short": "USYD",
+    "region": "AU",
+    "program_name_en": "Master of Commerce",
+    "program_name_zh": "商业硕士",
+    "faculty": "University of Sydney Business School",
+    "direction": "management",
+    "duration_months": 18,
+    "tuition": "International: 2026 入学 AUD 61,700/年;2027 入学 AUD 64,800/年",
+    "campus": "Camperdown/Darlington, Sydney",
+    "requirements": {
+      "undergrad_background": "商科/商业相关本科 + credit average(65%);或任何专业本科 + credit average(65%)+ 1 年相关工作经验;或荣誉学士(65%);或本科 50%+ 且 GMAT(班级均分 630)或 GMAT Focus(均分 585);或悉尼大学 Grad Dip/Cert in Commerce(65%)",
+      "china_university_list": "**未找到中国院校分档名单** —— 悉尼大学公布的是统一的 65% credit average 门槛,未见按院校分级的公开表格,推测为逐案评估",
+      "gpa_requirement": "credit average 65%",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.0" },
+      "toefl": { "overall": 96, "subscores": "阅读/听力/口语 17;写作 19" },
+      "gmat_gre": "仅在 WAM 50-64% 时作为替代通道:GMAT 均分 630 或 GMAT Focus 均分 585;达 65% 则不需要。GRE 官网未提及",
+      "prerequisites": "相关先修学习最多可申请 12 学分减免",
+      "work_experience": "不要求(仅非相关本科通道需要 1 年)",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2027-01-15",
+      "notes": "Semester 1 与 Semester 2 两次入学。国际生截止:S1 为 1月15日、S2 为 6月25日。Semester 2 2026(2026-06-25)已过期,当前开放周期为 **Semester 1 2027**,截止 2027-01-15。滚动发放 offer,建议尽早申请。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test", "passport"],
+    "source_urls": [
+      "https://www.sydney.edu.au/courses/courses/pc/master-of-commerce0.html",
+      "https://www.sydney.edu.au/business/study/postgraduate-courses.html",
+      "https://www.sydney.edu.au/business/study/study-areas/commerce/master-of-commerce-frequently-asked-questions.html"
+    ],
+    "confidence": "high",
+    "notes": "⚠️ 悉尼大学**没有独立的 Master of Finance / Marketing / Business Analytics** —— 中国学生最常申的金融、市场营销、商业分析(官方名为 Data Analytics for Business)都是本项目下的方向。共 8 个方向。可与 Extension 版本在入学早期互转。中国申请者的学历文件可能需经学信网(CSSD)认证,非英文文件需 NAATI 认证翻译。"
+  },
+  {
+    "school_name_en": "University of Sydney",
+    "school_name_zh": "悉尼大学",
+    "school_short": "USYD",
+    "region": "AU",
+    "program_name_en": "Master of Commerce (Extension)",
+    "program_name_zh": "商业硕士(延伸)",
+    "faculty": "University of Sydney Business School",
+    "direction": "management",
+    "duration_months": 24,
+    "tuition": "International: 2026 入学 AUD 61,700/年;2027 入学 AUD 64,800/年",
+    "campus": "Camperdown/Darlington, Sydney",
+    "requirements": {
+      "undergrad_background": "任何专业学士学位 + credit average(65%);或本科 50%+ 且 GMAT 630 / GMAT Focus 585;或悉尼大学 Grad Dip/Cert in Commerce(65%)。面向无商科背景或无相关经验者设计",
+      "china_university_list": "未找到中国院校分档名单,同为统一 65% 门槛",
+      "gpa_requirement": "credit average 65%",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.0" },
+      "toefl": { "overall": 96, "subscores": "阅读/听力/口语 17;写作 19" },
+      "gmat_gre": "同上替代通道;GRE 官网未提及",
+      "prerequisites": "相关先修学习最多可减免 12 学分",
+      "work_experience": "不要求",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2027-01-15",
+      "notes": "国际生截止:S1 为 1月15日、S2 为 6月25日。当前开放周期为 Semester 1 2027,截止 2027-01-15。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test", "passport"],
+    "source_urls": ["https://www.sydney.edu.au/courses/courses/pc/master-of-commerce-extension.html"],
+    "confidence": "high",
+    "notes": "可选**两个方向**或一个方向 + 研究延伸/交换。适合本科非商科、想多修一个方向或参加交换学期的中国申请者。可在第二学期结束前与标准版 Master of Commerce 互转。"
+  },
+  {
+    "school_name_en": "University of Sydney",
+    "school_name_zh": "悉尼大学",
+    "school_short": "USYD",
+    "region": "AU",
+    "program_name_en": "Master of Professional Accounting and Business Performance",
+    "program_name_zh": "专业会计与商业绩效硕士",
+    "faculty": "University of Sydney Business School",
+    "direction": "accounting",
+    "duration_months": 24,
+    "tuition": "International: 2026 入学 AUD 61,700/年;2027 入学 AUD 64,800/年",
+    "campus": "Camperdown/Darlington, Sydney",
+    "requirements": {
+      "undergrad_background": "学士学位或以上 + credit average(65%);或本科 50%+ 且 GMAT 630 / GMAT Focus 585;或悉尼大学对应 Grad Dip(65%)",
+      "china_university_list": "未找到中国院校分档名单,统一 65% 门槛",
+      "gpa_requirement": "credit average 65%",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.0" },
+      "toefl": { "overall": 96, "subscores": "阅读/听力/口语 17;写作 19" },
+      "gmat_gre": "同上替代通道;GRE 官网未提及",
+      "prerequisites": "无(pre-experience 项目)",
+      "work_experience": "不要求",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2027-01-15",
+      "notes": "当前开放周期为 Semester 1 2027,国际生截止 2027-01-15。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test", "passport"],
+    "source_urls": [
+      "https://www.sydney.edu.au/courses/courses/pc/master-of-professional-accounting-and-business-performance.html",
+      "https://www.sydney.edu.au/business/study/study-areas/accounting/master-of-professional-accounting-and-business-performance-frequently-asked-questions.html"
+    ],
+    "confidence": "high",
+    "notes": "课程设计对接 CPA Australia、CAANZ 与 ACCA 的认证/免考要求,是中国学生冲澳洲会计执业路径的热门选择。2023 年第一学期起取代旧的 Master of Professional Accounting。"
+  },
+  {
+    "school_name_en": "University of Sydney",
+    "school_name_zh": "悉尼大学",
+    "school_short": "USYD",
+    "region": "AU",
+    "program_name_en": "Master of Management",
+    "program_name_zh": "管理学硕士",
+    "faculty": "University of Sydney Business School",
+    "direction": "management",
+    "duration_months": 15,
+    "tuition": "International: 2026 入学 AUD 54,100/年;2027 入学 AUD 56,800/年",
+    "campus": "Camperdown/Darlington, Sydney",
+    "requirements": {
+      "undergrad_background": "任何专业学士学位 + credit average(65%);或本科 50%+ 且 GMAT 630 / GMAT Focus 585",
+      "china_university_list": "未找到中国院校分档名单,统一 65% 门槛",
+      "gpa_requirement": "credit average 65%",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.0" },
+      "toefl": { "overall": 96, "subscores": "阅读/听力/口语 17;写作 19" },
+      "gmat_gre": "同上替代通道;GRE 官网未提及",
+      "prerequisites": "无",
+      "work_experience": "官网明确不需要工作经验,欢迎任何专业背景的毕业生",
+      "interview": "标准方向官网未提及(CEMS 变体另有额外要求,不在本条范围)"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2027-01-15",
+      "notes": "当前开放周期为 Semester 1 2027,国际生截止 2027-01-15。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test", "passport"],
+    "source_urls": [
+      "https://www.sydney.edu.au/courses/courses/pc/master-of-management.html",
+      "https://www.sydney.edu.au/business/study/mba/master-of-management.html"
+    ],
+    "confidence": "high",
+    "notes": "明确面向任何专业的应届毕业生(适合转行),是无商科背景中国申请者的主要选择之一。学费低于同校 Commerce 系列。校方引用 QS 2026 Master of Management 排名称澳洲第一(校方自述)。另有 1.5 年制 CEMS 变体,含额外语言与录取要求,不在本条范围。"
+  },
+  {
+    "school_name_en": "University of Sydney",
+    "school_name_zh": "悉尼大学",
+    "school_short": "USYD",
+    "region": "AU",
+    "program_name_en": "Master of International Business",
+    "program_name_zh": "国际商务硕士",
+    "faculty": "University of Sydney Business School",
+    "direction": "international_business",
+    "duration_months": 15,
+    "tuition": "International: 2026 入学 AUD 61,700/年;2027 入学 AUD 64,800/年",
+    "campus": "Camperdown/Darlington, Sydney",
+    "requirements": {
+      "undergrad_background": "相关专业学士 + credit average(65%);或非相关专业学士(65%)+ 约 3 年专业经验;或相关专业学士 50%+ 且 GMAT 630 / GMAT Focus 585",
+      "china_university_list": "未找到中国院校分档名单,统一 65% 门槛",
+      "gpa_requirement": "credit average 65%",
+      "ielts": { "overall": 7.0, "subscores": "各单项最低 6.0" },
+      "toefl": { "overall": 96, "subscores": "阅读/听力/口语 17;写作 19" },
+      "gmat_gre": "同上替代通道;GRE 官网未提及",
+      "prerequisites": "相关专业本科 + 2 年以上相关工作经验最多可减免 12 学分",
+      "work_experience": "非相关专业本科通道需约 3 年",
+      "interview": "**需要面试** —— 学术排名后进行选拔面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2027-01-15",
+      "notes": "当前开放周期为 Semester 1 2027,国际生截止 2027-01-15。"
+    },
+    "materials": ["transcript", "degree_certificate", "personal_statement", "english_test", "passport"],
+    "source_urls": ["https://www.sydney.edu.au/courses/courses/pc/master-of-international-business.html"],
+    "confidence": "high",
+    "notes": "⚠️ 与该校其它四个项目最大的不同:**需要提交动机陈述并参加选拔面试**。中国申请者若以为和 Commerce/Management 一样只看成绩单,准备上会吃亏。校方引用 QS 2026 国际贸易排名称澳洲第一(校方自述)。"
+  }
+]

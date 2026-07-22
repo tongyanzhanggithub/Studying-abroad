@@ -1,0 +1,302 @@
+[
+  {
+    "school_name_en": "University of Nottingham",
+    "school_name_zh": "诺丁汉大学",
+    "school_short": "Nottingham",
+    "region": "UK",
+    "program_name_en": "MSc Finance and Investment",
+    "program_name_zh": "金融与投资硕士",
+    "faculty": "Nottingham University Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "£37,600",
+    "campus": "Jubilee Campus, University of Nottingham (UK)",
+    "requirements": {
+      "undergrad_background": "2:1 或国际同等学历，且需在至少两个模块中修读过数学、统计学、定量方法、定量金融相关专业或计量经济学中至少两门课程",
+      "china_university_list": "官网未在该课程页面单独列出中国院校分档要求；诺丁汉大学采用全校统一的中国院校分档标准(见 china-institution-list.aspx 页面)：High 2:1/1st: 75%-82%；2:1: 72%-80%；2:2: 68%-75%。该页面将中国院校分为 Tier 1(一类院校，约200余所，含北京大学、清华大学、复旦大学、上海交通大学、南京大学、武汉大学、安徽大学、北京航空航天大学、北京理工大学、北京师范大学、北京外国语大学、北京邮电大学等)、Tier 2(二类院校)、Tier 3(其余未列入院校)。页面注明 '2026 entry requirement for Chinese applications, please check individual course pages for course specific requirements'，未明确说明该分档是否专门适用于研究生阶段，也未提及商学院有独立于该通用名单的分档标准(仅提及法学院 School of Law 另有独立名单)。",
+      "gpa_requirement": "课程页面仅要求 2:1 或国际同等学历，未在该页面写明具体百分比；具体百分比换算见 china_university_list 字段中的分档标准",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "单项不低于6.0"
+      },
+      "toefl": {
+        "overall": null,
+        "subscores": "官网未列明具体 TOEFL 分数，仅说明接受 TOEFL iBT 作为可选替代英语成绩证明"
+      },
+      "gmat_gre": "不要求",
+      "prerequisites": "需具备数学、统计学、定量方法、定量金融专业方向或计量经济学背景",
+      "work_experience": "官网未列明强制性工作经验要求；对不完全符合学术要求的申请人，会'个案考虑'(considered on an individual basis)替代资质，可能包括相关工作经验"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "课程页面未列明具体截止日期；诺丁汉大学研究生申请总览页面(how-to-apply)说明：'the application deadline is usually around six to seven weeks before the start date for international applicants'，多数课程9月下旬开学；官网未给出该课程的确切 ISO 日期"
+    },
+    "materials": [
+      "transcript",
+      "degree_certificate",
+      "personal_statement",
+      "reference",
+      "english_test"
+    ],
+    "source_urls": [
+      "https://www.nottingham.ac.uk/pgstudy/course/taught/finance-and-investment-msc",
+      "https://www.nottingham.ac.uk/studywithus/international-applicants/country-info/countryinformation/china-institution-list.aspx",
+      "https://www.nottingham.ac.uk/pgstudy/how-to-apply/taught.aspx"
+    ],
+    "confidence": "medium",
+    "notes": "官网课程页面标题显示为 '2027 Entry'（即2027/28学年入学），截至2026-07-20尚未见到该课程明确的 '2026/27 entry' 专属页面版本，故本记录基于官网当前可获取的最新数据(2027 entry)，费用与要求可能与2026/27年入学存在细微差异。中国院校分档信息来自全校统一的国际处页面，非商学院专属页面，商学院是否额外要求更高分数官网未列明。"
+  },
+  {
+    "school_name_en": "University of Nottingham",
+    "school_name_zh": "诺丁汉大学",
+    "school_short": "Nottingham",
+    "region": "UK",
+    "program_name_en": "MSc Accounting and Finance",
+    "program_name_zh": "会计与金融硕士",
+    "faculty": "Nottingham University Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "£37,600 (国际生); 英国本土生 £17,400",
+    "campus": "Jubilee Campus, University of Nottingham (UK)",
+    "requirements": {
+      "undergrad_background": "会计学、审计学、财务管理或含大量会计内容的其他学科；需在本科最后两年修读的高阶/专业会计理论模块中，至少四门课程达到 2:1 (60%) 最低标准",
+      "china_university_list": "同校级通用标准，见 china-institution-list.aspx：High 2:1/1st: 75%-82%；2:1: 72%-80%；2:2: 68%-75%，按 Tier 1/2/3 院校分档(Tier 1 含北京大学、清华大学、复旦大学、上海交通大学、南京大学、武汉大学等约200余所院校)。该课程页面本身未提及中国院校名单或商学院专属分档。",
+      "gpa_requirement": "课程页面要求本科阶段最后两年至少四门高阶会计专业课达到 2:1 (60%) 标准；具体对应中国百分比见通用分档表",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "单项不低于6.0"
+      },
+      "toefl": {
+        "overall": null,
+        "subscores": "官网未列明具体 TOEFL 分数，仅说明接受 TOEFL iBT 作为可选替代"
+      },
+      "gmat_gre": "不要求",
+      "prerequisites": "需具备较强的会计学基础(strong accounting foundations)",
+      "work_experience": "官网未列明强制性工作经验要求；不完全符合学术条件者可'个案考虑'替代资质"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "课程页面未列明具体截止日期；参见全校研究生申请总览页面：国际申请人通常需在开课前6-7周申请，多数课程9月下旬开学"
+    },
+    "materials": [
+      "transcript",
+      "degree_certificate",
+      "personal_statement",
+      "reference",
+      "english_test"
+    ],
+    "source_urls": [
+      "https://www.nottingham.ac.uk/pgstudy/course/taught/accounting-and-finance-msc",
+      "https://www.nottingham.ac.uk/studywithus/international-applicants/country-info/countryinformation/china-institution-list.aspx",
+      "https://www.nottingham.ac.uk/pgstudy/how-to-apply/taught.aspx"
+    ],
+    "confidence": "medium",
+    "notes": "官网课程页面显示为 '2027 Entry'；截至2026-07-20未见明确的2026/27专属版本，采用最新可获取数据，已按规则标注。中国院校分档为全校通用标准，非商学院专属。"
+  },
+  {
+    "school_name_en": "University of Nottingham",
+    "school_name_zh": "诺丁汉大学",
+    "school_short": "Nottingham",
+    "region": "UK",
+    "program_name_en": "MSc Management",
+    "program_name_zh": "管理学硕士",
+    "faculty": "Nottingham University Business School",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "£34,800",
+    "campus": "Jubilee Campus, University of Nottingham (UK)",
+    "requirements": {
+      "undergrad_background": "2:1(或国际同等学历)，专业不限，但明确排除商科和/或管理学背景(excluding business and/or management)；官网说明此课程为 'conversion' 转专业课程，'not designed for students with an extensive background in business and management'",
+      "china_university_list": "同校级通用标准，见 china-institution-list.aspx：High 2:1/1st: 75%-82%；2:1: 72%-80%；2:2: 68%-75%，按 Tier 1/2/3 院校分档。该课程页面未提及中国院校名单或商学院专属分档标准。",
+      "gpa_requirement": "课程页面仅要求 2:1 或国际同等学历，未写明具体百分比；具体对应见通用分档表",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "单项不低于6.0(no less than 6.0 in each element)"
+      },
+      "toefl": {
+        "overall": null,
+        "subscores": "官网未列明具体 TOEFL 分数，仅说明接受 TOEFL iBT 作为可选替代"
+      },
+      "gmat_gre": "不要求",
+      "prerequisites": "非商科/管理学背景优先（转专业课程）",
+      "work_experience": "官网未列明强制性工作经验要求；'相关工作经验'(relevant work experience)可能在个案审核替代资质时被考虑"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "课程页面未列明具体截止日期，参见全校研究生申请总览页面通用说明"
+    },
+    "materials": [
+      "transcript",
+      "degree_certificate",
+      "personal_statement",
+      "reference",
+      "english_test"
+    ],
+    "source_urls": [
+      "https://www.nottingham.ac.uk/pgstudy/course/taught/management-msc",
+      "https://www.nottingham.ac.uk/studywithus/international-applicants/country-info/countryinformation/china-institution-list.aspx",
+      "https://www.nottingham.ac.uk/pgstudy/how-to-apply/taught.aspx"
+    ],
+    "confidence": "medium",
+    "notes": "官网课程页面显示为 '2027 Entry'；截至2026-07-20未见明确2026/27专属版本，采用最新可获取数据。中国院校分档为全校通用标准，非商学院专属。"
+  },
+  {
+    "school_name_en": "University of Nottingham",
+    "school_name_zh": "诺丁汉大学",
+    "school_short": "Nottingham",
+    "region": "UK",
+    "program_name_en": "MSc Business Analytics",
+    "program_name_zh": "商业分析硕士",
+    "faculty": "Nottingham University Business School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "£34,000",
+    "campus": "Jubilee Campus, University of Nottingham (UK)",
+    "requirements": {
+      "undergrad_background": "2:1(或国际同等学历)，专业不限，但要求在本科定量类模块中取得较高 2:1 (65%) 成绩，且需具备大量数学/统计学内容；申请人不应此前已系统学习过商业分析",
+      "china_university_list": "同校级通用标准，见 china-institution-list.aspx：High 2:1/1st: 75%-82%；2:1: 72%-80%；2:2: 68%-75%，按 Tier 1/2/3 院校分档。该课程页面未提及中国院校名单或商学院专属分档标准。",
+      "gpa_requirement": "要求定量类模块达到较高 2:1 (65%) 标准；具体对应中国百分比见通用分档表",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "单项不低于6.0"
+      },
+      "toefl": {
+        "overall": null,
+        "subscores": "官网未列明具体 TOEFL 分数，仅说明接受 TOEFL iBT 作为可选替代"
+      },
+      "gmat_gre": "官网该课程页面未提及 GMAT/GRE 要求",
+      "prerequisites": "需具备较强数理/统计背景，且此前未系统学习过商业分析相关内容",
+      "work_experience": "官网未列明强制性工作经验要求；不完全符合学术条件者可'个案考虑'替代资质"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "课程页面未列明具体截止日期，参见全校研究生申请总览页面通用说明"
+    },
+    "materials": [
+      "transcript",
+      "degree_certificate",
+      "personal_statement",
+      "reference",
+      "english_test"
+    ],
+    "source_urls": [
+      "https://www.nottingham.ac.uk/pgstudy/course/taught/business-analytics-msc",
+      "https://www.nottingham.ac.uk/studywithus/international-applicants/country-info/countryinformation/china-institution-list.aspx",
+      "https://www.nottingham.ac.uk/pgstudy/how-to-apply/taught.aspx"
+    ],
+    "confidence": "medium",
+    "notes": "官网课程页面显示为 '2027 Entry'；截至2026-07-20未见明确2026/27专属版本，采用最新可获取数据。中国院校分档为全校通用标准，非商学院专属。"
+  },
+  {
+    "school_name_en": "University of Nottingham",
+    "school_name_zh": "诺丁汉大学",
+    "school_short": "Nottingham",
+    "region": "UK",
+    "program_name_en": "MSc International Business",
+    "program_name_zh": "国际商务硕士",
+    "faculty": "Nottingham University Business School",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "£34,800",
+    "campus": "Jubilee Campus, University of Nottingham (UK)",
+    "requirements": {
+      "undergrad_background": "2:1(或国际同等学历)，专业不限，但明确排除商科和/或管理学背景(excluding business and/or management)；官网说明此课程为转专业(conversion)课程",
+      "china_university_list": "同校级通用标准，见 china-institution-list.aspx：High 2:1/1st: 75%-82%；2:1: 72%-80%；2:2: 68%-75%，按 Tier 1/2/3 院校分档。该课程页面未提及中国院校名单或商学院专属分档标准。",
+      "gpa_requirement": "课程页面仅要求 2:1 或国际同等学历，未写明具体百分比",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "单项不低于6.0"
+      },
+      "toefl": {
+        "overall": null,
+        "subscores": "官网未列明具体 TOEFL 分数，仅说明接受 TOEFL iBT 作为可选替代"
+      },
+      "gmat_gre": "不要求",
+      "prerequisites": "非商科/管理学背景优先（转专业课程）",
+      "work_experience": "官网未列明强制性工作经验要求；'相关工作经验'可能在个案审核替代资质时被考虑。若在校内参加预备英语课程(presessional)，国际学生可能需申请学生签证及 UKVI 认可的 IELTS"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "课程页面未列明具体截止日期，参见全校研究生申请总览页面通用说明"
+    },
+    "materials": [
+      "transcript",
+      "degree_certificate",
+      "personal_statement",
+      "reference",
+      "english_test"
+    ],
+    "source_urls": [
+      "https://www.nottingham.ac.uk/pgstudy/course/taught/international-business-msc",
+      "https://www.nottingham.ac.uk/studywithus/international-applicants/country-info/countryinformation/china-institution-list.aspx",
+      "https://www.nottingham.ac.uk/pgstudy/how-to-apply/taught.aspx"
+    ],
+    "confidence": "medium",
+    "notes": "官网课程页面显示为 '2027 Entry'；截至2026-07-20未见明确2026/27专属版本，采用最新可获取数据。中国院校分档为全校通用标准，非商学院专属。"
+  },
+  {
+    "school_name_en": "University of Nottingham",
+    "school_name_zh": "诺丁汉大学",
+    "school_short": "Nottingham",
+    "region": "UK",
+    "program_name_en": "MSc Marketing",
+    "program_name_zh": "市场营销硕士",
+    "faculty": "Nottingham University Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "£34,800 (国际生); 英国本土生 £17,400",
+    "campus": "Jubilee Campus, University of Nottingham (UK)",
+    "requirements": {
+      "undergrad_background": "2:1(或国际同等学历)，专业不限，但明确排除已具备大量市场营销背景的申请人；官网说明此课程为转专业(conversion)课程，'not designed for students with an extensive background in marketing'",
+      "china_university_list": "同校级通用标准，见 china-institution-list.aspx：High 2:1/1st: 75%-82%；2:1: 72%-80%；2:2: 68%-75%，按 Tier 1/2/3 院校分档。该课程页面未提及中国院校名单或商学院专属分档标准。",
+      "gpa_requirement": "课程页面仅要求 2:1 或国际同等学历，未写明具体百分比",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "单项不低于6.0"
+      },
+      "toefl": {
+        "overall": null,
+        "subscores": "官网未列明具体 TOEFL 分数，仅说明接受 TOEFL iBT 作为可选替代"
+      },
+      "gmat_gre": "官网未列明",
+      "prerequisites": null,
+      "work_experience": "官网未列明强制性工作经验要求；'相关工作经验'可能在个案审核替代资质时被考虑"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "课程页面未列明具体截止日期；官网特别注明：'this is a highly competitive course and there are a limited number of places available. The School reserves the right to close applications when capacity is reached.'，暗示为滚动录取、额满即止，而非固定截止日期"
+    },
+    "materials": [
+      "transcript",
+      "degree_certificate",
+      "personal_statement",
+      "reference",
+      "english_test"
+    ],
+    "source_urls": [
+      "https://www.nottingham.ac.uk/pgstudy/course/taught/marketing-msc",
+      "https://www.nottingham.ac.uk/studywithus/international-applicants/country-info/countryinformation/china-institution-list.aspx",
+      "https://www.nottingham.ac.uk/pgstudy/how-to-apply/taught.aspx"
+    ],
+    "confidence": "medium",
+    "notes": "官网课程页面显示为 '2027 Entry'；截至2026-07-20未见明确2026/27专属版本，采用最新可获取数据。中国院校分档为全校通用标准，非商学院专属，且该课程为竞争激烈的转专业课程，额满后可能提前关闭申请。"
+  }
+]

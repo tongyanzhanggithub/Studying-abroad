@@ -1,0 +1,351 @@
+[
+  {
+    "school_name_en": "City University of Hong Kong",
+    "school_name_zh": "香港城市大学",
+    "school_short": "CityU",
+    "region": "HK",
+    "program_name_en": "MSc Finance",
+    "program_name_zh": "金融学理学硕士(译名，官网未列出正式中文名)",
+    "faculty": "College of Business, Department of Economics and Finance",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "HKD 351,000",
+    "campus": "Kowloon Tong, Hong Kong (CityU main campus; 官网项目页面未单独注明校区)",
+    "requirements": {
+      "undergrad_background": "Hold a bachelor's degree from a recognized university; preferably possess more than 1 year of work experience in the industry (官网原文)",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": "接受：中国大陆大学英语六级新题型(CET-6)490分可替代雅思/托福",
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "官网表述为'preferably'具备1年以上行业工作经验，非强制要求",
+      "interview": "雅思整体分数为6.0(而非更高)的申请人须通过英语能力面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "【存档：2026 entry原始日期】官网原始开放日期 2025-09-16，最终截止 2026-05-31 (5/31/2026 15:59)。该周期已结束，故上方日期字段置为null。官网明确 'Applications are processed on a rolling basis. Review of applications will start before the deadline and continue until all places are filled.' 无分轮次(round)截止，仅单一最终截止日。Full-time学制1年，Combined/Part-time学制2年(最长5年)。2027 entry日期须待官网发布后重新核对。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://www.cb.cityu.edu.hk/masters/our-programmes/department-of-economics-and-finance/msc-finance",
+      "https://www.cityu.edu.hk/pg/programme/program-list/2026/college-of-business/department-of-economics-and-finance/p04"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须在官网开放后重新核对。申请材料清单官网页面未逐项列出，故materials字段留null，未编造。学费HKD 351,000为官网原文金额，跨周期相对稳定但仍可能调整。"
+  },
+  {
+    "school_name_en": "City University of Hong Kong",
+    "school_name_zh": "香港城市大学",
+    "school_short": "CityU",
+    "region": "HK",
+    "program_name_en": "MSc in FinTech and Digital Assets",
+    "program_name_zh": "金融科技与数字资产理学硕士(译名，官网未列出正式中文名)",
+    "faculty": "College of Business",
+    "direction": "other",
+    "duration_months": 12,
+    "tuition": "HKD 384,000",
+    "campus": "Kowloon Tong, Hong Kong (CityU main campus; 官网项目页面未单独注明校区)",
+    "requirements": {
+      "undergrad_background": "Recognised bachelor's degree in finance, economics, business, information systems, computer science, engineering, mathematics, statistics or a related discipline; others with adequate quantitative skills and strong motivation may also be considered (官网原文释义)",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": "接受：CET-6(新题型)450分可替代雅思/托福",
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "官网原文：Prior work experience in finance, technology or related sectors is not mandatory, but relevant professional experience is favourably considered",
+      "interview": "官网原文：All shortlisted candidates are required to attend an interview（强制面试，比其他项目要求更高）"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网仅说明 'Applications are processed on a rolling basis. Review of applications will start before the deadline and continue until all places are filled.' 本次抓取未能定位到该项目具体开放/截止日期(页面admission code显示为'-')，原始数据即为空，非因周期问题清除。值得注意：该项目CB页面显示 Program Entry Year 为 2027，可能为较新开设项目。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://www.cb.cityu.edu.hk/masters/our-programmes/college-of-business/msc-in-fintech-and-digital-assets"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须在官网开放后重新核对。该项目方向标记为'other'(实际方向为FinTech/金融科技)，因给定枚举无fintech选项。招生代码(admission code)在页面上显示为'-'，未能确认。申请材料清单官网未列出，materials留null。"
+  },
+  {
+    "school_name_en": "City University of Hong Kong",
+    "school_name_zh": "香港城市大学",
+    "school_short": "CityU",
+    "region": "HK",
+    "program_name_en": "MSc Applied Economics",
+    "program_name_zh": "应用经济学理学硕士(译名，官网未列出正式中文名)",
+    "faculty": "College of Business, Department of Economics and Finance",
+    "direction": "economics",
+    "duration_months": 12,
+    "tuition": "HKD 339,000",
+    "campus": "Kowloon Tong, Hong Kong (CityU main campus; 官网项目页面未单独注明校区)",
+    "requirements": {
+      "undergrad_background": "Hold a bachelor's degree from a recognized university; economics background not mandatory, students with solid quantitative background encouraged to apply (官网原文释义)",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": "接受：CET-6(新题型)490分可替代雅思/托福",
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": "雅思整体6.0分的申请人须通过英语能力面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "【存档：2026 entry原始日期】官网原始开放日期 2025-09-16，最终截止 2026-04-30 (4/30/2026 15:59)。该周期已结束，故上方日期字段置为null。官网确认无分轮次，仅单一最终截止日，滚动录取。2027 entry日期须待官网发布后重新核对。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://www.cb.cityu.edu.hk/masters/our-programmes/department-of-economics-and-finance/msc-applied-economics",
+      "https://www.cityu.edu.hk/pg/programme/program-list/2026/college-of-business/department-of-economics-and-finance/p13"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须在官网开放后重新核对。申请材料清单官网页面未逐项列出，故materials字段留null。"
+  },
+  {
+    "school_name_en": "City University of Hong Kong",
+    "school_name_zh": "香港城市大学",
+    "school_short": "CityU",
+    "region": "HK",
+    "program_name_en": "MSc Professional Accounting and Corporate Governance",
+    "program_name_zh": "专业会计与企业管治理学硕士(译名，官网未列出正式中文名)",
+    "faculty": "College of Business, Department of Accountancy",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "HKD 333,000",
+    "campus": "Kowloon Tong, Hong Kong (CityU main campus; 官网项目页面未单独注明校区)",
+    "requirements": {
+      "undergrad_background": "Hold an accounting or finance degree from a recognised university, or an equivalent qualification acceptable to CityUHK; preferably possess 2 years of experience in accounting or business disciplines (官网原文释义)",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": "接受：CET-6(新题型)450分可替代雅思/托福",
+      "gmat_gre": null,
+      "prerequisites": "要求会计或金融本科背景(或同等学历)",
+      "work_experience": "官网表述preferably具备2年会计/商科相关经验，非强制",
+      "interview": "雅思整体6.0分的申请人须通过英语能力面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "【存档：2026 entry原始日期】官网原始开放日期 2025-09-16，最终截止 2026-04-30 (4/30/2026 15:59)。该周期已结束，故上方日期字段置为null。官网确认无分轮次，仅单一最终截止日，滚动录取。2027 entry日期须待官网发布后重新核对。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://www.cb.cityu.edu.hk/masters/our-programmes/department-of-accountancy/msc-professional-accounting-and-corporate-governance",
+      "https://www.cityu.edu.hk/pg/programme/program-list/2026/college-of-business/department-of-accountancy/p10"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须在官网开放后重新核对。申请材料清单官网页面未逐项列出，故materials字段留null。同系另有MA International Accounting项目(代码P02)，本次未纳入采集。"
+  },
+  {
+    "school_name_en": "City University of Hong Kong",
+    "school_name_zh": "香港城市大学",
+    "school_short": "CityU",
+    "region": "HK",
+    "program_name_en": "MSc Business and Data Analytics (Quantitative Analysis for Business, QAB stream)",
+    "program_name_zh": "商业与数据分析理学硕士(商业量化分析方向)(译名，官网未列出正式中文名)",
+    "faculty": "College of Business, Department of Decision Analytics and Operations",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "HKD 330,000",
+    "campus": "Kowloon Tong, Hong Kong (CityU main campus; 官网项目页面未单独注明校区)",
+    "requirements": {
+      "undergrad_background": "Recognized Bachelor's degree in any discipline with curricula covering appropriate mathematical knowledge (官网原文释义)",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": "接受：CET-6(新题型)450分可替代雅思/托福",
+      "gmat_gre": null,
+      "prerequisites": "要求本科课程包含适当的数学基础",
+      "work_experience": "相关工作经验(如有)会作为录取考量因素之一，非强制",
+      "interview": "官网原文：Selection will be based on the candidate's academic performance in previous studies, relevant working experience (if any), motivation and potential of the candidate and performance in the interview（表述隐含需要面试）"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网确认为滚动录取(rolling basis)，但本次抓取未能定位到QAB stream对应的admission code及具体开放/截止日期页面，原始数据即为空。该项目另有IAM stream分支(隶属Department of Information Systems)。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://www.cb.cityu.edu.hk/masters/our-programmes/department-of-decision-analytics-and-operations/msc-business-and-data-analytics-quantitative-analysis-for-business-qab-stream"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须在官网开放后重新核对。此外该项目的开放/截止日期与admission code本身也未能在官网核实。申请材料清单未列出，materials留null。"
+  },
+  {
+    "school_name_en": "City University of Hong Kong",
+    "school_name_zh": "香港城市大学",
+    "school_short": "CityU",
+    "region": "HK",
+    "program_name_en": "MSc Management and Innovation",
+    "program_name_zh": "管理与创新理学硕士(译名，官网未列出正式中文名)",
+    "faculty": "College of Business, Department of Management",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "HKD 384,000",
+    "campus": "Kowloon Tong, Hong Kong (CityU main campus; 官网项目页面未单独注明校区)",
+    "requirements": {
+      "undergrad_background": "Hold a recognized degree or equivalent (官网原文)",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": "接受：CET-6(新题型)450分可替代雅思/托福",
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": "雅思整体6.0分的申请人须通过英语能力面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "【存档：2026 entry原始日期】官网原始开放日期 2025-09-16，最终截止 2026-06-30 (6/30/2026 15:59:59)，为本批项目中截止最晚者之一。该周期已结束，故上方日期字段置为null。官网确认无分轮次，滚动录取。2027 entry日期须待官网发布后重新核对。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://www.cb.cityu.edu.hk/masters/our-programmes/department-of-management/msc-management-and-innovation",
+      "https://www.cityu.edu.hk/pg/programme/program-list/2026/college-of-business/department-of-management/p19"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须在官网开放后重新核对。官网项目代码为P19。申请材料清单未逐项列出，故materials字段留null。"
+  },
+  {
+    "school_name_en": "City University of Hong Kong",
+    "school_name_zh": "香港城市大学",
+    "school_short": "CityU",
+    "region": "HK",
+    "program_name_en": "MA Global Business Management",
+    "program_name_zh": "全球商务管理文学硕士(译名，官网未列出正式中文名)",
+    "faculty": "College of Business, Department of Management",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "HKD 384,000",
+    "campus": "Kowloon Tong, Hong Kong (CityU main campus; 官网项目页面未单独注明校区)",
+    "requirements": {
+      "undergrad_background": "Possess a recognized Bachelor's degree with Second Class Honours or above, or the equivalent (官网原文)",
+      "china_university_list": null,
+      "gpa_requirement": "本科需为二等荣誉学位(Second Class Honours)或以上，或同等学历",
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": "接受：CET-6(新题型)490分可替代雅思/托福",
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "优先考虑具备3年以上国际商务管理相关工作经验者；商科学位背景可放宽至2年；不足2年经验者按个案考虑(官网原文释义)",
+      "interview": "雅思整体6.0分的申请人须通过英语能力面试；其他申请人可能不需要面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "【存档：2026 entry原始日期】官网原始开放日期 2025-09-16，最终截止 2026-06-30 (6/30/2026 15:59:59)，与同系MSc Management and Innovation一致。该周期已结束，故上方日期字段置为null。官网确认无分轮次，滚动录取。Full-time学制1年，Part-time学制2年(最长5年)。2027 entry日期须待官网发布后重新核对。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://www.cb.cityu.edu.hk/masters/our-programmes/department-of-management/ma-global-business-management",
+      "https://www.cityu.edu.hk/pg/programme/program-list/2026/college-of-business/department-of-management/p07"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须在官网开放后重新核对。官网项目代码为P07。是本批采集中唯一明确列出本科成绩(荣誉学位等级)门槛的项目。申请材料清单未列出，materials留null。"
+  },
+  {
+    "school_name_en": "City University of Hong Kong",
+    "school_name_zh": "香港城市大学",
+    "school_short": "CityU",
+    "region": "HK",
+    "program_name_en": "MSc Marketing",
+    "program_name_zh": "市场营销理学硕士(译名，官网未列出正式中文名)",
+    "faculty": "College of Business, Department of Marketing",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "HKD 379,500",
+    "campus": "Kowloon Tong, Hong Kong (CityU main campus; 官网项目页面未单独注明校区)",
+    "requirements": {
+      "undergrad_background": "Hold a recognized bachelor's degree, or equivalent (官网原文)",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": "接受：CET-6(新题型)450分可替代雅思/托福",
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "官网表述preferably具备2年以上商业相关工作经验，非强制",
+      "interview": "官网原文：All shortlisted candidates are required to attend an interview（强制面试）"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "【存档：2026 entry原始日期】官网原始开放日期 2025-09-16，最终截止 2026-05-31 (5/31/2026 15:59)。该周期已结束，故上方日期字段置为null。官网确认无分轮次，滚动录取。2027 entry日期须待官网发布后重新核对。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://www.cb.cityu.edu.hk/masters/our-programmes/department-of-marketing/msc-marketing",
+      "https://www.cityu.edu.hk/pg/programme/program-list/2026/college-of-business/department-of-marketing/p18"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须在官网开放后重新核对。官网项目代码为P18。申请材料清单未逐项列出，故materials字段留null。"
+  },
+  {
+    "school_name_en": "City University of Hong Kong",
+    "school_name_zh": "香港城市大学",
+    "school_short": "CityU",
+    "region": "HK",
+    "program_name_en": "MSc Operations and Supply Chain Management",
+    "program_name_zh": "运营与供应链管理理学硕士(译名，官网未列出正式中文名)",
+    "faculty": "College of Business, Department of Decision Analytics and Operations",
+    "direction": "supply_chain",
+    "duration_months": 12,
+    "tuition": "HKD 315,000",
+    "campus": "Kowloon Tong, Hong Kong (CityU main campus; 官网项目页面未单独注明校区)",
+    "requirements": {
+      "undergrad_background": "Applicants must hold a recognized Bachelor's degree (官网原文释义)",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": "接受：CET-6最低450分可替代雅思/托福",
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "官网原文：preferred but NOT required",
+      "interview": "雅思整体6.0分的申请人须通过英语能力面试；其他申请人可能不需要面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "【存档：2026 entry原始日期】官网原始开放日期 2025-09-16，最终截止 2026-05-31 (5/31/2026 15:59)。该周期已结束，故上方日期字段置为null。官网确认无分轮次，滚动录取。2027 entry日期须待官网发布后重新核对。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://www.cb.cityu.edu.hk/masters/our-programmes/department-of-decision-analytics-and-operations/msc-operations-and-supply-chain-management",
+      "https://www.cityu.edu.hk/pg/programme/program-list/2026/college-of-business/department-of-decision-analytics-and-operations/p09"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须在官网开放后重新核对。官网项目代码为P09。申请材料清单未逐项列出，故materials字段留null。"
+  }
+]

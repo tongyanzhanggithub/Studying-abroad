@@ -1,0 +1,403 @@
+[
+  {
+    "school_name_en": "Nanyang Technological University",
+    "school_name_zh": "南洋理工大学",
+    "school_short": "NTU",
+    "region": "SG",
+    "program_name_en": "MSc Finance",
+    "program_name_zh": "金融学硕士",
+    "faculty": "Nanyang Business School",
+    "duration_months": 12,
+    "direction": "finance",
+    "tuition": "SGD 75,210",
+    "campus": "50 Nanyang Avenue, Singapore 639798 (Jurong West)",
+    "requirements": {
+      "undergrad_background": "A good bachelor's degree in any discipline",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 100, "subscores": null},
+      "gmat_gre": "Optional (GMAT institution code V24-ZV-83 shared across some NBS programmes / GRE code 3123). Only in-person test results taken on/after 1 January 2024 are accepted; GMAT/GRE online scores after 31 Dec 2023 no longer accepted.",
+      "prerequisites": null,
+      "work_experience": "Not required; applicants with no work experience are welcome to apply",
+      "interview": "Required for shortlisted candidates, by invitation only"
+    },
+    "deadlines": {
+      "opens_at": "2026-09-01",
+      "rolling": true,
+      "rounds": [
+        {"name": "Round 1", "deadline": "2026-11-30", "decision_by": null},
+        {"name": "Round 2", "deadline": "2027-01-31", "decision_by": null},
+        {"name": "Round 3", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "官网当前展示的是 July 2027 入学季(2026年9月开放申请,三轮滚动审理)。查询时间为 2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "two_references", "english_test", "gmat_gre", "passport"],
+    "source_urls": [
+      "https://www.ntu.edu.sg/business/admissions/graduate-studies/msc-finance/admissions",
+      "https://www.ntu.edu.sg/business/admissions/graduate-studies/msc-finance/home"
+    ],
+    "confidence": "high",
+    "notes": "1年全日制,官网提及可选6个月实习延期(optional six-month internship extension)。学费页面标注为 'AY2026' 字样但与July 2027入学季申请页面并列展示,存在页面未及时更新的可能,建议以官网最新缴费通知为准。CV/简历限3页;需两份推荐信(须来自官方邮箱);GMAT/GRE、TOEFL/IELTS均只接受2024年1月1日以后的线下考试成绩。中国院校无分档说明。"
+  },
+  {
+    "school_name_en": "Nanyang Technological University",
+    "school_name_zh": "南洋理工大学",
+    "school_short": "NTU",
+    "region": "SG",
+    "program_name_en": "MSc Accountancy",
+    "program_name_zh": "会计学硕士",
+    "faculty": "Nanyang Business School",
+    "duration_months": 12,
+    "direction": "accounting",
+    "tuition": "SGD 70,850",
+    "campus": "50 Nanyang Avenue, Singapore 639798 (Jurong West)",
+    "requirements": {
+      "undergrad_background": "A good bachelor's degree from any discipline",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 100, "subscores": null},
+      "gmat_gre": "Optional (GMAT institution code V24-ZV-83, GRE code 3123). Only in-person test results taken on/after 1 January 2024 accepted.",
+      "prerequisites": null,
+      "work_experience": "A plus but not required",
+      "interview": "Required for shortlisted candidates, by invitation only"
+    },
+    "deadlines": {
+      "opens_at": "2026-09-01",
+      "rolling": true,
+      "rounds": [
+        {"name": "Round 1", "deadline": "2026-11-30", "decision_by": null},
+        {"name": "Round 2", "deadline": "2027-01-31", "decision_by": null},
+        {"name": "Round 3", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "官网当前展示的是 July 2027 入学季(2026年9月开放申请),三轮滚动审理。查询时间为 2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "two_references", "english_test", "gmat_gre", "passport"],
+    "source_urls": [
+      "https://www.ntu.edu.sg/business/admissions/graduate-studies/msc-accountancy/admissions"
+    ],
+    "confidence": "high",
+    "notes": "官网标注学费为 'August 2027 intake' 总额 S$70,850(含GST)。入学费S$20,000,可抵扣学费。申请费S$100不可退。CV限3页,两份推荐信须来自官方机构邮箱。中国院校无分档说明。"
+  },
+  {
+    "school_name_en": "Nanyang Technological University",
+    "school_name_zh": "南洋理工大学",
+    "school_short": "NTU",
+    "region": "SG",
+    "program_name_en": "MSc Business Analytics",
+    "program_name_zh": "商业分析硕士",
+    "faculty": "Nanyang Business School",
+    "duration_months": 12,
+    "direction": "business_analytics",
+    "tuition": "SGD 75,210",
+    "campus": "50 Nanyang Avenue, Singapore 639798 (Jurong West)",
+    "requirements": {
+      "undergrad_background": "A good bachelor's degree in any discipline",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 100, "subscores": null},
+      "gmat_gre": "Optional (GMAT institution code V24-ZV-70, GRE code 3123). Only in-person test results taken on/after 1 January 2024 accepted.",
+      "prerequisites": null,
+      "work_experience": "Not required; applicants with no work experience are welcome to apply",
+      "interview": "Required for shortlisted candidates, by invitation only"
+    },
+    "deadlines": {
+      "opens_at": "2026-09-01",
+      "rolling": true,
+      "rounds": [
+        {"name": "Round 1", "deadline": "2026-11-30", "decision_by": null},
+        {"name": "Round 2", "deadline": "2027-01-31", "decision_by": null},
+        {"name": "Round 3", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "官网当前展示的是 July 2027 入学季(2026年9月开放申请),三轮滚动审理。查询时间为 2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "two_references", "english_test", "gmat_gre", "passport"],
+    "source_urls": [
+      "https://www.ntu.edu.sg/business/admissions/graduate-studies/msc-business-analytics/admissions"
+    ],
+    "confidence": "high",
+    "notes": "官网页面未明确标注该学费S$75,210所属具体入学年份(与MSc Finance页面数字相同,可能为通用费率展示),建议以官网实时费用页确认。CV限3页,两份推荐信须来自官方邮箱。中国院校无分档说明。"
+  },
+  {
+    "school_name_en": "Nanyang Technological University",
+    "school_name_zh": "南洋理工大学",
+    "school_short": "NTU",
+    "region": "SG",
+    "program_name_en": "MSc Marketing Science",
+    "program_name_zh": "市场营销科学硕士",
+    "faculty": "Nanyang Business School",
+    "duration_months": 12,
+    "direction": "marketing",
+    "tuition": "SGD 69,760",
+    "campus": "50 Nanyang Avenue, Singapore 639798 (Jurong West)",
+    "requirements": {
+      "undergrad_background": "A good bachelor's degree from any discipline",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 100, "subscores": null},
+      "gmat_gre": "Optional (GMAT institution code V24-ZV-91, GRE code 3123). Only in-person test results taken on/after 1 January 2024 accepted.",
+      "prerequisites": null,
+      "work_experience": "Not required",
+      "interview": "Required for shortlisted candidates, by invitation only"
+    },
+    "deadlines": {
+      "opens_at": "2026-09-01",
+      "rolling": true,
+      "rounds": [
+        {"name": "Round 1", "deadline": "2026-11-30", "decision_by": null},
+        {"name": "Round 2", "deadline": "2027-01-31", "decision_by": null},
+        {"name": "Round 3", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "申请轮次页面展示的是 July 2027 入学季。学费页面标注为 AY2026/August 2026 intake 的S$69,760,可能是上一周期数字尚未更新,请以官网最新学费页为准。查询时间为 2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "two_references", "english_test", "gmat_gre", "passport"],
+    "source_urls": [
+      "https://www.ntu.edu.sg/business/admissions/graduate-studies/msc-marketing-science/admissions"
+    ],
+    "confidence": "medium",
+    "notes": "学费数字疑似为上一入学年(August 2026)费率,与本条其它三轮截止日期(July 2027入学季)所属周期不一致,已如实标注,confidence降为medium。中国院校无分档说明。"
+  },
+  {
+    "school_name_en": "Nanyang Technological University",
+    "school_name_zh": "南洋理工大学",
+    "school_short": "NTU",
+    "region": "SG",
+    "program_name_en": "MSc Financial Engineering",
+    "program_name_zh": "金融工程硕士",
+    "faculty": "Nanyang Business School",
+    "duration_months": 12,
+    "direction": "finance",
+    "tuition": "SGD 73,030 (Full-Time, Non-CMU track); SGD 78,480 (CMU dual-campus track, excludes ~SGD 18,000 CMU travel/living costs)",
+    "campus": "50 Nanyang Avenue, Singapore 639798 (Jurong West); CMU track includes a period at Carnegie Mellon University, USA",
+    "requirements": {
+      "undergrad_background": "A good undergraduate degree in applied mathematics, applied science, statistics, computer science, engineering, economics, or other quantitative fields; non-quantitative backgrounds may also be considered",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 100, "subscores": null},
+      "gmat_gre": "A good GMAT or GRE score taken within the last 5 years is generally expected (institution code GMAT V24-ZV-17, GRE 3123); optional/exempt for NTU SPMS graduates with Honours (Distinction) and above.",
+      "prerequisites": "Strong quantitative background (math, statistics, programming) preferred given curriculum focus",
+      "work_experience": "Preferred but not required",
+      "interview": "Required for shortlisted candidates"
+    },
+    "deadlines": {
+      "opens_at": "2026-09-01",
+      "rolling": true,
+      "rounds": [
+        {"name": "Round 1", "deadline": "2026-11-30", "decision_by": null},
+        {"name": "Round 2", "deadline": "2027-01-31", "decision_by": null},
+        {"name": "Round 3", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "官网当前展示的是 July 2027 入学季(2026年9月开放申请),学费页面标注为 August 2027 intake,周期一致。查询时间为 2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "two_references", "english_test", "gmat_gre", "passport"],
+    "source_urls": [
+      "https://www.ntu.edu.sg/business/admissions/graduate-studies/msc-financial-engineering/admissions"
+    ],
+    "confidence": "high",
+    "notes": "全日制12-24个月、非全日制24-48个月(官网原文表述为区间,已按全日制标准12个月填写duration_months)。提供与Carnegie Mellon University联合的CMU track选项,费用更高且需额外承担在美生活/差旅费约SGD 18,000。中国院校无分档说明。"
+  },
+  {
+    "school_name_en": "Nanyang Technological University",
+    "school_name_zh": "南洋理工大学",
+    "school_short": "NTU",
+    "region": "SG",
+    "program_name_en": "MSc Actuarial and Risk Analytics",
+    "program_name_zh": "精算与风险分析硕士",
+    "faculty": "Nanyang Business School",
+    "duration_months": 12,
+    "direction": "finance",
+    "tuition": "SGD 70,850",
+    "campus": "50 Nanyang Avenue, Singapore 639798 (Jurong West)",
+    "requirements": {
+      "undergrad_background": "A good undergraduate degree in any discipline",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 100, "subscores": null},
+      "gmat_gre": "Optional (GMAT institution code V24-ZV-40, GRE code 3123); not compulsory but can strengthen application if taken. Only in-person test results after 1 January 2024 accepted.",
+      "prerequisites": null,
+      "work_experience": "Not required",
+      "interview": "Required for shortlisted candidates, by invitation only"
+    },
+    "deadlines": {
+      "opens_at": "2026-09-01",
+      "rolling": true,
+      "rounds": [
+        {"name": "Round 1", "deadline": "2026-11-30", "decision_by": null},
+        {"name": "Round 2", "deadline": "2027-01-31", "decision_by": null},
+        {"name": "Round 3", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "官网当前展示的是 July 2027 入学季(2026年9月开放申请),学费标注为 AY2027/August 2027 intake,周期一致。查询时间为 2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "two_references", "english_test", "gmat_gre", "passport"],
+    "source_urls": [
+      "https://www.ntu.edu.sg/business/admissions/graduate-studies/msc-actuarial-risk-analytics/admissions"
+    ],
+    "confidence": "high",
+    "notes": "该项目隶属NBS银行与金融学部(Banking & Finance division)。项目为2024年后新设的精算+风险分析+可持续发展交叉学科硕士。全日制一年,授课语言英语。中国院校无分档说明。"
+  },
+  {
+    "school_name_en": "Nanyang Technological University",
+    "school_name_zh": "南洋理工大学",
+    "school_short": "NTU",
+    "region": "SG",
+    "program_name_en": "Master in Management",
+    "program_name_zh": "管理学硕士",
+    "faculty": "Nanyang Business School",
+    "duration_months": 12,
+    "direction": "management",
+    "tuition": "SGD 70,850",
+    "campus": "50 Nanyang Avenue, Singapore 639798 (Jurong West)",
+    "requirements": {
+      "undergrad_background": "A good bachelor's degree from any discipline",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 100, "subscores": null},
+      "gmat_gre": "Optional",
+      "prerequisites": null,
+      "work_experience": "Optional / not required",
+      "interview": "Required for shortlisted candidates, by invitation only; interviews are recorded"
+    },
+    "deadlines": {
+      "opens_at": "2026-09-01",
+      "rolling": true,
+      "rounds": [
+        {"name": "Round 1 (Scholarship qualifying round)", "deadline": "2026-11-01", "decision_by": null},
+        {"name": "Round 2", "deadline": "2027-01-31", "decision_by": null},
+        {"name": "Round 3", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "官网当前展示的是 July 2027 入学季(2026年9月开放申请)。Round 1(2026年11月1日)为奖学金资格轮次,与其它NBS项目的Round 1日期(11月30日)不同,请注意区分。查询时间为 2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "two_references", "english_test", "passport"],
+    "source_urls": [
+      "https://www.ntu.edu.sg/business/admissions/graduate-studies/master-in-management/admissions"
+    ],
+    "confidence": "high",
+    "notes": "一年制,整合商业、科技与创新技能(integrates business, technology, and innovation skills)。另有一次性杂费S$610。入学费S$21,800可抵扣学费。中国院校无分档说明。"
+  },
+  {
+    "school_name_en": "Nanyang Technological University",
+    "school_name_zh": "南洋理工大学",
+    "school_short": "NTU",
+    "region": "SG",
+    "program_name_en": "MSc in Applied Economics",
+    "program_name_zh": "应用经济学硕士",
+    "faculty": "School of Social Sciences",
+    "duration_months": 12,
+    "direction": "economics",
+    "tuition": "SGD 47,300 (AY2027/28, total across 3 trimesters: 15,766.67 + 15,766.67 + 15,766.66)",
+    "campus": "50 Nanyang Avenue, Singapore 639798 (Jurong West)",
+    "requirements": {
+      "undergrad_background": "A degree in Economics with good honours; applicants with honours degrees in other disciplines considered if demonstrating strong quantitative skills",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 85, "subscores": "适用于2026年1月21日前考试的成绩;2026年1月21日及以后的新版TOEFL iBT计分体系下最低总分要求为4.5分(官网新旧计分制度并存说明)"},
+      "gmat_gre": null,
+      "prerequisites": "All students required to complete online preparatory courses in Statistics and Mathematics before/during the trimester",
+      "work_experience": "Not required",
+      "interview": null
+    },
+    "deadlines": {
+      "opens_at": "2026-09-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-01-31",
+      "notes": "官网显示 'Nov 26 intake' 已截止(CLOSED),当前开放的是 'Aug 27 intake'(2027年8月入学),申请窗口为2026年9月1日至2027年1月31日,非分轮次滚动制。查询时间为 2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "english_test", "passport"],
+    "source_urls": [
+      "https://www.ntu.edu.sg/sss/admissions/graduate-education/msc-in-applied-economics",
+      "https://www.ntu.edu.sg/sss/admissions/graduate-education/msc-in-applied-economics/admissions",
+      "https://www.ntu.edu.sg/sss/admissions/graduate-education/msc-in-applied-economics/fees-and-awards"
+    ],
+    "confidence": "high",
+    "notes": "官网明确说明'不需要推荐信'(the referee report is not required),故materials中不含two_references,与其它NBS项目不同。GMAT/GRE官网未提及要求。申请费未在页面明确列出(NBS项目通常为S$100,但本项目未确认,故未填入tuition外的费用字段)。学费S$47,300为国际学生费率示例,新加坡公民/PR另有S$5,000补贴、NTU校友享10%学费减免。另需不可退确认押金S$15,000(计入首期学费)。非NBS,由社会科学学院(SSS)开设,但对内地商科/经济方向申请者也是热门选择,故纳入本次采集。"
+  },
+  {
+    "school_name_en": "Nanyang Technological University",
+    "school_name_zh": "南洋理工大学",
+    "school_short": "NTU",
+    "region": "SG",
+    "program_name_en": "MSc in Supply Chain Engineering (formerly MSc Supply Chain & Logistics)",
+    "program_name_zh": "供应链工程硕士",
+    "faculty": "School of Mechanical and Aerospace Engineering (MAE)",
+    "duration_months": 12,
+    "direction": "supply_chain",
+    "tuition": "SGD 53,562.60 (full programme, AY2026-2027, subject to annual revision)",
+    "campus": "50 Nanyang Avenue, Singapore 639798 (Jurong West)",
+    "requirements": {
+      "undergrad_background": "(A) A good bachelor's degree in Mechanical or Industrial Engineering or a related discipline with mathematical/production training, or (B) a bachelor's degree in engineering or a related discipline with mathematical training plus at least 2 years relevant industry experience. Business graduates considered if relevant specialization/experience supported by an employer letter.",
+      "china_university_list": null,
+      "gpa_requirement": "No minimum stated for general admission (scholarship holders must maintain CGPA ≥3.50 each semester to keep scholarship eligibility)",
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 85, "subscores": "iBT ≥85, PBT ≥563, or CBT ≥223"},
+      "gmat_gre": null,
+      "prerequisites": "Mathematical/production training background per pathway (A) or (B) above",
+      "work_experience": "Not mandatory in general, but required (≥2 years) under admission pathway (B) for non-Mechanical/Industrial Engineering related degrees; business graduates also need relevant experience with employer letter",
+      "interview": "Not required for general admission; scholarship applicants may be invited for interview"
+    },
+    "deadlines": {
+      "opens_at": "2026-07-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2026-08-31",
+      "notes": "该项目为1月入学(January 2027 intake),申请期为2026年7月1日至2026年8月31日,奖学金申请截止同为2026年8月31日。与NBS商科硕士的7月入学季不同,请注意区分。查询时间为 2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "two_references", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.ntu.edu.sg/education/graduate-programme/master-of-science-in-supply-chain-logistics"
+    ],
+    "confidence": "medium",
+    "notes": "由机械与航天工程学院(MAE)开设,并非Nanyang Business School项目,但因供应链/物流方向是中国学生商科申请热门方向而纳入采集,请留意其学院与NBS不同、入学月份(1月而非7月)也不同。官网未明确GMAT/GRE要求(视为不需要)。全日制最短1年最长2年,选择'8门课+论文'选项通常需1.5年;本条duration_months按最短全日制1年填写。中国院校无分档说明。学费为AY2026-2027数据,新周期(AY2027-2028)费用页面未查到更新数字。"
+  },
+  {
+    "school_name_en": "Nanyang Technological University",
+    "school_name_zh": "南洋理工大学",
+    "school_short": "NTU",
+    "region": "SG",
+    "program_name_en": "MSc Asset & Wealth Management",
+    "program_name_zh": "资产与财富管理硕士",
+    "faculty": "Nanyang Business School / Wealth Management Institute (WMI)",
+    "duration_months": 12,
+    "direction": "finance",
+    "tuition": "SGD 24,250 - 81,750 (depending on citizenship/age category after subsidies)",
+    "campus": null,
+    "requirements": {
+      "undergrad_background": "A good Bachelor's degree in a relevant programme",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 100, "subscores": null},
+      "gmat_gre": "A competitive GMAT/GMAT Focus or GRE score expected (specific cutoff not stated)",
+      "prerequisites": null,
+      "work_experience": "At least 2 years of working experience required",
+      "interview": "Required for shortlisted candidates"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网抓取到的时间线为 'AY2026 intake'(申请于2025年8月开放,面试/筛选2026年1-3月,申请截止2026年4月15日,2026年6月入学),该截止日期(2026-04-15)在本次查询日期(2026-07-20)之前已经过去,说明官网该页面尚未更新为下一入学季信息,故当前开放周期不明确,opens_at/final_deadline如实留空,不编造下一周期日期。在线申请表单链接文件名含'AY2627'字样,暗示可能已进入AY26/27周期但页面文字未同步更新。"
+    },
+    "materials": ["cv", "transcript", "degree_certificate", "english_test", "gmat_gre", "passport"],
+    "source_urls": [
+      "https://www.ntu.edu.sg/education/graduate-programme/master-of-science-in-asset-wealth-management"
+    ],
+    "confidence": "low",
+    "notes": "该项目要求至少2年工作经验,面向在职人士(work-study,隔周末上课),与其它NBS全日制硕士定位不同。校园地点未在抓取内容中明确说明(WMI教学地点与NTU主校区可能不同,未能确认,故campus留空)。当前申请周期信息因页面未及时更新而不确定,建议直接联系 mawm@wmi.edu.sg 或访问官网确认最新截止日期,已诚实标注confidence为low。中国院校无分档说明。"
+  }
+]

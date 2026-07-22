@@ -1,0 +1,361 @@
+[
+  {
+    "school_name_en": "Hong Kong Baptist University",
+    "school_name_zh": "香港浸会大学",
+    "school_short": "HKBU",
+    "region": "HK",
+    "program_name_en": "Master of Human Resources Management",
+    "program_name_zh": null,
+    "faculty": "School of Business",
+    "direction": "hr",
+    "duration_months": 12,
+    "tuition": "HK$227,000/programme (local); HK$285,000/programme (non-local)",
+    "campus": "Shaw Campus, 34 Renfrew Road, Kowloon Tong, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "A recognised bachelor's degree or an equivalent professional qualification (with no work experience requirement); or a recognised diploma plus a minimum of four years of work experience.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "Not required for bachelor's degree holders; a minimum of four years of work experience required for applicants holding only a recognised diploma.",
+      "interview": "Shortlisted candidates will be invited for an interview, either in person or via teleconferencing."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网截至2026-07-20尚未发布2027 entry申请周期，日期字段全部置null。【2026 entry存档数据】开放日期 2025-09-15；非本地(non-local)申请截止 2026-06-04；本地(local)申请截止 2026-07-24。官网未见明确的round/batch划分，也未出现\"rolling\"字样，rolling按官网未明确处理填false。"
+    },
+    "materials": ["id_document", "degree_certificate", "transcript", "english_test", "cv"],
+    "source_urls": [
+      "https://mhrm.hkbu.edu.hk/",
+      "https://mhrm.hkbu.edu.hk/admission/admission-requirements.html",
+      "https://ar.hkbu.edu.hk/tpg-admissions/programmes/master-of-human-resources-management-mhrm"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。学费、语言要求、面试要求、学术背景要求为官网原文，通常跨年度变化不大但仍须核实。工作经验证明等材料为\"如适用\"提交，官网未提供完整材料清单原文。"
+  },
+  {
+    "school_name_en": "Hong Kong Baptist University",
+    "school_name_zh": "香港浸会大学",
+    "school_short": "HKBU",
+    "region": "HK",
+    "program_name_en": "Master of Science in Applied Economics",
+    "program_name_zh": null,
+    "faculty": "School of Business",
+    "direction": "economics",
+    "duration_months": 12,
+    "tuition": "HK$225,000/programme (local); HK$295,000/programme (non-local)",
+    "campus": "Shaw Campus, 34 Renfrew Road, Kowloon Tong, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "A Bachelor's degree from a recognised university, or equivalent. A bachelor's degree in economics or related areas is not a pre-requisite, but applicants should have knowledge of microeconomics and macroeconomics, with some training in mathematics (especially calculus and linear algebra) and statistics.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": "Knowledge of microeconomics, macroeconomics, calculus, linear algebra and statistics.",
+      "work_experience": null,
+      "interview": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网截至2026-07-20尚未发布2027 entry申请周期，日期字段全部置null。【2026 entry存档数据】开放日期 2025-09-15；非本地申请截止 2026-06-04；本地申请截止 2026-07-24。选拔方式为\"符合最低要求者逐案审核(case-by-case)\"，官网未见明确round划分或\"rolling\"字样，rolling按官网未明确处理填false。"
+    },
+    "materials": ["id_document", "degree_certificate", "transcript", "english_test"],
+    "source_urls": [
+      "https://mscaecon.hkbu.edu.hk/",
+      "https://mscaecon.hkbu.edu.hk/admission/admission-requirements.html",
+      "https://ar.hkbu.edu.hk/tpg-admissions/programmes/master-of-science-msc-in-applied-economics"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。GMAT/GRE与工作经验要求官网未列明；面试要求未在官网可读取内容中出现，不代表一定无面试。"
+  },
+  {
+    "school_name_en": "Hong Kong Baptist University",
+    "school_name_zh": "香港浸会大学",
+    "school_short": "HKBU",
+    "region": "HK",
+    "program_name_en": "Master of Science in Data Analytics and Business Economics",
+    "program_name_zh": null,
+    "faculty": "School of Business",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "HK$248,000/programme (local); HK$318,000/programme (non-local)",
+    "campus": "Shaw Campus, 34 Renfrew Road, Kowloon Tong, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "A Bachelor's degree from a recognised university, or equivalent, with satisfactory academic performance. Applicants should ideally possess an undergraduate degree either in business or in non-business fields with good quantitative training.",
+      "china_university_list": null,
+      "gpa_requirement": "Satisfactory academic performance (no numeric GPA cut-off stated).",
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 79, "subscores": "Home Edition not accepted"},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": "Good quantitative training preferred.",
+      "work_experience": "Not mandatory; work experience proof submitted if applicable.",
+      "interview": "Shortlisted candidates will be invited for an interview and will sit for a written test (selected applicants invited to an online interview)."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网截至2026-07-20尚未发布2027 entry申请周期，日期字段全部置null。【2026 entry存档数据】开放日期 2025-09-15；非本地申请截止 2026-06-04；本地申请截止 2026-07-24。评审为逐案审核(case-by-case)，经Programme Management Committee筛选后推荐录取，官网未见明确round划分，rolling按官网未明确处理填false。"
+    },
+    "materials": ["id_document", "degree_certificate", "transcript", "english_test", "cv"],
+    "source_urls": [
+      "https://mscdabe.hkbu.edu.hk/",
+      "https://mscdabe.hkbu.edu.hk/admission/admission-requirements.html",
+      "https://ar.hkbu.edu.hk/tpg-admissions/programmes/master-of-science-msc-in-data-analytics-and-business-economics"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。该项目要求笔试(written test)加面试，是本批项目中少数明确要求笔试的项目；香港公开考试成绩(如适用)作为补充材料。"
+  },
+  {
+    "school_name_en": "Hong Kong Baptist University",
+    "school_name_zh": "香港浸会大学",
+    "school_short": "HKBU",
+    "region": "HK",
+    "program_name_en": "Master of Science in Entrepreneurship and Global Marketing",
+    "program_name_zh": null,
+    "faculty": "School of Business",
+    "direction": "marketing",
+    "duration_months": 15,
+    "tuition": "HK$298,000/programme",
+    "campus": "Shaw Campus, 34 Renfrew Road, Kowloon Tong, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "A Bachelor's Degree or equivalent, or with a minimum of 180 ECTS credits, in any discipline from a recognised university or comparable institution. Designed for graduates from any discipline, regardless of nationality.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 in all components"},
+      "toefl": {"overall": 90, "subscores": "minimum 21 in all bands (internet-based)"},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "Not mandatory; work experience proof submitted if applicable.",
+      "interview": "Shortlisted applicants might be invited to attend an interview via online teleconference tool such as Zoom (not guaranteed for all applicants)."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网截至2026-07-20尚未发布2027 entry申请周期，日期字段全部置null。【2026 entry存档数据】开放日期 2025-09-15；最终截止 2026-07-24；ar.hkbu.edu.hk页面注明该项目入学为\"Entry: January 2027\"，与本学院其他9月入学项目周期不同；未见本地/非本地分段截止日期的明确区分，也未见local/non-local学费差异。官网未见round划分或\"rolling\"字样，rolling按官网未明确处理填false。"
+    },
+    "materials": ["id_document", "degree_certificate", "transcript", "english_test", "cv", "personal_statement", "two_references"],
+    "source_urls": [
+      "https://mscegm.hkbu.edu.hk/",
+      "https://mscegm.hkbu.edu.hk/admission/admission-requirements.html",
+      "https://ar.hkbu.edu.hk/tpg-admissions/programmes/master-of-science-msc-in-entrepreneurship-and-global-marketing"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。该项目为1.25年(15个月)学制，入学时间标注为2027年1月，与其他项目9月入学不同，若目标为2027秋季入学需特别确认其入学批次安排。"
+  },
+  {
+    "school_name_en": "Hong Kong Baptist University",
+    "school_name_zh": "香港浸会大学",
+    "school_short": "HKBU",
+    "region": "HK",
+    "program_name_en": "Master of Science in Finance (FinTech and Financial Analytics)",
+    "program_name_zh": null,
+    "faculty": "School of Business",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "HK$335,000/programme",
+    "campus": "Shaw Campus, 34 Renfrew Road, Kowloon Tong, Kowloon, Hong Kong (WLB 804A, 8/F)",
+    "requirements": {
+      "undergrad_background": "A Bachelor degree with honours from a recognised university or comparable institution, or a professional qualification deemed to be equivalent. Applicants should possess basic training/experience in Finance, Mathematics or Computer Science, or complete preparatory courses.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": "A satisfactory GMAT/GRE score is encouraged but not mandatory.",
+      "prerequisites": "Basic training/experience in Finance, Mathematics or Computer Science, or completion of preparatory courses.",
+      "work_experience": "For part-time study, preference given to applicants with a minimum of three years of relevant work experience (may be relaxed for highly qualified applicants).",
+      "interview": "Qualified applicants will be required to attend an admission interview as part of the selection process."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网截至2026-07-20尚未发布2027 entry申请周期，日期字段全部置null。【2026 entry存档数据】开放日期 2025-10-06；非本地申请截止 2026-06-04；本地申请截止 2026-07-24。未获取到分轮次(round)信息，官网也未出现\"rolling\"字样，rolling按官网未明确处理填false。"
+    },
+    "materials": [],
+    "source_urls": [
+      "https://mscfinance-fintech.hkbu.edu.hk/",
+      "https://mscfinance-fintech.hkbu.edu.hk/admission/admission-requirements.html",
+      "https://ar.hkbu.edu.hk/tpg-admissions/programmes/master-of-science-msc-in-finance-fintech-and-financial-analytics"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。原域名 mscfinance.hkbu.edu.hk 已301重定向至 mscfinance-fintech.hkbu.edu.hk；申请材料清单官网未列明，materials留空非编造。该项目明确要求所有合格申请者参加录取面试。"
+  },
+  {
+    "school_name_en": "Hong Kong Baptist University",
+    "school_name_zh": "香港浸会大学",
+    "school_short": "HKBU",
+    "region": "HK",
+    "program_name_en": "Master of Science in Applied Accounting and Finance",
+    "program_name_zh": null,
+    "faculty": "School of Business",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "HK$220,000/programme (local); HK$310,000/programme (non-local)",
+    "campus": "Shaw Campus, 34 Renfrew Road, Kowloon Tong, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "A recognised bachelor's degree with honours in Business; or a bachelor's degree in other disciplines with relevant experience and/or training in Accounting, Finance, Management or related fields. Professional qualifications (CPA, ACCA, CFA, CMA) are also acceptable.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": "GMAT not required, but applicants with a GMAT score or relevant working experience are preferred.",
+      "prerequisites": null,
+      "work_experience": "Not mandatory, but preferred if available.",
+      "interview": "Applicants should have a satisfactory performance in an admission interview."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网截至2026-07-20尚未发布2027 entry申请周期，日期字段全部置null。【2026 entry存档轮次数据】Start 6 Oct 2025 → Round 1: 2026-02-28 → Round 2: 2026-04-30 → Round 3(Final): 2026-06-04(非本地)/2026-07-24(本地)。该项目官网明确按批次分轮截止，故rolling保留为true；2027 entry是否沿用同样的轮次结构须重新核对。"
+    },
+    "materials": ["id_document", "degree_certificate", "transcript", "english_test", "cv", "personal_statement"],
+    "source_urls": [
+      "https://mscaaf.hkbu.edu.hk/",
+      "https://mscaaf.hkbu.edu.hk/admission/admission-requirements.html",
+      "https://ar.hkbu.edu.hk/tpg-admissions/programmes/master-of-science-msc-in-applied-accounting-and-finance"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。此项目对内地申请者友好度较高：接受专业资格(CPA/ACCA/CFA/CMA)替代部分学术背景要求，且历史上有明确的3轮批次截止安排。"
+  },
+  {
+    "school_name_en": "Hong Kong Baptist University",
+    "school_name_zh": "香港浸会大学",
+    "school_short": "HKBU",
+    "region": "HK",
+    "program_name_en": "Master of Science in Marketing for the Creative Economy",
+    "program_name_zh": null,
+    "faculty": "School of Business",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "HK$240,000/programme (local); HK$298,000/programme (non-local)",
+    "campus": "Shaw Campus, 34 Renfrew Road, Kowloon Tong, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "A bachelor's degree from a recognised university or comparable institution, or an equivalent qualification.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "Not mandatory; professional references recommended for applicants with work experience.",
+      "interview": "Shortlisted candidates will be invited to attend an online interview."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网截至2026-07-20尚未发布2027 entry申请周期，日期字段全部置null。【2026 entry存档轮次数据】开放日期 2025-09-15；1st round: 2025-11-30；2nd round: 2026-02-28；3rd round: 2026-04-30；Final round: 2026-06-04(非本地)/2026-07-24(本地)。该项目官网明确列出4轮批次截止，故rolling保留为true；2027 entry轮次安排须重新核对。"
+    },
+    "materials": ["id_document", "transcript", "degree_certificate", "english_test", "cv", "reference"],
+    "source_urls": [
+      "https://mscmce.hkbu.edu.hk/",
+      "https://mscmce.hkbu.edu.hk/admission/admission-requirements.html",
+      "https://ar.hkbu.edu.hk/tpg-admissions/programmes/master-of-science-msc-in-marketing-for-the-creative-economy"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。该项目历史轮次信息最完整(4轮滚动批次)，适合用于说明申请节奏；官网材料清单写的是\"Reference letter\"(单封)，故materials使用\"reference\"而非\"two_references\"。"
+  },
+  {
+    "school_name_en": "Hong Kong Baptist University",
+    "school_name_zh": "香港浸会大学",
+    "school_short": "HKBU",
+    "region": "HK",
+    "program_name_en": "Master of Science in AI for Business",
+    "program_name_zh": null,
+    "faculty": "School of Business",
+    "direction": "other",
+    "duration_months": 12,
+    "tuition": "HK$360,000/programme",
+    "campus": "Shaw Campus, 34 Renfrew Road, Kowloon Tong, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "A bachelor's degree in any discipline (business, engineering, social sciences, etc.). Non-STEM applicants must demonstrate quantitative skills and intermediate IT/IS or business knowledge through coursework or work experience.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": "Non-STEM applicants must demonstrate quantitative skills and intermediate IT/IS or business knowledge.",
+      "work_experience": "Preferred but not mandatory; early-career professionals and career-changers encouraged to apply.",
+      "interview": "Shortlisted candidates participate in a panel interview assessing problem-solving skills and ethical reasoning; interviews conducted if the Programme Board deems necessary."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网截至2026-07-20尚未发布2027 entry申请周期，日期字段全部置null。【2026 entry存档数据】开放日期 2026-03-27(明显晚于同学院多数项目)；非本地申请截止 2026-06-15；本地申请截止 2026-07-24。官网注明\"applications may close earlier if capacity is reached\"(名额满可提前截止)，属于额满即止而非明确分轮批次，rolling暂填false并以此备注说明。"
+    },
+    "materials": ["two_references"],
+    "source_urls": [
+      "https://mscaib.hkbu.edu.hk/",
+      "https://mscaib.hkbu.edu.hk/Admission/Admission-Requirement.html",
+      "https://ar.hkbu.edu.hk/tpg-admissions/programmes/master-of-science-msc-in-ai-for-business"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。为近年新增项目，需要两封学术/专业推荐信；完整材料清单官网未列全，其余材料留空非编造。因存在\"额满提前截止\"条款，内地申请者应尽早提交。"
+  },
+  {
+    "school_name_en": "Hong Kong Baptist University",
+    "school_name_zh": "香港浸会大学",
+    "school_short": "HKBU",
+    "region": "HK",
+    "program_name_en": "Master of Science in Family Office Management",
+    "program_name_zh": null,
+    "faculty": "School of Business",
+    "direction": "other",
+    "duration_months": null,
+    "tuition": null,
+    "campus": "Shaw Campus, 34 Renfrew Road, Kowloon Tong, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "A bachelor's degree in a business-related discipline from a recognised university or comparable institution; or a professional qualification deemed equivalent; or a bachelor's degree in a non-business discipline (must complete self-paced online preparatory modules and attend a mandatory one-day pre-term bootcamp).",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": null},
+      "toefl": {"overall": 79, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": "Non-business degree holders must complete online preparatory modules and a mandatory one-day pre-term bootcamp.",
+      "work_experience": null,
+      "interview": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网截至2026-07-20尚未发布2027 entry申请周期。该项目连2026 entry的开放/截止日期也未在官网列明，对应的ar.hkbu.edu.hk项目详情页返回404，无存档轮次数据可归档。rolling按官网未明确处理填false。"
+    },
+    "materials": [],
+    "source_urls": [
+      "https://mscfom.hkbu.edu.hk/",
+      "https://mscfom.hkbu.edu.hk/Admission/Admission-Requirements.html"
+    ],
+    "confidence": "low",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。该项目为家族办公室管理方向；学费、学制、面试与工作经验要求、申请截止日期均未能在官网核实到，全部填null，须直接联系项目办公室确认。"
+  }
+]

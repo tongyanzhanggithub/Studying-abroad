@@ -1,0 +1,231 @@
+[
+  {
+    "school_name_en": "University of Leeds",
+    "school_name_zh": "利兹大学",
+    "school_short": "Leeds",
+    "region": "UK",
+    "program_name_en": "Accounting and Finance MSc",
+    "program_name_zh": "会计与金融硕士",
+    "faculty": "Leeds University Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "International: £35,500 (Total); UK: £18,750 (Total)",
+    "campus": "Leeds, UK (on campus), start September 2026",
+    "requirements": {
+      "undergrad_background": "A bachelor degree with a 2:1 (hons) in a related subject such as accounting, economics or finance; must have a good grounding in quantitative subjects.",
+      "china_university_list": "官网明确声明：'GPA requirements for all Business School Programmes: 75%-80% minimum GPA requirement depending on your institution.' (适用于商学院所有硕士项目，具体百分比取决于申请人本科院校)。官方另提供一份1000+所中国认可院校名单（Accepted Chinese institutions），按院校名称字母排序，但该名单在本次抓取到的可读文本中未显示明确的Band A/B/C等分级标签或逐校对应分数（原始文件为xlsx转PDF，标题为'AllOtherProgrammesChinese Ranking 2020.xlsx'，暗示后台可能有分级排名，但页面正文文本未清晰呈现分级明细）。未能在本次会话中找到更细分的Band/Tier命名体系，故此处仅能确认75%-80%区间及院校名单存在。",
+      "gpa_requirement": "英国荣誉学位2:1或同等学历；中国申请者官网列明：75%-80%（视本科院校而定）",
+      "ielts": {"overall": 6.5, "subscores": "no less than 6.0 in any component"},
+      "toefl": {"overall": null, "subscores": null},
+      "gmat_gre": null,
+      "prerequisites": "Good grounding in quantitative subjects",
+      "work_experience": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未列明具体截止日期。原文建议：'We recommend that international students apply as early as possible to ensure that they have time to apply for their visa.' 通常为滚动录取，招满为止（此为一般惯例推断，非官网逐字确认rolling一词）。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://courses.leeds.ac.uk/f921/accounting-and-finance-msc",
+      "https://business.leeds.ac.uk/masters/doc/accepted-chinese-institutions",
+      "https://business.leeds.ac.uk/masters/doc/international-equivalents-2",
+      "https://business.leeds.ac.uk/masters-courses"
+    ],
+    "confidence": "high",
+    "notes": "基于2026/27入学数据（官网页面显示Start Date: September 2026）。中国院校分级具体名称未能在可访问文本中找到，仅确认75%-80%区间说法，china_university_list字段该部分置信度为medium。"
+  },
+  {
+    "school_name_en": "University of Leeds",
+    "school_name_zh": "利兹大学",
+    "school_short": "Leeds",
+    "region": "UK",
+    "program_name_en": "Finance and Investment MSc",
+    "program_name_zh": "金融与投资硕士",
+    "faculty": "Leeds University Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "International: £35,500 (Total); UK: £18,750 (Total)",
+    "campus": "Leeds, UK (on campus)",
+    "requirements": {
+      "undergrad_background": "A bachelor degree with a 2:1 (hons) in a related subject such as accounting, finance, economics or mathematics; strong grounding in quantitative subjects with high scores in these subjects.",
+      "china_university_list": "同商学院统一政策，官网原文：'GPA requirements for all Business School Programmes: 75%-80% minimum GPA requirement depending on your institution.' 未找到该项目专属的更细分Band命名体系（详情同Accounting and Finance MSc说明）。",
+      "gpa_requirement": "英国荣誉学位2:1或同等学历；中国申请者：75%-80%（视本科院校而定）",
+      "ielts": {"overall": 6.5, "subscores": "no less than 6.0 in any component"},
+      "toefl": {"overall": null, "subscores": null},
+      "gmat_gre": null,
+      "prerequisites": "Strong quantitative background",
+      "work_experience": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未列明具体截止日期，建议尽早申请以便办理签证；课程含2周在线Global Industry Programme。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://courses.leeds.ac.uk/f840/finance-and-investment-msc",
+      "https://business.leeds.ac.uk/masters/doc/accepted-chinese-institutions",
+      "https://business.leeds.ac.uk/masters/doc/international-equivalents-2"
+    ],
+    "confidence": "high",
+    "notes": "GMAT/GRE和TOEFL在官方课程页面未列明（第三方留学中介网站提及TOEFL 88分，但未在官网原文中核实到，故按规则记为null）。"
+  },
+  {
+    "school_name_en": "University of Leeds",
+    "school_name_zh": "利兹大学",
+    "school_short": "Leeds",
+    "region": "UK",
+    "program_name_en": "International Business MSc",
+    "program_name_zh": "国际商务硕士",
+    "faculty": "Leeds University Business School",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "International: £32,500 (Total); UK: £17,500 (Total)",
+    "campus": "Leeds, UK (on campus)",
+    "requirements": {
+      "undergrad_background": "A bachelor degree with a 2:1 (hons) in any subject. You should have an interest in the subject, although you don't need any prior experience or qualifications in this area.",
+      "china_university_list": "同商学院统一政策，官网原文：'GPA requirements for all Business School Programmes: 75%-80% minimum GPA requirement depending on your institution.' 未找到该项目专属的更细分Band命名体系。",
+      "gpa_requirement": "英国荣誉学位2:1或同等学历；中国申请者：75%-80%（视本科院校而定）",
+      "ielts": {"overall": 6.5, "subscores": "no less than 6.0 in any component"},
+      "toefl": {"overall": null, "subscores": null},
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未列明具体截止日期，建议尽早申请。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://courses.leeds.ac.uk/e763/international-business-msc",
+      "https://business.leeds.ac.uk/masters/doc/accepted-chinese-institutions",
+      "https://business.leeds.ac.uk/masters/doc/international-equivalents-2"
+    ],
+    "confidence": "high",
+    "notes": "接受任意本科专业背景，无需商科背景。"
+  },
+  {
+    "school_name_en": "University of Leeds",
+    "school_name_zh": "利兹大学",
+    "school_short": "Leeds",
+    "region": "UK",
+    "program_name_en": "Management MSc",
+    "program_name_zh": "管理学硕士",
+    "faculty": "Leeds University Business School",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "International: £32,750 (Total); UK: £18,000 (Total)",
+    "campus": "Leeds, UK (on campus)",
+    "requirements": {
+      "undergrad_background": "A bachelor degree with a 2:1 (hons) in any subject.",
+      "china_university_list": "同商学院统一政策，官网原文：'GPA requirements for all Business School Programmes: 75%-80% minimum GPA requirement depending on your institution.' 未找到该项目专属的更细分Band命名体系。",
+      "gpa_requirement": "英国荣誉学位2:1或同等学历；中国申请者：75%-80%（视本科院校而定）",
+      "ielts": {"overall": 6.5, "subscores": "no less than 6.0 in any component"},
+      "toefl": {"overall": null, "subscores": null},
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未列明具体截止日期，建议尽早申请。课程含六个可选学习方向（Entrepreneurship, Organisational Behaviour, Decision Making, Digital and AI, Human Behaviour, Governance）。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://courses.leeds.ac.uk/a078/management-msc",
+      "https://business.leeds.ac.uk/masters/doc/accepted-chinese-institutions",
+      "https://business.leeds.ac.uk/masters-courses"
+    ],
+    "confidence": "high",
+    "notes": "接受任意本科专业背景。"
+  },
+  {
+    "school_name_en": "University of Leeds",
+    "school_name_zh": "利兹大学",
+    "school_short": "Leeds",
+    "region": "UK",
+    "program_name_en": "Business Analytics and Decision Sciences MSc",
+    "program_name_zh": "商业分析与决策科学硕士",
+    "faculty": "Leeds University Business School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "International: £32,750 (Total); UK: £17,500 (Total)",
+    "campus": "Leeds, UK (on campus)",
+    "requirements": {
+      "undergrad_background": "A bachelor degree with a 2:1 (hons); core quantitative skills and willingness to engage with quantitative materials are essential.",
+      "china_university_list": "同商学院统一政策，官网原文：'GPA requirements for all Business School Programmes: 75%-80% minimum GPA requirement depending on your institution.' 未找到该项目专属的更细分Band命名体系。",
+      "gpa_requirement": "英国荣誉学位2:1或同等学历；中国申请者：75%-80%（视本科院校而定）",
+      "ielts": {"overall": 6.5, "subscores": "no less than 6.0 in any component"},
+      "toefl": {"overall": null, "subscores": null},
+      "gmat_gre": null,
+      "prerequisites": "Core quantitative skills required",
+      "work_experience": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未列明具体截止日期，建议尽早申请；课程含2周在线Global Industry Programme。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://courses.leeds.ac.uk/g503/business-analytics-and-decision-sciences-msc",
+      "https://business.leeds.ac.uk/masters/doc/accepted-chinese-institutions",
+      "https://business.leeds.ac.uk/masters-courses"
+    ],
+    "confidence": "high",
+    "notes": "需要较强的量化背景。"
+  },
+  {
+    "school_name_en": "University of Leeds",
+    "school_name_zh": "利兹大学",
+    "school_short": "Leeds",
+    "region": "UK",
+    "program_name_en": "International Marketing Management MSc",
+    "program_name_zh": "国际市场营销管理硕士",
+    "faculty": "Leeds University Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "International: £31,500 (Total); UK: £15,750 (Total)",
+    "campus": "Leeds, UK (on campus), start September 2026",
+    "requirements": {
+      "undergrad_background": "A bachelor degree with a 2:1 (hons) in any subject. This course is primarily aimed at students with a general business or non-business background.",
+      "china_university_list": "同商学院统一政策，官网原文：'GPA requirements for all Business School Programmes: 75%-80% minimum GPA requirement depending on your institution.' 未找到该项目专属的更细分Band命名体系。",
+      "gpa_requirement": "英国荣誉学位2:1或同等学历；中国申请者：75%-80%（视本科院校而定）",
+      "ielts": {"overall": 6.5, "subscores": "no less than 6.0 in any component"},
+      "toefl": {"overall": null, "subscores": null},
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未列明具体截止日期，建议尽早申请。课程获CIM（Chartered Institute of Marketing）认证。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://courses.leeds.ac.uk/7652/international-marketing-management-msc",
+      "https://business.leeds.ac.uk/masters/doc/accepted-chinese-institutions",
+      "https://business.leeds.ac.uk/masters-courses"
+    ],
+    "confidence": "high",
+    "notes": "接受任意本科专业背景，欢迎跨专业申请者。"
+  }
+]

@@ -1,0 +1,536 @@
+[
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of Science in Applied Finance (MAF)",
+    "program_name_zh": "应用金融理学硕士",
+    "faculty": "Lee Kong Chian School of Business",
+    "direction": "finance",
+    "duration_months": 18,
+    "tuition": "S$63,220 (inclusive of GST)",
+    "campus": "Singapore, 50 Stamford Road",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree in any discipline; applicants near graduation may apply",
+      "chinese_university_preference": null,
+      "gpa": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "GMAT/GRE score of 600+ recommended with a strong Quantitative sub-score; SMU Admissions Test (SMUAT) accepted as alternative; GMAT valid 5 years",
+      "prerequisites": null,
+      "work_experience": "Not required - fresh graduates are welcome to apply. Full-time cohort averages ~1.8 years experience; part-time applicants typically 4-5 years",
+      "interview": "Yes - shortlisted candidates invited for an online interview within two weeks of application, approximately 20-30 minutes"
+    },
+    "deadlines": {
+      "intake": "August 2027",
+      "opening": "August 2026",
+      "rolling": true,
+      "rounds": null,
+      "final": "May 2027",
+      "note": "Application window August 2026 to May 2027; admissions awarded on a rolling basis. Confirmed on the MAF Apply Now page as the 2026/27 cycle."
+    },
+    "materials": [
+      "Completed online application form",
+      "Application fee S$100 (GST included)",
+      "GMAT/GRE/SMUAT score (unofficial score acceptable initially)",
+      "TOEFL/IELTS score (if applicable)",
+      "Updated resume",
+      "Official academic transcripts",
+      "CFA/ACCA certificates (if applicable)",
+      "Two personal statements (500-600 words each)",
+      "Two referee reports",
+      "Copy of NRIC/FIN/Passport"
+    ],
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/msc-in-applied-finance",
+      "https://masters.smu.edu.sg/programme/MAF/Apply_now"
+    ],
+    "confidence": "high",
+    "notes": "IELTS/TOEFL numeric thresholds not restated on the MAF page - only the conditional rule that they are required if undergraduate instruction was not in English. Sibling LKCSB programmes publish IELTS 6.5 / TOEFL 90 benchmarks but this was not confirmed specifically for MAF, so left null. No explicit GPA minimum published. No mention of preference for 985/211/double first-class Chinese universities."
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of Science in Quantitative Finance (MQF)",
+    "program_name_zh": "量化金融理学硕士",
+    "faculty": "Lee Kong Chian School of Business",
+    "direction": "finance",
+    "duration_months": 18,
+    "tuition": "S$59,950 (inclusive of GST); Application Fee S$100; Registration Fee S$400 (Singapore/PR) or S$500 (International); Advance Tuition deposit S$5,000",
+    "campus": "Singapore; International Track includes one term at Bayes Business School, London",
+    "requirements": {
+      "undergrad_background": "Bachelor's Degree in any field with some level of mathematical rigour",
+      "chinese_university_preference": null,
+      "gpa": "No explicit minimum; SMU graduates with GPA >=3.0/4.0 or local autonomous university graduates with GPA >=3.5/5.0 may be waived from the standardized test requirement",
+      "ielts": "Local track: IELTS >6.5 if undergraduate medium of instruction was not English. International track: IELTS 7.0 overall with 6.5 in Writing, mandatory for all applicants",
+      "toefl": "Local track: TOEFL >90 if undergraduate medium of instruction was not English",
+      "gmat_gre": "GMAT or GRE or SMU Admissions Test (SMUAT) required; exceptions for SMU graduates (GPA >=3.0/4.0) or local autonomous university graduates (GPA >=3.5/5.0)",
+      "prerequisites": "Mathematical foundation expected; no specific course list mandated",
+      "work_experience": "Not required - fresh graduates are welcome to apply. Class average work experience 2.3 years",
+      "interview": "Yes - shortlisted candidates invited for an online interview within two weeks of application submission"
+    },
+    "deadlines": {
+      "intake": "August 2027",
+      "opening": "August 2026",
+      "rolling": true,
+      "rounds": null,
+      "final": "May 2027",
+      "note": "Application window August 2026 to May 2027; admissions awarded on a rolling basis. Confirmed on the MQF Apply Now page as the 2026/27 cycle. The overview page separately carried an 'extended to June 2026' note which appears to refer to the prior cycle."
+    },
+    "materials": [
+      "Online application form",
+      "GMAT/GRE/SMUAT score",
+      "Official academic transcripts",
+      "Resume",
+      "Two personal statements (500-600 words each)",
+      "Two referee reports",
+      "Copy of NRIC/FIN/Passport",
+      "TOEFL/IELTS scores (if applicable)",
+      "CFA/ACCA certificates (if applicable)"
+    ],
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/msc-in-quantitative-finance",
+      "https://masters.smu.edu.sg/programme/MQF/Apply_now"
+    ],
+    "confidence": "high",
+    "notes": "Part-time track (24 months) is Singapore-track only. International Track is a 12-month joint arrangement with Bayes Business School, London (Terms 1 and 3 at SMU, Term 2 in London) and carries a stricter mandatory IELTS requirement applying to all applicants regardless of medium of instruction. Page explicitly carries no preference for specific Chinese universities."
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of Science in Wealth Management (MWM)",
+    "program_name_zh": "财富管理理学硕士",
+    "faculty": "Lee Kong Chian School of Business",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "S$74,120 inclusive of GST (AY2025)",
+    "campus": "Singapore (SMU), with overseas modules at University of St. Gallen (Switzerland) and Cambridge Judge Business School (UK)",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree in any field",
+      "chinese_university_preference": null,
+      "gpa": "No specific minimum GPA stated; SMU graduates with cumulative GPA 3.0/4.0 or better and local autonomous university graduates with 3.5/5.0 or better are exempt from standardized tests",
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "GMAT, GRE, or SMU Admissions Test (SMUAT) required; no minimum score specified on the official page",
+      "prerequisites": null,
+      "work_experience": "MANDATORY - minimum post-degree work experience of 2 years; waiver considered for CFA Level 1 pass holders",
+      "interview": "Yes - shortlisted candidates invited for online interviews within two weeks of application"
+    },
+    "deadlines": {
+      "intake": "August 2027",
+      "opening": "August 2026",
+      "rolling": true,
+      "rounds": null,
+      "final": "May 2027",
+      "note": "Application window August 2026 to May 2027; rolling admissions with early applications encouraged. Confirmed on the MWM Apply Now page as the 2026/27 cycle."
+    },
+    "materials": [
+      "Updated resume",
+      "Official transcripts",
+      "GMAT/GRE/SMUAT scores",
+      "English proficiency scores (if applicable)",
+      "Two personal statements (500-600 words each)",
+      "Two referee reports",
+      "Copy of identification documents",
+      "CFA/ACCA certificates (if applicable)"
+    ],
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/msc-in-wealth-management",
+      "https://masters.smu.edu.sg/programme/MWM/Apply_now"
+    ],
+    "confidence": "high",
+    "notes": "Modular 12-month format. Tuition figure is labelled AY2025 on the official page and may be revised for AY2026/27 - confirm at application time. IELTS/TOEFL numeric thresholds not published on this page, only the conditional rule that they are required if undergraduate instruction was not in English. The 2-year mandatory work experience requirement is the key differentiator versus other SMU finance masters. Ranked 1st in Asia / 3rd globally by FT Global Masters in Finance (Post-Experience) 2022."
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of Science in Management (MiM)",
+    "program_name_zh": "管理学理学硕士",
+    "faculty": "Lee Kong Chian School of Business",
+    "direction": "management",
+    "duration_months": 18,
+    "tuition": "S$59,950 (inclusive of GST)",
+    "campus": "Singapore, 50 Stamford Road",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree from a reputable institution in any field; designed for individuals with no prior business experience",
+      "chinese_university_preference": null,
+      "gpa": "SMU graduates with 3.0/4.0 GPA or better, and local autonomous university graduates (NUS, NTU, SUSS, SUTD, SIT) with 3.5/5.0 GPA or better, are exempt from standardized test requirements. No exemption from test if GPA requirements not met",
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "GMAT (minimum competitive score 600+), GRE, or SMU Admissions Test (SMUAT); SMUAT T-Score of 55/80 considered competitive. Average GMAT score of admitted class: 683",
+      "prerequisites": null,
+      "work_experience": "No work experience required; up to 3 years of full-time experience allowed",
+      "interview": "Yes - shortlisted candidates invited for an online interview with the admissions committee"
+    },
+    "deadlines": {
+      "intake": "January 2027 and August 2027",
+      "opening": "June 2026 (January 2027 intake); August 2026 (August 2027 intake)",
+      "rolling": true,
+      "rounds": [
+        "January 2027 intake: application period June 2026 to October 2026 (closes 31 October 2026)",
+        "August 2027 intake: application period August 2026 to May 2027 (closes 31 May 2027)"
+      ],
+      "final": "31 May 2027 (August 2027 intake)",
+      "note": "Two intakes per year. Admissions awarded on a rolling basis; early submission encouraged as seats may be limited towards the end of admissions. Confirmed on the MiM Apply Now page as the 2026/27 cycle."
+    },
+    "materials": [
+      "Updated resume",
+      "Official academic transcripts from all institutions attended",
+      "Two personal statements (500-600 words each): career aspirations/motivation, and greatest weakness/talents/ethical complexity",
+      "Two referee reports (submitted directly by referees)",
+      "Copy of NRIC/FIN/Passport",
+      "GMAT/GRE/SMUAT scores",
+      "TOEFL/IELTS scores (if applicable)"
+    ],
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/msc-in-management",
+      "https://masters.smu.edu.sg/programme/MIM/Apply_now"
+    ],
+    "confidence": "high",
+    "notes": "Targets fresh graduates and very early career applicants - work experience is capped at 3 years rather than required. IELTS/TOEFL numeric thresholds not published on this page; only the conditional rule (required if English was not the medium of instruction) and 2-year score validity. Mandatory 10+ week internship with S$1,200-S$2,000 monthly stipend. Optional specialisation tracks in Finance, Marketing, Operations Management and Sustainability - note these are curriculum tracks within MiM, not separate degrees. Class profile ~147 students, average age 25, 92% international."
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of Science in Economics (MSE)",
+    "program_name_zh": "经济学理学硕士",
+    "faculty": "School of Economics",
+    "direction": "economics",
+    "duration_months": 18,
+    "tuition": "S$49,050 (inclusive of GST); Application fee S$100 (non-refundable); Registration/deposit fee S$400-S$500 plus S$5,000 deposit (non-refundable)",
+    "campus": "Singapore, 90 Stamford Road",
+    "requirements": {
+      "undergrad_background": "Good Bachelor's degree; a 'no prior training in economics' pathway is available for non-economics majors, with foundation courses provided to bridge knowledge gaps",
+      "chinese_university_preference": null,
+      "gpa": "Exemption from standardized test for SMU alumni with CGPA 3.0/4.0 or above (within 5 years) and NUS/NTU/SUTD/SUSS/SIT alumni with CGPA 3.5/5.0 or above (within 5 years). Minimum CGPA 2.50/4.00 required for graduation",
+      "ielts": "6.5 or above (required only if degree not taught in English)",
+      "toefl": "90 or above (required only if degree not taught in English)",
+      "gmat_gre": "GMAT 600 or above; GRE Verbal plus Quantitative average of 156 or above; SMU Admission Test Verbal/Numerical/Integrated Reasoning average of 55 or above; CAT 80th percentile or above",
+      "prerequisites": "No prior economics training strictly required; foundation courses bridge gaps",
+      "work_experience": "Not mandatory",
+      "interview": "Yes - admission interview required for shortlisted candidates; decision timeline about a month"
+    },
+    "deadlines": {
+      "intake": "August and January intakes",
+      "opening": "1 October (August intake); 1 July (January intake)",
+      "rolling": null,
+      "rounds": [
+        "August intake: 1 October to 30 June",
+        "January intake: 1 July to 30 November"
+      ],
+      "final": "30 June (August intake); 30 November (January intake)",
+      "note": "These are the standing recurring annual application windows as published on the official page. The page did not label them as 2026/27-cycle-specific, so they should be read as the standing pattern rather than a freshly announced cycle."
+    },
+    "materials": [
+      "Personal identification document",
+      "Degree scroll and official transcript from each university (English translation if applicable)",
+      "GMAT/GRE/SMU Admission Test score report",
+      "IELTS/TOEFL (if applicable)",
+      "Updated resume",
+      "Personal statement",
+      "Two referee reports"
+    ],
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/master-in-economics"
+    ],
+    "confidence": "high",
+    "notes": "Two tracks: Applied Economics (AE, practice-oriented) and Econometrics and Quantitative Economics (EQ, data-analytic and theoretical). Track-level differential admission requirements were not separately specified on the official page - the requirements captured here apply to the programme as a whole. Applied Economics exists only as a track within MSE, not as a standalone degree. Curriculum structure changes effective August 2026 (foundation courses reduced from 4 to 3 CU, open electives expand from 2 to 3 CU). Part-time study available only to Singapore-based students. EQ track classes primarily held during weekday daytime hours."
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of Science in Financial Economics (MSFE)",
+    "program_name_zh": "金融经济学理学硕士",
+    "faculty": "School of Economics",
+    "direction": "finance",
+    "duration_months": 18,
+    "tuition": "S$54,500 (inclusive of GST); Application fee S$100 (inclusive of GST, non-refundable)",
+    "campus": "Singapore, 90 Stamford Road",
+    "requirements": {
+      "undergrad_background": "Students from diverse academic backgrounds welcomed; foundation courses provided to bridge knowledge gaps; students with strong quantitative backgrounds may be exempted from foundation courses",
+      "chinese_university_preference": null,
+      "gpa": "Bachelor's degree with good academic performance required. Standardized test waived for SMU alumni with 3.0/4.0 or above (within 5 years) and NUS/NTU/SUTD/SUSS/SIT alumni with 3.5/5.0 or above (within 5 years). Minimum CGPA 2.50 required for graduation",
+      "ielts": "6.5 or above (required if first degree was not taught in English)",
+      "toefl": "90 or above (required if first degree was not taught in English)",
+      "gmat_gre": "Good score in GMAT/GRE/SMU Admission Test required. Recommended minimums: GMAT 600 or above; GRE Verbal plus Quantitative average of 156 or above; SMU Admission Test Verbal/Numerical average of 55 or above",
+      "prerequisites": "No strict prerequisite; foundation courses available; strong quantitative background may exempt foundation courses",
+      "work_experience": null,
+      "interview": "Yes - shortlisted applicants with complete application records contacted for admission interview; conducted via Zoom for applicants not in Singapore"
+    },
+    "deadlines": {
+      "intake": "August and January intakes",
+      "opening": "1 October (August intake); 1 July (January intake)",
+      "rolling": null,
+      "rounds": [
+        "August intake: 1 October to 30 June",
+        "January intake: 1 July to 30 November"
+      ],
+      "final": "30 June (August intake); 30 November (January intake)",
+      "note": "These are the standing recurring annual application windows as published on the official page, not labelled as 2026/27-cycle-specific."
+    },
+    "materials": [
+      "Personal identification document",
+      "Degree scroll and official transcript from each university (English translation if applicable)",
+      "GMAT/GRE/SMU Admission Test score report",
+      "IELTS/TOEFL (if applicable)",
+      "Updated resume",
+      "Personal statement",
+      "Two referee reports"
+    ],
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/master-in-financial-economics"
+    ],
+    "confidence": "high",
+    "notes": "Coursework-based professional master's with no thesis requirement. Full-time 18 months with an accelerated 12-month pathway; part-time 30 months with an accelerated 24-month pathway. Internship opportunities available (minimum 10 weeks). Work experience requirement not mentioned anywhere on the official page, hence null rather than 'not required'. Mapped to finance direction per coordinator instruction despite being administered by the School of Economics."
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of Professional Accounting (MPA)",
+    "program_name_zh": "专业会计硕士",
+    "faculty": "School of Accountancy",
+    "direction": "accounting",
+    "duration_months": 18,
+    "tuition": "SGD 58,860 (inclusive of GST); Application fee SGD 100 (non-refundable)",
+    "campus": "Singapore, 60 Stamford Road, Level 5",
+    "requirements": {
+      "undergrad_background": "Good Bachelor's degree from a recognised institution; explicitly welcomes graduates from non-accounting disciplines; sufficient background in Mathematics or Calculus necessary",
+      "chinese_university_preference": null,
+      "gpa": "No specific numeric minimum published; general 'good Bachelor's degree' standard stated",
+      "ielts": "Minimum 6.5 (valid 2 years); required if undergraduate studies were not conducted in English",
+      "toefl": "Minimum 90 iBT (or Band 4.5), valid 2 years; required if undergraduate studies were not conducted in English",
+      "gmat_gre": "Mandatory - GMAT 600 or higher (or GMAT Focus 595+), or GRE 312 combined Verbal and Quantitative, or SMU Admissions Test (SMUAT); scores valid 5 years. Average GMAT of recent cohorts: 682",
+      "prerequisites": "Sufficient background in Mathematics or Calculus required",
+      "work_experience": "Not compulsory but provides valuable dimension and is viewed favourably; average cohort has approximately 3 years work experience",
+      "interview": "Yes - shortlisted applicants invited for interview with the Admissions Panel; interviews conducted approximately October to June; decisions within 1-2 weeks post-interview"
+    },
+    "deadlines": {
+      "intake": "August 2026",
+      "opening": "1 August 2025",
+      "rolling": false,
+      "rounds": [
+        "Phase 1 (Early Admission): 1-31 August 2025",
+        "Phase 2: 1 September - 31 December 2025",
+        "Phase 3: 1 January - 31 March 2026",
+        "Phase 4: 1 April - 30 June 2026"
+      ],
+      "final": "30 June 2026",
+      "note": "PRIOR CYCLE DATES. This is the published schedule for the August 2026 intake. As of the research date 2026-07-20, the 2026/27-cycle phased deadlines leading to an August 2027 intake had NOT yet been published on the official page."
+    },
+    "materials": [
+      "Updated resume",
+      "Undergraduate degree certificate and transcript",
+      "Passport copy",
+      "Two professional references (automated forms sent to referees)",
+      "Standardized test scores (GMAT/GRE/SMUAT)",
+      "English proficiency test scores (if applicable)",
+      "Application fee SGD 100"
+    ],
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/master-of-professional-accounting"
+    ],
+    "confidence": "high",
+    "notes": "Deadlines captured are for the August 2026 intake (prior cycle); 2026/27 cycle dates not yet published as of 2026-07-20. Recognised by nine professional bodies for exemption pathways: ACCA, ICAEW, ISCA/SCAQ, CPA Australia, CIMA (up to 11 of 16 papers exempted), CA ANZ, CMA Australia, IMA, plus AACSB dual accreditation in Business and Accounting. Full-time 18 months with an option to complete in 12 months; part-time 24 months. Class profile approximately 94% international students across 9 nationalities."
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of Science in Accounting (MSA)",
+    "program_name_zh": "会计学理学硕士",
+    "faculty": "School of Accountancy",
+    "direction": "accounting",
+    "duration_months": 18,
+    "tuition": "SGD 63,220 (inclusive of GST)",
+    "campus": "Singapore, 60 Stamford Road, Level 5",
+    "requirements": {
+      "undergrad_background": "Good Bachelor's degree from a recognised institution with sufficient background in Accounting/Finance/Statistics/Business; background assessed via GMAT quantitative score (minimum 60th percentile) or completion of university-level mathematics courses",
+      "chinese_university_preference": null,
+      "gpa": null,
+      "ielts": "Minimum 6.5 (if undergraduate degree not taught in English)",
+      "toefl": "Minimum 90 iBT (or Band 4.5) (if undergraduate degree not taught in English)",
+      "gmat_gre": "Required - GMAT minimum 600 (or GMAT Focus 595), GRE 312 combined, or SMU Admissions Test (SMUAT)",
+      "prerequisites": "Accounting/Finance/Statistics/Business background, or quantitative competency demonstrated via GMAT quantitative percentile (60th+) or university-level mathematics coursework",
+      "work_experience": "Not mandatory but considered favourably by the admissions panel",
+      "interview": "Yes - shortlisted applicants only, conducted by the MSA Admissions Panel"
+    },
+    "deadlines": {
+      "intake": "August 2026",
+      "opening": "31 August 2025",
+      "rolling": false,
+      "rounds": [
+        "Phase 1 (Early): 31 August 2025",
+        "Phase 2: 1 September - 31 December 2025",
+        "Phase 3: 1 January - 31 March 2026",
+        "Phase 4: 1 April - 30 June 2026"
+      ],
+      "final": "30 June 2026",
+      "note": "PRIOR CYCLE DATES for the August 2026 intake; 2026/27-cycle dates not yet published as of research date 2026-07-20. Phase 1 rendered on the official page as a single date rather than a range, which may be a page rendering artifact."
+    },
+    "materials": [
+      "Updated resume",
+      "Bachelor's degree scroll/diploma",
+      "Undergraduate transcript",
+      "Admission test scores (official reports)",
+      "English proficiency test (if applicable)",
+      "Passport copy",
+      "Two referee contacts (automated referral forms)"
+    ],
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/master-in-accounting"
+    ],
+    "confidence": "medium",
+    "notes": "Confidence set to medium due to naming ambiguity: different SMU pages refer to this programme as 'MSc in Accounting', 'Master of Science in Accounting (MSA)' and 'MSc in Accounting Data and Analytics'. The page fetched titles it 'Master of Science in Accounting (MSA)' with two tracks: Data & Analytics, and Applied Artificial Intelligence. Exact public-facing branding needs final confirmation. Single intake annually in August. Full-time 12-18 months (18 recorded); part-time 24 months. Deadlines captured are prior cycle (August 2026 intake). No published GPA minimum."
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of IT in Business (MITB)",
+    "program_name_zh": "商业信息技术硕士",
+    "faculty": "School of Computing and Information Systems",
+    "direction": "business_analytics",
+    "duration_months": 18,
+    "tuition": "S$56,680 (Inclusive of GST)",
+    "campus": "Singapore",
+    "requirements": {
+      "undergrad_background": "No explicit major requirement published; class profile shows diverse backgrounds - Business/Financial Services 36%, Engineering 33%, Computing 13%, Science 13%, Arts & Social Sciences 5%",
+      "chinese_university_preference": null,
+      "gpa": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "GMAT / GRE / SMU Admissions Test required. Average GMAT of admitted class: 625",
+      "prerequisites": "Programming competency expected and built in via foundation courses: Computational Thinking with Python, Statistical Thinking for Data Science, Spreadsheet Modelling for Decision Making. Multiple advanced electives require prior completion of Python Programming & Data Analysis or Computational Thinking with Python",
+      "work_experience": "Not stated as mandatory; average years of work experience among 2018-2021 cohorts was 4.1 years; typical age range 22-32",
+      "interview": null
+    },
+    "deadlines": {
+      "intake": "August and January intakes",
+      "opening": "1 January (August intake); 1 June (January intake)",
+      "rolling": null,
+      "rounds": [
+        "August intake: 1 January to 30 June (applications extended to 30 June 2026)",
+        "January intake: 1 June to 31 October"
+      ],
+      "final": "30 June (August intake); 31 October (January intake)",
+      "note": "These are the standing recurring annual windows. The 'extended to 30 June 2026' note appears to describe the current/2026 intake rather than a 2026/27-labelled cycle, so exact 2026/27-cycle-specific dates are NOT confirmed."
+    },
+    "materials": [],
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/master-of-it-in-business"
+    ],
+    "confidence": "medium",
+    "notes": "官网未列明 / not stated on official page: IELTS and TOEFL numeric thresholds, interview stage confirmation, GPA requirement, and the full required-documents checklist were all NOT found on the MITB pages fetched. Materials deliberately left as an empty array rather than inferred from sibling SMU programmes. These gaps need a follow-up fetch of a dedicated MITB admissions sub-page before being treated as final; contact listed on the official page is mitb@smu.edu.sg. Five tracks offered: Artificial Intelligence (AI), Cybersecurity (CYB), Data Science & Analytics (DSA, rebranded from Analytics/AT in April 2025), Digital Transformation (DT), and Financial Technology & Analytics (FTA). No track-specific tuition variation found and no track-differentiated admission requirements found on the official pages - DSA and FTA appear to share the same general MITB admission process, differing only in curriculum electives. Duration published as 12 to 24 months; 18 recorded as the nominal full-time figure."
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of Science in Business Artificial Intelligence (MBAI)",
+    "program_name_zh": "商业人工智能理学硕士",
+    "faculty": "Lee Kong Chian School of Business",
+    "direction": "other",
+    "duration_months": 12,
+    "tuition": "S$59,950 (inclusive of GST)",
+    "campus": "Singapore, 50 Stamford Road",
+    "requirements": {
+      "undergrad_background": "Open to applicants from all academic backgrounds who aspire to lead in an AI-enabled business environment",
+      "chinese_university_preference": null,
+      "gpa": "No fixed minimum published; SMU graduates with 3.0/4.0 or local autonomous university graduates with 3.5/5.0 may waive the standardized test requirement",
+      "ielts": "6.5 (reference benchmark; required only if undergraduate instruction was not in English)",
+      "toefl": "90 (reference benchmark; required only if undergraduate instruction was not in English)",
+      "gmat_gre": "One of: GMAT >=600, GMAT Focus >=595, GRE >=312, or SMU Admissions Test >=55",
+      "prerequisites": "No prerequisite coursework mandated for admission",
+      "work_experience": "1 to 5 years of work experience preferred; candidates without experience may apply if demonstrating strong motivation and interest in business AI",
+      "interview": "Yes - shortlisted candidates invited for an online interview within two weeks of the application"
+    },
+    "deadlines": {
+      "intake": "August 2026",
+      "opening": "September 2025",
+      "rolling": true,
+      "rounds": null,
+      "final": "June 2026",
+      "note": "PRIOR CYCLE DATES. Published as rolling admissions from September 2025 with a June 2026 deadline for the August 2026 intake. As of research date 2026-07-20, 2026/27-cycle dates (August 2027 intake) were NOT yet found published."
+    },
+    "materials": [
+      "Completed online application",
+      "NRIC/FIN/Passport copy",
+      "Bachelor's degree certificate and transcripts",
+      "Standardized test scores (GMAT/GRE/SMU Admissions Test)",
+      "English proficiency proof (if applicable)",
+      "Resume",
+      "Two personal statements (500-600 words each)",
+      "Two referee reports"
+    ],
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/msc-in-business-ai"
+    ],
+    "confidence": "high",
+    "notes": "12-month full-time programme with a maximum course duration of 1.5 years. Mapped to 'other' direction per coordinator instruction - sits between business analytics and general management in content. Deadlines captured are prior cycle (August 2026 intake); 2026/27 dates not yet published as of 2026-07-20."
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of Data Science in Economics (MDSE)",
+    "program_name_zh": "经济学数据科学硕士",
+    "faculty": "School of Economics",
+    "direction": "economics",
+    "duration_months": 18,
+    "tuition": "S$54,500 (inclusive of GST); Application fee S$100 (inclusive of GST)",
+    "campus": "Singapore, 90 Stamford Road",
+    "requirements": {
+      "undergrad_background": "No specific prerequisites required; a background in mathematics, statistics, computer science, or economics will be advantageous. Applicants with relevant experience may qualify for exemptions from foundation and core courses",
+      "chinese_university_preference": null,
+      "gpa": "SMU alumni: CGPA 3.0/4.0 or above (within 5 years of graduation). NUS/NTU/SUTD/SUSS/SIT alumni: CGPA 3.5/5.0 or above (within 5 years of graduation). These exemptions waive the standardized test requirement",
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "GMAT or GRE recommended; alternatively applicants may take the SMU Admission Test (fee S$125). CGPA-based exceptions waive this requirement",
+      "prerequisites": "None mandatory; mathematics, statistics, computer science or economics background advantageous",
+      "work_experience": "No minimum requirement stated. Note: the Industry Distinction Scholarship targets applicants with at least three years of work experience - this is a scholarship criterion, not an admission requirement",
+      "interview": "Yes - shortlisted applicants with complete application records will be contacted for an admission interview"
+    },
+    "deadlines": {
+      "intake": "August and January intakes",
+      "opening": "1 October (August intake); 1 July (January intake)",
+      "rolling": null,
+      "rounds": [
+        "August intake: 1 October to 30 June",
+        "January intake: 1 July to 30 November"
+      ],
+      "final": "30 June (August intake); 30 November (January intake)",
+      "note": "Standing recurring annual application windows as published on the official page; not labelled as 2026/27-cycle-specific."
+    },
+    "materials": [
+      "Personal identification document",
+      "Degree scroll and official transcript(s)",
+      "GMAT/GRE/SMU Admission Test score report",
+      "IELTS/TOEFL (if applicable)",
+      "Updated resume",
+      "Personal statement",
+      "Two referee reports"
+    ],
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/master-of-data-science-economics"
+    ],
+    "confidence": "high",
+    "notes": "IELTS/TOEFL numeric thresholds not published on this page - only the conditional rule that they are required if the degree was not taught in English. Full-time 18 months with flexibility to complete in 12 months; part-time 30 months with flexibility to complete in 24 months. Described on the official page as Singapore's first and only programme blending data science and economics."
+  }
+]

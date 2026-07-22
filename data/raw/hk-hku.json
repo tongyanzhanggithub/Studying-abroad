@@ -1,0 +1,276 @@
+[
+  {
+    "school_name_en": "The University of Hong Kong",
+    "school_name_zh": "香港大学",
+    "school_short": "HKU",
+    "region": "HK",
+    "program_name_en": "Master of Finance",
+    "program_name_zh": "金融学硕士",
+    "faculty": "HKU Business School (Faculty of Business and Economics)",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "HKD 508,000 (deposit HKD 169,000 upon offer acceptance)",
+    "campus": "Main Campus, Pokfulam, Hong Kong",
+    "requirements": {
+      "undergrad_background": "Hold a Bachelor's degree with honours of HKU, or another qualification of equivalent standard from HKU or another recognised university/institution. No specific undergraduate major required by regulation; curriculum is interdisciplinary (finance, statistics, maths, economics, law).",
+      "china_university_list": null,
+      "gpa_requirement": "官网未列明具体最低GPA/均分要求；仅规定须持有荣誉学士学位或同等资格，必要时须通过入学资格考试(qualifying examination)。",
+      "ielts": {"overall": 6.0, "subscores": "no subtest below 5.5"},
+      "toefl": {"overall": 80, "subscores": "internet-based test; HKU Business School general admissions page states a score of 80+ for tests taken before 21 Jan 2026, or 4.5+ for tests taken from 21 Jan 2026 onwards (verbatim official text; the '4.5' scale is not further explained on the page)"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not required. A good GMAT/GRE score is favourably considered and can help marginal cases. GMAT programme code: FS2-WL-65. GRE code (HKU): 2482.",
+      "prerequisites": "No mandatory prerequisite subjects stated; quantitative background helpful given curriculum (calculus, statistics) but not a formal requirement in the regulations document.",
+      "work_experience": "Not a stated admission requirement. Application document checklist includes working experience proof (internship or full-time employment) only if applicable.",
+      "interview": "HKU Business School general admissions policy: 'In general, applicants are not required to attend an interview during the admissions process,' though applicants may be invited to record and upload additional mandatory admission videos. No MFin-specific interview requirement found on official pages."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网(masters.hkubs.hku.hk)明确采用滚动录取(rolling admission)，页面显示'Application rounds for 2027 intake are now open'，并建议尽早申请('a large proportion of offers will be allocated to applicants in the early stages')，但未在可抓取的官网页面上找到具体分轮次(Round 1/2/3)的确切截止日期表。建议申请人直接登录HKU Business School TPG在线申请系统查看当前开放轮次的具体日期，或邮件联系 MFadmissions@hku.hk。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document", "work_experience_proof", "gmat_gre"],
+    "source_urls": [
+      "https://masters.hkubs.hku.hk/admissions/",
+      "https://masters.hkubs.hku.hk/our-programmes/master-of-finance/",
+      "https://www4.hku.hk/pubunit/drcd/files/pgdr2025-26/Business/MFin.pdf"
+    ],
+    "confidence": "medium",
+    "notes": "materials中 work_experience_proof 与 gmat_gre 为可选材料（有则提交），其余为必交。课程结构、入学基本要求、学费(2027 intake，即2026/27申请季)、GMAT/GRE代码等直接来自HKU官网及官方学位规章(DRCD)PDF；但具体分轮次截止日期、CET-6是否可替代雅思托福、以及是否有GPA硬性门槛，官网未列明，故相关字段留空。MFin官网Our Programmes页面文案出现'two-year year full-time'的措辞（疑似网站笔误），但官方Regulations文件(MF6条)明确写明'一学年全日制'，故duration_months采用12。"
+  },
+  {
+    "school_name_en": "The University of Hong Kong",
+    "school_name_zh": "香港大学",
+    "school_short": "HKU",
+    "region": "HK",
+    "program_name_en": "Master of Accounting",
+    "program_name_zh": "会计学硕士",
+    "faculty": "HKU Business School (Faculty of Business and Economics)",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "HKD 468,000 (deposit HKD 156,000 upon offer acceptance)",
+    "campus": "Main Campus, Pokfulam, Hong Kong",
+    "requirements": {
+      "undergrad_background": "Hold a Bachelor's degree with honours of HKU, or another qualification of equivalent standard from HKU or another recognised university/institution. No specific undergraduate major mandated; a non-credit-bearing 'boot camp' in Economics and Statistical Analysis is offered before term start to level the academic foundation for candidates from diverse backgrounds.",
+      "china_university_list": null,
+      "gpa_requirement": "官网未列明具体最低GPA/均分要求，仅要求持有荣誉学士学位或同等资格，必要时须通过入学资格考试。",
+      "ielts": {"overall": 6.0, "subscores": "no subtest below 5.5"},
+      "toefl": {"overall": 80, "subscores": "internet-based test; per HKU Business School general admissions page, the stated requirement differs for tests taken before vs. from 21 Jan 2026 (identical wording to other HKUBS programmes)"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not required. A good GMAT/GRE score is favourably considered, especially helpful for marginal cases. GMAT programme code: FS2-WL-21. GRE code (HKU): 2482.",
+      "prerequisites": "No formal prerequisite subject required; programme includes a pre-term boot camp (Economics + Statistical Analysis, 30 hours, non-credit, pass/fail) for candidates without a strong quantitative/economics background.",
+      "work_experience": "Not a stated admission requirement. Working experience proof submitted only if applicable.",
+      "interview": "General HKU Business School policy: interview generally not required; applicants may be invited to submit an admission video instead. No MAcct-specific interview requirement found."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "滚动录取，官网未提供针对2026/27申请季（即'2027 intake'）具体的分轮次截止日期表。某第三方检索结果曾提示'2026 intake的申请轮次已截止'，但那属于上一届信息，与本季无关，故未采纳。建议直接查看HKU Business School TPG在线申请系统当前开放轮次或联系 MAcctadmissions@hku.hk。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document", "work_experience_proof", "gmat_gre"],
+    "source_urls": [
+      "https://masters.hkubs.hku.hk/admissions/",
+      "https://www4.hku.hk/pubunit/drcd/files/pgdr2025-26/Business/MAcct.pdf"
+    ],
+    "confidence": "medium",
+    "notes": "materials中 work_experience_proof 与 gmat_gre 为可选；官方清单另允许在'Others'类中附交专业资格证书(如ACCA/CFA/CPA)，亦为可选。课程结构（3个方向：Accounting Analytics and Big Data / Financial Reporting and Valuation / ESG and Strategic Management）、学费、入学基本条件均来自官方DRCD规章PDF与官网Admissions页；分轮次截止日期及CET-6替代政策官网未列明，留空。"
+  },
+  {
+    "school_name_en": "The University of Hong Kong",
+    "school_name_zh": "香港大学",
+    "school_short": "HKU",
+    "region": "HK",
+    "program_name_en": "Master of Economics",
+    "program_name_zh": "经济学硕士",
+    "faculty": "HKU Business School (Faculty of Business and Economics)",
+    "direction": "economics",
+    "duration_months": 12,
+    "tuition": "HKD 438,000 (deposit HKD 146,000 upon offer acceptance)",
+    "campus": "Main Campus, Pokfulam, Hong Kong",
+    "requirements": {
+      "undergrad_background": "Hold a Bachelor's degree with honours of HKU, or another qualification of equivalent standard. Offers four streams: Advanced Research Stream, Data Analysis Stream, Policy Analysis Stream, Theory Stream — Data Analysis/Policy Analysis streams use easier-entry core courses (ECON6021/6022) versus Advanced Research/Theory streams (ECON6011/6012), indicating the latter two expect stronger undergraduate training in economics and mathematics.",
+      "china_university_list": null,
+      "gpa_requirement": "官网未列明具体最低GPA/均分要求。",
+      "ielts": {"overall": 6.0, "subscores": "no subtest below 5.5"},
+      "toefl": {"overall": 80, "subscores": "internet-based test; same HKUBS-wide wording regarding pre/post 21 Jan 2026 test dates"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not required. A good GMAT/GRE score favourably considered. GMAT programme code: FS2-WL-88. GRE code (HKU): 2482. Note: course ECON6005 (Econometric Theory I) states candidates 'may be required to pass a mathematics test' in order to take that course.",
+      "prerequisites": "Advanced Research Stream and Theory Stream expect strong undergraduate training in economics/mathematics (candidates take ECON6011/6012 Microeconomic/Macroeconomic Theory); Data Analysis and Policy Analysis Streams offer an alternative, less mathematically intensive entry route (ECON6021/6022). Advanced Research Stream applicants must additionally submit a 2-page Research Statement (writing sample optional).",
+      "work_experience": "Not a stated admission requirement; working experience proof submitted only if applicable.",
+      "interview": "General HKUBS policy: interview generally not required; applicants may be asked to submit an admission video."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "滚动录取。网络检索中出现过'2026 intake早申截止日为2025年7月25日中午'的说法，但该信息对应上一个申请季(2026 intake)，非本次调研目标的2026/27季('2027 intake')，且未能在官网直接核实到该日期出处，故未采纳，final_deadline留空。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document", "work_experience_proof", "gmat_gre", "research_statement"],
+    "source_urls": [
+      "https://masters.hkubs.hku.hk/admissions/",
+      "https://www4.hku.hk/pubunit/drcd/files/pgdr2024-25/Business/MEcon.pdf"
+    ],
+    "confidence": "medium",
+    "notes": "materials中 research_statement 仅适用于 Advanced Research Stream 申请人（另可选交writing sample）；work_experience_proof 与 gmat_gre 为可选。课程结构（4个方向流）与研究论文提交时限（Advanced Research Stream须于最后学年1月1日前提交论文题目与提案、8月31日前提交论文）来自官方规章文件；分轮次截止日期未在官网确认，留空。"
+  },
+  {
+    "school_name_en": "The University of Hong Kong",
+    "school_name_zh": "香港大学",
+    "school_short": "HKU",
+    "region": "HK",
+    "program_name_en": "Master of Science in Business Analytics",
+    "program_name_zh": "商业分析理学硕士",
+    "faculty": "HKU Business School (Faculty of Business and Economics)",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "HKD 468,000 (deposit HKD 156,000 upon offer acceptance)",
+    "campus": "Main Campus, Pokfulam, Hong Kong",
+    "requirements": {
+      "undergrad_background": "Hold a Bachelor's degree with honours of HKU, or another qualification of equivalent standard. No mandated major, though a quantitative/technical background is useful given the curriculum (Python, statistics, machine learning, optimization).",
+      "china_university_list": null,
+      "gpa_requirement": "官网未列明具体最低GPA/均分要求。",
+      "ielts": {"overall": 6.0, "subscores": "no subtest below 5.5"},
+      "toefl": {"overall": 80, "subscores": "internet-based test"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not required. A good GMAT/GRE score favourably considered, helpful for marginal cases. GMAT programme code: FS2-WL-82. GRE code (HKU): 2482.",
+      "prerequisites": "No formal prerequisite; candidates may concentrate in the Artificial Intelligence (AI) Stream or the Management Consulting (MC) Stream, each requiring minimum elective picks from specified course lists.",
+      "work_experience": "Not a stated admission requirement.",
+      "interview": "General HKUBS policy: 'In general, applicants are not required to attend an interview during the admission process'; applicants may be asked to submit an admission video."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "滚动录取；每年仅一次入学(八/九月)；录取决定一般在申请截止后约1个月内公布。具体分轮次截止日期官网未能在可抓取页面上确认，留空。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document", "gmat_gre"],
+    "source_urls": [
+      "https://masters.hkubs.hku.hk/admissions/",
+      "https://www4.hku.hk/pubunit/drcd/files/pgdr2025-26/Business/MSc(BA).pdf"
+    ],
+    "confidence": "medium",
+    "notes": "materials中 gmat_gre 为可选（有则提交）；如有实习/工作经历亦可附交工作证明。课程结构（AI Stream / Management Consulting Stream，共10门课含Capstone）与入学基本条件来自官方DRCD规章PDF及官网Admissions页；分轮次截止日期及CET-6替代政策未列明。"
+  },
+  {
+    "school_name_en": "The University of Hong Kong",
+    "school_name_zh": "香港大学",
+    "school_short": "HKU",
+    "region": "HK",
+    "program_name_en": "Master of Global Management",
+    "program_name_zh": "全球管理硕士",
+    "faculty": "HKU Business School (Faculty of Business and Economics)",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "HKD 468,000 (deposit HKD 156,000 upon offer acceptance)",
+    "campus": "Main Campus, Pokfulam, Hong Kong",
+    "requirements": {
+      "undergrad_background": "Hold a Bachelor's degree with honours of HKU, or another qualification of equivalent standard. No specific undergraduate major required; the programme covers organizational behaviour, cross-cultural management, global strategy and an optional ESG concentration.",
+      "china_university_list": null,
+      "gpa_requirement": "官网未列明具体最低GPA/均分要求。",
+      "ielts": {"overall": 6.0, "subscores": "no subtest below 5.5; IELTS One Skill Retake not accepted"},
+      "toefl": {"overall": 80, "subscores": "internet-based test; TOEFL iBT Home Edition not accepted"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not required. A good GMAT/GRE score favourably considered. GMAT programme code: FS2-WL-17. GRE code (HKU): 2482.",
+      "prerequisites": "None mandated; candidates may opt into an ESG Stream by taking a minimum of three designated ESG electives (e.g. Corporate Governance and Social Responsibility, Sustainable Capitalism, ESG Reporting).",
+      "work_experience": "Not a stated admission requirement; working experience proof submitted only if applicable.",
+      "interview": "General HKUBS policy: interview generally not required, though applicants may be invited to submit an admission video. Application fee HK$780 per application (per official admissions page)."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "滚动录取，官网未列明具体分轮次(Round 1/2/3)截止日期表。建议直接查询在线申请系统当前轮次或邮件联系 MGMadmissions@hku.hk。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document", "work_experience_proof", "gmat_gre"],
+    "source_urls": [
+      "https://masters.hkubs.hku.hk/admissions/",
+      "https://www4.hku.hk/pubunit/drcd/files/pgdr2020-21/Business/MGM.pdf"
+    ],
+    "confidence": "medium",
+    "notes": "materials中 work_experience_proof 与 gmat_gre 为可选。课程结构（10门课，含ESG Stream选项）与录取条件来自官方DRCD规章PDF及官网Admissions页；因项目定位为国际化管理，direction归类为 international_business。分轮次截止日期及CET-6替代政策未列明。"
+  },
+  {
+    "school_name_en": "The University of Hong Kong",
+    "school_name_zh": "香港大学",
+    "school_short": "HKU",
+    "region": "HK",
+    "program_name_en": "Master of Science in Marketing",
+    "program_name_zh": "市场学理学硕士",
+    "faculty": "HKU Business School (Faculty of Business and Economics)",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "HKD 438,000 (deposit HKD 146,000 upon offer acceptance)",
+    "campus": "Main Campus, Pokfulam, Hong Kong",
+    "requirements": {
+      "undergrad_background": "Hold a Bachelor's degree with honours of HKU, or another qualification of equivalent standard. No specific undergraduate major required.",
+      "china_university_list": null,
+      "gpa_requirement": "官网未列明具体最低GPA/均分要求。",
+      "ielts": {"overall": 6.0, "subscores": "no subtest below 5.5"},
+      "toefl": {"overall": 80, "subscores": "internet-based test (paper-based equivalent 550 per official FAQ wording)"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not required. A good GMAT/GRE score favourably considered. GMAT programme code: FS2-WL-12. GRE code (HKU): 2482.",
+      "prerequisites": "None mandated; candidates may concentrate in the Strategic Marketing Stream or the Quantitative Marketing Stream by taking a minimum of three designated stream electives each.",
+      "work_experience": "Not a stated admission requirement.",
+      "interview": "General HKUBS policy: 'applicants are not required to attend an interview during the admissions process'; applicants may be invited to submit an admission video."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "滚动录取；每年仅一次入学(八/九月)；录取决定一般在申请截止后约1个月内公布。具体分轮次截止日期官网未能确认，留空。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document", "gmat_gre"],
+    "source_urls": [
+      "https://masters.hkubs.hku.hk/admissions/",
+      "https://www4.hku.hk/pubunit/drcd/files/pgdr2024-25/Business/MSc(Mktg).pdf"
+    ],
+    "confidence": "medium",
+    "notes": "materials中 gmat_gre 为可选；如有实习/工作经历亦可附交工作证明。课程结构（Strategic Marketing Stream / Quantitative Marketing Stream，共10门课含Capstone模拟课程）与入学条件来自官方DRCD规章PDF及官网Admissions页；分轮次截止日期与CET-6替代政策未列明。特别提醒：至少一位推荐人须为毕业院校的学术推荐人，且须在推荐表中提供该校官网的个人主页或名录链接，否则推荐信视为不完整、申请不予处理。"
+  },
+  {
+    "school_name_en": "The University of Hong Kong",
+    "school_name_zh": "香港大学",
+    "school_short": "HKU",
+    "region": "HK",
+    "program_name_en": "Master of Finance in Financial Technology",
+    "program_name_zh": "金融科技硕士",
+    "faculty": "HKU Business School (Faculty of Business and Economics)",
+    "direction": "other",
+    "duration_months": 12,
+    "tuition": "HKD 508,000 (deposit HKD 169,000 upon offer acceptance)",
+    "campus": "Main Campus, Pokfulam, Hong Kong",
+    "requirements": {
+      "undergrad_background": "Hold a Bachelor's degree with honours of HKU, or another qualification of equivalent standard. Official regulation MFFinTech 1(e) states candidates should 'preferably have background knowledge in computer science, engineering, mathematics, physics, statistics, or science and technology'.",
+      "china_university_list": null,
+      "gpa_requirement": "官网未列明具体最低GPA/均分要求。",
+      "ielts": {"overall": 6.0, "subscores": "no subtest below 5.5"},
+      "toefl": {"overall": 80, "subscores": "internet-based test"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not required. A good GMAT/GRE score favourably considered. GMAT programme code: FS2-WL-09. GRE code (HKU): 2482.",
+      "prerequisites": "Preferred (not mandatory) STEM background per official regulation: computer science, engineering, mathematics, physics, statistics, or science & technology. Candidates with a computer science major may apply for exemption from FITE7409 Blockchain and Cryptocurrency.",
+      "work_experience": "Not a stated admission requirement.",
+      "interview": "General HKUBS policy: interview generally not required; applicants may be invited to submit an admission video."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "滚动录取，早申请优先。官网未列明具体分轮次截止日期表。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document", "gmat_gre"],
+    "source_urls": [
+      "https://masters.hkubs.hku.hk/admissions/",
+      "https://www4.hku.hk/pubunit/drcd/files/pgdr2024-25/Business/MFFinTech.pdf"
+    ],
+    "confidence": "medium",
+    "notes": "materials中 gmat_gre 为可选。学费采用官网Composition Fee表中对应当前开放轮次的数据(HKD 508,000 / 押金 169,000)；此前第三方检索片段曾提及上一届(2026 intake)为 HKD 462,000 / 押金 154,000，已弃用。enum中无fintech专项分类，故direction标为other。课程含区块链与加密货币、金融机器学习与AI、量化交易，并可选修法学院/工学院课程(隐私与数据保护法、反洗钱法、金融欺诈分析、深度学习)。分轮次截止日期与CET-6替代政策官网未列明。"
+  }
+]

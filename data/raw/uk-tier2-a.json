@@ -1,0 +1,781 @@
+[
+  {
+    "school_name_en": "King's College London",
+    "school_name_zh": "伦敦国王学院",
+    "school_short": "KCL",
+    "region": "UK",
+    "program_name_en": "MSc Finance (Corporate Finance)",
+    "program_name_zh": "金融学硕士(公司金融方向)",
+    "faculty": "King's Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "GBP 45,100 per year (International, 2026/27 as shown on official fees page)",
+    "campus": "Strand Campus, London",
+    "requirements": {
+      "undergrad_background": "本科需为社会科学相关专业(如管理、经济、金融或其他相关学科),官网建议具备金融和/或经济学的量化背景,或所学学位包含一定量化内容。",
+      "china_university_list": "官网未公开针对中国院校的分档名单。通用要求为本科阶段各年均分65%及以上(英国分级体系下的High 2:1),按King's官方国家/地区等效换算表评估,未见对中国大学的分层或差异化分数线表述。",
+      "gpa_requirement": "最低要求 High 2:1,即本科各年均分65%及以上;若分数略低,可凭借显著相关工作经验或已获得的相关研究生学历弥补。",
+      "ielts": {"overall": 7.0, "subscores": "Band B: 单项不低于6.5"},
+      "toefl": {"overall": 100, "subscores": "Band B, 2026年1月21日前考试:总分100,写作最低25,其他单项最低23;2026年1月21日后新计分体系:总分5.0,单项最低4.5"},
+      "gmat_gre": "官网明示不强制要求GMAT/GRE,但提供且有帮助时可提升申请竞争力。参考分数:GMAT(第10版)670+;GMAT Focus Edition 78%或615分;GRE 324分且verbal reasoning在70-75%区间。",
+      "prerequisites": "建议具备金融/经济学量化背景或学位中含量化内容课程。",
+      "work_experience": "非强制要求;若本科分数略低于标准,显著相关工作经验可作为补充材料增强申请。",
+      "interview": "官网未提及需要面试或视频测评。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网课程页面仅显示'Application closing date guidance'标题但未给出具体日期;King's通用说明为每年10月中旬开放次年9月入学的申请,采用滚动录取(rolling admission),建议尽早申请。采集日为2026-07-20,官网当前显示的学费为'2026/27'学年,不能确认这是即将截止的2026年9月入学周期还是已更新至2027年9月入学周期,请以官网课程页面及King's Apply申请系统实时信息为准。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/corporate-finance-msc",
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/corporate-finance-msc/requirements",
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/corporate-finance-msc/fees",
+      "https://www.kcl.ac.uk/study/postgraduate-taught/how-to-apply/entry-requirements/english-language-requirements"
+    ],
+    "confidence": "high",
+    "notes": "申请费£130,非退还。King's Business School提供最高50%学费或£10,000的奖学金(适用于全日制线下授课型硕士)。官网未公开逐校中国大学分档名单,是KCL区别于Southampton/Birmingham等校的重要特点。"
+  },
+  {
+    "school_name_en": "King's College London",
+    "school_name_zh": "伦敦国王学院",
+    "school_short": "KCL",
+    "region": "UK",
+    "program_name_en": "MSc Banking & Finance",
+    "program_name_zh": "银行与金融硕士",
+    "faculty": "King's Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "GBP 45,100 per year (International, 2026/27 as shown on official fees page)",
+    "campus": "Strand Campus, London",
+    "requirements": {
+      "undergrad_background": "本科需为社会科学相关专业(管理、经济、金融或其他相关学科),官网表示'具备金融和/或经济学的量化背景,或学位含量化元素'者最为合适。",
+      "china_university_list": "官网未公开针对中国院校的分档名单。通用要求为本科各年均分65%及以上(High 2:1),按国家/地区等效换算表评估,未见对中国大学的分层名单。",
+      "gpa_requirement": "最低 High 2:1,即本科各年均分65%及以上;分数略低时可凭相关工作经验或相关研究生学历弥补。",
+      "ielts": {"overall": 7.0, "subscores": "Band B: 单项不低于6.5"},
+      "toefl": {"overall": 100, "subscores": "Band B, 2026年1月21日前:总分100,写作最低25,其余单项最低23;2026年1月21日后新计分体系:总分5.0,单项最低4.5"},
+      "gmat_gre": "官网明确说明'不强制要求GMAT或GRE分数',但提供可作为加分项。参考分数:GMAT(第10版)670+;GMAT Focus 78%或615分;GRE 324分(verbal 70-75%)。",
+      "prerequisites": "建议具备金融/经济学量化背景;设有虚拟交易大厅及金融数据库供教学使用。",
+      "work_experience": "非强制;分数略低时,相关工作经验可作为弥补材料。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "同KCL其他项目,官网课程页面未给出具体截止日期,采用滚动录取。采集日2026-07-20,官网学费页面显示'2026/27'学年,具体对应哪个入学周期请以官网及King's Apply系统为准。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/banking-and-finance-msc",
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/banking-and-finance-msc/requirements",
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/banking-and-finance-msc/fees"
+    ],
+    "confidence": "high",
+    "notes": "申请费£130。King's Business School最高提供50%学费或£10,000奖学金。"
+  },
+  {
+    "school_name_en": "King's College London",
+    "school_name_zh": "伦敦国王学院",
+    "school_short": "KCL",
+    "region": "UK",
+    "program_name_en": "MSc International Management",
+    "program_name_zh": "国际管理硕士",
+    "faculty": "King's Business School",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "GBP 40,450 per year (International, 2026/27 as shown on official fees page)",
+    "campus": "Strand Campus, London",
+    "requirements": {
+      "undergrad_background": "本科专业不限,官网未要求特定学科背景。",
+      "china_university_list": "官网未公开针对中国院校的分档名单。通用要求为本科各年均分65%及以上(High 2:1)。",
+      "gpa_requirement": "最低 High 2:1,即本科各年均分65%及以上;分数略低时可凭相关研究生学历弥补,专业不限。",
+      "ielts": {"overall": 7.0, "subscores": "Band B: 单项不低于6.5"},
+      "toefl": {"overall": 100, "subscores": "Band B, 2026年1月21日前:总分100,写作最低25,其余单项最低23;2026年1月21日后:总分5.0,单项最低4.5"},
+      "gmat_gre": "官网明确说明不强制要求;参考分数:GMAT(第10版)670+,GMAT Focus 78%或615分,GRE 324分(verbal 70-75%)。",
+      "prerequisites": "官网未列明特定先修课程要求。",
+      "work_experience": "非强制要求。",
+      "interview": "该项目设有竞争性选拔流程,申请者需在初审后通过 Kira Talent 平台完成在线视频测评(非传统面试)。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未给出具体截止日期,滚动录取。采集日2026-07-20,官网学费页面显示'2026/27'学年。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/international-management-msc",
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/international-management-msc/requirements",
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/international-management-msc/fees"
+    ],
+    "confidence": "high",
+    "notes": "QS Business Master's Rankings 2026中管理类位列全球前30。因含视频测评环节,建议申请者提前准备。"
+  },
+  {
+    "school_name_en": "King's College London",
+    "school_name_zh": "伦敦国王学院",
+    "school_short": "KCL",
+    "region": "UK",
+    "program_name_en": "MSc Accounting, Accountability & Financial Management",
+    "program_name_zh": "会计、问责制与财务管理硕士",
+    "faculty": "King's Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "GBP 45,100 per year (International, 2026/27 as shown on official fees page)",
+    "campus": "Strand Campus, London",
+    "requirements": {
+      "undergrad_background": "本科需为社会科学相关专业(如管理、经济、社会学或其他相关学科)。",
+      "china_university_list": "官网未公开针对中国院校的分档名单。通用要求为本科各年均分65%及以上(High 2:1)。",
+      "gpa_requirement": "最低 High 2:1,即本科各年均分65%及以上;分数略低或专业不相关时可凭相关工作经验或研究生学历弥补。",
+      "ielts": {"overall": 7.0, "subscores": "Band B: 单项不低于6.5"},
+      "toefl": {"overall": 100, "subscores": "Band B, 2026年1月21日前:总分100,写作最低25,其余单项最低23;2026年1月21日后:总分5.0,单项最低4.5"},
+      "gmat_gre": "官网明确说明不强制要求;参考分数:GMAT(第10版)670+,GMAT Focus 78%或615分,GRE 324分(verbal 70-75%)。",
+      "prerequisites": "官网未列明具体先修课程,侧重会计与财务管理的经济、技术与制度基础。",
+      "work_experience": "非强制;可作为分数不足时的弥补材料。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未给出具体截止日期,滚动录取。采集日2026-07-20,官网学费页面显示'2026/27'学年。"
+    },
+    "materials": ["transcript", "degree_certificate", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/accounting-accountability-and-financial-management-msc",
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/accounting-accountability-and-financial-management-msc/requirements",
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/accounting-accountability-and-financial-management-msc/fees"
+    ],
+    "confidence": "high",
+    "notes": "申请费£130。此项目为King's少数明确要求提交'学位证书'(degree certificate)而非仅成绩单的项目之一。"
+  },
+  {
+    "school_name_en": "King's College London",
+    "school_name_zh": "伦敦国王学院",
+    "school_short": "KCL",
+    "region": "UK",
+    "program_name_en": "MSc International Marketing",
+    "program_name_zh": "国际市场营销硕士",
+    "faculty": "King's Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "GBP 38,300 per year (International, 2026/27 as shown on official fees page)",
+    "campus": "Strand Campus, London",
+    "requirements": {
+      "undergrad_background": "本科专业通常不建议为市场营销专业本身(官网说明该项目通常不适合本科已学市场营销的申请者)。",
+      "china_university_list": "官网未公开针对中国院校的分档名单。通用要求为本科各年均分65%及以上(High 2:1)。",
+      "gpa_requirement": "最低 High 2:1,即本科各年均分65%及以上;分数略低时可凭相关工作经验或研究生学历弥补。",
+      "ielts": {"overall": 7.0, "subscores": "Band B: 单项不低于6.5"},
+      "toefl": {"overall": 100, "subscores": "Band B, 2026年1月21日前:总分100,写作最低25,其余单项最低23;2026年1月21日后:总分5.0,单项最低4.5"},
+      "gmat_gre": "官网明确说明不强制要求;参考分数:GMAT(第10版)670+,GMAT Focus 78%或615分,GRE 324分(verbal 70-75%)。",
+      "prerequisites": "建议具备一定数据分析/统计软件基础(如Excel或SPSS)。",
+      "work_experience": "非强制;可作为分数不足时的弥补材料。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未给出具体截止日期,滚动录取。采集日2026-07-20,官网学费页面显示'2026/27'学年。"
+    },
+    "materials": ["transcript", "degree_certificate", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/international-marketing-msc",
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/international-marketing-msc/requirements",
+      "https://www.kcl.ac.uk/study/postgraduate-taught/courses/international-marketing-msc/fees"
+    ],
+    "confidence": "high",
+    "notes": "申请费£130。本科为市场营销专业者官网建议考虑该校其他项目而非本项目。"
+  },
+  {
+    "school_name_en": "University of Bristol",
+    "school_name_zh": "布里斯托大学",
+    "school_short": "Bristol",
+    "region": "UK",
+    "program_name_en": "MSc Accounting and Finance",
+    "program_name_zh": "会计与金融硕士",
+    "faculty": "University of Bristol Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "GBP 39,000 per year (International)",
+    "campus": "Temple Quarter Enterprise Campus (Bristol)",
+    "requirements": {
+      "undergrad_background": "本科需为会计、金融或商科(含会计/金融方向)专业,2:1荣誉学位;或本科修读过至少3门达到2:1水平的相关模块(需分别覆盖'财务会计/公司金融'与'管理会计/问责制'两大模块群中的至少各1门)。",
+      "china_university_list": "官网Bristol国际学生中国专页说明:持有四年制本科学位、成绩达到78%-87%区间可被视为达到英国2:1标准,具体门槛'取决于所在本科院校及申请专业'。官网另设'Accepted universities in China'认可院校名单(约600余所,其中部分标注为仅限相关专业的'Specialist institution'),但该名单未附带逐校对应的具体百分比门槛,故无法提供逐校分档对照表。",
+      "gpa_requirement": "2:1荣誉学位或国际同等学历(即中国本科成绩约78%-87%,具体依院校而定)。",
+      "ielts": {"overall": 6.5, "subscores": "Profile Level B(官网页面未在本页给出具体单项分数,历史通行标准为各单项不低于6.0,请以官网profile B页面为准)"},
+      "toefl": {"overall": null, "subscores": "官网课程页面未列出具体TOEFL分数,仅注明需达到'Profile Level B'英语要求"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "接受ACCA、CIMA或CFA等专业资格部分抵扣模块要求。",
+      "work_experience": "若成绩未达标,5年以上会计/金融相关工作经验可增强申请。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-13",
+      "notes": "本页显示为2026年9月入学(2026 entry):海外申请者截止2026-08-13,英国本土申请者截止2026-09-10,名额滚动分配,建议尽早申请。采集日为2026-07-20,该截止日期即将到来;官网2027年9月入学的申请页面/学费尚未发布,故本记录采集的是当前仍开放的2026 entry周期数据。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "cv", "english_test"],
+    "source_urls": [
+      "https://www.bristol.ac.uk/study/postgraduate/taught/msc-accounting-and-finance/",
+      "https://www.bristol.ac.uk/international/countries/china.html",
+      "https://www.bristol.ac.uk/international/countries/china/accepted-universities-in-china/",
+      "https://www.bristol.ac.uk/study/media/postgraduate/admissions-statements/2026/msc-accounting-finance-and-management.pdf"
+    ],
+    "confidence": "high",
+    "notes": "国际生学费另有25%校友折扣。CV仅在申请人依赖工作经验或替代资格弥补成绩时被建议提交,其余申请人仍需按admissions statement提交transcript/personal statement/reference/english test。"
+  },
+  {
+    "school_name_en": "University of Bristol",
+    "school_name_zh": "布里斯托大学",
+    "school_short": "Bristol",
+    "region": "UK",
+    "program_name_en": "MSc Finance and Investment",
+    "program_name_zh": "金融与投资硕士",
+    "faculty": "University of Bristol Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "GBP 39,000 per year (International)",
+    "campus": "Temple Quarter Enterprise Campus (Bristol)",
+    "requirements": {
+      "undergrad_background": "需量化学科2:1荣誉学位,含会计与金融、精算、计算机科学、数据科学、经济学、工程、金融、国际经济与贸易、数学、物理或含金融/会计方向的商科;非量化专业需2:1学位并额外修读3门数学类课程且均达60%以上,或数学A-Level达A等级。",
+      "china_university_list": "官网Bristol中国专页通用表述:四年制本科成绩78%-87%区间可视为达到英国2:1标准,具体门槛取决于本科院校及申请专业;官网未公开逐校分档对照表(仅有认可院校名单,无逐校百分比)。",
+      "gpa_requirement": "2:1(60%及以上)量化学科学位,或国际同等学历。",
+      "ielts": {"overall": 6.5, "subscores": "Profile Level B(具体单项分数未在本页列出)"},
+      "toefl": {"overall": null, "subscores": "官网课程页面未列出具体TOEFL分数"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "需量化背景;非量化学位需额外数学类课程支撑。",
+      "work_experience": "5年以上会计/经济/金融/投资相关工作经验可增强边缘申请。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-13",
+      "notes": "2026年9月入学:海外申请者截止2026-08-13,英国本土申请者截止2026-09-10,滚动录取。采集日2026-07-20,截止日期临近;2027年9月入学页面尚未发布。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "cv", "english_test"],
+    "source_urls": [
+      "https://www.bristol.ac.uk/study/postgraduate/taught/msc-finance-and-investment/",
+      "https://www.bristol.ac.uk/international/countries/china.html",
+      "https://www.bristol.ac.uk/study/media/postgraduate/admissions-statements/2026/msc-finance-and-investment.pdf"
+    ],
+    "confidence": "high",
+    "notes": "学费预计每年最多上涨8%(适用于多年制项目,本项目为1年制)。"
+  },
+  {
+    "school_name_en": "University of Bristol",
+    "school_name_zh": "布里斯托大学",
+    "school_short": "Bristol",
+    "region": "UK",
+    "program_name_en": "MSc Management (International Business)",
+    "program_name_zh": "管理学硕士(国际商务方向)",
+    "faculty": "University of Bristol Business School",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "GBP 33,900 per year (International)",
+    "campus": "Temple Quarter Enterprise Campus (Bristol)",
+    "requirements": {
+      "undergrad_background": "本科专业不限,需2:1荣誉学位或国际同等学历。",
+      "china_university_list": "官网Bristol中国专页通用表述:四年制本科成绩78%-87%区间可视为达到英国2:1标准,具体门槛取决于本科院校及申请专业;未公开逐校分档对照表。",
+      "gpa_requirement": "2:1荣誉学位或国际同等学历,专业不限。",
+      "ielts": {"overall": 6.5, "subscores": "Profile Level B(具体单项分数未在本页列出)"},
+      "toefl": {"overall": null, "subscores": "官网课程页面未列出具体TOEFL分数"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "官网未列明特定先修课程。",
+      "work_experience": "若成绩略低,至少5年相关工作经验(商业管理、金融、市场营销、运营、人力资源、项目管理或数据分析)或相关研究生学历可增强申请。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-13",
+      "notes": "2026年9月入学:海外申请者截止2026-08-13,英国本土申请者截止2026-09-10,滚动录取。采集日2026-07-20,截止日期临近;2027年9月入学页面尚未发布。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "cv", "english_test"],
+    "source_urls": [
+      "https://www.bristol.ac.uk/study/postgraduate/taught/msc-management-international-business/",
+      "https://www.bristol.ac.uk/international/countries/china.html"
+    ],
+    "confidence": "high",
+    "notes": "核心模块含管理与组织、战略、财务与会计等;若依赖工作经验弥补成绩,建议提交CV。"
+  },
+  {
+    "school_name_en": "University of Bristol",
+    "school_name_zh": "布里斯托大学",
+    "school_short": "Bristol",
+    "region": "UK",
+    "program_name_en": "MSc Marketing",
+    "program_name_zh": "市场营销硕士",
+    "faculty": "University of Bristol Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "GBP 33,900 per year (International)",
+    "campus": "Temple Quarter Enterprise Campus (Bristol)",
+    "requirements": {
+      "undergrad_background": "本科专业不限,需2:1荣誉学位或国际同等学历。",
+      "china_university_list": "官网Bristol中国专页通用表述:四年制本科成绩78%-87%区间可视为达到英国2:1标准,具体门槛取决于本科院校及申请专业;未公开逐校分档对照表。",
+      "gpa_requirement": "2:1荣誉学位或国际同等学历,专业不限。",
+      "ielts": {"overall": 6.5, "subscores": "Profile Level B(具体单项分数未在本页列出)"},
+      "toefl": {"overall": null, "subscores": "官网课程页面未列出具体TOEFL分数"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "官网未列明特定先修课程。",
+      "work_experience": "若成绩略低,5年以上市场营销、品牌、传播、社媒、公关或广告相关工作经验可增强申请;官网表示对成绩'略低于要求'的临时/在读成绩单申请人仍会考虑。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-13",
+      "notes": "2026年9月入学:海外申请者截止2026-08-13,英国本土申请者截止2026-09-10,滚动录取。采集日2026-07-20,截止日期临近;2027年9月入学页面尚未发布。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "cv", "english_test"],
+    "source_urls": [
+      "https://www.bristol.ac.uk/study/postgraduate/taught/msc-marketing/",
+      "https://www.bristol.ac.uk/international/countries/china.html"
+    ],
+    "confidence": "high",
+    "notes": "课程结构为4门核心课+2门选修课+毕业项目/论文。"
+  },
+  {
+    "school_name_en": "University of Bristol",
+    "school_name_zh": "布里斯托大学",
+    "school_short": "Bristol",
+    "region": "UK",
+    "program_name_en": "MSc Business Analytics",
+    "program_name_zh": "商业分析硕士",
+    "faculty": "University of Bristol Business School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "GBP 33,900 per year (International)",
+    "campus": "Temple Quarter Enterprise Campus (Bristol)",
+    "requirements": {
+      "undergrad_background": "需量化学科2:1荣誉学位,含会计与金融、精算、计算机科学、数据科学、经济学、工程、金融、数学、物理等相关专业;或2:1学位并修读过至少2门经批准的数学类课程(各达60%以上),或数学A-Level达A等级。",
+      "china_university_list": "官网Bristol中国专页通用表述:四年制本科成绩78%-87%区间可视为达到英国2:1标准,具体门槛取决于本科院校及申请专业;未公开逐校分档对照表。",
+      "gpa_requirement": "2:1(60%及以上)量化学科学位,或国际同等学历。",
+      "ielts": {"overall": 6.5, "subscores": "Profile Level B(具体单项分数未在本页列出)"},
+      "toefl": {"overall": null, "subscores": "官网课程页面未列出具体TOEFL分数"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "可接受的数学类课程包括高等数学、代数/线性代数、微积分、金融数学、统计学、计量经济学、定量方法等。",
+      "work_experience": "5年以上数据分析、商业分析、银行、金融等相关工作经验可增强边缘申请。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-13",
+      "notes": "2026年9月入学:海外申请者截止2026-08-13,英国本土申请者截止2026-09-10,滚动录取。采集日2026-07-20,截止日期临近;2027年9月入学页面尚未发布。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "cv", "english_test"],
+    "source_urls": [
+      "https://www.bristol.ac.uk/study/postgraduate/taught/msc-business-analytics/",
+      "https://www.bristol.ac.uk/international/countries/china.html"
+    ],
+    "confidence": "high",
+    "notes": "国际生学费另有25%校友折扣;设有Think Big、Career Accelerator、Business School Advance等奖学金。"
+  },
+  {
+    "school_name_en": "University of Southampton",
+    "school_name_zh": "南安普顿大学",
+    "school_short": "Southampton",
+    "region": "UK",
+    "program_name_en": "MSc Accounting and Finance",
+    "program_name_zh": "会计与金融硕士",
+    "faculty": "Southampton Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "GBP 36,300 per year (International)",
+    "campus": "Highfield Campus, Southampton",
+    "requirements": {
+      "undergrad_background": "需会计/审计专业学位,或本科学位中含至少7门会计/审计相关模块。语言学、艺术设计、职业技能类学位不接受。",
+      "china_university_list": "官网设有'Chinese awarding institutions listed by tier'分档名单,将中国院校分为A/B/C/D四档,不同档位对应不同的2:1/2:2等效百分比:Tier A(如北京大学、清华大学、复旦大学、上海交通大学、南京大学、厦门大学、浙江大学等39所)2:1等效约70%,2:2等效约65%;Tier B(约250余所)2:1等效约75%,2:2等效约70%;Tier C(约300余所)2:1等效约80%,2:2等效约75%;Tier D(所有未列名但被UK ENIC认可的院校)2:1等效约88%,2:2等效约83%。注:该分档为学校层面通用标准,具体到本项目仍以课程页面'2:1'要求为准。",
+      "gpa_requirement": "2:1(英国二等一学位荣誉),对应中国院校分档后的具体百分比(见china_university_list字段)。",
+      "ielts": {"overall": 6.5, "subscores": "Reading 6.0, Writing 6.0, Speaking 6.0, Listening 6.0"},
+      "toefl": {"overall": null, "subscores": "官网课程页面未列出具体TOEFL分数,注明接受其他官方认可的英语考试及预备英语课程"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "ACCA/ACA/CIMA等专业资格可按个案考虑抵扣专业背景要求。",
+      "work_experience": "非强制要求,但可弥补专业不对口或分数不足的情况。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-19",
+      "notes": "2026年9月入学:国际学生申请截止2026-08-19中午(英国时间),英国本土学生截止2026-09-02中午;名额招满后可能提前关闭。采集日2026-07-20,该截止日期即将到来;2027年9月入学页面尚未发布,本记录为当前仍开放的2026 entry周期数据。2026 entry无申请费。"
+    },
+    "materials": ["transcript", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.southampton.ac.uk/courses/accounting-finance-masters-msc",
+      "https://www.southampton.ac.uk/international/entry-qualification-equivalencies/china",
+      "https://www.southampton.ac.uk/international/entry-qualification-equivalencies/china/postgraduate-taught-tier-list"
+    ],
+    "confidence": "high",
+    "notes": "该项目明确说明不需要推荐信(No references required)。南安普顿是四所院校中官网公开分档细则最完整的一所。"
+  },
+  {
+    "school_name_en": "University of Southampton",
+    "school_name_zh": "南安普顿大学",
+    "school_short": "Southampton",
+    "region": "UK",
+    "program_name_en": "MSc Finance",
+    "program_name_zh": "金融学硕士",
+    "faculty": "Southampton Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "GBP 36,300 per year (International)",
+    "campus": "Highfield Campus, Southampton",
+    "requirements": {
+      "undergrad_background": "需量化学科背景,含金融、理科、数学、工程、计算机科学、经济学或量化商科/管理学。语言学、艺术设计、职业技能类学位不接受。",
+      "china_university_list": "适用南安普顿通用中国院校分档标准(A/B/C/D四档):Tier A 2:1等效约70%,Tier B约75%,Tier C约80%,Tier D(未列名院校)约88%。具体名单及分档见官网tier list页面。",
+      "gpa_requirement": "2:1(英国二等一学位荣誉)量化学科背景,对应中国院校分档百分比见上。",
+      "ielts": {"overall": 6.5, "subscores": "Reading 6.0, Writing 6.0, Speaking 6.0, Listening 6.0"},
+      "toefl": {"overall": null, "subscores": "官网课程页面未列出具体TOEFL分数"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "需量化背景;官网列出CFA Institute、GARP等专业认证合作。",
+      "work_experience": "非强制,专业经验可用于边缘案例的个案评估。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-19",
+      "notes": "2026年9月入学:国际学生截止2026-08-19中午,英国本土截止2026-09-02中午。采集日2026-07-20,截止日期临近;2027年9月入学页面尚未发布。"
+    },
+    "materials": ["transcript", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.southampton.ac.uk/courses/finance-masters-msc",
+      "https://www.southampton.ac.uk/international/entry-qualification-equivalencies/china/postgraduate-taught-tier-list"
+    ],
+    "confidence": "high",
+    "notes": "获AACSB、CFA Institute、GARP多重认证。无需推荐信。"
+  },
+  {
+    "school_name_en": "University of Southampton",
+    "school_name_zh": "南安普顿大学",
+    "school_short": "Southampton",
+    "region": "UK",
+    "program_name_en": "MSc International Management",
+    "program_name_zh": "国际管理硕士",
+    "faculty": "Southampton Business School",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "GBP 32,500 per year (International)",
+    "campus": "Highfield Campus, Southampton",
+    "requirements": {
+      "undergrad_background": "本科专业范围较广,接受工程、人文、商科、数学、自然科学、信息系统、管理、社会科学、语言等专业。",
+      "china_university_list": "适用南安普顿通用中国院校分档标准(A/B/C/D四档):Tier A 2:1等效约70%,Tier B约75%,Tier C约80%,Tier D(未列名院校)约88%。",
+      "gpa_requirement": "2:1(英国二等一学位荣誉),对应中国院校分档百分比见上。",
+      "ielts": {"overall": 6.5, "subscores": "Reading 6.0, Writing 6.0, Speaking 6.0, Listening 6.0"},
+      "toefl": {"overall": null, "subscores": "官网课程页面未列出具体TOEFL分数"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "官网未列明特定先修课程。",
+      "work_experience": "非强制,显著相关工作经验可在未达标准分数时按个案考虑。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-19",
+      "notes": "2026年9月入学:国际学生截止2026-08-19中午,英国本土截止2026-09-02中午。采集日2026-07-20,截止日期临近;2027年9月入学页面尚未发布。"
+    },
+    "materials": ["transcript", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.southampton.ac.uk/courses/international-management-masters-msc",
+      "https://www.southampton.ac.uk/international/entry-qualification-equivalencies/china/postgraduate-taught-tier-list"
+    ],
+    "confidence": "high",
+    "notes": "获AACSB认证。无需推荐信。"
+  },
+  {
+    "school_name_en": "University of Southampton",
+    "school_name_zh": "南安普顿大学",
+    "school_short": "Southampton",
+    "region": "UK",
+    "program_name_en": "MSc Business Analytics and Management Science",
+    "program_name_zh": "商业分析与管理科学硕士",
+    "faculty": "Southampton Business School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "GBP 32,500 per year (International)",
+    "campus": "Highfield Campus, Southampton",
+    "requirements": {
+      "undergrad_background": "需量化学科本科学位,含金融、理科、数学、工程、计算机科学、经济学或量化商科/管理学。语言学、艺术设计、职业技能类学位不接受。",
+      "china_university_list": "适用南安普顿通用中国院校分档标准(A/B/C/D四档):Tier A 2:1等效约70%,Tier B约75%,Tier C约80%,Tier D(未列名院校)约88%。",
+      "gpa_requirement": "2:1(英国二等一学位荣誉)量化学科背景,对应中国院校分档百分比见上。",
+      "ielts": {"overall": 6.5, "subscores": "Reading 6.0, Writing 6.0, Speaking 6.0, Listening 6.0"},
+      "toefl": {"overall": null, "subscores": "官网课程页面未列出具体TOEFL分数"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "需量化背景。",
+      "work_experience": "非强制,专业经验可用于边缘案例的个案评估。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-19",
+      "notes": "2026年9月入学:国际学生截止2026-08-19中午,英国本土截止2026-09-02中午。采集日2026-07-20,截止日期临近;2027年9月入学页面尚未发布。"
+    },
+    "materials": ["transcript", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.southampton.ac.uk/courses/business-analytics-management-science-masters-msc",
+      "https://www.southampton.ac.uk/international/entry-qualification-equivalencies/china/postgraduate-taught-tier-list"
+    ],
+    "confidence": "high",
+    "notes": "无需推荐信。"
+  },
+  {
+    "school_name_en": "University of Southampton",
+    "school_name_zh": "南安普顿大学",
+    "school_short": "Southampton",
+    "region": "UK",
+    "program_name_en": "MSc Digital Marketing",
+    "program_name_zh": "数字营销硕士",
+    "faculty": "Southampton Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "GBP 32,500 per year (International)",
+    "campus": "Highfield Campus, Southampton",
+    "requirements": {
+      "undergrad_background": "需商科、管理学、市场营销学位,或学位中含部分市场营销模块。",
+      "china_university_list": "适用南安普顿通用中国院校分档标准(A/B/C/D四档):Tier A 2:1等效约70%,Tier B约75%,Tier C约80%,Tier D(未列名院校)约88%。",
+      "gpa_requirement": "2:1(英国二等一学位荣誉),对应中国院校分档百分比见上。",
+      "ielts": {"overall": 6.5, "subscores": "Reading 6.0, Writing 6.0, Speaking 6.0, Listening 6.0"},
+      "toefl": {"overall": null, "subscores": "官网课程页面未列出具体TOEFL分数"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "官网未列明特定先修课程。",
+      "work_experience": "非强制,专业工作经验按个案评估。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-19",
+      "notes": "2026年9月入学:国际学生截止2026-08-19中午,英国本土截止2026-09-02中午。采集日2026-07-20,截止日期临近;2027年9月入学页面尚未发布。"
+    },
+    "materials": ["transcript", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.southampton.ac.uk/courses/digital-marketing-masters-msc",
+      "https://www.southampton.ac.uk/international/entry-qualification-equivalencies/china/postgraduate-taught-tier-list"
+    ],
+    "confidence": "high",
+    "notes": "获IDM(Institute of Data and Marketing)及AACSB认证;毕业论文约15,000字。"
+  },
+  {
+    "school_name_en": "University of Birmingham",
+    "school_name_zh": "伯明翰大学",
+    "school_short": "Birmingham",
+    "region": "UK",
+    "program_name_en": "MSc Accounting and Finance",
+    "program_name_zh": "会计与金融硕士",
+    "faculty": "Birmingham Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "UK/Ireland: GBP 18,900 per year (2026 entry, as statically shown on official course page); International fee not shown as static text on the official page (appears to require an interactive fee-checker tool) — not recorded to avoid guessing",
+    "campus": "Birmingham (Edgbaston)",
+    "requirements": {
+      "undergrad_background": "需会计或金融相关专业2:1荣誉学位或英国以外同等学历;非相关专业需满足以下之一:本科至少3门会计/金融模块,或相关会计/金融领域专业工作经验,或ACCA/ACA/CIMA/CPA等部分资格。",
+      "china_university_list": "本次研究未在官网找到Birmingham Business School针对中国院校的逐校分档名单或百分比门槛页面;官网国际入学要求页面仅说明按国家/地区评估学位等效性(参照UK ENIC/NARIC),未见中国院校分层列表公开发布。",
+      "gpa_requirement": "2:1荣誉学位或海外同等学历(会计/金融相关专业)。",
+      "ielts": {"overall": 6.5, "subscores": "各单项不低于6.0"},
+      "toefl": {"overall": 88, "subscores": "2026年1月前:阅读21+,听力20+,口语22+,写作21+;2026年1月起新计分:总分4.5,两项4.5、另两项4.0"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "无额外先修课程要求,专业背景不符者可凭工作经验或专业资格弥补。",
+      "work_experience": "非强制,可用于弥补专业背景不符的情况。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-28",
+      "notes": "2026年9月入学:英国本土及免签申请者截止2026-08-28,名额招满即关闭申请,建议尽早申请。官网未提及该项目有2027年1月入学批次。采集日2026-07-20,截止日期临近;2027年9月入学页面尚未发布。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.birmingham.ac.uk/study/postgraduate/subjects/accounting-and-finance-courses/accounting-and-finance-msc",
+      "https://admissions.bham.ac.uk/knowledgebase/article/KA-01345/en-us/?level=postgraduate"
+    ],
+    "confidence": "medium",
+    "notes": "国际生学费未能从官网静态页面直接提取(仅显示UK/Ireland学费£18,900),需通过官网课程页面内的动态查询工具按国家选择后查看,故未记录具体数字以免编造。参考信(reference)非强制,通常不影响录取决定,若发offer则作为条件之一。"
+  },
+  {
+    "school_name_en": "University of Birmingham",
+    "school_name_zh": "伯明翰大学",
+    "school_short": "Birmingham",
+    "region": "UK",
+    "program_name_en": "MSc Financial Management",
+    "program_name_zh": "财务管理硕士",
+    "faculty": "Birmingham Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "UK/Ireland: GBP 18,900 per year (2026 entry, as statically shown on official course page); International fee not shown as static text on the official page — not recorded to avoid guessing",
+    "campus": "Birmingham (Edgbaston)",
+    "requirements": {
+      "undergrad_background": "官网未限定特定专业背景,要求2:1荣誉学位。",
+      "china_university_list": "本次研究未在官网找到Birmingham Business School针对中国院校的逐校分档名单或百分比门槛页面;仅有通用的按国家评估学位等效性说明。",
+      "gpa_requirement": "2:1荣誉学位或以上。",
+      "ielts": {"overall": 6.5, "subscores": "各单项不低于6.0"},
+      "toefl": {"overall": 88, "subscores": "2026年1月前:阅读21,听力20,口语22,写作21;2026年1月起新计分:总分4.5,两项4.5、另两项4.0"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "官网未列明具体先修课程。",
+      "work_experience": "官网未列明为必需项。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "September 2026 entry", "deadline": "2026-08-28", "decision_by": null},
+        {"name": "January 2027 entry", "deadline": "2026-12-18", "decision_by": null}
+      ],
+      "final_deadline": "2026-12-18",
+      "notes": "该项目提供2026年9月与2027年1月两个入学批次,两批次核心课程与毕业论文安排相同。截止日期均为针对英国本土及免签申请者;名额招满可能提前关闭。采集日2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.birmingham.ac.uk/study/postgraduate/subjects/accounting-and-finance-courses/financial-management-msc",
+      "https://admissions.bham.ac.uk/knowledgebase/article/KA-01345/en-us/?level=postgraduate"
+    ],
+    "confidence": "medium",
+    "notes": "国际生学费未能从官网静态页面直接提取,原因同上。设有多项奖学金:Birmingham Business School Masters Scholarship(最高£25,000)、Postgraduate Access Scholarship(£4,000)、Alumni Scholarship(£2,000学费减免)。"
+  },
+  {
+    "school_name_en": "University of Birmingham",
+    "school_name_zh": "伯明翰大学",
+    "school_short": "Birmingham",
+    "region": "UK",
+    "program_name_en": "MSc International Business",
+    "program_name_zh": "国际商务硕士",
+    "faculty": "Department of Strategy and International Business, Birmingham Business School",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "UK/Ireland: GBP 17,460 per year (2026 entry, as statically shown on official course page); International fee not shown as static text on the official page — not recorded to avoid guessing",
+    "campus": "Birmingham (Edgbaston)",
+    "requirements": {
+      "undergrad_background": "本科专业不限,需2:1荣誉学位或海外同等学历。",
+      "china_university_list": "本次研究未在官网找到Birmingham Business School针对中国院校的逐校分档名单或百分比门槛页面。",
+      "gpa_requirement": "2:1荣誉学位或以上,专业不限。",
+      "ielts": {"overall": 6.5, "subscores": "各单项不低于6.0"},
+      "toefl": {"overall": 88, "subscores": "2026年1月前:阅读21,听力20,口语22,写作21;2026年1月起新计分:总分4.5,两项4.5、另两项4.0"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "官网未列明具体先修课程。",
+      "work_experience": "官网未列明为必需项。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "September 2026 entry", "deadline": "2026-08-28", "decision_by": null},
+        {"name": "January 2027 entry", "deadline": "2026-12-18", "decision_by": null}
+      ],
+      "final_deadline": "2026-12-18",
+      "notes": "提供2026年9月与2027年1月两个入学批次。截止日期针对英国本土及免签申请者。采集日2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.birmingham.ac.uk/study/postgraduate/subjects/business-and-management-courses/international-business-msc",
+      "https://admissions.bham.ac.uk/knowledgebase/article/KA-01345/en-us/?level=postgraduate"
+    ],
+    "confidence": "medium",
+    "notes": "国际生学费未能从官网静态页面直接提取,原因同上。第三方留学平台(非官网,未采纳为数据来源)提及的国际学费数字约为GBP 26,640,仅供交叉参考,未在官网确认,故本记录学费字段不采用该数字。"
+  },
+  {
+    "school_name_en": "University of Birmingham",
+    "school_name_zh": "伯明翰大学",
+    "school_short": "Birmingham",
+    "region": "UK",
+    "program_name_en": "MSc Management",
+    "program_name_zh": "管理学硕士",
+    "faculty": "Birmingham Business School",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "UK/Ireland: GBP 17,460 per year (2026 entry, as statically shown on official course page); International fee not shown as static text on the official page — not recorded to avoid guessing",
+    "campus": "Birmingham (Edgbaston)",
+    "requirements": {
+      "undergrad_background": "本科专业不限,需2:1荣誉学位或海外同等学历。",
+      "china_university_list": "本次研究未在官网找到Birmingham Business School针对中国院校的逐校分档名单或百分比门槛页面。",
+      "gpa_requirement": "2:1荣誉学位或以上,专业不限。",
+      "ielts": {"overall": 6.5, "subscores": "各单项不低于6.0"},
+      "toefl": {"overall": 88, "subscores": "2026年1月前:阅读21,听力20,口语22,写作21;2026年1月起新计分:总分4.5,两项4.5、另两项4.0"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "可选修创业、国际商务、危机管理、人才发展等方向模块。",
+      "work_experience": "官网未列明为必需项。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-28",
+      "notes": "官网仅列出2026年9月入学批次,未提及该项目有2027年1月入学。截止日期为英国本土及免签申请者。采集日2026-07-20,截止日期临近;2027年9月入学页面尚未发布。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.birmingham.ac.uk/study/postgraduate/subjects/business-and-management-courses/management-msc",
+      "https://admissions.bham.ac.uk/knowledgebase/article/KA-01345/en-us/?level=postgraduate"
+    ],
+    "confidence": "medium",
+    "notes": "国际生学费未能从官网静态页面直接提取,原因同上。"
+  },
+  {
+    "school_name_en": "University of Birmingham",
+    "school_name_zh": "伯明翰大学",
+    "school_short": "Birmingham",
+    "region": "UK",
+    "program_name_en": "MSc Marketing",
+    "program_name_zh": "市场营销硕士",
+    "faculty": "Birmingham Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "UK/Ireland: GBP 17,460 per year (2026 entry, as statically shown on official course page); International fee not shown as static text on the official page — not recorded to avoid guessing",
+    "campus": "Birmingham (Edgbaston)",
+    "requirements": {
+      "undergrad_background": "本科专业不限,需2:1荣誉学位或海外同等学历。",
+      "china_university_list": "本次研究未在官网找到Birmingham Business School针对中国院校的逐校分档名单或百分比门槛页面。",
+      "gpa_requirement": "2:1荣誉学位或以上,专业不限。",
+      "ielts": {"overall": 6.5, "subscores": "各单项不低于6.0"},
+      "toefl": {"overall": 88, "subscores": "2026年1月前:阅读21,听力20,口语22,写作21;2026年1月起新计分:总分4.5,两项4.5、另两项4.0"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)。",
+      "prerequisites": "官网未列明具体先修课程。",
+      "work_experience": "官网未列明为必需项。",
+      "interview": "官网未提及需要面试。"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "September 2026 entry", "deadline": "2026-08-28", "decision_by": null},
+        {"name": "January 2027 entry", "deadline": "2026-12-18", "decision_by": null}
+      ],
+      "final_deadline": "2026-12-18",
+      "notes": "自2027年起该项目也可选择1月入学。截止日期针对英国本土及免签申请者。采集日2026-07-20。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.birmingham.ac.uk/study/postgraduate/subjects/marketing-courses/marketing-msc",
+      "https://admissions.bham.ac.uk/knowledgebase/article/KA-01345/en-us/?level=postgraduate"
+    ],
+    "confidence": "medium",
+    "notes": "国际生学费未能从官网静态页面直接提取,原因同上。"
+  }
+]

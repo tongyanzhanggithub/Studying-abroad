@@ -1,0 +1,408 @@
+[
+  {
+    "school_name_en": "The Hong Kong University of Science and Technology",
+    "school_name_zh": "香港科技大学",
+    "school_short": "HKUST",
+    "region": "HK",
+    "program_name_en": "Master of Science in Finance (MFin)",
+    "program_name_zh": "金融学理学硕士",
+    "faculty": "HKUST Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "HKD 460,000 (2027-28 intake, full-time; covers up to 34 credits)",
+    "campus": "Clear Water Bay, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree with satisfactory academic performance from a recognized university or approved institution (any discipline; no explicit business-only restriction found)",
+      "china_university_list": null,
+      "gpa_requirement": "官网未给出具体数值门槛，仅要求 \"satisfactory academic performance\"（成绩优良）",
+      "ielts": {"overall": 6.5, "subscores": "all sub-scores >= 5.5 (Academic Module; single attempt only; test-at-home not accepted)"},
+      "toefl": {"overall": 80, "subscores": "iBT 80 for tests before 2026-01-21, or 4.5 on new scale from 2026-01-21 onwards; pBT 550; Revised paper-delivered 60 (Reading + Listening + Writing combined)"},
+      "cet6_accepted": null,
+      "gmat_gre": "不强制要求，但建议提供以增强申请（GMAT/GRE not required, strong scores enhance application; all GMAT/GRE test formats incl. online accepted; valid 5 years）",
+      "prerequisites": "官网未列明具体先修课程要求",
+      "work_experience": "全日制不要求工作经验（有相关经验可加分）；兼读需至少1年全职毕业后相关工作经验",
+      "interview": "需要面试。仅通过初审的申请者会被邀请面试；香港本地申请者可面对面面试，其他地区通过网络视频面试；不接受电话面试"
+    },
+    "deadlines": {
+      "opens_at": "2026-07-02",
+      "rolling": true,
+      "rounds": [
+        {"name": "Full-time Phase 1", "deadline": "2026-10-11", "decision_by": null},
+        {"name": "Full-time Phase 2", "deadline": "2026-11-29", "decision_by": null},
+        {"name": "Full-time Phase 3", "deadline": "2027-01-10", "decision_by": null},
+        {"name": "Full-time Phase 4", "deadline": "2027-02-28", "decision_by": null},
+        {"name": "Part-time Phase 1", "deadline": "2026-12-13", "decision_by": null},
+        {"name": "Part-time Phase 2", "deadline": "2027-01-31", "decision_by": null},
+        {"name": "Part-time Phase 3", "deadline": "2027-03-21", "decision_by": null},
+        {"name": "Part-time Phase 4", "deadline": "2027-05-02", "decision_by": null}
+      ],
+      "final_deadline": "2027-02-28",
+      "notes": "本数据为 2027/28 年入学季（Fall 2027入学）信息——因采集时点（2026年7月）已晚于2026/27入学季的申请周期（该周期已基本结束），HKUST官网已滚动更新为下一年度(2027/28)招生信息，故如实采集官网当前展示的最新一轮数据。Priority Round: 2026-07-02至2026-08-15，随后于2026年9月起进入Regular Rounds（即上列各Phase）。Phase 3/4是否受理视名额而定。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test"],
+    "source_urls": [
+      "https://mfin.hkust.edu.hk/admissions/admissions-requirement",
+      "https://mfin.hkust.edu.hk/admissions/application-deadline",
+      "https://mfin.hkust.edu.hk/admissions/program-fee-and-expenses",
+      "https://mfin.hkust.edu.hk/faq/admission"
+    ],
+    "confidence": "high",
+    "notes": "该项目由MSc in Investment Management与MSc in Financial Analysis两个项目于2019年合并而来。官网未提及CET-6可替代托福/雅思。"
+  },
+  {
+    "school_name_en": "The Hong Kong University of Science and Technology",
+    "school_name_zh": "香港科技大学",
+    "school_short": "HKUST",
+    "region": "HK",
+    "program_name_en": "Master of Science in Accounting (MSAC)",
+    "program_name_zh": "会计学理学硕士",
+    "faculty": "HKUST Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "HKD 428,000 (2027-2028 intake)",
+    "campus": "Clear Water Bay, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "商科背景申请者需具良好成绩的商科学士学位；非商科背景申请者须满足以下至少一项：本科修读过会计/经济/统计课程且成绩良好；或通过CPA考试中Financial Reporting/Financial Accounting模块；或具备至少2年会计相关全职工作经验",
+      "china_university_list": null,
+      "gpa_requirement": "官网未给出具体数值门槛，仅要求 \"good standing\"（成绩优良）",
+      "ielts": {"overall": 6.5, "subscores": "all sub-scores >= 5.5 (Academic Module; single attempt only; test-at-home not accepted)"},
+      "toefl": {"overall": 80, "subscores": "iBT 80; pBT 550; Revised paper-delivered 60 (Reading + Listening + Writing combined)"},
+      "cet6_accepted": null,
+      "gmat_gre": "强烈建议提供GMAT Focus/GRE成绩，但非硬性要求",
+      "prerequisites": "非商科背景需满足上述会计/经济/统计课程、CPA模块或工作经验三选一条件",
+      "work_experience": "不要求最低工作经验；相关工作或商业经验可加分（非商科背景可用2年会计相关工作经验替代课程要求）",
+      "interview": "需要面试。仅通过初审的申请者会被邀请面试；香港本地申请者可面对面面试，其他地区通过网络视频面试；不接受电话面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Phase 1", "deadline": "2026-11-01", "decision_by": "2027-01-01"},
+        {"name": "Phase 2", "deadline": "2026-12-15", "decision_by": "2027-02-01"},
+        {"name": "Phase 3", "deadline": "2027-02-01", "decision_by": "2027-03-01"},
+        {"name": "Phase 4", "deadline": "2027-04-01", "decision_by": "2027-05-01"}
+      ],
+      "final_deadline": "2027-04-01",
+      "notes": "官网原文：\"We invite applications from July 2026 onwards for the 2027-2028 intake\"，未给出具体开放日期，故opens_at留null。上列各Phase的decision_by实为\"面试通知\"时间（官网称约面试后两周内公布结果），非最终录取结果时间，谨供参考。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test"],
+    "source_urls": [
+      "https://msac.hkust.edu.hk/admission/admission-requirements",
+      "https://msac.hkust.edu.hk/admission/application-deadline-n-procedures",
+      "https://msac.hkust.edu.hk/admission/program-fee"
+    ],
+    "confidence": "high",
+    "notes": "面向商科和非商科背景均开放申请，是HKUST针对非会计专业学生较友好的会计硕士项目之一。官网未提及CET-6可替代托福/雅思。"
+  },
+  {
+    "school_name_en": "The Hong Kong University of Science and Technology",
+    "school_name_zh": "香港科技大学",
+    "school_short": "HKUST",
+    "region": "HK",
+    "program_name_en": "Master of Science in Business Analytics (MSBA)",
+    "program_name_zh": "商业分析理学硕士",
+    "faculty": "HKUST Business School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "HKD 415,000 (2027/28 intake)",
+    "campus": "Clear Water Bay, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "认可院校的学士学位或同等学历，任何专业背景",
+      "china_university_list": null,
+      "gpa_requirement": "官网未给出具体数值门槛",
+      "ielts": {"overall": 6.5, "subscores": "all sub-scores >= 5.5 (Academic Module)"},
+      "toefl": {"overall": 80, "subscores": "iBT 80 (tests before 2026-01-21) or 4.5 (from 2026-01-21); pBT 550; Revised paper-delivered 60"},
+      "cet6_accepted": null,
+      "gmat_gre": "强烈建议但非强制要求，无最低分数线",
+      "prerequisites": "要求具备基础的SQL和Python编程能力，官网提供了自学准备材料（统计学、Python、SQL、应用数学）供申请者提前准备",
+      "work_experience": "全日制不要求（相关经验可加分）；兼读制建议具备2年全职相关工作经验",
+      "interview": "需要面试，仅邀请通过初审的申请者；未回应面试邀请者将不再被考虑"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Full-time Phase 1", "deadline": "2026-10-11", "decision_by": null},
+        {"name": "Full-time Phase 2", "deadline": "2026-11-29", "decision_by": null},
+        {"name": "Full-time Phase 3", "deadline": "2027-01-10", "decision_by": null},
+        {"name": "Full-time Phase 4", "deadline": "2027-02-28", "decision_by": null},
+        {"name": "Part-time Phase 1", "deadline": "2026-12-13", "decision_by": null},
+        {"name": "Part-time Phase 2", "deadline": "2027-01-31", "decision_by": null},
+        {"name": "Part-time Phase 3", "deadline": "2027-03-21", "decision_by": null},
+        {"name": "Part-time Phase 4", "deadline": "2027-05-02", "decision_by": null}
+      ],
+      "final_deadline": "2027-02-28",
+      "notes": "官网原文注明\"Application for 2027/28 intake will open soon!\"，未给出确切开放日期，故opens_at留null（同校其他商科硕士项目多为2026年7月2日开放优先轮，仅供参考，未在本项目页面得到确认）。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test"],
+    "source_urls": [
+      "https://msba.hkust.edu.hk/admission/admission-requirements",
+      "https://msba.hkust.edu.hk/admission/application-schedule-procedures",
+      "https://msba.hkust.edu.hk/admission/program-fee-expenses"
+    ],
+    "confidence": "high",
+    "notes": "项目学制未在官网明确写为\"12个月\"，此处12个月为根据全日制标准商科硕士学制及官网表述推断，该字段置信度中等（其余字段为官网原文，高置信）。官网未提及CET-6可替代托福/雅思。"
+  },
+  {
+    "school_name_en": "The Hong Kong University of Science and Technology",
+    "school_name_zh": "香港科技大学",
+    "school_short": "HKUST",
+    "region": "HK",
+    "program_name_en": "Master of Science in Economics (MScEcon)",
+    "program_name_zh": "经济学理学硕士",
+    "faculty": "HKUST Business School (Department of Economics)",
+    "direction": "economics",
+    "duration_months": 12,
+    "tuition": "HKD 350,000 (tuition, 2027/28 intake) + HKD 400 caution money",
+    "campus": "Clear Water Bay, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "认可大学/高等院校学士学位；非经济学/商科背景申请者需具备较强的定量背景（quantitative background）及学术研究意愿",
+      "china_university_list": null,
+      "gpa_requirement": "官网未给出具体数值门槛",
+      "ielts": {"overall": 6.5, "subscores": "all sub-scores >= 5.5 (Academic Module); test-at-home not accepted"},
+      "toefl": {"overall": 80, "subscores": "iBT 80 (before 2026-01-21) or 4.5 (from 2026-01-21); pBT 550; Revised paper-delivered 60"},
+      "cet6_accepted": null,
+      "gmat_gre": "强烈建议提供GRE/GMAT成绩，但未明确是否强制",
+      "prerequisites": "非经济/商科专业需有较强定量背景（如统计、数学类课程）",
+      "work_experience": "官网未提及工作经验相关要求",
+      "interview": "官网所查页面（Entrance Requirements、Application Schedule & Procedures）均未提及面试环节，与该校其他商科硕士项目普遍要求面试不同；不排除仍有面试但未在官网明确说明"
+    },
+    "deadlines": {
+      "opens_at": "2026-07-02",
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网原文：\"Application for intake 2027/28 MSc in Economics will open on 2 July 2026\"；\"There is no waiting list and all applications will be reviewed with any additional information continuously until all spots are filled\"——即无固定轮次/批次截止日期，纯滚动录取，招满为止，故rounds为空、final_deadline留null。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test"],
+    "source_urls": [
+      "https://mscecon.hkust.edu.hk/admission/entrance-requirements",
+      "https://mscecon.hkust.edu.hk/admission/application-schedule-procedures",
+      "https://mscecon.hkust.edu.hk/admission/fees-and-charges",
+      "https://mscecon.hkust.edu.hk/program/about-program"
+    ],
+    "confidence": "high",
+    "notes": "该项目偏学术研究导向，为申请海外经济学PhD做准备，设有可选的Research Preparation Concentration（需延长一学期）。学制12个月为参照标准商科硕士学制及curriculum安排的推断，该字段置信度中等。官网未提及CET-6可替代托福/雅思，也未提及面试要求。"
+  },
+  {
+    "school_name_en": "The Hong Kong University of Science and Technology",
+    "school_name_zh": "香港科技大学",
+    "school_short": "HKUST",
+    "region": "HK",
+    "program_name_en": "Master of Science in Marketing (MScMARK)",
+    "program_name_zh": "市场营销学理学硕士",
+    "faculty": "HKUST Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "HKD 400,000 (2027/28 intake; covers up to 34 credits)",
+    "campus": "Clear Water Bay, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "认可院校学士学位，成绩优良（面向应届生或工作经验较短者设计，pre-experience项目）",
+      "china_university_list": null,
+      "gpa_requirement": "官网未给出具体数值门槛",
+      "ielts": {"overall": 6.5, "subscores": "all sub-scores >= 5.5 (Academic Module)"},
+      "toefl": {"overall": 80, "subscores": "iBT 80 (before 2026-01-21) or 4.5 (from 2026-01-21); pBT 550; Revised paper-delivered 60"},
+      "cet6_accepted": null,
+      "gmat_gre": "高度建议提供，但非强制，会纳入综合考量",
+      "prerequisites": "官网未列明具体先修课程要求",
+      "work_experience": "不要求最低工作经验",
+      "interview": "需要面试，仅邀请通过初审的申请者，采用网络视频面试形式"
+    },
+    "deadlines": {
+      "opens_at": "2026-07-02",
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网原文：\"Applications for the 2027/28 MSc in Marketing open with a Priority Round from July 2 to August 15, 2026, followed by Regular Rounds starting in September 2026. Admissions will be considered on a rolling basis.\"——未在该页面列出具体分轮次截止日期，故rounds留空、final_deadline留null。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test"],
+    "source_urls": [
+      "https://mscmark.hkust.edu.hk/admissions/admission-requirements",
+      "https://mscmark.hkust.edu.hk/admissions/application-schedule-procedures",
+      "https://mscmark.hkust.edu.hk/admissions/program-fee-expenses"
+    ],
+    "confidence": "high",
+    "notes": "课程涵盖数据驱动营销、数字营销、品牌管理及AI应用方向。官网未提及CET-6可替代托福/雅思。"
+  },
+  {
+    "school_name_en": "The Hong Kong University of Science and Technology",
+    "school_name_zh": "香港科技大学",
+    "school_short": "HKUST",
+    "region": "HK",
+    "program_name_en": "Master of Science in Global Operations (MSGO)",
+    "program_name_zh": "全球运营管理理学硕士",
+    "faculty": "HKUST Business School",
+    "direction": "supply_chain",
+    "duration_months": 12,
+    "tuition": "HKD 365,000 (2027-2028 intake; covers up to 34 credits)",
+    "campus": "Clear Water Bay, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "认可院校学士学位，成绩优良；建议具备基础定量能力（微积分、线性代数、定量方法、统计学等）",
+      "china_university_list": null,
+      "gpa_requirement": "官网未给出具体数值门槛",
+      "ielts": {"overall": 6.5, "subscores": "all sub-scores >= 5.5 (Academic Module); test-at-home not accepted"},
+      "toefl": {"overall": 80, "subscores": "iBT 80 (before 2026-01-21) or 4.5 (from 2026-01-21); pBT 550; Revised paper-delivered 60"},
+      "cet6_accepted": null,
+      "gmat_gre": "强烈建议提供，非强制要求",
+      "prerequisites": "建议具备定量方法相关背景",
+      "work_experience": "不要求最低工作经验，相关工作/商业经验可加分",
+      "interview": "需要面试，仅邀请通过初审者；香港本地申请者面对面面试，其他地区视频面试，不接受电话面试；结果通常在面试后约一个月内公布"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Phase 1", "deadline": "2026-10-11", "decision_by": "2026-11-11"},
+        {"name": "Phase 2", "deadline": "2026-11-29", "decision_by": "2026-12-29"},
+        {"name": "Phase 3", "deadline": "2027-01-10", "decision_by": "2027-02-10"},
+        {"name": "Phase 4", "deadline": "2027-02-28", "decision_by": "2027-03-28"}
+      ],
+      "final_deadline": "2027-02-28",
+      "notes": "官网原文：\"We invite applications from September 2026 onwards for the 2027-2028 intake.\"（未提及优先轮/Priority Round，与MFin/MIMT/MScMARK等7月开放优先轮不同）。decision_by列的是\"面试通知\"日期而非最终录取结果日期。Phase 3/4是否受理视名额而定。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test"],
+    "source_urls": [
+      "https://msgo.hkust.edu.hk/admissions/admission-requirements",
+      "https://msgo.hkust.edu.hk/admissions/application-schedule-procedures",
+      "https://msgo.hkust.edu.hk/admissions/program-fee-expenses"
+    ],
+    "confidence": "high",
+    "notes": "课程涉及服务运营、制造运营与供应链管理，含企业合作项目(ISOM6880 Project Study)及与Yale/FGV的双学位选项。官网未提及CET-6可替代托福/雅思。"
+  },
+  {
+    "school_name_en": "The Hong Kong University of Science and Technology",
+    "school_name_zh": "香港科技大学",
+    "school_short": "HKUST",
+    "region": "HK",
+    "program_name_en": "Master of Science in International Management (MIMT, with optional CEMS Qualification)",
+    "program_name_zh": "国际管理学理学硕士（可选CEMS双资质）",
+    "faculty": "HKUST Business School",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "HKD 420,000 (2027-28 intake)",
+    "campus": "Clear Water Bay, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "MIMT（非CEMS）：认可院校学士学位，任何专业；MIMT(CEMS)：需商科相关学士学位",
+      "china_university_list": null,
+      "gpa_requirement": "官网未给出具体数值门槛，仅要求成绩优良",
+      "ielts": {"overall": 6.5, "subscores": "all sub-scores >= 5.5；CEMS方向建议7.0以上"},
+      "toefl": {"overall": 80, "subscores": "iBT 80 (before 2026-01-21) or 4.5 (from 2026-01-21); pBT 550; Revised paper-delivered 60；CEMS方向建议iBT 100以上"},
+      "cet6_accepted": null,
+      "gmat_gre": "MIMT非CEMS方向：建议但非强制；MIMT(CEMS)方向：强制要求提供合格的GMAT/GRE成绩",
+      "prerequisites": "CEMS方向要求入学时至少掌握两门语言（含英语），毕业前需掌握三门语言（含英语），方言不计入CEMS语言要求，普通话或粤语可作为其一",
+      "work_experience": "要求毕业后全职工作经验少于2年（less than 2 years full-time post-qualification work experience）",
+      "interview": "需要面试，仅邀请通过初审者；香港本地面对面，其他地区视频面试，不接受电话面试"
+    },
+    "deadlines": {
+      "opens_at": "2026-07-02",
+      "rolling": true,
+      "rounds": [
+        {"name": "Phase 1", "deadline": "2026-10-11", "decision_by": "2026-11-11"},
+        {"name": "Phase 2", "deadline": "2026-11-29", "decision_by": "2026-12-29"},
+        {"name": "Phase 3", "deadline": "2027-01-10", "decision_by": "2027-02-10"},
+        {"name": "Phase 4", "deadline": "2027-02-28", "decision_by": "2027-03-29"}
+      ],
+      "final_deadline": "2027-02-28",
+      "notes": "Priority Round: 2026-07-02至2026-08-15，随后9月起进入Regular Rounds（上列Phase）。CEMS方向的交换学校分配在第二轮申请截止后处理，第三/四轮申请者交换选校优先级较低，视名额而定。decision_by为面试通知日期。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test"],
+    "source_urls": [
+      "https://mimt.hkust.edu.hk/admission-requirements",
+      "https://mimt.hkust.edu.hk/admissions/application-deadlines-procedures",
+      "https://mimt.hkust.edu.hk/admissions/program-fee-expenses",
+      "https://mimt.hkust.edu.hk/admissions/faq"
+    ],
+    "confidence": "high",
+    "notes": "创立于1991年，提供与CEMS（Global Alliance in Management Education）联合的双资质选项，需赴CEMS成员院校交换一学期。官网未提及CET-6可替代托福/雅思。"
+  },
+  {
+    "school_name_en": "The Hong Kong University of Science and Technology",
+    "school_name_zh": "香港科技大学",
+    "school_short": "HKUST",
+    "region": "HK",
+    "program_name_en": "Master of Science in Financial Technology (MSc FinTech)",
+    "program_name_zh": "金融科技学理学硕士",
+    "faculty": "Jointly offered by HKUST Business School, School of Engineering, and School of Science",
+    "direction": "other",
+    "duration_months": null,
+    "tuition": "HKD 395,000 (标注为 2026/27 Fall intake 的\"nominal program fee\"，全日制与兼读制同价)",
+    "campus": "Clear Water Bay, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "认可大学或高等院校学士学位，建议具备编程与数学背景",
+      "china_university_list": null,
+      "gpa_requirement": "官网未给出具体数值门槛",
+      "ielts": {"overall": null, "subscores": null},
+      "toefl": {"overall": null, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": "强烈建议提供，但非强制要求",
+      "prerequisites": "建议具备编程和数学背景；数学基础较弱的学生可能被要求额外修读 Mathematical Foundation of FinTech（2学分）",
+      "work_experience": "全日制不要求；兼读制建议（非强制）具备至少2年全职毕业后工作经验",
+      "interview": "该页面未提及面试要求（具体录取流程/是否面试请参见HKUST Fok Ying Tung Graduate School页面，本次未能成功访问该页面核实）"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Round 1", "deadline": "2025-12-01", "decision_by": null},
+        {"name": "Round 2", "deadline": "2026-03-01", "decision_by": null}
+      ],
+      "final_deadline": "2026-03-01",
+      "notes": "重要提示：该页面（seng.hkust.edu.hk/msc/fintech）明确标注的是\"2026/27 Fall intake\"信息，其申请轮次(Round 1: 2025-12-01, Round 2: 2026-03-01)对应的招生周期在采集时(2026年7月)已经结束，与同校商学院其他MSc项目页面已滚动更新至2027/28周期的情况不一致，可能是该(工学院侧)页面尚未及时更新。建议申请者直接联系项目办公室或查看页面是否已发布2027/28周期的最新轮次信息。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test"],
+    "source_urls": [
+      "https://seng.hkust.edu.hk/msc/fintech"
+    ],
+    "confidence": "medium",
+    "notes": "该项目由商学院、工学院、理学院联合开办，学生须从SBM/SENG/SSCI三个学院各选修至少一门选修课；需完成30学分课程及至少4次enrichment活动（其中3次须为线下）；毕业要求GGA不低于2.850(满分4.3)。因页面信息疑似未同步至最新申请周期，且未能核实具体托福/雅思分数门槛与是否需要面试，故整体置信度标为medium。官网未提及CET-6可替代托福/雅思。"
+  },
+  {
+    "school_name_en": "The Hong Kong University of Science and Technology",
+    "school_name_zh": "香港科技大学",
+    "school_short": "HKUST",
+    "region": "HK",
+    "program_name_en": "Master of Science in Information Systems Management (MSc ISM)",
+    "program_name_zh": "信息系统管理学理学硕士",
+    "faculty": "HKUST Business School",
+    "direction": "other",
+    "duration_months": 12,
+    "tuition": "HKD 360,000 全日制 / HKD 297,000 兼读制（2027-28 intake）",
+    "campus": "Clear Water Bay, Kowloon, Hong Kong",
+    "requirements": {
+      "undergrad_background": "认可大学或院校的良好学士学位，成绩优良",
+      "china_university_list": null,
+      "gpa_requirement": "官网未给出具体数值门槛",
+      "ielts": {"overall": 6.5, "subscores": "all sub-scores >= 5.5（单次考试成绩，不接受Test at Home）"},
+      "toefl": {"overall": 80, "subscores": "iBT 80 (before 2026-01-21) or 4.5 (from 2026-01-21); pBT 550; Revised paper-delivered 60"},
+      "cet6_accepted": null,
+      "gmat_gre": "强烈建议提供，非强制要求，接受线上考试成绩",
+      "prerequisites": "官网未列明具体先修课程要求；2026-27学年起新增人工智能(AI)方向(concentration)",
+      "work_experience": "兼读制要求至少2年全职毕业后工作经验；全日制不强制要求，但有工作经验更具优势（项目面向应届生及具2年以上工作经验者）",
+      "interview": "需要面试，仅邀请通过初审者；香港本地面对面，其他地区视频面试，不接受电话面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Full-time Phase 1", "deadline": "2025-10-12", "decision_by": "2025-11-12"},
+        {"name": "Full-time Phase 2", "deadline": "2025-11-30", "decision_by": "2025-12-30"},
+        {"name": "Full-time Phase 3", "deadline": "2026-01-11", "decision_by": "2026-02-11"},
+        {"name": "Full-time Phase 4", "deadline": "2026-03-01", "decision_by": "2026-04-01"},
+        {"name": "Part-time Phase 1", "deadline": "2025-12-14", "decision_by": "2026-01-14"},
+        {"name": "Part-time Phase 2", "deadline": "2026-02-08", "decision_by": "2026-03-08"},
+        {"name": "Part-time Phase 3", "deadline": "2026-04-12", "decision_by": "2026-05-12"},
+        {"name": "Part-time Phase 4", "deadline": "2026-05-03", "decision_by": "2026-06-03"}
+      ],
+      "final_deadline": "2026-03-01",
+      "notes": "重要提示：本轮次数据来自官网\"application-schedule-procedures\"页面在采集时标注的\"Current Intake (2026/27)\"，其截止日期集中在2025年10月至2026年5月，对应的入学季在采集时点(2026年7月)已基本结束；而同一项目的\"program-fee-expenses\"页面在同一时间点已明确标注学费为\"2027-28 Intake\"。两个子页面呈现的招生周期不一致，推测是学费页面已更新而排期页面尚未同步更新至2027/28周期。请以官网实时页面为准，本记录如实呈现采集时观察到的原始信息及该不一致现象。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test"],
+    "source_urls": [
+      "https://mscism.hkust.edu.hk/admission-requirements",
+      "https://mscism.hkust.edu.hk/admissions/program-fee-expenses",
+      "https://mscism.hkust.edu.hk/admissions/application-schedule-procedures"
+    ],
+    "confidence": "medium",
+    "notes": "全日制1年/兼读制2年。官网未提及CET-6可替代托福/雅思。因排期页与学费页在采集时呈现不同招生周期(2026/27 vs 2027/28)，故整体confidence标为medium，具体见deadlines.notes说明。"
+  }
+]

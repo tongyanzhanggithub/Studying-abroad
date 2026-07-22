@@ -1,0 +1,166 @@
+[
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of IT in Business (Data Science & Analytics)",
+    "program_name_zh": "信息技术与商业硕士(数据科学与分析方向)(译名，官网未列出正式中文名)",
+    "faculty": "School of Computing and Information Systems (SCIS)",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "S$56,680 (Inclusive of GST)",
+    "campus": "School of Computing and Information Systems 2, 90 Stamford Road, Singapore 178903 (SMU城市校区；官网未按track区分校区)",
+    "requirements": {
+      "undergrad_background": null,
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": null, "subscores": null},
+      "toefl": {"overall": null, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": "官网原文列为申请前提：'GMAT / GRE / SMU Admissions Test'，即三选一(可用SMU自有入学测试替代GMAT/GRE)。官网公布往届录取平均GMAT为625(2018-2021届班级数据)。未列明最低分数线、成绩有效期，也未说明是required还是recommended。",
+      "prerequisites": "官网未列出入学前的编程/数学先修课要求。技术基础以必修核心课形式内置于课程中(全体MITB学生共同必修)：Computational Thinking with Python、Spreadsheet Modelling for Decision Making、Statistical Thinking for Data Science。",
+      "work_experience": "官网未列为强制要求。仅公布往届班级平均工作经验4.1年，典型年龄区间22-32岁(2018-2021届数据)。",
+      "interview": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": null,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未设分轮次(Round 1/2/3)，每个intake为单一连续申请窗口。原始表述：8月入学「1 January to 30 June」(项目总览页注明2026年8月入学延长至2026-06-30)；同一Apply Now页另一次抓取显示为「1 January to 31 May」，两处口径存在出入，此处照实记录未做取舍。1月入学「1 June to 31 October」。官网未标注这些日期对应的具体年份(除2026-06-30延期外)，无法确认是逐年沿用的通用窗口还是本周期专用日期。截至2026-07-20，官网尚未发布2027年8月入学(即2026/27周期)的专属日期。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/master-of-it-in-business",
+      "https://masters.smu.edu.sg/programme/MITB/Apply_now",
+      "https://masters.smu.edu.sg/mitb",
+      "https://masters.smu.edu.sg/programmes"
+    ],
+    "confidence": "low",
+    "notes": "官网未列明语言成绩要求(IELTS/TOEFL在项目总览页、Apply Now页均无任何分数)，故置null。官网亦未公布GPA门槛、本科专业背景要求、面试环节、申请材料清单，均置null未编造。学费S$56,680为全项目统一口径，官网未按track区分。duration官网原文为「12 to 24 months」，此处取下限12，官网未区分全日制/非全日制学制。招生要求方面官网完全不按track区分，DSA与其他track共用同一套要求，仅课程列表不同。DSA方向课程包括Data Management、Big Data: Tools & Techniques、Applied Machine Learning、Visual Analytics & Applications、Text Analytics & Applications等。未发现任何针对中国985/211/双一流院校的偏好表述。申请材料清单仅存在于需留资下载的招生手册(scispg.smu.edu.sg/acton/media/44865/mitbdb)，该页为表单页非正文，无法抓取。"
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of IT in Business (Financial Technology & Analytics)",
+    "program_name_zh": "信息技术与商业硕士(金融科技与分析方向)(译名，官网未列出正式中文名)",
+    "faculty": "School of Computing and Information Systems (SCIS)",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "S$56,680 (Inclusive of GST)",
+    "campus": "School of Computing and Information Systems 2, 90 Stamford Road, Singapore 178903 (SMU城市校区；官网未按track区分校区)",
+    "requirements": {
+      "undergrad_background": null,
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": null, "subscores": null},
+      "toefl": {"overall": null, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": "官网原文列为申请前提：'GMAT / GRE / SMU Admissions Test'，即三选一(可用SMU自有入学测试替代GMAT/GRE)。官网公布往届录取平均GMAT为625(2018-2021届班级数据)。未列明最低分数线、成绩有效期，也未说明是required还是recommended。",
+      "prerequisites": "官网未列出入学前的编程/数学/金融先修课要求。技术基础以必修核心课形式内置于课程中(与其他track共用)：Computational Thinking with Python、Spreadsheet Modelling for Decision Making、Statistical Thinking for Data Science。",
+      "work_experience": "官网未列为强制要求。仅公布往届班级平均工作经验4.1年，典型年龄区间22-32岁(2018-2021届数据)。",
+      "interview": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": null,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未设分轮次(Round 1/2/3)，每个intake为单一连续申请窗口。原始表述：8月入学「1 January to 30 June」(项目总览页注明2026年8月入学延长至2026-06-30)；同一Apply Now页另一次抓取显示为「1 January to 31 May」，两处口径存在出入，此处照实记录未做取舍。1月入学「1 June to 31 October」。官网未标注这些日期对应的具体年份(除2026-06-30延期外)。截至2026-07-20，官网尚未发布2027年8月入学(即2026/27周期)的专属日期。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/master-of-it-in-business",
+      "https://masters.smu.edu.sg/programme/MITB/Apply_now",
+      "https://masters.smu.edu.sg/mitb",
+      "https://masters.smu.edu.sg/programmes"
+    ],
+    "confidence": "low",
+    "notes": "官网未列明语言成绩要求(IELTS/TOEFL在项目总览页、Apply Now页均无任何分数)，故置null。官网亦未公布GPA门槛、本科专业背景要求、面试环节、申请材料清单，均置null未编造。重要核查结论：未发现FTA方向对量化/金融背景的要求严于DSA或其他方向——官网招生要求完全不按track区分，五个track共用同一套要求，GMAT/GRE政策亦无差异，仅课程列表不同。该方向标记为'finance'，实际更接近FinTech/金融科技分析。FTA方向课程包括Corporate & Consumer Financial Technology、Financial Markets Systems & Technology、Digital Banking & Trends、Digital Payments & Innovations、Data Science in Financial Services、RiskTech & RegTech、Quantum Computing in Financial Services等。未发现任何针对中国985/211/双一流院校的偏好表述。"
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of IT in Business (Artificial Intelligence)",
+    "program_name_zh": "信息技术与商业硕士(人工智能方向)(译名，官网未列出正式中文名)",
+    "faculty": "School of Computing and Information Systems (SCIS)",
+    "direction": "other",
+    "duration_months": 12,
+    "tuition": "S$56,680 (Inclusive of GST)",
+    "campus": "School of Computing and Information Systems 2, 90 Stamford Road, Singapore 178903 (SMU城市校区；官网未按track区分校区)",
+    "requirements": {
+      "undergrad_background": null,
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": null, "subscores": null},
+      "toefl": {"overall": null, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": "官网原文列为申请前提：'GMAT / GRE / SMU Admissions Test'，即三选一(可用SMU自有入学测试替代GMAT/GRE)。官网公布往届录取平均GMAT为625(2018-2021届班级数据)。未列明最低分数线、成绩有效期，也未说明是required还是recommended。",
+      "prerequisites": "官网未列出入学前的编程/数学先修课要求。技术基础以必修核心课形式内置于课程中(与其他track共用)：Computational Thinking with Python、Spreadsheet Modelling for Decision Making、Statistical Thinking for Data Science。",
+      "work_experience": "官网未列为强制要求。仅公布往届班级平均工作经验4.1年，典型年龄区间22-32岁(2018-2021届数据)。",
+      "interview": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": null,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未设分轮次，每个intake为单一连续申请窗口。原始表述：8月入学「1 January to 30 June」(总览页注明2026年8月入学延长至2026-06-30)，同一Apply Now页另一次抓取显示为「1 January to 31 May」，口径存在出入，照实记录。1月入学「1 June to 31 October」。截至2026-07-20，官网尚未发布2027年8月入学(2026/27周期)的专属日期。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/master-of-it-in-business",
+      "https://masters.smu.edu.sg/programme/MITB/Apply_now",
+      "https://masters.smu.edu.sg/mitb",
+      "https://masters.smu.edu.sg/programmes"
+    ],
+    "confidence": "low",
+    "notes": "官网未列明语言成绩要求(IELTS/TOEFL全站项目页均无分数)，故置null。GPA门槛、本科专业背景、面试环节、申请材料清单官网均未公布，置null未编造。本条为按track拆分记录，但官网招生要求不按track区分，五个track共用同一套要求，AI方向的具体课程列表本次调研未逐项抓取(调研任务仅要求详查DSA与FTA两个方向)。direction标记为'other'。未发现任何针对中国985/211/双一流院校的偏好表述。"
+  },
+  {
+    "school_name_en": "Singapore Management University",
+    "school_name_zh": "新加坡管理大学",
+    "school_short": "SMU",
+    "region": "SG",
+    "program_name_en": "Master of IT in Business (Digital Transformation)",
+    "program_name_zh": "信息技术与商业硕士(数字化转型方向)(译名，官网未列出正式中文名)",
+    "faculty": "School of Computing and Information Systems (SCIS)",
+    "direction": "other",
+    "duration_months": 12,
+    "tuition": "S$56,680 (Inclusive of GST)",
+    "campus": "School of Computing and Information Systems 2, 90 Stamford Road, Singapore 178903 (SMU城市校区；官网未按track区分校区)",
+    "requirements": {
+      "undergrad_background": null,
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": null, "subscores": null},
+      "toefl": {"overall": null, "subscores": null},
+      "cet6_accepted": null,
+      "gmat_gre": "官网原文列为申请前提：'GMAT / GRE / SMU Admissions Test'，即三选一(可用SMU自有入学测试替代GMAT/GRE)。官网公布往届录取平均GMAT为625(2018-2021届班级数据)。未列明最低分数线、成绩有效期，也未说明是required还是recommended。",
+      "prerequisites": "官网未列出入学前的编程/数学先修课要求。技术基础以必修核心课形式内置于课程中(与其他track共用)：Computational Thinking with Python、Spreadsheet Modelling for Decision Making、Statistical Thinking for Data Science。",
+      "work_experience": "官网未列为强制要求。仅公布往届班级平均工作经验4.1年，典型年龄区间22-32岁(2018-2021届数据)。",
+      "interview": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": null,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未设分轮次，每个intake为单一连续申请窗口。原始表述：8月入学「1 January to 30 June」(总览页注明2026年8月入学延长至2026-06-30)，同一Apply Now页另一次抓取显示为「1 January to 31 May」，口径存在出入，照实记录。1月入学「1 June to 31 October」。截至2026-07-20，官网尚未发布2027年8月入学(2026/27周期)的专属日期。"
+    },
+    "materials": null,
+    "source_urls": [
+      "https://masters.smu.edu.sg/programme/master-of-it-in-business",
+      "https://masters.smu.edu.sg/programme/MITB/Apply_now",
+      "https://masters.smu.edu.sg/mitb",
+      "https://masters.smu.edu.sg/programmes"
+    ],
+    "confidence": "low",
+    "notes": "官网未列明语言成绩要求(IELTS/TOEFL全站项目页均无分数)，故置null。GPA门槛、本科专业背景、面试环节、申请材料清单官网均未公布，置null未编造。本条为按track拆分记录，但官网招生要求不按track区分，五个track共用同一套要求，Digital Transformation方向的具体课程列表本次调研未逐项抓取。direction标记为'other'。未发现任何针对中国985/211/双一流院校的偏好表述。另注：MITB第五个方向Cybersecurity(2025年9月新设)本次未纳入，按指示跳过。"
+  }
+]

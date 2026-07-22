@@ -1,0 +1,353 @@
+[
+  {
+    "school_name_en": "The Hong Kong Polytechnic University",
+    "school_name_zh": "香港理工大学",
+    "school_short": "PolyU",
+    "region": "HK",
+    "program_name_en": "Master of Finance (Corporate Finance)",
+    "program_name_zh": "金融学硕士(企业融资)",
+    "faculty": "School of Accounting and Finance, Faculty of Business",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "HK$403,200 per programme (HK$11,200 per credit)",
+    "campus": null,
+    "requirements": {
+      "undergrad_background": "A Bachelor's degree from a recognised university, or the equivalent.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 80, "subscores": "TOEFL iBT overall 80/120; for tests taken on or after 21 Jan 2026, 4.5 out of 6"},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "Not required. Applicants with no or little work experience are welcome to apply.",
+      "interview": "Suitable candidates may be invited to attend admission interviews."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-10-20", "decision_by": null},
+        {"name": "Main Round", "deadline": "2027-02-25", "decision_by": null}
+      ],
+      "final_deadline": "2027-02-25",
+      "notes": "Sept 2027 entry. Same deadlines for local and non-local applicants. Only Early Round and Main Round are published on the official 2027 page; the 2026 cycle also had an Extended Round (30 Apr) that has not yet appeared for 2027 — do not assume it exists. Application opening date not stated on the official page."
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": ["https://www.polyu.edu.hk/study/pg/tpg/2027/21050-cpf"],
+    "confidence": "high",
+    "notes": "IELTS/TOEFL figures come from PolyU's general TPG English requirement page, not the programme page; the programme page only says applicants must meet the University's minimum English requirement. CET-6 is NOT listed as an accepted qualification anywhere on PolyU's official TPG English requirement page — cet6_accepted left null (官网未列明). GPA and GMAT/GRE 官网未列明. Full-time 1 year / part-time 2 years. Non-English documents require certified English translations."
+  },
+  {
+    "school_name_en": "The Hong Kong Polytechnic University",
+    "school_name_zh": "香港理工大学",
+    "school_short": "PolyU",
+    "region": "HK",
+    "program_name_en": "MSc in Accountancy",
+    "program_name_zh": "会计学理学硕士",
+    "faculty": "School of Accounting and Finance, Faculty of Business",
+    "direction": "accounting",
+    "duration_months": 18,
+    "tuition": "HK$369,000 per programme (HK$12,300 per credit)",
+    "campus": null,
+    "requirements": {
+      "undergrad_background": "A Bachelor's degree in accounting or other relevant disciplines; OR equivalent professional qualifications.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 80, "subscores": "TOEFL iBT overall 80/120; for tests taken on or after 21 Jan 2026, 4.5 out of 6"},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "Not mandatory. Preference will be given to applicants with at least one year of relevant working experience.",
+      "interview": "Suitable candidates may be invited to attend admission interviews."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-10-20", "decision_by": null},
+        {"name": "Main Round", "deadline": "2027-02-25", "decision_by": null}
+      ],
+      "final_deadline": "2027-02-25",
+      "notes": "Sept 2027 entry. Same deadlines for local and non-local. Only two rounds published for 2027 so far (the 2026 cycle had a third Extended Round on 30 Apr 2026)."
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": ["https://www.polyu.edu.hk/study/pg/tpg/2027/21049-afm-apm"],
+    "confidence": "high",
+    "notes": "Mixed-mode: full-time 1.5 years (18 months) / part-time 2.5 years; note the 2026-entry page stated a range of '1 to 1.5 years' while the 2027 page states 1.5 years — the 2027 figure is used. Full-time students must attend evening classes. Copies of professional qualifications (HKICPA, AICPA, ACCA, CPA Australia) also accepted if applicable. English scores from PolyU general TPG requirement page. CET-6 not accepted per official page (未列明为可接受资格). GPA 和 GMAT/GRE 官网未列明."
+  },
+  {
+    "school_name_en": "The Hong Kong Polytechnic University",
+    "school_name_zh": "香港理工大学",
+    "school_short": "PolyU",
+    "region": "HK",
+    "program_name_en": "MSc in Accounting and Finance Analytics",
+    "program_name_zh": "会计与金融分析理学硕士",
+    "faculty": "School of Accounting and Finance, Faculty of Business",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "HK$390,000 per programme (HK$13,000 per credit)",
+    "campus": null,
+    "requirements": {
+      "undergrad_background": "A Bachelor's degree. Preference will be given to applicants with a business degree who are equipped with some fundamental training in computing, or graduates with a background in computing, science or engineering.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 80, "subscores": "TOEFL iBT overall 80/120; for tests taken on or after 21 Jan 2026, 4.5 out of 6"},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": "Preference for fundamental training in computing, or a background in computing, science or engineering.",
+      "work_experience": "Not required. Interested applicants with little or no work experience are encouraged to apply.",
+      "interview": "Suitable candidates may be invited to attend admission interviews."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-10-20", "decision_by": null},
+        {"name": "Main Round", "deadline": "2027-02-25", "decision_by": null}
+      ],
+      "final_deadline": "2027-02-25",
+      "notes": "Sept 2027 entry. Same deadlines for local and non-local. Only two rounds published for 2027 (the 2026 cycle had an Extended Round on 30 Apr 2026)."
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": ["https://www.polyu.edu.hk/study/pg/tpg/2027/21052-fam-pam"],
+    "confidence": "high",
+    "notes": "Mixed-mode; full-time 1 year / part-time 2 years; classes normally on weekday evenings across three semesters. The HK$390,000 figure is confirmed on the 2027-entry page (it had earlier appeared on the school page labelled '2027/28 intake', so the two now agree). Copies of professional qualifications accepted if applicable. CET-6 not listed as accepted; GPA and GMAT/GRE 官网未列明."
+  },
+  {
+    "school_name_en": "The Hong Kong Polytechnic University",
+    "school_name_zh": "香港理工大学",
+    "school_short": "PolyU",
+    "region": "HK",
+    "program_name_en": "MSc in Business Analytics",
+    "program_name_zh": "商业分析理学硕士",
+    "faculty": "Department of Management and Marketing, Faculty of Business",
+    "direction": "business_analytics",
+    "duration_months": 18,
+    "tuition": "HK$399,000 per programme (HK$13,300 per credit)",
+    "campus": null,
+    "requirements": {
+      "undergrad_background": "A Bachelor's degree or equivalent academic/professional qualifications, preferably with at least one year of relevant work experience.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 80, "subscores": "TOEFL iBT overall 80/120; for tests taken on or after 21 Jan 2026, 4.5 out of 6"},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "Preferred but not mandatory: at least one year of relevant work experience. Alternative pathway: applicants normally aged 27 or above with other post-secondary qualifications and at least 6 years of work experience in industry, commerce or public administration (including 3 years in a managerial capacity).",
+      "interview": "Shortlisted candidates may be invited to attend admission interviews."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-10-20", "decision_by": null},
+        {"name": "Main Round", "deadline": "2027-02-25", "decision_by": null}
+      ],
+      "final_deadline": "2027-02-25",
+      "notes": "Sept 2027 entry. Same deadlines for local and non-local, mixed mode. Only Early and Main rounds published on the official page."
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": ["https://www.polyu.edu.hk/study/pg/tpg/2027/23090-maf-map", "https://www.polyu.edu.hk/mm/study/tpg/ba/admissions/"],
+    "confidence": "high",
+    "notes": "Full-time 1.5 years (18 months) / part-time 2.5 years, mixed mode, 31 credits. The 1-credit Academic Integrity and Ethics subject is non-chargeable. 'Rolling' set true based on PolyU's university-wide multi-round rolling model, but the programme page itself does not use the words 'rolling basis' — only the Global Business and Decision Analysis page states that explicitly. CET-6 not accepted per official pages; GPA and GMAT/GRE 官网未列明."
+  },
+  {
+    "school_name_en": "The Hong Kong Polytechnic University",
+    "school_name_zh": "香港理工大学",
+    "school_short": "PolyU",
+    "region": "HK",
+    "program_name_en": "MSc in Marketing Management",
+    "program_name_zh": "市场营销管理理学硕士",
+    "faculty": "Department of Management and Marketing, Faculty of Business",
+    "direction": "marketing",
+    "duration_months": 18,
+    "tuition": "HK$387,000 per programme (HK$12,900 per credit)",
+    "campus": null,
+    "requirements": {
+      "undergrad_background": "A Bachelor's degree or equivalent academic/professional qualifications. There is no restriction on previous background — business, engineering, social sciences, natural sciences, humanities, law and others are all acceptable.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 80, "subscores": "TOEFL iBT overall 80/120; for tests taken on or after 21 Jan 2026, 4.5 out of 6"},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "Not mandatory: 'Priority will be given to applicants with relevant work experience.'",
+      "interview": "Shortlisted candidates may be invited to attend admission interviews."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-10-20", "decision_by": null},
+        {"name": "Main Round", "deadline": "2027-02-25", "decision_by": null}
+      ],
+      "final_deadline": "2027-02-25",
+      "notes": "Sept 2027 entry. Same deadlines for local and non-local, mixed mode. Only Early and Main rounds published."
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": ["https://www.polyu.edu.hk/study/pg/tpg/2027/23090-mkf-mkp", "https://www.polyu.edu.hk/mm/study/tpg/mm/admissions/"],
+    "confidence": "high",
+    "notes": "Full-time 1.5 years (18 months) / part-time 2.5 years, mixed mode, 31 credits (4 compulsory + 6 electives + 1 ethics subject, or a dissertation pathway). Classes typically weekday evenings with some daytime sessions for full-time students. CET-6 not accepted per official pages; GPA and GMAT/GRE 官网未列明."
+  },
+  {
+    "school_name_en": "The Hong Kong Polytechnic University",
+    "school_name_zh": "香港理工大学",
+    "school_short": "PolyU",
+    "region": "HK",
+    "program_name_en": "MSc in Human Resource Management",
+    "program_name_zh": "人力资源管理理学硕士",
+    "faculty": "Department of Management and Marketing, Faculty of Business",
+    "direction": "hr",
+    "duration_months": 18,
+    "tuition": "HK$375,000 per programme (HK$12,500 per credit)",
+    "campus": null,
+    "requirements": {
+      "undergrad_background": "A Bachelor's degree or equivalent professional qualification, preferably with at least 1 year of relevant work experience.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 80, "subscores": "TOEFL iBT overall 80/120; for tests taken on or after 21 Jan 2026, 4.5 out of 6"},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "Preferred but not mandatory: at least 1 year of relevant work experience. Alternative pathway: applicants normally aged 27 or above with other post-secondary qualifications and at least 6 years of work experience in industry, commerce or public administration (including 3 years in a managerial capacity).",
+      "interview": "Suitable candidates may be invited to attend admission interviews."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-10-20", "decision_by": null},
+        {"name": "Main Round", "deadline": "2027-02-25", "decision_by": null}
+      ],
+      "final_deadline": "2027-02-25",
+      "notes": "Sept 2027 entry. Same deadlines for local and non-local. Only Early and Main rounds published."
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": ["https://www.polyu.edu.hk/study/pg/tpg/2027/23090-mhf-mhp"],
+    "confidence": "high",
+    "notes": "Full-time 1.5 years (18 months) / part-time 2.5 years, mixed mode; classes normally on weekday evenings. The 1-credit AIE (Academic Integrity and Ethics) subject is non-chargeable. CET-6 not accepted per official pages; GPA and GMAT/GRE 官网未列明."
+  },
+  {
+    "school_name_en": "The Hong Kong Polytechnic University",
+    "school_name_zh": "香港理工大学",
+    "school_short": "PolyU",
+    "region": "HK",
+    "program_name_en": "MSc in International Management and Leadership",
+    "program_name_zh": "国际管理与领导力理学硕士",
+    "faculty": "Department of Management and Marketing, Faculty of Business",
+    "direction": "management",
+    "duration_months": 18,
+    "tuition": "HK$417,000 per programme (HK$13,900 per credit)",
+    "campus": null,
+    "requirements": {
+      "undergrad_background": "A Bachelor's degree or equivalent academic/professional qualifications.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 80, "subscores": "TOEFL iBT overall 80/120; for tests taken on or after 21 Jan 2026, 4.5 out of 6"},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": "Shortlisted candidates may be invited to attend admission interviews."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-10-20", "decision_by": null},
+        {"name": "Main Round", "deadline": "2027-02-25", "decision_by": null}
+      ],
+      "final_deadline": "2027-02-25",
+      "notes": "Sept 2027 entry. Same deadlines for local and non-local. Only Early and Main rounds published."
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": ["https://www.polyu.edu.hk/study/pg/tpg/2027/23090-mif", "https://www.polyu.edu.hk/mm/study/tpg/iml/admissions/"],
+    "confidence": "high",
+    "notes": "Full-time mode only, 1.5 years (18 months); lectures on weekday daytime and evenings. The 1-credit ethics subject is non-chargeable. An MM Taught Postgraduate Scholarship Scheme is available, potentially including full tuition waivers and living allowances up to HK$50,000 for non-local applicants. Work experience requirement 官网未列明. CET-6 not accepted per official pages; GPA and GMAT/GRE 官网未列明."
+  },
+  {
+    "school_name_en": "The Hong Kong Polytechnic University",
+    "school_name_zh": "香港理工大学",
+    "school_short": "PolyU",
+    "region": "HK",
+    "program_name_en": "MSc in Global Business and Decision Analysis",
+    "program_name_zh": "全球商业与决策分析理学硕士",
+    "faculty": "Department of Logistics and Maritime Studies, Faculty of Business",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "HK$423,000 per programme (HK$14,100 per credit)",
+    "campus": null,
+    "requirements": {
+      "undergrad_background": "A Bachelor's degree or equivalent in any discipline.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 80, "subscores": "TOEFL iBT overall 80/120; for tests taken on or after 21 Jan 2026, 4.5 out of 6"},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": "Yes, round-based. Official wording: 'Departments will consider applications on a rolling basis. Shortlisted candidates may be invited to attend admission interviews.' Applicants submitting before 20 October 2026 will be invited to the first round of interviews in November 2026, with additional rounds thereafter."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-10-20", "decision_by": null},
+        {"name": "Main Round", "deadline": "2027-02-25", "decision_by": null}
+      ],
+      "final_deadline": "2027-02-25",
+      "notes": "Sept 2027 entry. This programme has the most explicit official rolling-admission confirmation of all PolyU FB programmes checked: 'Departments will consider applications on a rolling basis.' First interview round in November 2026 for Early Round applicants. Same deadlines for local and non-local, mixed mode."
+    },
+    "materials": ["transcript", "degree_certificate", "personal_statement", "cv", "english_test"],
+    "source_urls": ["https://www.polyu.edu.hk/study/pg/tpg/2027/44094-bfm-bpm"],
+    "confidence": "high",
+    "notes": "Full-time 1 year / part-time 2.5 years, mixed mode, 31 credits. Transcript/certificate and Personal Statement are mandatory; CV and Employer's Recommendation are optional (CV listed in materials but is optional; the Employer's Recommendation does not map cleanly to the 'two_references' enum value so it is omitted rather than force-fit). CET-6 not accepted per official pages; GPA and GMAT/GRE 官网未列明."
+  },
+  {
+    "school_name_en": "The Hong Kong Polytechnic University",
+    "school_name_zh": "香港理工大学",
+    "school_short": "PolyU",
+    "region": "HK",
+    "program_name_en": "MSc in International Shipping and Transport Logistics",
+    "program_name_zh": "国际航运及物流学理学硕士",
+    "faculty": "Department of Logistics and Maritime Studies, Faculty of Business",
+    "direction": "supply_chain",
+    "duration_months": 24,
+    "tuition": null,
+    "campus": null,
+    "requirements": {
+      "undergrad_background": "Local applicants: a Bachelor's degree in any discipline. International applicants: a Bachelor's degree in shipping, maritime studies or relevant fields, with English as the medium of instruction, OR demonstrated English proficiency.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 80, "subscores": "TOEFL iBT 80 or above; TOEFL paper-based 550 or above (this programme page states its own thresholds, which match the University's general minimum)"},
+      "cet6_accepted": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": "Not required for degree holders. An alternative pathway exists on the department page for applicants with other post-secondary qualifications who have at least 6 years' employment in maritime/shipping/transport/logistics, including 3 years in a managerial capacity.",
+      "interview": "Shortlisted candidates may be invited to attend admission interviews."
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-10-20", "decision_by": null},
+        {"name": "Main Round", "deadline": "2027-02-25", "decision_by": null}
+      ],
+      "final_deadline": "2027-02-25",
+      "notes": "Sept 2027 entry. Same deadlines for local and non-local. Only Early and Main rounds published for 2027 (the 2026 cycle had a third Extended Round on 30 Apr 2026)."
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "english_test"],
+    "source_urls": ["https://www.polyu.edu.hk/study/pg/tpg/2027/44087-iss", "https://www.polyu.edu.hk/lms/study/tpg/istl-mm/admissions/?sc_lang=en"],
+    "confidence": "medium",
+    "notes": "IMPORTANT CAVEAT ON TUITION: the 2027-entry page for this full-time code (44087-ISS) states tuition is 'Covered by The Hong Kong Maritime and Logistics Scholarship Scheme (Subject to review)' rather than giving a fee figure, so tuition is set to null rather than guessed. Recipients must commit to working full-time in Hong Kong's maritime industry for at least 36 consecutive months after graduation — a significant condition for Mainland applicants. This 2027 listing also shows 46 credits (40 academic + 6 training credits from a maritime internship), versus 34 credits and HK$253,500 on the 2026 listing, so the programme structure appears to have changed materially; the separate mixed-mode MSc/PgD ISTL variant run by the department may have different fees and structure. Duration 2 years full-time per the 2027 page. Confidence is medium because of these structural discrepancies between cycles. CET-6 not accepted; GPA and GMAT/GRE 官网未列明."
+  }
+]

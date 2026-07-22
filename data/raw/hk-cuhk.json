@@ -1,0 +1,347 @@
+[
+  {
+    "school_name_en": "The Chinese University of Hong Kong",
+    "school_name_zh": "香港中文大学",
+    "school_short": "CUHK",
+    "region": "HK",
+    "program_name_en": "MSc in Finance",
+    "program_name_zh": "金融学理学硕士",
+    "faculty": "CUHK Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "HKD 460,000 (Full-time); HKD 365,000 (Part-time)",
+    "campus": "Shatin, N.T., Hong Kong (Cheng Yu Tung Building)",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree with Second Class Honours or achieving an average grade of B from a recognised university, or an equivalent professional qualification",
+      "china_university_list": null,
+      "gpa_requirement": "Second Class Honours / average grade B or above",
+      "ielts": {"overall": 6.5, "subscores": "官网未列明单项要求；6.5 为全校授课式硕士通用最低分(Test Centre-based 或 Online)"},
+      "toefl": {"overall": 79, "subscores": "4.5 of 6 (Internet-based/Home Edition)；官网未列明单项要求"},
+      "cet6_accepted": null,
+      "gmat_gre": "Full-time: not mandatory, 'a good GMAT/GRE score will strengthen the application'; Part-time: not required but highly encouraged",
+      "prerequisites": null,
+      "work_experience": "Full-time: none required; Part-time: preferably 2 years of post-qualification full-time work experience",
+      "interview": "项目专页未列明；学院通用申请流程写明 shortlisted candidates may be invited to interview at the programme's discretion"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Full-time Early Round", "deadline": "2026-07-31", "decision_by": null},
+        {"name": "Full-time Regular", "deadline": "2027-03-31", "decision_by": null},
+        {"name": "Part-time Final", "deadline": "2027-04-30", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "官网原文: 'Application will be processed on a rolling basis until all places fill up. Therefore, early applications are strongly encouraged.' 并注明 the application deadline may be closed early if places are no longer available. 官网未列明申请开放日期(opens_at)。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document"],
+    "source_urls": [
+      "https://masters.bschool.cuhk.edu.hk/programmes/mscfin/",
+      "https://masters.bschool.cuhk.edu.hk/admission-requirements/",
+      "https://masters.bschool.cuhk.edu.hk/apply/",
+      "https://www.gs.cuhk.edu.hk/admissions/requirements"
+    ],
+    "confidence": "high",
+    "notes": "重要说明:采集时(2026年7月)CUHK商学院官网展示的申请周期已是2027-28学年(2027年9月入学)，2026/27入学申请季已关闭且官网未保留其原始数据，故本条数据为官网最新可核实周期。CET-6:CUHK研究生院官方英语要求页仅列出 IELTS 6.5 / TOEFL 79 / GMAT Verbal Band 21(GMAT Focus Band 78)以及英语授课学位等豁免途径，未将大学英语六级列为可接受替代，内地申请者需备考雅思或托福。申请费 HKD 500 不可退。"
+  },
+  {
+    "school_name_en": "The Chinese University of Hong Kong",
+    "school_name_zh": "香港中文大学",
+    "school_short": "CUHK",
+    "region": "HK",
+    "program_name_en": "Master of Accountancy",
+    "program_name_zh": "会计学硕士",
+    "faculty": "CUHK Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "HKD 420,000 (Full-time); HKD 360,000 (Part-time)",
+    "campus": "Shatin, N.T., Hong Kong (Cheng Yu Tung Building)",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree with Second Class Honours or achieving an average grade of B from a recognised university, or an equivalent professional qualification",
+      "china_university_list": null,
+      "gpa_requirement": "Second Class Honours / average grade B or above",
+      "ielts": {"overall": 6.5, "subscores": "官网未列明单项要求；全校通用最低分"},
+      "toefl": {"overall": 79, "subscores": "4.5 of 6 (Internet-based/Home Edition)；官网未列明单项要求"},
+      "cet6_accepted": null,
+      "gmat_gre": "Full-time: not mandatory but 'a good GMAT/GRE score will strengthen the application'; Part-time: encouraged but not required",
+      "prerequisites": null,
+      "work_experience": "Full-time: 官网未列明要求; Part-time: preferably with relevant post-qualification full-time work experience",
+      "interview": "项目专页未列明；适用学院通用的酌情面试政策"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Full-time Early Round", "deadline": "2026-07-31", "decision_by": null},
+        {"name": "Full-time Regular", "deadline": "2027-03-31", "decision_by": null},
+        {"name": "Part-time Final", "deadline": "2027-04-30", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "滚动录取(rolling basis until all places fill up)，官网提示可能提前关闭申请。官网未列明开放申请日期。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document"],
+    "source_urls": [
+      "https://masters.bschool.cuhk.edu.hk/programmes/macc/",
+      "https://masters.bschool.cuhk.edu.hk/admission-requirements/",
+      "https://www.gs.cuhk.edu.hk/admissions/requirements"
+    ],
+    "confidence": "high",
+    "notes": "官网当前展示周期为2027-28学年，2026/27周期已关闭。IELTS/TOEFL 数值来自 CUHK 研究生院与商学院通用英语要求页，项目专页仅指向该通用页。CET-6 官网未列为可接受替代。该项目为内地会计背景申请者的主要目标之一，可衔接香港会计师公会(HKICPA)专业资格路径(具体豁免安排官网本页未详述)。"
+  },
+  {
+    "school_name_en": "The Chinese University of Hong Kong",
+    "school_name_zh": "香港中文大学",
+    "school_short": "CUHK",
+    "region": "HK",
+    "program_name_en": "MSc in Business Analytics",
+    "program_name_zh": "商业分析理学硕士",
+    "faculty": "CUHK Business School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "HKD 400,000 (subject to University approval), payable in 3 instalments",
+    "campus": "Shatin, N.T., Hong Kong (Cheng Yu Tung Building)",
+    "requirements": {
+      "undergrad_background": "Graduated from a recognised university with a bachelor's degree, normally with honours not lower than Second Class or achieving an average grade of not lower than 'B'; professional qualifications equivalent to a bachelor's degree also accepted",
+      "china_university_list": null,
+      "gpa_requirement": "Second Class Honours / average grade B or above",
+      "ielts": {"overall": 6.5, "subscores": "官网未列明单项要求；全校通用最低分"},
+      "toefl": {"overall": 79, "subscores": "4.5 of 6 (Internet-based/Home Edition)；官网未列明单项要求"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not mandatory, but 'a good GMAT/GRE score will strengthen the application'",
+      "prerequisites": null,
+      "work_experience": "官网未列明工作经验要求",
+      "interview": "项目专页未列明；适用学院通用的酌情面试政策"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-07-31", "decision_by": null},
+        {"name": "Final Round", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "官网原文: 'Application will be processed on a rolling basis until all places fill up... The application deadline may be closed early if places are no longer available.' 官网未列明开放申请日期。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document"],
+    "source_urls": [
+      "https://masters.bschool.cuhk.edu.hk/programmes/mscba/",
+      "https://masters.bschool.cuhk.edu.hk/admission-requirements/"
+    ],
+    "confidence": "high",
+    "notes": "仅设全日制(1年，9月开学)，无兼读制。内地申请者热度极高的项目之一，建议赶 Early Round。官网专页未列出具体材料清单与面试安排，材料字段依据学院通用申请流程页(需上传身份证明、成绩单、学历证书、个人陈述、简历，并由两名推荐人提交推荐信)。CET-6 未被官网列为可接受的英语替代证明。"
+  },
+  {
+    "school_name_en": "The Chinese University of Hong Kong",
+    "school_name_zh": "香港中文大学",
+    "school_short": "CUHK",
+    "region": "HK",
+    "program_name_en": "MSc in Marketing",
+    "program_name_zh": "市场学理学硕士",
+    "faculty": "CUHK Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "HKD 410,000, payable in 3 instalments",
+    "campus": "Shatin, N.T., Hong Kong (Cheng Yu Tung Building)",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree with Second Class Honours or achieving an average grade of B from a recognised university, or an equivalent professional qualification",
+      "china_university_list": null,
+      "gpa_requirement": "Second Class Honours / average grade B or above",
+      "ielts": {"overall": 6.5, "subscores": "官网未列明单项要求；全校通用最低分"},
+      "toefl": {"overall": 79, "subscores": "4.5 of 6 (Internet-based/Home Edition)；官网未列明单项要求"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not mandatory, but 'a good GMAT/GRE score will strengthen the application'",
+      "prerequisites": null,
+      "work_experience": "官网未列明工作经验要求",
+      "interview": "项目专页未列明；适用学院通用的酌情面试政策"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-07-31", "decision_by": null},
+        {"name": "Alumni Referral Round", "deadline": "2026-12-01", "decision_by": null},
+        {"name": "Regular / Final Round", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "滚动录取。官网另列出一个 'Alumni Referral Program' 轮次(截止 2026-12-01)，适用资格条件官网本页未详述，需通过校友推荐渠道。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document"],
+    "source_urls": [
+      "https://masters.bschool.cuhk.edu.hk/programmes/mscmkt/",
+      "https://masters.bschool.cuhk.edu.hk/programmes/mscmkt/admissions/",
+      "https://masters.bschool.cuhk.edu.hk/admission-requirements/"
+    ],
+    "confidence": "high",
+    "notes": "全日制1年，8月开学(早于多数9月开学项目，内地申请者需注意签证与毕业证时间衔接)。IELTS/TOEFL 分数引自学院通用英语要求页。CET-6 未被列为可接受替代。"
+  },
+  {
+    "school_name_en": "The Chinese University of Hong Kong",
+    "school_name_zh": "香港中文大学",
+    "school_short": "CUHK",
+    "region": "HK",
+    "program_name_en": "MSc in Management",
+    "program_name_zh": "管理学理学硕士",
+    "faculty": "CUHK Business School",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "HKD 435,000, payable in 3 instalments of HKD 145,000 each",
+    "campus": "Shatin, N.T., Hong Kong (Cheng Yu Tung Building)",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree from a recognised university with Second Class Honours or above, or an average grade of B or above; equivalent professional qualifications acceptable",
+      "china_university_list": null,
+      "gpa_requirement": "Second Class Honours / average grade B or above",
+      "ielts": {"overall": 6.5, "subscores": "官网未列明单项要求；全校通用最低分"},
+      "toefl": {"overall": 79, "subscores": "4.5 of 6 (Internet-based/Home Edition)；官网未列明单项要求"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not mandatory but 'highly recommended to submit a satisfactory GMAT or GRE test result along with your application to increase the chances of a successful application'",
+      "prerequisites": null,
+      "work_experience": "官网未列明要求(该项目定位为 pre-experience，面向应届及低工作经验申请者)",
+      "interview": "项目专页录取要求部分未列明；适用学院通用的酌情面试政策"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-07-31", "decision_by": null},
+        {"name": "Final Round", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "滚动录取，官网提示名额招满即可能提前关闭。官网未列明开放申请日期。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document"],
+    "source_urls": [
+      "https://masters.bschool.cuhk.edu.hk/programmes/mim/",
+      "https://masters.bschool.cuhk.edu.hk/admission-requirements/"
+    ],
+    "confidence": "high",
+    "notes": "MiM(Master in Management)是CUHK商学院中对 GMAT/GRE 表述最积极的项目之一(官网用词为 'highly recommended' 而非其他项目的 'not mandatory')，内地申请者若目标该项目建议准备 GMAT/GRE。全日制1年，8月开学。申请费 HKD 500 不可退。CET-6 未被列为可接受替代。"
+  },
+  {
+    "school_name_en": "The Chinese University of Hong Kong",
+    "school_name_zh": "香港中文大学",
+    "school_short": "CUHK",
+    "region": "HK",
+    "program_name_en": "MSc in Sustainable Global Business",
+    "program_name_zh": "可持续全球商业理学硕士",
+    "faculty": "CUHK Business School",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "HKD 380,000 (Full-time); HKD 260,000 (Part-time)",
+    "campus": "Shatin, N.T., Hong Kong (Cheng Yu Tung Building)",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree from a recognised university with Second Class Honours or an average grade of 'B' or above; equivalent professional qualifications accepted",
+      "china_university_list": null,
+      "gpa_requirement": "入学:Second Class Honours / 平均分B或以上；毕业:cumulative GPA at least 2.50",
+      "ielts": {"overall": 6.5, "subscores": "官网未列明单项要求；全校通用最低分"},
+      "toefl": {"overall": 79, "subscores": "4.5 of 6 (Internet-based/Home Edition)；官网未列明单项要求"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not mandatory though 'a good GMAT/GRE score will strengthen the application'; 兼读制申请者尤其被鼓励提交",
+      "prerequisites": null,
+      "work_experience": "Full-time: not required; Part-time: 3 years of post-qualification full-time work experience preferred",
+      "interview": "官网原文: 'Shortlisted applicants may be invited for an interview' —明确写出可能安排面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Full-time Early Round", "deadline": "2026-07-31", "decision_by": null},
+        {"name": "Full-time Final Round", "deadline": "2027-03-31", "decision_by": null},
+        {"name": "Part-time Final", "deadline": "2027-04-30", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "滚动录取(rolling basis until all places fill up)。官网未列明开放申请日期。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document"],
+    "source_urls": [
+      "https://masters.bschool.cuhk.edu.hk/programmes/mscsgb/",
+      "https://masters.bschool.cuhk.edu.hk/programmes/mscsgb/admissions/",
+      "https://masters.bschool.cuhk.edu.hk/admission-requirements/"
+    ],
+    "confidence": "high",
+    "notes": "本项目是CUHK商学院当前项目列表中最接近'国际商务/全球商业管理'方向的在招项目。需特别提醒:坊间常见的 'MSc in Global Business Management' 名称在CUHK商学院现行官网项目列表中并不存在，官网亦未说明本项目为其改名版本，请勿据外部清单推断。此外官网确认 'MSc in International Business'、'MSc in Supply Chain Management'、'MSc in Economics'(经济学硕士由社会科学院/经济系而非商学院开设)、'MSc in Financial Technology' 均不在商学院硕士项目列表中。"
+  },
+  {
+    "school_name_en": "The Chinese University of Hong Kong",
+    "school_name_zh": "香港中文大学",
+    "school_short": "CUHK",
+    "region": "HK",
+    "program_name_en": "MSc in Information Science and Technology Management",
+    "program_name_zh": "信息科学与技术管理理学硕士",
+    "faculty": "CUHK Business School",
+    "direction": "other",
+    "duration_months": 12,
+    "tuition": "HKD 340,000 (subject to University approval), payable in 3 instalments (HKD 140,000 deposit + HKD 100,000 x 2)",
+    "campus": "Shatin, N.T., Hong Kong (Cheng Yu Tung Building)",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree with Second Class Honours or an average grade of B or above from a recognised university; professional qualifications equivalent to a bachelor's degree acceptable",
+      "china_university_list": null,
+      "gpa_requirement": "Second Class Honours / average grade B or above",
+      "ielts": {"overall": 6.5, "subscores": "官网未列明单项要求；全校通用最低分"},
+      "toefl": {"overall": 79, "subscores": "4.5 of 6 (Internet-based/Home Edition)；官网未列明单项要求"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not mandatory, but 'a good GMAT/GRE score will strengthen the application'",
+      "prerequisites": null,
+      "work_experience": "官网未列明",
+      "interview": "官网未列明；适用学院通用的酌情面试政策"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-07-31", "decision_by": null},
+        {"name": "Final Round", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "滚动录取(processed on a rolling basis until all places have been filled)。官网未列明开放申请日期。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document"],
+    "source_urls": [
+      "https://masters.bschool.cuhk.edu.hk/programmes/mscistm/",
+      "https://masters.bschool.cuhk.edu.hk/admission-requirements/"
+    ],
+    "confidence": "medium",
+    "notes": "本项目对应'信息系统管理(Information Systems Management)'方向。务必区分:CUHK商学院另有一个名称高度相似但独立的兼读制项目 'MSc in Information and Technology Management'(URL 为 /programmes/mscitm/)，本条记录针对的是全日制的 mscistm。学费在CUHK商学院硕士中相对较低(HKD 340,000)，另设最高 HKD 100,000 的入学奖学金(自动评估，无需另行申请)。confidence 标为 medium 系因材料清单与面试安排官网专页未列明，相关字段依据学院通用政策填写。"
+  },
+  {
+    "school_name_en": "The Chinese University of Hong Kong",
+    "school_name_zh": "香港中文大学",
+    "school_short": "CUHK",
+    "region": "HK",
+    "program_name_en": "MSc in Actuarial Science and Insurance Analytics",
+    "program_name_zh": "精算学与保险分析理学硕士",
+    "faculty": "CUHK Business School",
+    "direction": "other",
+    "duration_months": 12,
+    "tuition": "HKD 370,000 (subject to University approval), payable in 3 instalments of HKD 123,333 / 123,333 / 123,334",
+    "campus": "Shatin, N.T., Hong Kong (Cheng Yu Tung Building)",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree with Second Class Honours or an average grade of B or above from a recognised university, or an equivalent professional qualification",
+      "china_university_list": null,
+      "gpa_requirement": "Second Class Honours / average grade B or above",
+      "ielts": {"overall": 6.5, "subscores": "官网未列明单项要求；全校通用最低分"},
+      "toefl": {"overall": 79, "subscores": "4.5 of 6 (Internet-based/Home Edition)；官网未列明单项要求"},
+      "cet6_accepted": null,
+      "gmat_gre": "Not mandatory, but 'a good GMAT/GRE score will strengthen the application'",
+      "prerequisites": "At least one university-level course in either calculus, probability, statistics, or an approved equivalent",
+      "work_experience": "官网未列明工作经验要求",
+      "interview": "官网原文: 'Shortlisted applicants will be invited for an interview' —明确要求面试"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [
+        {"name": "Early Round", "deadline": "2026-07-31", "decision_by": null},
+        {"name": "Final Round", "deadline": "2027-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-03-31",
+      "notes": "滚动录取(processed on a rolling basis until all places fill up)。官网未列明开放申请日期。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "english_test", "id_document"],
+    "source_urls": [
+      "https://masters.bschool.cuhk.edu.hk/programmes/mscasi/",
+      "https://masters.bschool.cuhk.edu.hk/admission-requirements/"
+    ],
+    "confidence": "high",
+    "notes": "本项目是CUHK商学院硕士中少数在官网明确写出'入围者将被邀请面试'的项目(措辞为 will 而非 may)，内地申请者需提前准备面试。同时明确要求先修课:微积分、概率论或统计学中至少一门大学层次课程，纯文商背景申请者需注意此硬性门槛。CET-6 未被官网列为可接受的英语替代证明。"
+  }
+]

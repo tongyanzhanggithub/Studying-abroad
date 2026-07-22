@@ -1,0 +1,524 @@
+[
+  {
+    "school_name_en": "University of Edinburgh Business School",
+    "school_name_cn": "爱丁堡大学商学院",
+    "university_name_en": "The University of Edinburgh",
+    "country": "UK",
+    "program_name_en": "MSc Finance and Investment",
+    "direction": "Finance",
+    "degree_type": "MSc",
+    "duration_months": 12,
+    "study_mode": "Full-time",
+    "start_month": "September",
+    "tuition": {
+      "entry_year_of_data": "2026 entry (2026/27)",
+      "is_target_cycle": false,
+      "home_raw": "Home: £24,800",
+      "international_raw": "International (including EU): £36,310",
+      "currency": "GBP",
+      "international_amount": 36310,
+      "home_amount": 24800,
+      "application_fee_raw": "A non-refundable application fee of £60",
+      "deposit_raw": "non-refundable deposit of £2,500, usually due within 28 days of the offer issue date",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/finance-investment/fees-living-expenses",
+      "notes": "官网页面标题为 Fees for entry in 2026。截至2026-07-20未发布2027/28学费。"
+    },
+    "requirements": {
+      "degree_classification": "UK first-class or 2:1 honours degree, or an equivalent overseas qualification",
+      "china_gpa_equivalent": "85%+ (Band A) from a university on the Priority List of Chinese universities",
+      "china_university_list": {
+        "has_tier_list": true,
+        "list_name": "University of Edinburgh Priority List of Chinese universities",
+        "program_band": "Band A",
+        "band_definitions": {
+          "Band A": "minimum 85% awarded by a university on the Priority List",
+          "Band B": "minimum 80% awarded by a university on the Priority List",
+          "Band C": "minimum 80% from a Priority List university OR minimum 85% from any recognised university",
+          "Band D": "minimum 80% from any recognised university"
+        },
+        "list_contents_fetched": false,
+        "source_url": "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china",
+        "notes": "Band A-D 定义取自爱丁堡大学中央国际招生页面;本项目在其 entry-requirements 页明确列为 Band A / 85%+。Priority List 具体院校名单为官网 PDF 附件,本次未解析,需另行获取。"
+      },
+      "prerequisite_background": "An undergraduate degree in accounting, finance, business or economics is normally required. Applicants with an Honours degree in a non-related subject considered if they demonstrate a high standard of ability and motivation.",
+      "quantitative_requirement": "Must have passed at least one quantitative-based module such as linear algebra, calculus, probability, or statistics; alternatively relevant work experience with a significant quantitative element.",
+      "ielts": {
+        "overall": 7.0,
+        "subscore_min": 6.0,
+        "raw": "IELTS Academic: total 7.0 with at least 6.0 in each component"
+      },
+      "toefl": {
+        "overall": 100,
+        "subscore_min": 20,
+        "raw": "TOEFL iBT (including Home Edition) before 21 January 2026: total 100 with at least 20 in each component. From 21 January 2026: total 5.0 with at least 4.0 in each component (new TOEFL scale)."
+      },
+      "gmat_gre": "NOT MENTIONED ON OFFICIAL SITE — entry requirements page makes no reference to GMAT or GRE; appears not required, but no explicit statement found.",
+      "work_experience": "Not required. 'Relevant work experience is not required but may increase your chances of acceptance.'",
+      "interview": "NOT FOUND ON OFFICIAL SITE"
+    },
+    "application_materials": [
+      "Personal statement (approximately 500 words)",
+      "Official transcript (certified English translation if required)",
+      "Degree certificate (certified English translation if required; not required for current students)",
+      "English language qualification certificate"
+    ],
+    "application_materials_notes": "Reference is NOT required as part of the application, but the School reserves the right to request one during review. CV and passport are NOT listed as required documents.",
+    "deadlines": {
+      "entry_year": "2027 entry (target)",
+      "opens_at": null,
+      "final_deadline": null,
+      "rounds": [],
+      "notes": "官网截至2026-07-20仅发布 'Application deadlines for study 2026/27',无2027 entry信息。存档上一届(2026 entry)五轮日期供参考:Round 1 截止 2025-10-15(2025-12-04出结果);Round 2 截止 2025-12-10(2026-02-19);Round 3 截止 2026-02-11(2026-04-23);Round 4 截止 2026-04-22(2026-06-04);Round 5(最终轮)截止 2026-06-10(2026-07-23)。官网提示:需要签证者建议在第5轮前递交;申请费须在轮次截止后5个工作日内缴纳;申请未满额时最终轮后仍可能继续受理。",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/finance-investment/apply/application-deadlines"
+    },
+    "source_urls": [
+      "https://www.business-school.ed.ac.uk/msc",
+      "https://www.business-school.ed.ac.uk/msc/finance-investment",
+      "https://www.business-school.ed.ac.uk/msc/finance-investment/overview/programme-structure",
+      "https://www.business-school.ed.ac.uk/msc/finance-investment/entry-requirements",
+      "https://www.business-school.ed.ac.uk/msc/finance-investment/fees-living-expenses",
+      "https://www.business-school.ed.ac.uk/msc/finance-investment/apply",
+      "https://www.business-school.ed.ac.uk/msc/finance-investment/apply/application-deadlines",
+      "https://www.business-school.ed.ac.uk/msc/finance-investment/apply/process",
+      "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china"
+    ],
+    "confidence": "low",
+    "data_collected_at": "2026-07-20",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。学费、语言要求、Band A门槛、先修课要求跨周期相对稳定,已保留原值;申请轮次日期已置空并归档至 deadlines.notes。中国学生为热门方向,FT 2026 Masters in Finance 排名英国第8。"
+  },
+  {
+    "school_name_en": "University of Edinburgh Business School",
+    "school_name_cn": "爱丁堡大学商学院",
+    "university_name_en": "The University of Edinburgh",
+    "country": "UK",
+    "program_name_en": "MSc Accounting and Financial Management",
+    "direction": "Accounting & Finance",
+    "degree_type": "MSc",
+    "duration_months": 12,
+    "study_mode": "Full-time",
+    "start_month": "September",
+    "tuition": {
+      "entry_year_of_data": "2026 entry (2026/27)",
+      "is_target_cycle": false,
+      "home_raw": "Home: £24,800",
+      "international_raw": "International (including EU): £36,310",
+      "currency": "GBP",
+      "international_amount": 36310,
+      "home_amount": 24800,
+      "application_fee_raw": "A non-refundable application fee of £60",
+      "deposit_raw": "non-refundable deposit of £2,500, usually due within 28 days of the offer issue date",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/accounting-financial-management/fees-living-expenses",
+      "notes": "官网为 2026 entry 学费。截至2026-07-20未发布2027/28学费。"
+    },
+    "requirements": {
+      "degree_classification": "UK first-class or 2:1 honours degree, or an equivalent overseas qualification",
+      "china_gpa_equivalent": "85%+ (Band A) from a university on the Priority List of Chinese universities",
+      "china_university_list": {
+        "has_tier_list": true,
+        "list_name": "University of Edinburgh Priority List of Chinese universities",
+        "program_band": "Band A",
+        "band_definitions": {
+          "Band A": "minimum 85% awarded by a university on the Priority List",
+          "Band B": "minimum 80% awarded by a university on the Priority List",
+          "Band C": "minimum 80% from a Priority List university OR minimum 85% from any recognised university",
+          "Band D": "minimum 80% from any recognised university"
+        },
+        "list_contents_fetched": false,
+        "source_url": "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china",
+        "notes": "Band A-D 定义取自爱丁堡大学中央国际招生页面;本项目在其 entry-requirements 页明确列为 Band A / 85%+。Priority List 具体院校名单为官网 PDF 附件,本次未解析。"
+      },
+      "prerequisite_background": "An undergraduate degree in accounting, finance, financial management, or related discipline is normally required. Applicants with an Honours degree in quantitative disciplines (e.g. economics or mathematics) or business studies considered if a strong accounting and finance background is demonstrated.",
+      "quantitative_requirement": "No named prerequisite module. 'You should be able to demonstrate some evidence of mathematical ability.'",
+      "ielts": {
+        "overall": 7.0,
+        "subscore_min": 6.0,
+        "raw": "IELTS Academic: total 7.0 with at least 6.0 in each component"
+      },
+      "toefl": {
+        "overall": 100,
+        "subscore_min": 20,
+        "raw": "TOEFL iBT (including Home Edition) before 21 January 2026: total 100 with at least 20 in each component"
+      },
+      "gmat_gre": "NOT MENTIONED ON OFFICIAL SITE — appears not required, no explicit statement found.",
+      "work_experience": "Not required. 'Relevant work experience is not required but may increase your chances of acceptance.' Preference given to those with grades above the minimum requirements.",
+      "interview": "NOT FOUND ON OFFICIAL SITE"
+    },
+    "application_materials": [
+      "Personal statement (approximately 500 words)",
+      "Official transcript (certified English translation if required)",
+      "Degree certificate (certified English translation if required; not required for current students)",
+      "English language qualification certificate"
+    ],
+    "application_materials_notes": "Reference is NOT required but the School reserves the right to request one during review. CV and passport are NOT listed as required documents.",
+    "deadlines": {
+      "entry_year": "2027 entry (target)",
+      "opens_at": null,
+      "final_deadline": null,
+      "rounds": [],
+      "notes": "官网截至2026-07-20仅发布2026/27周期,无2027 entry信息。存档上一届(2026 entry)五轮日期:Round 1 截止 2025-10-15(2025-12-04出结果);Round 2 截止 2025-12-10(2026-02-19);Round 3 截止 2026-02-11(2026-04-23);Round 4 截止 2026-04-22(2026-06-04);Round 5(最终轮)截止 2026-06-10(2026-07-23)。需签证者建议第5轮前递交;申请未满额时最终轮后仍可能继续受理。",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/accounting-financial-management/apply/application-deadlines"
+    },
+    "source_urls": [
+      "https://www.business-school.ed.ac.uk/msc",
+      "https://www.business-school.ed.ac.uk/msc/accounting-financial-management",
+      "https://www.business-school.ed.ac.uk/msc/accounting-financial-management/overview/programme-structure",
+      "https://www.business-school.ed.ac.uk/msc/accounting-financial-management/entry-requirements",
+      "https://www.business-school.ed.ac.uk/msc/accounting-financial-management/fees-living-expenses",
+      "https://www.business-school.ed.ac.uk/msc/accounting-financial-management/apply",
+      "https://www.business-school.ed.ac.uk/msc/accounting-financial-management/apply/application-deadlines",
+      "https://www.business-school.ed.ac.uk/msc/accounting-financial-management/apply/process",
+      "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china"
+    ],
+    "confidence": "low",
+    "data_collected_at": "2026-07-20",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。官网说明本项目为原 MSc Accounting and Finance 的更新版本,改名后中文材料可能仍沿用旧名。学费、语言要求、Band A门槛、先修课要求已保留原值。"
+  },
+  {
+    "school_name_en": "University of Edinburgh Business School",
+    "school_name_cn": "爱丁堡大学商学院",
+    "university_name_en": "The University of Edinburgh",
+    "country": "UK",
+    "program_name_en": "MSc Management",
+    "direction": "Management",
+    "degree_type": "MSc",
+    "duration_months": 12,
+    "study_mode": "Full-time",
+    "start_month": "September",
+    "tuition": {
+      "entry_year_of_data": "2026 entry (2026/27)",
+      "is_target_cycle": false,
+      "home_raw": "Home £24,800",
+      "international_raw": "International (including EU) £34,800",
+      "currency": "GBP",
+      "international_amount": 34800,
+      "home_amount": 24800,
+      "application_fee_raw": "A non-refundable application fee of £60",
+      "deposit_raw": "applicants will be required to pay a non-refundable deposit of £2,500",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/management/fees-living-expenses",
+      "notes": "官网页面标题为 'Fees for entry to MSc Management in 2026'。截至2026-07-20未发布2027/28学费。"
+    },
+    "requirements": {
+      "degree_classification": "UK first-class or 2:1 honours degree in any subject, or an equivalent overseas qualification",
+      "china_gpa_equivalent": "85%+ (Band A) from a university on the Priority List of Chinese universities",
+      "china_university_list": {
+        "has_tier_list": true,
+        "list_name": "University of Edinburgh Priority List of Chinese universities",
+        "program_band": "Band A",
+        "band_definitions": {
+          "Band A": "minimum 85% awarded by a university on the Priority List",
+          "Band B": "minimum 80% awarded by a university on the Priority List",
+          "Band C": "minimum 80% from a Priority List university OR minimum 85% from any recognised university",
+          "Band D": "minimum 80% from any recognised university"
+        },
+        "list_contents_fetched": false,
+        "source_url": "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china",
+        "notes": "Band A-D 定义取自爱丁堡大学中央国际招生页面;本项目在其 entry-requirements 页明确列为 Band A / 85%+。Priority List 具体院校名单为官网 PDF 附件,本次未解析。"
+      },
+      "prerequisite_background": "No specific subject background required — degree may be in any subject.",
+      "quantitative_requirement": "NOT FOUND ON OFFICIAL SITE (no quantitative prerequisite stated)",
+      "ielts": {
+        "overall": 7.0,
+        "subscore_min": 6.0,
+        "raw": "IELTS Academic: total 7.0 with at least 6.0 in each component"
+      },
+      "toefl": {
+        "overall": 100,
+        "subscore_min": 20,
+        "raw": "TOEFL iBT (including Home Edition) before 21 January 2026: total 100 with at least 20 in each component. From 21 January 2026: total 5.0 with at least 4.0 in each component (new TOEFL scale)."
+      },
+      "gmat_gre": "NOT MENTIONED ON OFFICIAL SITE — appears not required, no explicit statement found.",
+      "work_experience": "Not required. 'Relevant work experience is not required but may increase your chances of acceptance.'",
+      "interview": "NOT FOUND ON OFFICIAL SITE"
+    },
+    "application_materials": [
+      "Personal statement (approximately 500 words)",
+      "Official transcript (certified English translation if required)",
+      "Degree certificate (certified English translation if required; not required for current students)",
+      "English language qualification certificate"
+    ],
+    "application_materials_notes": "Reference is NOT required but the School reserves the right to request one during review. CV and passport are NOT listed as required documents.",
+    "deadlines": {
+      "entry_year": "2027 entry (target)",
+      "opens_at": null,
+      "final_deadline": null,
+      "rounds": [],
+      "notes": "官网截至2026-07-20仅发布2026/27周期,无2027 entry信息。存档上一届(2026 entry)五轮日期:Round 1 截止 2025-10-15(2025-12-04出结果);Round 2 截止 2025-12-10(2026-02-19);Round 3 截止 2026-02-11(2026-04-23);Round 4 截止 2026-04-22(2026-06-04);Round 5(最终轮)截止 2026-06-10(2026-07-23)。官网提示:需签证者建议第5轮前递交;申请费须在轮次截止后5个工作日内缴纳;申请大学宿舍须在7月31日前收到并接受无条件offer。",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/management/apply/application-deadlines"
+    },
+    "source_urls": [
+      "https://www.business-school.ed.ac.uk/msc",
+      "https://www.business-school.ed.ac.uk/msc/management",
+      "https://www.business-school.ed.ac.uk/msc/management/overview/programme-structure",
+      "https://www.business-school.ed.ac.uk/msc/management/entry-requirements",
+      "https://www.business-school.ed.ac.uk/msc/management/fees-living-expenses",
+      "https://www.business-school.ed.ac.uk/msc/management/apply",
+      "https://www.business-school.ed.ac.uk/msc/management/apply/application-deadlines",
+      "https://www.business-school.ed.ac.uk/msc/management/apply/process",
+      "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china"
+    ],
+    "confidence": "low",
+    "data_collected_at": "2026-07-20",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。本项目对本科专业无限制,适合跨专业申请者,是中国学生热门选择。学费、语言要求、Band A门槛已保留原值。"
+  },
+  {
+    "school_name_en": "University of Edinburgh Business School",
+    "school_name_cn": "爱丁堡大学商学院",
+    "university_name_en": "The University of Edinburgh",
+    "country": "UK",
+    "program_name_en": "MSc Marketing",
+    "direction": "Marketing",
+    "degree_type": "MSc",
+    "duration_months": 12,
+    "study_mode": "Full-time",
+    "start_month": "September",
+    "tuition": {
+      "entry_year_of_data": "2026 entry (2026/27)",
+      "is_target_cycle": false,
+      "home_raw": "Home: £20,100",
+      "international_raw": "International (including EU): £33,200",
+      "currency": "GBP",
+      "international_amount": 33200,
+      "home_amount": 20100,
+      "application_fee_raw": "A non-refundable application fee of £60",
+      "deposit_raw": "applicants will be required to pay a non-refundable deposit of £2,500",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/marketing/fees-living-expenses",
+      "notes": "官网为 2026 entry 学费。截至2026-07-20未发布2027/28学费。"
+    },
+    "requirements": {
+      "degree_classification": "UK first-class or 2:1 honours degree in any subject, or an equivalent overseas qualification",
+      "china_gpa_equivalent": "85%+ (Band A) from a university on the Priority List of Chinese universities",
+      "china_university_list": {
+        "has_tier_list": true,
+        "list_name": "University of Edinburgh Priority List of Chinese universities",
+        "program_band": "Band A",
+        "band_definitions": {
+          "Band A": "minimum 85% awarded by a university on the Priority List",
+          "Band B": "minimum 80% awarded by a university on the Priority List",
+          "Band C": "minimum 80% from a Priority List university OR minimum 85% from any recognised university",
+          "Band D": "minimum 80% from any recognised university"
+        },
+        "list_contents_fetched": false,
+        "source_url": "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china",
+        "notes": "Band A-D 定义取自爱丁堡大学中央国际招生页面;本项目在其 entry-requirements 页明确列为 Band A / 85%+。Priority List 具体院校名单为官网 PDF 附件,本次未解析。"
+      },
+      "prerequisite_background": "Any subject accepted, but 'preference will be given to those who have studied business and management related subjects' due to competition.",
+      "quantitative_requirement": "NOT FOUND ON OFFICIAL SITE (no quantitative prerequisite stated)",
+      "ielts": {
+        "overall": 7.0,
+        "subscore_min": 6.0,
+        "raw": "IELTS Academic: total 7.0 with at least 6.0 in each component"
+      },
+      "toefl": {
+        "overall": 100,
+        "subscore_min": 20,
+        "raw": "TOEFL iBT (including Home Edition) before 21 January 2026: total 100 with at least 20 in each component"
+      },
+      "gmat_gre": "NOT MENTIONED ON OFFICIAL SITE — appears not required, no explicit statement found.",
+      "work_experience": "Not required. 'Relevant work experience is not required but may increase your chances of acceptance.'",
+      "interview": "NOT FOUND ON OFFICIAL SITE"
+    },
+    "application_materials": [
+      "Personal statement (approximately 500 words)",
+      "Official transcript (certified English translation if required)",
+      "Degree certificate (certified English translation if required; not required for current students)",
+      "English language qualification certificate"
+    ],
+    "application_materials_notes": "Reference is NOT required but the School reserves the right to request one during review. CV and passport are NOT listed as required documents.",
+    "deadlines": {
+      "entry_year": "2027 entry (target)",
+      "opens_at": null,
+      "final_deadline": null,
+      "rounds": [],
+      "notes": "官网截至2026-07-20仅发布2026/27周期,无2027 entry信息。存档上一届(2026 entry)五轮日期:Round 1 截止 2025-10-15(2025-12-04出结果);Round 2 截止 2025-12-10(2026-02-19);Round 3 截止 2026-02-11(2026-04-23);Round 4 截止 2026-04-22(2026-06-04);Round 5(最终轮)截止 2026-06-10(2026-07-23)。需签证者建议第5轮前递交;申请未满额时最终轮后仍可能继续受理。",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/marketing/apply/application-deadlines"
+    },
+    "source_urls": [
+      "https://www.business-school.ed.ac.uk/msc",
+      "https://www.business-school.ed.ac.uk/msc/marketing",
+      "https://www.business-school.ed.ac.uk/msc/marketing/overview/programme-structure",
+      "https://www.business-school.ed.ac.uk/msc/marketing/entry-requirements",
+      "https://www.business-school.ed.ac.uk/msc/marketing/fees-living-expenses",
+      "https://www.business-school.ed.ac.uk/msc/marketing/apply",
+      "https://www.business-school.ed.ac.uk/msc/marketing/apply/application-deadlines",
+      "https://www.business-school.ed.ac.uk/msc/marketing/apply/process",
+      "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china"
+    ],
+    "confidence": "low",
+    "data_collected_at": "2026-07-20",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。QS 2026 市场营销硕士排名第17。学费、语言要求、Band A门槛已保留原值。"
+  },
+  {
+    "school_name_en": "University of Edinburgh Business School",
+    "school_name_cn": "爱丁堡大学商学院",
+    "university_name_en": "The University of Edinburgh",
+    "country": "UK",
+    "program_name_en": "MSc Business Analytics",
+    "direction": "Business Analytics",
+    "degree_type": "MSc",
+    "duration_months": 12,
+    "study_mode": "Full-time",
+    "start_month": "September",
+    "tuition": {
+      "entry_year_of_data": "2026 entry (2026/27)",
+      "is_target_cycle": false,
+      "home_raw": "Home: £21,420",
+      "international_raw": "International (including EU): £34,800",
+      "currency": "GBP",
+      "international_amount": 34800,
+      "home_amount": 21420,
+      "application_fee_raw": "A non-refundable application fee of £60",
+      "deposit_raw": "applicants will be required to pay a non-refundable deposit of £2,500",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/business-analytics/fees-living-expenses",
+      "notes": "官网为 2026 entry 学费。截至2026-07-20未发布2027/28学费。"
+    },
+    "requirements": {
+      "degree_classification": "UK first-class or 2:1 honours degree, or an equivalent overseas qualification",
+      "china_gpa_equivalent": "85%+ (Band A) from a university on the Priority List of Chinese universities",
+      "china_university_list": {
+        "has_tier_list": true,
+        "list_name": "University of Edinburgh Priority List of Chinese universities",
+        "program_band": "Band A",
+        "band_definitions": {
+          "Band A": "minimum 85% awarded by a university on the Priority List",
+          "Band B": "minimum 80% awarded by a university on the Priority List",
+          "Band C": "minimum 80% from a Priority List university OR minimum 85% from any recognised university",
+          "Band D": "minimum 80% from any recognised university"
+        },
+        "list_contents_fetched": false,
+        "source_url": "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china",
+        "notes": "Band A-D 定义取自爱丁堡大学中央国际招生页面;本项目在其 entry-requirements 页明确列为 Band A / 85%+。Priority List 具体院校名单为官网 PDF 附件,本次未解析。"
+      },
+      "prerequisite_background": "An undergraduate degree in any disciplinary area related to management science, operational research, statistics, econometrics, mathematics, physics, computer science, engineering, or business and management which incorporates a distinct quantitative element is required. Candidates with a first-class or 2:1 degree in an unrelated subject but relevant work experience considered individually.",
+      "quantitative_requirement": "Background should ideally include courses and/or experience in linear algebra, calculus, probability, statistics, and computer programming.",
+      "ielts": {
+        "overall": 7.0,
+        "subscore_min": 6.0,
+        "raw": "IELTS Academic: total 7.0 with at least 6.0 in each component"
+      },
+      "toefl": {
+        "overall": 100,
+        "subscore_min": 20,
+        "raw": "TOEFL iBT (including Home Edition) before 21 January 2026: total 100 with at least 20 in each component. From 21 January 2026: total 5.0 with at least 4.0 in each component (new TOEFL scale)."
+      },
+      "gmat_gre": "NOT MENTIONED ON OFFICIAL SITE — appears not required, no explicit statement found.",
+      "work_experience": "Not required. 'Relevant work experience is not required but may increase your chances of acceptance.' Work experience can compensate for an unrelated degree background.",
+      "interview": "NOT FOUND ON OFFICIAL SITE"
+    },
+    "application_materials": [
+      "Personal statement (approximately 500 words)",
+      "Official transcript (certified English translation if required)",
+      "Degree certificate (certified English translation if required; not required for current students)",
+      "English language qualification certificate"
+    ],
+    "application_materials_notes": "Reference is NOT required but the School reserves the right to request one during review. CV and passport are NOT listed as required documents.",
+    "deadlines": {
+      "entry_year": "2027 entry (target)",
+      "opens_at": null,
+      "final_deadline": null,
+      "rounds": [],
+      "notes": "官网截至2026-07-20仅发布2026/27周期,无2027 entry信息。存档上一届(2026 entry)五轮日期:Round 1 截止 2025-10-15(2025-12-04出结果);Round 2 截止 2025-12-10(2026-02-19);Round 3 截止 2026-02-11(2026-04-23);Round 4 截止 2026-04-22(2026-06-04);Round 5(最终轮)截止 2026-06-10(2026-07-23)。官网提示:申请费须在轮次截止后5个工作日内缴纳;需签证者建议第5轮前递交。",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/business-analytics/apply/application-deadlines"
+    },
+    "source_urls": [
+      "https://www.business-school.ed.ac.uk/msc",
+      "https://www.business-school.ed.ac.uk/msc/business-analytics",
+      "https://www.business-school.ed.ac.uk/msc/business-analytics/overview/programme-structure",
+      "https://www.business-school.ed.ac.uk/msc/business-analytics/entry-requirements",
+      "https://www.business-school.ed.ac.uk/msc/business-analytics/fees-living-expenses",
+      "https://www.business-school.ed.ac.uk/msc/business-analytics/apply",
+      "https://www.business-school.ed.ac.uk/msc/business-analytics/apply/application-deadlines",
+      "https://www.business-school.ed.ac.uk/msc/business-analytics/apply/process",
+      "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china"
+    ],
+    "confidence": "low",
+    "data_collected_at": "2026-07-20",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。本项目有明确量化背景要求(线代/微积分/概率/统计/编程),文商科背景申请者需谨慎。QS 2026 商业分析硕士排名第26。学费、语言要求、Band A门槛、先修课要求已保留原值。"
+  },
+  {
+    "school_name_en": "University of Edinburgh Business School",
+    "school_name_cn": "爱丁堡大学商学院",
+    "university_name_en": "The University of Edinburgh",
+    "country": "UK",
+    "program_name_en": "MSc Human Resource Management",
+    "direction": "HR Management",
+    "degree_type": "MSc",
+    "duration_months": 12,
+    "study_mode": "Full-time",
+    "start_month": "September",
+    "tuition": {
+      "entry_year_of_data": "2026 entry (2026/27)",
+      "is_target_cycle": false,
+      "home_raw": "Home £18,000",
+      "international_raw": "International (including EU) £33,200",
+      "currency": "GBP",
+      "international_amount": 33200,
+      "home_amount": 18000,
+      "application_fee_raw": "A non-refundable application fee of £60",
+      "deposit_raw": "applicants will be required to pay a non-refundable deposit of £2,500",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/human-resource-management/fees-living-expenses",
+      "notes": "官网为 2026 entry 学费。截至2026-07-20未发布2027/28学费。押金金额存在冲突:搜索摘要曾显示£1,500,但直接抓取的官方费用页为£2,500,以官方页面为准,建议二次核对。"
+    },
+    "requirements": {
+      "degree_classification": "UK first-class or 2:1 honours degree in any subject, or an equivalent overseas qualification",
+      "china_gpa_equivalent": "85%+ (Band A) from a university on the Priority List of Chinese universities",
+      "china_university_list": {
+        "has_tier_list": true,
+        "list_name": "University of Edinburgh Priority List of Chinese universities",
+        "program_band": "Band A",
+        "band_definitions": {
+          "Band A": "minimum 85% awarded by a university on the Priority List",
+          "Band B": "minimum 80% awarded by a university on the Priority List",
+          "Band C": "minimum 80% from a Priority List university OR minimum 85% from any recognised university",
+          "Band D": "minimum 80% from any recognised university"
+        },
+        "list_contents_fetched": false,
+        "source_url": "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china",
+        "notes": "Band A-D 定义取自爱丁堡大学中央国际招生页面;本项目在其 entry-requirements 页明确列为 Band A / 85%+。Priority List 具体院校名单为官网 PDF 附件,本次未解析。"
+      },
+      "prerequisite_background": "No specific subject required; candidates must demonstrate an interest in pursuing a career in Human Resource Management. Preference given to those with grades above the minimum requirements.",
+      "quantitative_requirement": "NOT FOUND ON OFFICIAL SITE (no quantitative prerequisite stated)",
+      "ielts": {
+        "overall": 7.0,
+        "subscore_min": 6.0,
+        "raw": "IELTS Academic: total 7.0 with at least 6.0 in each component"
+      },
+      "toefl": {
+        "overall": 100,
+        "subscore_min": 20,
+        "raw": "TOEFL iBT (including Home Edition) before 21 January 2026: total 100 with at least 20 in each component. From 21 January 2026: total 5.0 with at least 4.0 in each component (new TOEFL scale)."
+      },
+      "gmat_gre": "NOT MENTIONED ON OFFICIAL SITE — appears not required, no explicit statement found.",
+      "work_experience": "Not stated as mandatory; 'highly relevant work or other experience' may strengthen an application where degree qualifications are borderline.",
+      "interview": "NOT FOUND ON OFFICIAL SITE"
+    },
+    "application_materials": [
+      "Personal statement (approximately 500 words)",
+      "Official transcript (certified English translation if required)",
+      "Degree certificate (certified English translation if required; not required for current students)",
+      "English language qualification certificate"
+    ],
+    "application_materials_notes": "Reference is NOT required but the School reserves the right to request one during review. CV and passport are NOT listed as required documents.",
+    "deadlines": {
+      "entry_year": "2027 entry (target)",
+      "opens_at": null,
+      "final_deadline": null,
+      "rounds": [],
+      "notes": "官网截至2026-07-20仅发布2026/27周期,无2027 entry信息。存档上一届(2026 entry)五轮日期:Round 1 截止 2025-10-15(2025-12-04出结果);Round 2 截止 2025-12-10(2026-02-19);Round 3 截止 2026-02-11(2026-04-23);Round 4 截止 2026-04-22(2026-06-04);Round 5(最终轮)截止 2026-06-10(2026-07-23)。官网提示:申请费须在轮次截止后5个工作日内缴纳;申请未满额时最终轮后仍可能继续受理。",
+      "source_url": "https://www.business-school.ed.ac.uk/msc/human-resource-management/apply/application-deadlines"
+    },
+    "source_urls": [
+      "https://www.business-school.ed.ac.uk/msc",
+      "https://www.business-school.ed.ac.uk/msc/human-resource-management",
+      "https://www.business-school.ed.ac.uk/msc/human-resource-management/overview/programme-structure",
+      "https://www.business-school.ed.ac.uk/msc/human-resource-management/entry-requirements",
+      "https://www.business-school.ed.ac.uk/msc/human-resource-management/fees-living-expenses",
+      "https://www.business-school.ed.ac.uk/msc/human-resource-management/apply",
+      "https://www.business-school.ed.ac.uk/msc/human-resource-management/apply/application-deadlines",
+      "https://www.business-school.ed.ac.uk/msc/human-resource-management/apply/process",
+      "https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china"
+    ],
+    "confidence": "low",
+    "data_collected_at": "2026-07-20",
+    "notes": "【上一届数据】官网截至2026-07-20尚未发布2027 entry周期,此为2026 entry数据,仅供参考,须重新核对。商学院另设 MSc International Human Resource Management,本条为纯 HRM 方向。爱丁堡商学院现无独立的 MSc International Business 项目(官网14个硕士项目列表中不存在),原任务清单中该方向无对应记录。学费、语言要求、Band A门槛已保留原值。"
+  }
+]

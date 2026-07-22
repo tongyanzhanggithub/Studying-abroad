@@ -1,0 +1,916 @@
+[
+  {
+    "school_name_en": "University of Sheffield",
+    "school_name_zh": "谢菲尔德大学",
+    "school_short": "Sheffield",
+    "region": "UK",
+    "program_name_en": "Management MSc",
+    "program_name_zh": "管理学硕士",
+    "faculty": "Sheffield University Management School",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "官网未列明具体数字;费用页面为动态计算器(需选择入学年份及Home/Overseas身份查询),官网确认2026年9月入学的海外生可自动获得£3,000学费减免(无需单独申请)",
+    "campus": "Sheffield",
+    "requirements": {
+      "undergrad_background": "Minimum 2:1 undergraduate honours degree in any subject;官网说明该项目适合此前未学过商科的学生",
+      "china_university_list": "官网未公开按学校分档的Band A/B/C名单,而是提供可按具体院校名称搜索的查询工具(sheffield.ac.uk/international/entry-requirements/china/ranking-list),返回该校对应的'UK 2:1等同分数'与'UK 2:2等同分数'两档百分比。示例(原文摘录):Anhui University、Beihang University、Beijing Jiaotong University、Beijing Normal University等要求70%(2:1)/65%(2:2);Anhui Normal University、Anhui Agricultural University要求75%/70%;部分认可度较低院校(如Anhui International Studies University)要求85%/80%。该规则为全校统一标准,未发现管理学院专属的差异化名单。",
+      "gpa_requirement": "无学院层面统一百分比,需通过官网院校查询工具按本科院校确定具体门槛(常见区间70-85%对应2:1门槛)",
+      "ielts": {"overall": 6.5, "subscores": "6.0 in each component"},
+      "toefl": null,
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要;该校仅MBA项目页面单独列出申请材料要求,与本硕士项目无关)",
+      "prerequisites": "无特定先修课或量化背景要求",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": null,
+      "rounds": null,
+      "final_deadline": null,
+      "notes": "2026-07-20查询课程页面显示原文:'Applications for 2026 entry are now closed. Applications for 2027 will open in September 2026.'(2027年9月开放申请,无具体日期)。但学校总入学截止日期页面(sheffield.ac.uk/postgraduate/deadlines)同时列出该项目2026年9月入学的截止日期为2026-09-04,与课程页面'已关闭'的表述矛盾,推测为该热门项目提前满额关闭,总览页面未及时更新。两处信息均如实记录,请以官网实时状态为准。当前对应入学年份:2026 entry(已关闭)/即将开放2027 entry。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": [
+      "https://sheffield.ac.uk/postgraduate/taught/courses/2026/management-msc",
+      "https://sheffield.ac.uk/postgraduate/deadlines",
+      "https://www.sheffield.ac.uk/international/entry-requirements/china/ranking-list"
+    ],
+    "confidence": "high",
+    "notes": "官网原文明确说明:'We will not ask you to provide references or referee details as part of your application' 且 'We do not require a supporting statement for this programme.' 即默认不需要推荐信和个人陈述(个别情况下可能被额外要求,非标准流程)。学费无静态数字,需用官网费用计算器实时查询。"
+  },
+  {
+    "school_name_en": "University of Sheffield",
+    "school_name_zh": "谢菲尔德大学",
+    "school_short": "Sheffield",
+    "region": "UK",
+    "program_name_en": "Finance and Accounting MSc",
+    "program_name_zh": "金融与会计硕士",
+    "faculty": "Sheffield University Management School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "官网未列明具体数字;费用页面为动态计算器。第三方搜索结果曾提及约£32,350(2026-27),但未能通过官网页面原文直接核实,故标记为未确认",
+    "campus": "Sheffield",
+    "requirements": {
+      "undergrad_background": "Minimum 2:1 undergraduate honours degree in any subject(不限专业背景);官网原文:'We assess each application on the basis of the applicant's preparation and achievement as a whole.'",
+      "china_university_list": "同校级通用查询工具(见Management MSc条目说明),未发现本项目专属分档名单。",
+      "gpa_requirement": "无项目层面统一百分比,需通过院校查询工具确定",
+      "ielts": {"overall": 6.5, "subscores": "6.0 in each component"},
+      "toefl": null,
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)",
+      "prerequisites": "无特定量化先修课要求;可选模块允许学生侧重会计或金融方向",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": null,
+      "rounds": null,
+      "final_deadline": null,
+      "notes": "2026-07-20查询显示:'Applications for 2026 entry are now closed. Applications for 2027 will open in September 2026.' 与总截止日期页面所列2026-09-04存在矛盾(详见Management MSc条目说明)。入学年份:2026 entry(已关闭)/2027 entry即将开放。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": [
+      "https://sheffield.ac.uk/postgraduate/taught/courses/2026/finance-and-accounting-msc",
+      "https://sheffield.ac.uk/postgraduate/deadlines"
+    ],
+    "confidence": "high",
+    "notes": "官网明确不要求推荐信和个人陈述(与其他管理学院硕士项目一致)。学费无静态确认数字。"
+  },
+  {
+    "school_name_en": "University of Sheffield",
+    "school_name_zh": "谢菲尔德大学",
+    "school_short": "Sheffield",
+    "region": "UK",
+    "program_name_en": "Finance MSc",
+    "program_name_zh": "金融学硕士",
+    "faculty": "Sheffield University Management School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "官网未列明具体数字;费用页面为动态计算器",
+    "campus": "Sheffield",
+    "requirements": {
+      "undergrad_background": "官网原文:'Minimum 2:1 undergraduate honours degree in economics or a degree which meets the module requirements below. You should have studied the following four modules: Macroeconomics, Microeconomics, Mathematics, Statistics or Econometrics.'",
+      "china_university_list": "同校级通用查询工具(见Management MSc条目),未发现本项目专属分档名单。",
+      "gpa_requirement": "无项目层面统一百分比,需通过院校查询工具确定;另需满足四门指定量化模块要求",
+      "ielts": {"overall": 6.5, "subscores": "6.0 in each component"},
+      "toefl": null,
+      "gmat_gre": "官网未提及",
+      "prerequisites": "明确要求:经济学学位,或本科阶段修读过宏观经济学、微观经济学、数学、统计学/计量经济学四门课程",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": null,
+      "final_deadline": "2026-09-04",
+      "notes": "2026-07-20查询该课程页面显示'Apply now'及'You can apply now using our Postgraduate Online Application Form',与其他多个已关闭的管理学院项目不同,本项目当前仍开放申请。总截止日期页面列出2026年9月入学截止日期为2026-09-04(为全校通用截止日期,非项目专属确认)。入学年份:2026 entry(开放中)。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": [
+      "https://sheffield.ac.uk/postgraduate/taught/courses/2026/finance-msc"
+    ],
+    "confidence": "high",
+    "notes": "该项目要求申请者本科修读过四门指定量化课程(见prerequisites),相对本校其他商科项目对量化背景要求更高。官网明确不要求推荐信和个人陈述。"
+  },
+  {
+    "school_name_en": "University of Sheffield",
+    "school_name_zh": "谢菲尔德大学",
+    "school_short": "Sheffield",
+    "region": "UK",
+    "program_name_en": "Management and International Business MSc",
+    "program_name_zh": "管理与国际商务硕士",
+    "faculty": "Sheffield University Management School",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "官网未列明具体数字;费用页面为动态计算器,官网确认2026年9月入学海外生可获£3,000学费减免;学费押金截止日期为2026-06-01(该日期在2026-07-20已过)",
+    "campus": "Sheffield",
+    "requirements": {
+      "undergrad_background": "Minimum 2:1 undergraduate honours degree in any subject;官网说明未达标准但有相关经验者'may be accepted'",
+      "china_university_list": "同校级通用查询工具(见Management MSc条目),未发现本项目专属分档名单。",
+      "gpa_requirement": "无项目层面统一百分比,需通过院校查询工具确定",
+      "ielts": {"overall": 6.5, "subscores": "6.0 in each component"},
+      "toefl": null,
+      "gmat_gre": "官网未提及",
+      "prerequisites": "官网未列明",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": null,
+      "rounds": null,
+      "final_deadline": null,
+      "notes": "2026-07-20查询显示:'Applications for 2026 entry are now closed. Applications for 2027 will open in September 2026.' 与总截止日期页面所列2026-09-04存在矛盾(详见Management MSc条目说明)。入学年份:2026 entry(已关闭)/2027 entry即将开放。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": [
+      "https://sheffield.ac.uk/postgraduate/taught/courses/2026/management-and-international-business-msc",
+      "https://sheffield.ac.uk/postgraduate/deadlines"
+    ],
+    "confidence": "high",
+    "notes": "官网明确不要求推荐信和个人陈述。学费押金截止日期(2026-06-01)已过,说明该项目2026年入学的招生流程已进入尾声,与'2026已关闭'表述一致。"
+  },
+  {
+    "school_name_en": "University of Sheffield",
+    "school_name_zh": "谢菲尔德大学",
+    "school_short": "Sheffield",
+    "region": "UK",
+    "program_name_en": "International Marketing and Management MSc",
+    "program_name_zh": "国际市场营销与管理硕士",
+    "faculty": "Sheffield University Management School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "官网未列明具体数字;费用页面为动态计算器。第三方搜索结果曾提及约£34,340(2026),未能通过官网原文直接核实,标记为未确认",
+    "campus": "Sheffield",
+    "requirements": {
+      "undergrad_background": "Minimum 2:1 undergraduate honours degree in any subject;官网原文描述为'designed for graduates from any disciplinary background'",
+      "china_university_list": "同校级通用查询工具(见Management MSc条目),未发现本项目专属分档名单。",
+      "gpa_requirement": "无项目层面统一百分比,需通过院校查询工具确定",
+      "ielts": {"overall": 6.5, "subscores": "6.0 in each component"},
+      "toefl": null,
+      "gmat_gre": "官网未提及",
+      "prerequisites": "官网未列明",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": null,
+      "rounds": null,
+      "final_deadline": null,
+      "notes": "2026-07-20查询显示:'Applications for 2026 entry are now closed. Applications for 2027 will open in September 2026.' 入学年份:2026 entry(已关闭)/2027 entry即将开放。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": [
+      "https://sheffield.ac.uk/postgraduate/taught/courses/2026/international-marketing-and-management-msc"
+    ],
+    "confidence": "high",
+    "notes": "官网明确不要求推荐信和个人陈述。学费无静态确认数字。"
+  },
+  {
+    "school_name_en": "University of Sheffield",
+    "school_name_zh": "谢菲尔德大学",
+    "school_short": "Sheffield",
+    "region": "UK",
+    "program_name_en": "Business Analytics MSc",
+    "program_name_zh": "商业分析硕士",
+    "faculty": "Sheffield University Management School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "官网未列明具体数字;费用页面为动态计算器。第三方搜索结果曾提及约£34,340(2026),未能通过官网原文直接核实,标记为未确认",
+    "campus": "Sheffield",
+    "requirements": {
+      "undergrad_background": "Minimum 2:1 undergraduate honours degree in any subject;官网原文:'You do not need to have studied data or analytics before to study this course.'",
+      "china_university_list": "同校级通用查询工具(见Management MSc条目),未发现本项目专属分档名单。",
+      "gpa_requirement": "无项目层面统一百分比,需通过院校查询工具确定",
+      "ielts": {"overall": 6.5, "subscores": "6.0 in each component"},
+      "toefl": null,
+      "gmat_gre": "官网未提及",
+      "prerequisites": "明确说明不需要此前的数据/分析学习背景;课程从基础教授Python、SQL、数据可视化与决策建模",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": null,
+      "final_deadline": "2026-09-04",
+      "notes": "2026-07-20查询该课程页面显示'Apply now',与Finance MSc情况相同,当前仍开放2026年9月入学申请(截止日期参考全校通用日期2026-09-04,非项目专属确认)。页面同时说明本课程为新开设课程,模块列表仍在确认中。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": [
+      "https://sheffield.ac.uk/postgraduate/taught/courses/2026/business-analytics-msc"
+    ],
+    "confidence": "medium",
+    "notes": "该项目为新开课程,官网说明模块设置仍在确定中,请以最新官网信息为准。官网明确不要求推荐信和个人陈述。"
+  },
+  {
+    "school_name_en": "University of Exeter",
+    "school_name_zh": "埃克塞特大学",
+    "school_short": "Exeter",
+    "region": "UK",
+    "program_name_en": "MSc Finance and Investment",
+    "program_name_zh": "金融与投资硕士",
+    "faculty": "University of Exeter Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "GBP 32,600/year (International, 2026/27 entry页面显示); GBP 19,900/year (UK/Home)",
+    "campus": "Streatham Campus, Exeter",
+    "requirements": {
+      "undergrad_background": "2:2 Honours degree in Accounting, Finance, Investment, Economics, Maths, Business or a related discipline;官网原文强调'evidence of mathematical/quantitative ability is essential'(含代数、微积分、计量经济学、统计学、概率论、优化方法等)",
+      "china_university_list": "官网中国申请者页面(exeter.ac.uk/international-students/china)原文说明已'取消原有国内大学排名的要求,所有中国大学都采取统一分数标准评估',即目前不存在按学校分档的名单,统一标准为UK 2:1≈75%,UK 2:2≈70%。经检索未发现Business School针对该项目的差异化分档名单。",
+      "gpa_requirement": "中国本科均分:约75%对应UK 2:1,约70%对应UK 2:2(全校统一标准,非本项目专属)",
+      "ielts": {"overall": 6.5, "subscores": "no less than 5.5 in any section (Profile B1)"},
+      "toefl": {"overall": 90, "subscores": "minimum 20 Speaking, 18 in Writing/Listening/Reading"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)",
+      "prerequisites": "明确要求数学/量化能力证明,含代数、微积分、计量经济学、统计学、概率论、优化方法等内容",
+      "work_experience": "非必需;官网说明相关工作经验或CFA/ACCA/ICAEW/ICAS/CIMA等专业资格会被优先考虑",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-09-11",
+      "notes": "官网总硕士截止日期页面(exeter.ac.uk/masters-degrees/apply/application-deadlines)显示2026年9月入学(国际生)截止日期为2026-09-11(23:59);另有2027年1月入学截止日期2027-01-04(该轮已于2026-03-02开放申请)。课程页面本身(2026-07-20查询)默认展示'2027 entry'标签(即2027年9月入学的下一学年页面),但2026年9月入学仍在同步开放申请中,尚未到截止日期。本条目数据对应当前可申请的2026年9月/2027年1月入学季。"
+    },
+    "materials": ["transcript", "reference", "english_test"],
+    "source_urls": [
+      "https://www.exeter.ac.uk/study/postgraduate/courses/finance/finance_investment/",
+      "https://www.exeter.ac.uk/masters-degrees/apply/application-deadlines/",
+      "https://www.exeter.ac.uk/international-students/china/",
+      "https://www.exeter.ac.uk/study/englishlanguagerequirements/profile-b1/"
+    ],
+    "confidence": "high",
+    "notes": "个人陈述(personal statement)官网列为'部分项目需要,建议500字以内',非本项目页面明确强制要求,故未列入materials,已在此说明。"
+  },
+  {
+    "school_name_en": "University of Exeter",
+    "school_name_zh": "埃克塞特大学",
+    "school_short": "Exeter",
+    "region": "UK",
+    "program_name_en": "MSc Accounting and Finance",
+    "program_name_zh": "会计与金融硕士",
+    "faculty": "University of Exeter Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "GBP 32,600/year (International, 2026/27 entry页面显示)",
+    "campus": "Streatham Campus, Exeter",
+    "requirements": {
+      "undergrad_background": "2:2 Honours degree in Accounting, Finance or a related discipline;官网原文要求'should have passed at least two modules in Financial Accounting at undergraduate level'",
+      "china_university_list": "同校级统一标准(见Finance and Investment条目说明),未发现本项目专属分档名单。官网明确已取消按校排名的旧有分档要求。",
+      "gpa_requirement": "约75%对应UK 2:1,约70%对应UK 2:2(全校统一标准)",
+      "ielts": {"overall": 6.5, "subscores": "no less than 5.5 in any section (Profile B1)"},
+      "toefl": {"overall": 90, "subscores": "minimum 20 Speaking, 18 in Writing/Listening/Reading"},
+      "gmat_gre": "官网未提及",
+      "prerequisites": "本科阶段至少修读过两门财务会计(Financial Accounting)相关模块",
+      "work_experience": "非必需;CFA/ACCA/ICAEW/ICAS/CIMA资格或优秀专业模块成绩会被优先考虑",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-09-11",
+      "notes": "同校总截止日期(见Finance and Investment条目说明):2026年9月入学国际生截止日期2026-09-11;2027年1月入学截止日期2027-01-04。课程页面当前默认展示'2027 entry'标签,但2026年9月入学仍在开放申请。"
+    },
+    "materials": ["transcript", "reference", "english_test"],
+    "source_urls": [
+      "https://www.exeter.ac.uk/study/postgraduate/courses/accounting/accounting_finance/",
+      "https://www.exeter.ac.uk/masters-degrees/apply/application-deadlines/"
+    ],
+    "confidence": "high",
+    "notes": "个人陈述为部分项目要求,非本项目页面强制列明,故未计入materials。"
+  },
+  {
+    "school_name_en": "University of Exeter",
+    "school_name_zh": "埃克塞特大学",
+    "school_short": "Exeter",
+    "region": "UK",
+    "program_name_en": "MSc Management",
+    "program_name_zh": "管理学硕士",
+    "faculty": "University of Exeter Business School",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "GBP 31,000/year (International, 2026/27 entry页面显示);另有12个月+带薪实习(Industrial Experience)的24个月项目,第二年加收GBP 6,200。注:一则搜索结果显示2026 entry版本页面国际生学费为GBP 29,500,与当前默认展示的2027 entry页面GBP 31,000不同,两者均记录以供参考,未能对两个版本页面分别完整核实",
+    "campus": "Streatham Campus, Exeter",
+    "requirements": {
+      "undergrad_background": "2:1 Honours degree or equivalent, any discipline",
+      "china_university_list": "同校级统一标准(见Finance and Investment条目说明),未发现本项目专属分档名单。",
+      "gpa_requirement": "约75%对应UK 2:1,约70%对应UK 2:2(全校统一标准)",
+      "ielts": {"overall": 6.5, "subscores": "no less than 5.5 in any section (Profile B1)"},
+      "toefl": {"overall": 90, "subscores": "minimum 20 Speaking, 18 in Writing/Listening/Reading"},
+      "gmat_gre": "官网未提及",
+      "prerequisites": "官网未列明",
+      "work_experience": "非必需;'significant work experience or professional qualifications'可作为学术条件之外的补充证明",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-09-11",
+      "notes": "同校总截止日期:2026年9月入学国际生截止日期2026-09-11。课程页面当前默认展示'2027 entry'标签。"
+    },
+    "materials": ["transcript", "reference", "english_test"],
+    "source_urls": [
+      "https://www.exeter.ac.uk/study/postgraduate/courses/business/management/",
+      "https://www.exeter.ac.uk/masters-degrees/msc-management/",
+      "https://www.exeter.ac.uk/masters-degrees/apply/application-deadlines/"
+    ],
+    "confidence": "medium",
+    "notes": "2:1学位要求(高于本校多数其他商科硕士的2:2门槛)。学费在2026 entry与2027 entry两个页面版本间存在数字差异,未能完全核实,已如实记录两者。"
+  },
+  {
+    "school_name_en": "University of Exeter",
+    "school_name_zh": "埃克塞特大学",
+    "school_short": "Exeter",
+    "region": "UK",
+    "program_name_en": "MSc Marketing",
+    "program_name_zh": "市场营销硕士",
+    "faculty": "University of Exeter Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "GBP 31,000/year (International, 2026/27 entry页面显示);带薪实习年(Industrial Experience)加收GBP 6,200",
+    "campus": "Streatham Campus, Exeter",
+    "requirements": {
+      "undergrad_background": "2:2 Honours degree, any discipline",
+      "china_university_list": "同校级统一标准(见Finance and Investment条目说明),未发现本项目专属分档名单。",
+      "gpa_requirement": "约75%对应UK 2:1,约70%对应UK 2:2(全校统一标准)",
+      "ielts": {"overall": 6.5, "subscores": "no less than 5.5 in any section (Profile B1)"},
+      "toefl": {"overall": 90, "subscores": "minimum 20 Speaking, 18 in Writing/Listening/Reading"},
+      "gmat_gre": "官网未提及",
+      "prerequisites": "官网未列明",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-09-11",
+      "notes": "同校总截止日期:2026年9月入学国际生截止日期2026-09-11。课程页面当前默认展示'2027 entry'标签。"
+    },
+    "materials": ["transcript", "reference", "english_test"],
+    "source_urls": [
+      "https://www.exeter.ac.uk/study/postgraduate/courses/business/marketing/",
+      "https://www.exeter.ac.uk/masters-degrees/apply/application-deadlines/"
+    ],
+    "confidence": "high",
+    "notes": "该项目获CIM(Chartered Institute of Marketing)认证,毕业后可享受专业资格考试免修。"
+  },
+  {
+    "school_name_en": "University of Exeter",
+    "school_name_zh": "埃克塞特大学",
+    "school_short": "Exeter",
+    "region": "UK",
+    "program_name_en": "MSc Business Analytics",
+    "program_name_zh": "商业分析硕士",
+    "faculty": "University of Exeter Business School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "GBP 31,000/year (International, 2026/27 entry页面显示); GBP 18,600/year (UK/Home)",
+    "campus": "Streatham Campus, Exeter",
+    "requirements": {
+      "undergrad_background": "2:2 or equivalent from a recognised university,官网明确要求'including at least one mathematical/quantitative module at 2:2 or equivalent'",
+      "china_university_list": "同校级统一标准(见Finance and Investment条目说明),未发现本项目专属分档名单。",
+      "gpa_requirement": "约75%对应UK 2:1,约70%对应UK 2:2(全校统一标准)",
+      "ielts": {"overall": 6.5, "subscores": "no less than 5.5 in any section (Profile B1)"},
+      "toefl": {"overall": 90, "subscores": "minimum 20 Speaking, 18 in Writing/Listening/Reading"},
+      "gmat_gre": "官网未提及",
+      "prerequisites": "明确要求本科阶段至少一门量化/数学相关模块达到2:2水平",
+      "work_experience": "非必需;'significant relevant work experience or professional qualifications'可作为学术条件之外的补充证明",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-09-11",
+      "notes": "同校总截止日期:2026年9月入学国际生截止日期2026-09-11。课程页面当前默认展示'2027 entry'标签。"
+    },
+    "materials": ["transcript", "reference", "english_test"],
+    "source_urls": [
+      "https://www.exeter.ac.uk/masters-degrees/msc-business-analytics/",
+      "https://www.exeter.ac.uk/masters-degrees/apply/application-deadlines/"
+    ],
+    "confidence": "high",
+    "notes": "设有QTEM项目供高水平学生申请(含海外学期+量化实习)。"
+  },
+  {
+    "school_name_en": "University of Exeter",
+    "school_name_zh": "埃克塞特大学",
+    "school_short": "Exeter",
+    "region": "UK",
+    "program_name_en": "MSc International Business",
+    "program_name_zh": "国际商务硕士",
+    "faculty": "University of Exeter Business School",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "GBP 31,000/year (International, 2026/27 entry页面显示); GBP 18,600/year (UK/Home)",
+    "campus": "Streatham Campus, Exeter",
+    "requirements": {
+      "undergrad_background": "2:2 Honours degree, any discipline",
+      "china_university_list": "同校级统一标准(见Finance and Investment条目说明),未发现本项目专属分档名单。",
+      "gpa_requirement": "约75%对应UK 2:1,约70%对应UK 2:2(全校统一标准)",
+      "ielts": {"overall": 6.5, "subscores": "no less than 5.5 in any section (Profile B1)"},
+      "toefl": {"overall": 90, "subscores": "minimum 20 Speaking, 18 in Writing/Listening/Reading"},
+      "gmat_gre": "官网未提及",
+      "prerequisites": "官网未列明",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-09-11",
+      "notes": "同校总截止日期:2026年9月入学国际生截止日期2026-09-11。课程页面当前默认展示'2027 entry'标签。"
+    },
+    "materials": ["transcript", "reference", "english_test"],
+    "source_urls": [
+      "https://www.exeter.ac.uk/study/postgraduate/courses/business/international_business/",
+      "https://www.exeter.ac.uk/masters-degrees/apply/application-deadlines/"
+    ],
+    "confidence": "high",
+    "notes": "该项目特色:学生可选择提交商业计划书(business plan)代替毕业论文。"
+  },
+  {
+    "school_name_en": "Lancaster University",
+    "school_name_zh": "兰卡斯特大学",
+    "school_short": "Lancaster",
+    "region": "UK",
+    "program_name_en": "Finance MSc",
+    "program_name_zh": "金融学硕士",
+    "faculty": "Lancaster University Management School (LUMS) - Department of Accounting and Finance",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "GBP 30,000/year (International, 2026 entry); GBP 16,270/year (Home)",
+    "campus": "Lancaster",
+    "requirements": {
+      "undergrad_background": "2:2 Hons degree (UK or equivalent) in Finance, Accounting, Economics, or another business-related subject;非商科但量化背景强(数学、工程、物理、计算机与数据科学等)的申请者也受欢迎",
+      "china_university_list": "官网未公开逐校分档名单(未找到Band 1/2/3结构)。仅有全校通用的中国学位等级对照:一等学位(First Class)≈85-90%,二等一级(Upper Second/2:1)≈75-85%,二等二级(Lower Second/2:2)≈70-80%。另有硕士预科合作院校名单(东北财经大学、华东理工大学、四川外国语大学、华南师范大学、北京外国语大学、北京交通大学等),但这是预科/衔接项目合作名单,不是直接入读的分档名单。",
+      "gpa_requirement": "本科需达UK 2:2水平,对应中国院校均分约70-80%(全校通用标准,非项目专属百分比)",
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 in each element"},
+      "toefl": null,
+      "gmat_gre": "官网未提及",
+      "prerequisites": "欢迎具有较强量化背景的非商科申请者(数学、工程、物理、计算机与数据科学等)",
+      "work_experience": "非必需;相关工作经验或较强编程能力会被优先考虑(非硬性要求)",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": null,
+      "final_deadline": null,
+      "notes": "官网未公开具体截止日期,采取滚动录取(rolling admissions),建议尽早申请。官网原文确认:'Applications for entry in 2027 will open in September 2026.' 即当前(2026-07-20)开放申请的是2026年入学季,2027年入学申请尚未开放。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://www.lancaster.ac.uk/study/postgraduate/postgraduate-courses/finance-msc/2026/",
+      "https://www.lancaster.ac.uk/lums/postgraduate/apply-for-masters/",
+      "https://www.lancaster.ac.uk/study/international-students/china/"
+    ],
+    "confidence": "high",
+    "notes": "国际生奖学金与本科学位等级挂钩:一等学位可获£10,000奖学金(实付£20,000);2:1获£10,000奖学金(实付£20,000);2:2获£3,000奖学金(实付£27,000)。无申请费。"
+  },
+  {
+    "school_name_en": "Lancaster University",
+    "school_name_zh": "兰卡斯特大学",
+    "school_short": "Lancaster",
+    "region": "UK",
+    "program_name_en": "Accounting and Finance MSc",
+    "program_name_zh": "会计与金融硕士",
+    "faculty": "Lancaster University Management School (LUMS) - Department of Accounting and Finance",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "GBP 30,000/year (International, 2026 entry,与同系Finance MSc一致); Home费用约GBP 16,270/year(取自同系页面,未对本项目页面单独二次核实)",
+    "campus": "Lancaster",
+    "requirements": {
+      "undergrad_background": "2:2 Hons degree (UK or equivalent) in Accounting, Finance, Economics, or another business-related subject;非商科但量化背景强的申请者(数学、工程、物理、计算机与数据科学)受鼓励申请",
+      "china_university_list": "官网未公开逐校分档名单(见Finance MSc条目说明,全校统一标准)。",
+      "gpa_requirement": "本科需达UK 2:2水平,对应中国院校均分约70-80%(全校通用标准)",
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 in each element"},
+      "toefl": null,
+      "gmat_gre": "官网未提及",
+      "prerequisites": "欢迎具有量化背景的非商科申请者",
+      "work_experience": "非必需;相关工作经验或专业资格会被优先考虑",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": null,
+      "final_deadline": null,
+      "notes": "同系Finance MSc情况:采取滚动录取,无固定截止日期;当前(2026-07-20)开放申请的是2026年入学季,2027年入学申请将于2026年9月开放。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://www.lancaster.ac.uk/study/postgraduate/postgraduate-courses/accounting-and-finance-msc/2026/",
+      "https://www.lancaster.ac.uk/lums/our-departments/accounting-and-finance/masters/"
+    ],
+    "confidence": "high",
+    "notes": "该项目获ACCA认证。"
+  },
+  {
+    "school_name_en": "Lancaster University",
+    "school_name_zh": "兰卡斯特大学",
+    "school_short": "Lancaster",
+    "region": "UK",
+    "program_name_en": "Management MSc",
+    "program_name_zh": "管理学硕士",
+    "faculty": "Lancaster University Management School (LUMS) - Department of Entrepreneurship and Strategy",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "GBP 30,000/year (International, 2026 entry); GBP 16,270/year (Home)",
+    "campus": "Lancaster",
+    "requirements": {
+      "undergrad_background": "2:2 Hons degree (UK or equivalent) in any discipline",
+      "china_university_list": "官网未公开逐校分档名单(见Finance MSc条目说明,全校统一标准)。",
+      "gpa_requirement": "本科需达UK 2:2水平,对应中国院校均分约70-80%(全校通用标准)",
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 in each element"},
+      "toefl": null,
+      "gmat_gre": "官网未提及",
+      "prerequisites": "官网未列明,接受任何专业背景",
+      "work_experience": "官网明确要求申请前管理类工作经验不超过2年(即面向应届生/低年资人群,非最低工作经验要求,而是工作经验上限)",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": null,
+      "final_deadline": null,
+      "notes": "采取滚动录取,无固定截止日期;当前(2026-07-20)开放申请的是2026年入学季,2027年入学申请将于2026年9月开放。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://www.lancaster.ac.uk/study/postgraduate/postgraduate-courses/management-msc/2026/",
+      "https://www.lancaster.ac.uk/lums/postgraduate/management/"
+    ],
+    "confidence": "high",
+    "notes": "该项目定位为应届生/管理经验2年以内申请者(Master in Management类型项目),官网称在QS Business Master's Rankings 2026中位列英国第13名。"
+  },
+  {
+    "school_name_en": "Lancaster University",
+    "school_name_zh": "兰卡斯特大学",
+    "school_short": "Lancaster",
+    "region": "UK",
+    "program_name_en": "Marketing MSc",
+    "program_name_zh": "市场营销硕士",
+    "faculty": "Lancaster University Management School (LUMS) - Department of Marketing",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "GBP 30,000/year (International, 2026 entry,依据LUMS统一费率;未对本项目页面单独二次核实原始网页文本)",
+    "campus": "Lancaster",
+    "requirements": {
+      "undergrad_background": "2:2 Hons degree (UK or equivalent) in any subject discipline",
+      "china_university_list": "官网未公开逐校分档名单(见Finance MSc条目说明,全校统一标准)。",
+      "gpa_requirement": "本科需达UK 2:2水平,对应中国院校均分约70-80%(全校通用标准)",
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 in each element"},
+      "toefl": null,
+      "gmat_gre": "官网未提及",
+      "prerequisites": "官网未列明",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": null,
+      "final_deadline": null,
+      "notes": "采取滚动录取,无固定截止日期;当前(2026-07-20)开放申请的是2026年入学季,2027年入学申请将于2026年9月开放。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://www.lancaster.ac.uk/study/postgraduate/postgraduate-courses/marketing-msc/2026/",
+      "https://www.lancaster.ac.uk/lums/our-departments/marketing/masters/msc-marketing/"
+    ],
+    "confidence": "medium",
+    "notes": "该项目为英国首个市场营销学系(创立于1964年)开设,获CIM认证学位。学费数字依据LUMS商学院统一费率推断,未逐页二次核实。"
+  },
+  {
+    "school_name_en": "Lancaster University",
+    "school_name_zh": "兰卡斯特大学",
+    "school_short": "Lancaster",
+    "region": "UK",
+    "program_name_en": "Business Analytics MSc",
+    "program_name_zh": "商业分析硕士",
+    "faculty": "Lancaster University Management School (LUMS) - Department of Management Science",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "GBP 30,000/year (International, 2026 entry); GBP 16,270/year (Home)",
+    "campus": "Lancaster",
+    "requirements": {
+      "undergrad_background": "2:2 Hons degree (UK or equivalent);官网原文强调'Marks should be consistently at 2:2 level throughout your undergraduate studies.'",
+      "china_university_list": "官网未公开逐校分档名单(见Finance MSc条目说明,全校统一标准)。",
+      "gpa_requirement": "本科需达UK 2:2水平且成绩需全程稳定,对应中国院校均分约70-80%(全校通用标准)",
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 in each element"},
+      "toefl": null,
+      "gmat_gre": "官网未提及",
+      "prerequisites": "明确要求量化方法背景,如数学、统计学、概率论、计量经济学、博弈论、数据分析、运筹学、仿真与商业建模等",
+      "work_experience": "非必需;部分院系奖学金将'行业经验'列为优先考虑因素(非申请硬性要求)",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": null,
+      "final_deadline": null,
+      "notes": "采取滚动录取,无固定截止日期;当前(2026-07-20)开放申请的是2026年入学季,2027年入学申请将于2026年9月开放。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://www.lancaster.ac.uk/study/postgraduate/postgraduate-courses/business-analytics-msc/2026/",
+      "https://www.lancaster.ac.uk/lums/our-departments/management-science/masters/msc-business-analytics/"
+    ],
+    "confidence": "high",
+    "notes": "对量化背景要求明显高于同校其他商科硕士项目。"
+  },
+  {
+    "school_name_en": "Lancaster University",
+    "school_name_zh": "兰卡斯特大学",
+    "school_short": "Lancaster",
+    "region": "UK",
+    "program_name_en": "International Business and Strategic Management MSc",
+    "program_name_zh": "国际商务与战略管理硕士",
+    "faculty": "Lancaster University Management School (LUMS) - Department of Entrepreneurship and Strategy",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "GBP 30,000/year (International, 2026 entry,依据同系Management MSc费率推断;未对本项目页面单独二次核实原始网页文本)",
+    "campus": "Lancaster",
+    "requirements": {
+      "undergrad_background": "2:2 Hons degree (UK or equivalent) in any discipline",
+      "china_university_list": "官网未公开逐校分档名单(见Finance MSc条目说明,全校统一标准)。",
+      "gpa_requirement": "本科需达UK 2:2水平,对应中国院校均分约70-80%(全校通用标准)",
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 in each element"},
+      "toefl": null,
+      "gmat_gre": "官网未提及",
+      "prerequisites": "官网未列明",
+      "work_experience": "非必需;'extensive professional experience'可作为未达标准学术条件申请者的补充证明因素",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": null,
+      "final_deadline": null,
+      "notes": "采取滚动录取,无固定截止日期;当前(2026-07-20)开放申请的是2026年入学季,2027年入学申请将于2026年9月开放。"
+    },
+    "materials": ["transcript", "personal_statement", "reference", "english_test"],
+    "source_urls": [
+      "https://www.lancaster.ac.uk/study/postgraduate/postgraduate-courses/international-business-and-strategic-management-msc/2026/",
+      "https://www.lancaster.ac.uk/lums/postgraduate/business-and-strategy/"
+    ],
+    "confidence": "medium",
+    "notes": "检索中发现另有一个未标注年份的相似课程页面'international-business-and-strategy-msc'(不含'-strategic-management'及年份后缀),可能为旧版/已更名课程,本条目以带2026年份后缀的当前版本URL为准,如涉及项目身份精确核对建议二次确认。"
+  },
+  {
+    "school_name_en": "University of Liverpool",
+    "school_name_zh": "利物浦大学",
+    "school_short": "Liverpool",
+    "region": "UK",
+    "program_name_en": "Accounting and Finance MSc",
+    "program_name_zh": "会计与金融硕士",
+    "faculty": "University of Liverpool Management School (ULMS)",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "GBP 34,000/year (International, full-time, 2026/27学费); GBP 17,000/year (International, part-time)",
+    "campus": "Liverpool",
+    "requirements": {
+      "undergrad_background": "官网原文:'2:2 honours degree from a UK university, or an equivalent academic qualification from a similar non-UK institution. This degree should include at least eight modules in Accounting and/or Finance at 2:1 level.' 专业资格(ACA、CPA、ACCA、CIMA)也被纳入考量",
+      "china_university_list": "官网未公开按院校命名的分档名单(无Band A/B/C结构),仅有通用表述(该文字通过校方国家/地区选择器动态注入所有课程页面):'taught master's applications with a bachelor's degree from a recognised Chinese university, with overall average academic grades between 65% to 78% (depending on the level/tier of Chinese university), will be considered... Some of our courses do require higher entry requirements.' 未发现本项目对该区间的差异化上调。",
+      "gpa_requirement": "中国本科均分65%-78%(依院校层级浮动,全校统一表述,非逐校列名);另需本科阶段至少8门会计/金融相关模块达2:1水平",
+      "ielts": {"overall": 6.5, "subscores": "no component below 6.0"},
+      "toefl": {"overall": 88, "subscores": "旧计分标准(2026-01-21前):L19/W19/R19/S20;新计分标准(2026-01-21起):overall 4.5,各单项不低于4"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要;曾有ask.liv.ac.uk的GMAT相关FAQ链接,现已失效并跳转至通用帮助页面,故未采用为信息来源)",
+      "prerequisites": "本科阶段需至少8门会计和/或金融相关模块达2:1水平",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-08-21",
+      "notes": "国际生申请截止日期2026-08-21;英国本地生截止日期2026-09-11;开课日期2026-09-28。入学年份:2026 entry(2026年9月入学),当前(2026-07-20)仍在开放申请。"
+    },
+    "materials": ["transcript", "degree_certificate", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.liverpool.ac.uk/courses/accounting-and-finance-msc",
+      "https://www.liverpool.ac.uk/international/countries/chinamainland.php"
+    ],
+    "confidence": "high",
+    "notes": "英语其他可接受成绩:Duolingo 125(写作≥125,口语/阅读≥115,听力≥110);PTE Academic 61(各单项≥59)。"
+  },
+  {
+    "school_name_en": "University of Liverpool",
+    "school_name_zh": "利物浦大学",
+    "school_short": "Liverpool",
+    "region": "UK",
+    "program_name_en": "Finance MSc",
+    "program_name_zh": "金融学硕士",
+    "faculty": "University of Liverpool Management School (ULMS)",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "GBP 32,000/year (International, full-time, 2026/27学费); GBP 16,000/year (International, part-time)",
+    "campus": "Liverpool",
+    "requirements": {
+      "undergrad_background": "2:2 honours degree(或国际同等学历),优先考虑金融、会计或经济学背景;其他专业但金融相关内容突出的申请者也会被考虑",
+      "china_university_list": "官网未公开按院校命名的分档名单;仅有通用表述(见Accounting and Finance MSc条目):中国本科均分65%-78%区间,依院校层级浮动。",
+      "gpa_requirement": "中国本科均分65%-78%(依院校层级浮动,全校统一表述)",
+      "ielts": {"overall": 6.5, "subscores": "no component below 6.0"},
+      "toefl": {"overall": 88, "subscores": "同Accounting and Finance MSc条目所述新旧计分标准"},
+      "gmat_gre": "官网未提及",
+      "prerequisites": "优先考虑金融/会计/经济学专业背景",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-08-21",
+      "notes": "国际生申请截止日期2026-08-21;英国本地生截止日期2026-09-11;开课日期2026-09-28。入学年份:2026 entry。"
+    },
+    "materials": ["transcript", "degree_certificate", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.liverpool.ac.uk/courses/finance-msc",
+      "https://www.liverpool.ac.uk/international/countries/chinamainland.php"
+    ],
+    "confidence": "high",
+    "notes": "官网未列明GMAT/GRE要求,亦未有ask.liv.ac.uk等页面可核实其明确豁免表述。"
+  },
+  {
+    "school_name_en": "University of Liverpool",
+    "school_name_zh": "利物浦大学",
+    "school_short": "Liverpool",
+    "region": "UK",
+    "program_name_en": "Marketing MSc",
+    "program_name_zh": "市场营销硕士",
+    "faculty": "University of Liverpool Management School (ULMS)",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "GBP 32,000/year (International, full-time, 2026/27学费); GBP 16,000/year (International, part-time)",
+    "campus": "Liverpool",
+    "requirements": {
+      "undergrad_background": "2:2 honours degree,除市场营销专业本身外的任何专业均可(假定申请者此前未系统学习过市场营销)",
+      "china_university_list": "官网未公开按院校命名的分档名单;仅有通用表述:中国本科均分65%-78%区间,依院校层级浮动。",
+      "gpa_requirement": "中国本科均分65%-78%(依院校层级浮动)",
+      "ielts": {"overall": 6.5, "subscores": "no component below 6.0"},
+      "toefl": {"overall": 88, "subscores": "同Accounting and Finance MSc条目所述新旧计分标准"},
+      "gmat_gre": "官网未提及",
+      "prerequisites": "官网未列明",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-08-21",
+      "notes": "该项目同时开放2026年9月及2027年1月两个入学季,本条目截止日期为2026年9月入学(国际生2026-08-21,英国本地生2026-09-11)。2027年1月入学的具体截止日期未在本次调研中单独核实,如需请查官网课程页面确认。"
+    },
+    "materials": ["transcript", "degree_certificate", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.liverpool.ac.uk/courses/marketing-msc",
+      "https://www.liverpool.ac.uk/international/countries/chinamainland.php"
+    ],
+    "confidence": "high",
+    "notes": "同时提供2026年9月及2027年1月两个入学季选项。"
+  },
+  {
+    "school_name_en": "University of Liverpool",
+    "school_name_zh": "利物浦大学",
+    "school_short": "Liverpool",
+    "region": "UK",
+    "program_name_en": "Business Analytics and Big Data MSc",
+    "program_name_zh": "商业分析与大数据硕士",
+    "faculty": "University of Liverpool Management School (ULMS)",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "GBP 32,000/year (International, full-time, 2026/27学费); GBP 16,000/year (International, part-time)。注:部分第三方聚合网站显示旧年份数字约£28,500,与官网当前实时数字£32,000不同,以官网当前页面为准",
+    "campus": "Liverpool",
+    "requirements": {
+      "undergrad_background": "2:2 honours degree in Physics, Mathematics, Computing, Engineering, Management or closely related disciplines;官网说明会对2:2水平申请者个案考量,具有丰富专业经验的非本科毕业申请者也可能被考虑",
+      "china_university_list": "官网未公开按院校命名的分档名单;仅有通用表述:中国本科均分65%-78%区间,依院校层级浮动。",
+      "gpa_requirement": "中国本科均分65%-78%(依院校层级浮动)",
+      "ielts": {"overall": 6.5, "subscores": "no component below 6.0"},
+      "toefl": {"overall": 88, "subscores": "同Accounting and Finance MSc条目所述新旧计分标准"},
+      "gmat_gre": "官网未提及",
+      "prerequisites": "明确要求量化/STEM或管理相关本科背景(物理、数学、计算机、工程、管理等)",
+      "work_experience": "非硬性要求;丰富的专业经验在特定情况下可替代常规学位要求",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-08-21",
+      "notes": "国际生申请截止日期2026-08-21;英国本地生截止日期2026-09-11;开课日期2026-09-28。入学年份:2026 entry。"
+    },
+    "materials": ["transcript", "degree_certificate", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.liverpool.ac.uk/courses/business-analytics-and-big-data-msc",
+      "https://www.liverpool.ac.uk/international/countries/chinamainland.php"
+    ],
+    "confidence": "high",
+    "notes": "对本科专业背景要求明显偏理工/量化方向,区别于同校其他商科硕士的'任何专业'门槛。"
+  },
+  {
+    "school_name_en": "University of Liverpool",
+    "school_name_zh": "利物浦大学",
+    "school_short": "Liverpool",
+    "region": "UK",
+    "program_name_en": "International Business MSc",
+    "program_name_zh": "国际商务硕士",
+    "faculty": "University of Liverpool Management School (ULMS)",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "GBP 32,000/year (International, full-time, 2026/27学费); GBP 16,000/year (International, part-time)",
+    "campus": "Liverpool",
+    "requirements": {
+      "undergrad_background": "2:2 honours degree, any subject discipline",
+      "china_university_list": "官网未公开按院校命名的分档名单;仅有通用表述:中国本科均分65%-78%区间,依院校层级浮动。",
+      "gpa_requirement": "中国本科均分65%-78%(依院校层级浮动)",
+      "ielts": {"overall": 6.5, "subscores": "no component below 6.0"},
+      "toefl": {"overall": 88, "subscores": "同Accounting and Finance MSc条目所述新旧计分标准"},
+      "gmat_gre": "官网未提及(注:此为页面无表述的推断,并非官网明示不需要)",
+      "prerequisites": "官网未列明",
+      "work_experience": "官网未提及",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-08-21",
+      "notes": "该项目同时开放2026年9月及2027年1月两个入学季,本条目截止日期为2026年9月入学(国际生2026-08-21,英国本地生2026-09-11)。2027年1月入学具体截止日期未单独核实。"
+    },
+    "materials": ["transcript", "degree_certificate", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.liverpool.ac.uk/courses/international-business-msc",
+      "https://www.liverpool.ac.uk/international/countries/chinamainland.php"
+    ],
+    "confidence": "high",
+    "notes": "同时提供2026年9月及2027年1月两个入学季选项。"
+  },
+  {
+    "school_name_en": "University of Liverpool",
+    "school_name_zh": "利物浦大学",
+    "school_short": "Liverpool",
+    "region": "UK",
+    "program_name_en": "Master in Management (MiM)",
+    "program_name_zh": "管理学硕士(MIM)",
+    "faculty": "University of Liverpool Management School (ULMS)",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "GBP 32,000/year (International, full-time, 2026/27学费); GBP 16,000/year (International, part-time)",
+    "campus": "Liverpool",
+    "requirements": {
+      "undergrad_background": "2:2 honours degree, any subject discipline。官网说明自2024-11-01起已取消'具有丰富专业经验的非本科毕业申请者'替代性录取条款(即该条款已不再适用于本项目)",
+      "china_university_list": "官网未公开按院校命名的分档名单;仅有通用表述:中国本科均分65%-78%区间,依院校层级浮动。",
+      "gpa_requirement": "中国本科均分65%-78%(依院校层级浮动)",
+      "ielts": {"overall": 6.5, "subscores": "no component below 6.0"},
+      "toefl": {"overall": 88, "subscores": "同Accounting and Finance MSc条目所述新旧计分标准"},
+      "gmat_gre": "官网未提及",
+      "prerequisites": "官网未列明",
+      "work_experience": "非强制要求,但官网说明'ideally suited if you already have work experience'(有工作经验更适合,非硬性门槛)",
+      "interview": "官网未提及"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": null,
+      "final_deadline": "2026-08-21",
+      "notes": "该项目同时开放2026年9月及2027年1月两个入学季,本条目截止日期为2026年9月入学(国际生2026-08-21,英国本地生2026-09-11)。2027年1月入学具体截止日期未单独核实。"
+    },
+    "materials": ["transcript", "degree_certificate", "personal_statement", "english_test"],
+    "source_urls": [
+      "https://www.liverpool.ac.uk/courses/master-in-management-mim",
+      "https://www.liverpool.ac.uk/international/countries/chinamainland.php"
+    ],
+    "confidence": "high",
+    "notes": "2024-11-01起已取消非本科毕业但有丰富专业经验申请者的替代录取条款,现要求必须持有本科学位。"
+  }
+]

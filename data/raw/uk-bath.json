@@ -1,0 +1,242 @@
+[
+  {
+    "school_name_en": "University of Bath",
+    "school_name_zh": "巴斯大学",
+    "school_short": "Bath",
+    "region": "UK",
+    "program_name_en": "MSc Accounting and Finance",
+    "program_name_zh": "会计与金融理学硕士",
+    "faculty": "School of Management",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "Overseas £34,950; Home £20,050 (2026/27, full-time)",
+    "campus": "University of Bath, Claverton Down, Bath BA2 7AY",
+    "requirements": {
+      "undergrad_background": "2:2 to 2:1 or above (or international equivalent) undergraduate degree depending on institution attended; degree can be in any discipline but a quantitative background/aptitude is required (e.g. engineering, mathematics, economics, physics; other subjects considered if quantitative content sufficient).",
+      "china_university_list": null,
+      "gpa_requirement": "Chinese qualifications: a four-year Bachelor's degree with a final overall score of at least 62-75%, depending on the institution attended. No named tier list of Chinese universities was found on the official page — only this percentage range differentiated by 'institution attended'.",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "Reading, Writing, Listening, Speaking each at least 6.0; results no more than 2 years old at course start. PTE Academic, TOEFL iBT, CPE, CAE also accepted. Combined pre-sessional offers: IELTS 6.0 overall (5.5 each skill) = 5-week pre-sessional; IELTS 5.5 overall (5.5 each skill) = 10-week pre-sessional."
+      },
+      "toefl": {
+        "overall": null,
+        "subscores": "TOEFL iBT accepted as an alternative to IELTS but exact score threshold not stated on this page — 官网未列明具体TOEFL分数"
+      },
+      "gmat_gre": "Not mentioned anywhere on the official course, entry-requirements, or application pages — 官网未列明，推断不作为该项目的必需材料",
+      "prerequisites": "Quantitative background required; professional accreditation with ACCA currently in progress (outcome pending).",
+      "work_experience": "Not required by default; 'in exceptional cases, relevant work experience may be a substitute for the degree requirement' (max 3 years' relevant experience)."
+    },
+    "deadlines": {
+      "opens_at": "2025-09-03",
+      "rolling": true,
+      "rounds": [
+        { "name": "Home applicants", "deadline": "2026-08-31", "decision_by": null },
+        { "name": "Overseas applicants", "deadline": "2026-06-30", "decision_by": null }
+      ],
+      "final_deadline": "2026-06-30",
+      "notes": "Course page 'Application information' section lists Home application deadline 31 August 2026 and Overseas application deadline 30 June 2026, with note 'we recommend you apply early as we may close applications before the deadline if a course is full.' Separately, School of Management scholarship deadlines are 4 February 2026 (round 1) and 8 April 2026 (round 2, final). Note: a separate university-wide 'Taught postgraduate admissions timeline' page states a later generic overseas deadline of 31 July 2026 — the course-specific page (30 June 2026) is treated as authoritative here since it is course-level data."
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "reference", "english_test", "passport"],
+    "source_urls": [
+      "https://www.bath.ac.uk/courses/postgraduate-2026/taught-postgraduate-courses/msc-accounting-and-finance/",
+      "https://www.bath.ac.uk/corporate-information/school-of-management-taught-postgraduate-tuition-fees-2026-27/",
+      "https://www.bath.ac.uk/guides/applying-for-a-taught-postgraduate-course/",
+      "https://www.bath.ac.uk/corporate-information/taught-postgraduate-admissions-timeline/"
+    ],
+    "confidence": "high",
+    "notes": "All figures read directly from the live 2026/27 course page (interactively selecting 'China' in the 'Origin of qualifications' dropdown, which is JS-driven and not visible via static fetch) and the official School of Management 2026/27 fees page. Materials list sourced from the general 'Applying for a taught postgraduate course' guide (university-wide, applies to School of Management applicants)."
+  },
+  {
+    "school_name_en": "University of Bath",
+    "school_name_zh": "巴斯大学",
+    "school_short": "Bath",
+    "region": "UK",
+    "program_name_en": "MSc Finance",
+    "program_name_zh": "金融学理学硕士",
+    "faculty": "School of Management",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "Overseas £34,950; Home £20,050 (2026/27, full-time)",
+    "campus": "University of Bath, Claverton Down, Bath BA2 7AY",
+    "requirements": {
+      "undergrad_background": "2:2 to 2:1 or above (or international equivalent) undergraduate degree depending on institution attended; any discipline but quantitative background/aptitude required (e.g. engineering, mathematics, economics, physics; other quantitative subjects considered).",
+      "china_university_list": null,
+      "gpa_requirement": "Chinese qualifications: a four-year Bachelor's degree with a final overall score of at least 62-75%, depending on the institution attended. No named tier list of Chinese universities found on the official page.",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "Reading, Writing, Listening, Speaking each at least 6.0; results no more than 2 years old at course start. PTE Academic, TOEFL iBT, CPE, CAE also accepted. Combined pre-sessional offers: IELTS 6.0 -> 5-week pre-sessional; IELTS 5.5 -> 10-week pre-sessional, each skill minimum 5.5."
+      },
+      "toefl": {
+        "overall": null,
+        "subscores": "TOEFL iBT accepted as alternative; exact score threshold not published on this page — 官网未列明具体TOEFL分数"
+      },
+      "gmat_gre": "Not mentioned on the official course/entry-requirements pages — 官网未列明",
+      "prerequisites": "Quantitative background/aptitude required.",
+      "work_experience": "Not required by default; 'in exceptional cases, relevant work experience may be a substitute for the degree requirement' (max 3 years' relevant experience)."
+    },
+    "deadlines": {
+      "opens_at": "2025-09-03",
+      "rolling": true,
+      "rounds": [
+        { "name": "Home applicants", "deadline": "2026-08-31", "decision_by": null },
+        { "name": "Overseas applicants", "deadline": "2026-06-30", "decision_by": null }
+      ],
+      "final_deadline": "2026-06-30",
+      "notes": "Course page 'Application information' section (course code TDUMN-FN01): Home deadline 31 August 2026, Overseas deadline 30 June 2026. School of Management scholarship deadlines: 4 February 2026 and 8 April 2026 (from university-wide admissions timeline page)."
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "reference", "english_test", "passport"],
+    "source_urls": [
+      "https://www.bath.ac.uk/courses/postgraduate-2026/taught-postgraduate-courses/msc-finance/",
+      "https://www.bath.ac.uk/corporate-information/school-of-management-taught-postgraduate-tuition-fees-2026-27/",
+      "https://www.bath.ac.uk/guides/applying-for-a-taught-postgraduate-course/",
+      "https://www.bath.ac.uk/corporate-information/taught-postgraduate-admissions-timeline/"
+    ],
+    "confidence": "high",
+    "notes": "Figures read directly from the live 2026/27 course page (China selected via the page's country dropdown) and the official 2026/27 School of Management fees page."
+  },
+  {
+    "school_name_en": "University of Bath",
+    "school_name_zh": "巴斯大学",
+    "school_short": "Bath",
+    "region": "UK",
+    "program_name_en": "MSc Management",
+    "program_name_zh": "管理学理学硕士",
+    "faculty": "School of Management",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "Overseas £29,500; Home £18,900 (2026/27, full-time)",
+    "campus": "University of Bath, Claverton Down, Bath BA2 7AY",
+    "requirements": {
+      "undergrad_background": "2:2 to 2:1 or above (or international equivalent) undergraduate degree depending on institution attended. Degree can be in ANY discipline EXCEPT business or management subjects — applicants with a business/management degree are directed instead to MSc International Management or another specialised MSc.",
+      "china_university_list": null,
+      "gpa_requirement": "Chinese qualifications: a four-year Bachelor's degree with a final overall score of at least 62-75%, depending on the institution attended. No named Chinese university tier list found on the official page.",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "Reading, Writing, Listening, Speaking each at least 6.0; results no more than 2 years old at course start. PTE Academic, TOEFL iBT, CPE, CAE also accepted; same 5-week/10-week combined pre-sessional offers as other School of Management MSc courses."
+      },
+      "toefl": {
+        "overall": null,
+        "subscores": "TOEFL iBT accepted as alternative; exact score threshold not published on this page — 官网未列明具体TOEFL分数"
+      },
+      "gmat_gre": "Not mentioned on the official course/entry-requirements pages — 官网未列明",
+      "prerequisites": "Non-business/management undergraduate background required (this is the key distinguishing entry rule for this course).",
+      "work_experience": "No explicit work-experience-substitution clause was found in the China-specific entry requirements text for this course (unlike Accounting & Finance, Finance, Marketing and Business Analytics pages, which do mention a work-experience substitute) — 官网未列明工作经验替代条款"
+    },
+    "deadlines": {
+      "opens_at": "2025-09-03",
+      "rolling": true,
+      "rounds": [
+        { "name": "Home applicants", "deadline": "2026-08-31", "decision_by": null },
+        { "name": "Overseas applicants", "deadline": "2026-06-30", "decision_by": null }
+      ],
+      "final_deadline": "2026-06-30",
+      "notes": "Course page 'Application information' section (course code TDUMN-MM03): Home deadline 31 August 2026, Overseas deadline 30 June 2026. School of Management scholarship deadlines: 4 February 2026 and 8 April 2026."
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "reference", "english_test", "passport"],
+    "source_urls": [
+      "https://www.bath.ac.uk/courses/postgraduate-2026/taught-postgraduate-courses/msc-management/",
+      "https://www.bath.ac.uk/corporate-information/school-of-management-taught-postgraduate-tuition-fees-2026-27/",
+      "https://www.bath.ac.uk/guides/applying-for-a-taught-postgraduate-course/",
+      "https://www.bath.ac.uk/corporate-information/taught-postgraduate-admissions-timeline/"
+    ],
+    "confidence": "high",
+    "notes": "Figures read directly from the live 2026/27 course page (China selected via country dropdown) and the official 2026/27 fees page. Graduates may apply for CIMA exemptions per the course page."
+  },
+  {
+    "school_name_en": "University of Bath",
+    "school_name_zh": "巴斯大学",
+    "school_short": "Bath",
+    "region": "UK",
+    "program_name_en": "MSc Business Analytics",
+    "program_name_zh": "商业分析理学硕士",
+    "faculty": "School of Management",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "Overseas £31,700; Home £18,900 (2026/27, full-time)",
+    "campus": "University of Bath, Claverton Down, Bath BA2 7AY",
+    "requirements": {
+      "undergrad_background": "2:2 to 2:1 or above (or international equivalent) undergraduate degree depending on institution attended; any discipline but must have studied a subject with high quantitative content (better suited if background in business/management, mathematics/statistics, computer science, engineering, physics, or a quantitative social science).",
+      "china_university_list": null,
+      "gpa_requirement": "Chinese qualifications: a four-year Bachelor's degree with a final overall score of at least 62-75%, depending on the institution attended. No named Chinese university tier list found on the official page.",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "Reading, Writing, Listening, Speaking each at least 6.0; results no more than 2 years old at course start. PTE Academic, TOEFL iBT, CPE, CAE also accepted; same combined pre-sessional offers (IELTS 6.0 -> 5-week; 5.5 -> 10-week, each skill minimum 5.5)."
+      },
+      "toefl": {
+        "overall": null,
+        "subscores": "TOEFL iBT accepted as alternative; exact score threshold not published on this page — 官网未列明具体TOEFL分数"
+      },
+      "gmat_gre": "Not mentioned on the official course/entry-requirements pages — 官网未列明",
+      "prerequisites": "High quantitative content required; 'previous experience of computer programming is an advantage' and applicants should describe quantitative/programming experience in their personal statement.",
+      "work_experience": "Not required by default; 'in exceptional cases, relevant work experience may be a substitute for the degree requirement' (max 3 years' relevant experience)."
+    },
+    "deadlines": {
+      "opens_at": "2025-09-03",
+      "rolling": true,
+      "rounds": [
+        { "name": "Home applicants", "deadline": "2026-08-31", "decision_by": null },
+        { "name": "Overseas applicants", "deadline": "2026-06-30", "decision_by": null }
+      ],
+      "final_deadline": "2026-06-30",
+      "notes": "Course page 'Application information' section (course code TDUMN-BA01): Home deadline 31 August 2026, Overseas deadline 30 June 2026. School of Management scholarship deadlines: 4 February 2026 and 8 April 2026."
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "reference", "english_test", "passport"],
+    "source_urls": [
+      "https://www.bath.ac.uk/courses/postgraduate-2026/taught-postgraduate-courses/msc-business-analytics/",
+      "https://www.bath.ac.uk/corporate-information/school-of-management-taught-postgraduate-tuition-fees-2026-27/",
+      "https://www.bath.ac.uk/guides/applying-for-a-taught-postgraduate-course/",
+      "https://www.bath.ac.uk/corporate-information/taught-postgraduate-admissions-timeline/"
+    ],
+    "confidence": "high",
+    "notes": "Figures read directly from the live 2026/27 course page (China selected via country dropdown) and the official 2026/27 fees page. QS Business Masters Rankings 2026 cited on the page as UK top 10 / world top 100 for this subject (ranking claim quoted from the page, not independently verified)."
+  },
+  {
+    "school_name_en": "University of Bath",
+    "school_name_zh": "巴斯大学",
+    "school_short": "Bath",
+    "region": "UK",
+    "program_name_en": "MSc Marketing",
+    "program_name_zh": "市场营销理学硕士",
+    "faculty": "School of Management",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "Overseas £29,500; Home £18,900 (2026/27, full-time)",
+    "campus": "University of Bath, Claverton Down, Bath BA2 7AY",
+    "requirements": {
+      "undergrad_background": "2:2 to 2:1 or above (or international equivalent) undergraduate degree depending on institution attended; any discipline but must include an appropriate level of business/management and marketing-related experience. If the applicant lacks a suitable first degree, the page suggests MSc Management (with marketing specialisation) instead.",
+      "china_university_list": null,
+      "gpa_requirement": "Chinese qualifications: a four-year Bachelor's degree with a final overall score of at least 62-75%, depending on the institution attended. No named Chinese university tier list found on the official page.",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "Reading, Writing, Listening, Speaking each at least 6.0; results no more than 2 years old at course start. PTE Academic, TOEFL iBT, CPE, CAE also accepted; same combined pre-sessional offers (IELTS 6.0 -> 5-week; 5.5 -> 10-week, each skill minimum 5.5)."
+      },
+      "toefl": {
+        "overall": null,
+        "subscores": "TOEFL iBT accepted as alternative; exact score threshold not published on this page — 官网未列明具体TOEFL分数"
+      },
+      "gmat_gre": "Not mentioned on the official course/entry-requirements pages — 官网未列明",
+      "prerequisites": "Must include an appropriate level of business/management and marketing-related experience/background.",
+      "work_experience": "Not required by default; 'in exceptional cases, relevant work experience may be a substitute for the degree requirement' (max 3 years' relevant experience)."
+    },
+    "deadlines": {
+      "opens_at": "2025-09-03",
+      "rolling": true,
+      "rounds": [
+        { "name": "Home applicants", "deadline": "2026-08-31", "decision_by": null },
+        { "name": "Overseas applicants", "deadline": "2026-06-30", "decision_by": null }
+      ],
+      "final_deadline": "2026-06-30",
+      "notes": "Course page 'Application information' section (course code TDUMN-MK01): Home deadline 31 August 2026, Overseas deadline 30 June 2026. This is the September-start Marketing MSc (Bath also separately offers a January-start Marketing MSc with different dates, not covered here). School of Management scholarship deadlines: 4 February 2026 and 8 April 2026."
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "reference", "english_test", "passport"],
+    "source_urls": [
+      "https://www.bath.ac.uk/courses/postgraduate-2026/taught-postgraduate-courses/msc-marketing/",
+      "https://www.bath.ac.uk/corporate-information/school-of-management-taught-postgraduate-tuition-fees-2026-27/",
+      "https://www.bath.ac.uk/guides/applying-for-a-taught-postgraduate-course/",
+      "https://www.bath.ac.uk/corporate-information/taught-postgraduate-admissions-timeline/"
+    ],
+    "confidence": "high",
+    "notes": "Figures read directly from the live 2026/27 course page (China selected via country dropdown) and the official 2026/27 fees page. QS Business Master's Rankings 2026 cited on the page as UK top 10 / world top 50 for this subject (ranking claim quoted from the page, not independently verified)."
+  }
+]

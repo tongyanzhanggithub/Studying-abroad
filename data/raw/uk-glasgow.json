@@ -1,0 +1,260 @@
+[
+  {
+    "school_name_en": "University of Glasgow",
+    "school_name_zh": "格拉斯哥大学",
+    "school_short": "Glasgow",
+    "region": "UK",
+    "program_name_en": "MSc Investment Banking & Finance",
+    "program_name_zh": "投资银行与金融理学硕士",
+    "faculty": "Adam Smith Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "£36,720",
+    "campus": "Glasgow: Gilmorehill campus",
+    "requirements": {
+      "undergrad_background": "2.1 Hons (or non-UK equivalent) in Economics or Finance. Degrees in a related discipline within Social Science will be accepted with at least 4 credit bearing modules in Economics and/or Finance at an average grade of pass.",
+      "china_university_list": "University of Glasgow publishes an official 'Accepted Chinese University List 2026' (PDF, verbatim source: https://www.gla.ac.uk/media/Media_1221495_smxx.pdf) covering 700+ mainland Chinese institutions, sorted into University Bands A-E plus a separate 'TNE' (transnational/Sino-foreign joint venture) category. The list gives two minimum average-mark thresholds per institution: 'Result Required 2:1' and 'Result Required 2:2', to be matched against whichever UK degree classification the specific programme requires. This programme requires a 2:1 Hons, so the 'Result Required 2:1' column applies: Band A = 70% (e.g. Peking University 北京大学, Tsinghua University 清华大学, Fudan University 复旦大学, Shanghai Jiao Tong University 上海交通大学, Zhejiang University 浙江大学, Nanjing University 南京大学, Wuhan University 武汉大学, Sun Yat-sen University 中山大学, and other C9/elite '985' universities); Band B = 75% (large majority of '211'/strong non-C9 universities, e.g. Beijing Jiaotong University 北京交通大学, Soochow University 苏州大学, Shenzhen University 深圳大学, Central University of Finance and Economics 中央财经大学); Band C = 80% (e.g. Beijing Union University 北京联合大学, Anhui Jianzhu University 安徽建筑大学); Band D = 85% (e.g. Anhui Science and Technology University 安徽科技学院); Band E = 87% (weakest tier, mostly teachers colleges, e.g. Aba Teachers College 阿坝师范学院). If the programme instead required a 2:2, thresholds drop 5 points per band (65/70/75/80/85%). Separately, Sino-foreign/transnational (TNE) institutions have bespoke GPA thresholds: Xi'an Jiaotong-Liverpool University and University of Nottingham Ningbo China are treated as using standard UK classifications directly ('2:1'/'2:2'); NYU Shanghai, Duke Kunshan University and Wenzhou-Kean University require GPA 2.8 (2:1-equivalent) / GPA 2.6 (2:2-equivalent); CUHK-Shenzhen, HKUST(Guangzhou) and City University of Hong Kong (Dongguan) require GPA 2.85 / GPA 2.5; Shenzhen MSU-BIT University requires GPA 4.0/'Good' (2:1-equiv) / GPA 3.7/'Satisfactory' (2:2-equiv). Official notes on the document state: 'Grades given are MINIMUM entry requirements and do not guarantee an offer... entry to the University of Glasgow is entirely at the discretion of the University' and 'Requirement of each programme can be found at https://www.gla.ac.uk/postgraduate/taught/'. This list is university-wide (not published as a business-school-only list), and no separate, stricter Adam Smith Business School-specific China tier list was found on the individual course pages fetched.",
+      "gpa_requirement": "2.1 Hons (UK) or non-UK equivalent; for Chinese applicants, see china_university_list (Band A-E, 70-87% depending on institution for a 2:1-requiring programme)",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "no subtest less than 6.0"
+      },
+      "toefl": {
+        "overall": 90,
+        "subscores": "Tests taken up to 20 Jan 2026: Overall 90, no subtest lower than Reading 20/Listening 19/Speaking 19/Writing 21. Tests from 21 Jan 2026 onwards: Overall 92, no subtest lower than Reading 22/Listening 20/Speaking 23/Writing 21."
+      },
+      "gmat_gre": "官网未列明 (not mentioned on official course page)",
+      "prerequisites": "At least 4 credit-bearing modules in Economics and/or Finance if degree is in a related Social Science discipline",
+      "work_experience": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-24",
+      "notes": "Official page lists a single application deadline '24 August 2026' applicable to both International & EU and Home applicants for 2026/27 entry; page does not explicitly state whether earlier rounds/rolling decisions apply, so rolling=true is a medium-confidence inference typical of Glasgow PGT admissions, not an explicit statement."
+    },
+    "materials": ["transcript", "degree_certificate", "reference", "english_test", "passport"],
+    "source_urls": [
+      "https://www.gla.ac.uk/postgraduate/taught/investmentbankingfinance/",
+      "https://www.gla.ac.uk/media/Media_1221495_smxx.pdf"
+    ],
+    "confidence": "high",
+    "notes": "Tuition, entry requirements, English requirements and deadline explicitly confirmed on official 2026/27 course page. GMAT/GRE and work-experience fields: 官网未列明。CV/Personal Statement not explicitly listed among required documents on the fetched page, so omitted rather than assumed."
+  },
+  {
+    "school_name_en": "University of Glasgow",
+    "school_name_zh": "格拉斯哥大学",
+    "school_short": "Glasgow",
+    "region": "UK",
+    "program_name_en": "MSc Management",
+    "program_name_zh": "管理学理学硕士",
+    "faculty": "Adam Smith Business School",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "£36,720",
+    "campus": "Glasgow: Gilmorehill campus",
+    "requirements": {
+      "undergrad_background": "2.1 Hons (or non-UK equivalent) in any subject; designed as a generalist conversion degree for students whose previous studies were outside business and management.",
+      "china_university_list": "Same official University of Glasgow 'Accepted Chinese University List 2026' applies (PDF: https://www.gla.ac.uk/media/Media_1221495_smxx.pdf). This programme requires a 2.1 Hons, so the 'Result Required 2:1' column applies: Band A = 70% (e.g. Peking University, Tsinghua University, Fudan University, Zhejiang University, Nanjing University); Band B = 75% (majority of '211' and other strong universities, e.g. Beijing Jiaotong University, Soochow University); Band C = 80%; Band D = 85%; Band E = 87% (weakest tier). TNE/Sino-foreign institutions use bespoke GPA thresholds, e.g. Xi'an Jiaotong-Liverpool University and Nottingham Ningbo (2:1/2:2 directly), NYU Shanghai/Duke Kunshan/Wenzhou-Kean (GPA 2.8/2.6), CUHK-Shenzhen/HKUST-Guangzhou/CityU Dongguan (GPA 2.85/2.5), Shenzhen MSU-BIT (GPA 4.0-Good/3.7-Satisfactory). Document notes grades are MINIMUM requirements only, decision is at University discretion, and states per-programme requirement should be checked at https://www.gla.ac.uk/postgraduate/taught/.",
+      "gpa_requirement": "2.1 Hons (UK) or non-UK equivalent in any subject; for Chinese applicants see china_university_list (Band A-E, 70-87%)",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "no subtest less than 6.0"
+      },
+      "toefl": {
+        "overall": 90,
+        "subscores": "Tests taken up to 20 Jan 2026: Overall 90, no subtest lower than Reading 20/Listening 19/Speaking 19/Writing 21. Tests from 21 Jan 2026: Overall 92, no subtest lower than Reading 22/Listening 20/Speaking 23/Writing 21."
+      },
+      "gmat_gre": "官网未列明",
+      "prerequisites": "None specified beyond degree classification; explicitly positioned as a conversion/generalist programme",
+      "work_experience": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-24",
+      "notes": "Official page lists '24 August 2026' as the application deadline for both International & EU and Home applicants, 2026/27 entry. No explicit statement of rolling rounds found."
+    },
+    "materials": ["transcript", "degree_certificate", "reference", "english_test", "passport"],
+    "source_urls": [
+      "https://www.gla.ac.uk/postgraduate/taught/managementmsc/",
+      "https://www.gla.ac.uk/media/Media_1221495_smxx.pdf"
+    ],
+    "confidence": "high",
+    "notes": "Core/optional course structure (Accounting for Management, Delivering Performance, International Management, Organisational Behaviour, Responsible Leadership, Strategic Management) confirmed via search of official page but not independently re-verified via full WebFetch content quote in this pass. Tuition/entry/English/deadline fields confirmed via WebFetch."
+  },
+  {
+    "school_name_en": "University of Glasgow",
+    "school_name_zh": "格拉斯哥大学",
+    "school_short": "Glasgow",
+    "region": "UK",
+    "program_name_en": "MSc International Business",
+    "program_name_zh": "国际商务理学硕士",
+    "faculty": "Adam Smith Business School",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "£34,470",
+    "campus": "Glasgow: Gilmorehill campus",
+    "requirements": {
+      "undergrad_background": "2.1 Hons (or non-UK equivalent) in Business Management, Marketing or Commerce OR a Social Science degree with at least 5 credit bearing modules in Management and/or Marketing at an average grade of pass. Alternative route: 2.1 Hons in any subject with 2 years' work experience in a relevant sector (Marketing or Business).",
+      "china_university_list": "Same official University of Glasgow 'Accepted Chinese University List 2026' applies (PDF: https://www.gla.ac.uk/media/Media_1221495_smxx.pdf), using the 'Result Required 2:1' column since this programme requires 2.1 Hons: Band A = 70% (elite C9/985 universities e.g. Peking University, Fudan University, Shanghai Jiao Tong University); Band B = 75% (most '211' and other strong universities); Band C = 80%; Band D = 85%; Band E = 87% (weakest tier institutions). Sino-foreign/TNE institutions (Xi'an Jiaotong-Liverpool, Nottingham Ningbo, NYU Shanghai, Duke Kunshan, Wenzhou-Kean, CUHK-Shenzhen, HKUST-Guangzhou, CityU Dongguan, Shenzhen MSU-BIT) each carry bespoke GPA/classification thresholds as listed on the document. Document explicitly states grades are minimum requirements only and final decision rests with the University; per-programme classification requirement should be cross-checked at gla.ac.uk/postgraduate/taught/.",
+      "gpa_requirement": "2.1 Hons (UK) or non-UK equivalent; for Chinese applicants see china_university_list (Band A-E, 70-87%)",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "no subtest less than 6.0"
+      },
+      "toefl": {
+        "overall": 90,
+        "subscores": "Tests taken up to 20 Jan 2026: Overall 90, no subtest lower than Reading 20/Listening 19/Speaking 19/Writing 21. Tests from 21 Jan 2026: Overall 92, no subtest lower than Reading 22/Listening 20/Speaking 23/Writing 21."
+      },
+      "gmat_gre": "官网未列明",
+      "prerequisites": "At least 5 credit-bearing modules in Management/Marketing if from a Social Science background",
+      "work_experience": "Optional alternative entry route only: 2 years' relevant work experience (Marketing or Business) can substitute for a Business/Marketing/Commerce degree background"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-24",
+      "notes": "Official page lists '24 August 2026' as the application deadline for both International & EU and Home applicants, 2026/27 entry."
+    },
+    "materials": ["transcript", "degree_certificate", "reference", "english_test", "passport"],
+    "source_urls": [
+      "https://www.gla.ac.uk/postgraduate/taught/internationalbusiness/",
+      "https://www.gla.ac.uk/media/Media_1221495_smxx.pdf"
+    ],
+    "confidence": "high",
+    "notes": "Tuition/entry/English/deadline fields confirmed via WebFetch of official 2026/27 course page."
+  },
+  {
+    "school_name_en": "University of Glasgow",
+    "school_name_zh": "格拉斯哥大学",
+    "school_short": "Glasgow",
+    "region": "UK",
+    "program_name_en": "MSc Business Analytics",
+    "program_name_zh": "商业分析理学硕士",
+    "faculty": "Adam Smith Business School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "£34,470",
+    "campus": "Glasgow: Gilmorehill campus",
+    "requirements": {
+      "undergrad_background": "2.1 Hons (or non-UK equivalent) in Business, Management or another subject with a quantitative focus. This is a conversion course for students with no prior Business Analytics study. Applicants with a 2:1 in an unrelated subject and at least two years' relevant work experience are considered individually. Students from Economics, Finance or Computing Science backgrounds are advised to instead consider MSc Data Analytics for Economics & Finance.",
+      "china_university_list": "Same official University of Glasgow 'Accepted Chinese University List 2026' applies (PDF: https://www.gla.ac.uk/media/Media_1221495_smxx.pdf), using the 'Result Required 2:1' column since this programme requires 2.1 Hons: Band A = 70%; Band B = 75%; Band C = 80%; Band D = 85%; Band E = 87% (see representative institution examples under other Glasgow programmes above). Sino-foreign/TNE institutions carry separate GPA thresholds (e.g. GPA 2.85/2.5 for CUHK-Shenzhen, HKUST-Guangzhou, CityU Dongguan; GPA 2.8/2.6 for NYU Shanghai, Duke Kunshan, Wenzhou-Kean; direct '2:1'/'2:2' for Xi'an Jiaotong-Liverpool and Nottingham Ningbo; GPA 4.0-Good/3.7-Satisfactory for Shenzhen MSU-BIT). Document states grades are minimum only, offers are at University discretion, and to check per-programme classification requirement at gla.ac.uk/postgraduate/taught/.",
+      "gpa_requirement": "2.1 Hons (UK) or non-UK equivalent, quantitative-focus subject preferred; for Chinese applicants see china_university_list (Band A-E, 70-87%)",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "no subtest less than 6.0"
+      },
+      "toefl": {
+        "overall": 90,
+        "subscores": "Tests taken up to 20 Jan 2026: Overall 90, no subtest lower than Reading 20/Listening 19/Speaking 19/Writing 21. Tests from 21 Jan 2026: Overall 92, no subtest lower than Reading 22/Listening 20/Speaking 23/Writing 21."
+      },
+      "gmat_gre": "官网未列明",
+      "prerequisites": "Quantitative-focus undergraduate background preferred; no prior Business Analytics study assumed",
+      "work_experience": "Only required as an alternative pathway: at least 2 years' relevant work experience if the undergraduate degree is unrelated/non-quantitative"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-24",
+      "notes": "Official page lists '24 August 2026' as the application deadline for both International & EU and Home applicants, 2026/27 entry."
+    },
+    "materials": ["transcript", "degree_certificate", "reference", "english_test", "passport"],
+    "source_urls": [
+      "https://www.gla.ac.uk/postgraduate/taught/business-analytics/",
+      "https://www.gla.ac.uk/media/Media_1221495_smxx.pdf"
+    ],
+    "confidence": "high",
+    "notes": "Tuition/entry/English/deadline fields confirmed via WebFetch of official 2026/27 course page."
+  },
+  {
+    "school_name_en": "University of Glasgow",
+    "school_name_zh": "格拉斯哥大学",
+    "school_short": "Glasgow",
+    "region": "UK",
+    "program_name_en": "MAcc International Accounting & Financial Management",
+    "program_name_zh": "国际会计与财务管理硕士",
+    "faculty": "Adam Smith Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "£37,350",
+    "campus": "Glasgow: Gilmorehill campus",
+    "requirements": {
+      "undergrad_background": "2.1 Hons (or non-UK equivalent) in any subject with at least 5 credit bearing modules in Accounting and/or Finance at an average grade of pass.",
+      "china_university_list": "Same official University of Glasgow 'Accepted Chinese University List 2026' applies (PDF: https://www.gla.ac.uk/media/Media_1221495_smxx.pdf), using the 'Result Required 2:1' column since this programme requires 2.1 Hons: Band A = 70% (elite C9/985 universities, e.g. Peking University 北京大学, Tsinghua University 清华大学, Fudan University 复旦大学, Shanghai Jiao Tong University 上海交通大学, Renmin University of China 中国人民大学); Band B = 75% (majority of '211'/strong finance-focused universities, e.g. Central University of Finance and Economics 中央财经大学, Shanghai University of Finance and Economics 上海财经大学, Southwestern University of Finance and Economics 西南财经大学, Dongbei University of Finance and Economics 东北财经大学); Band C = 80%; Band D = 85%; Band E = 87%. Sino-foreign/TNE institutions carry bespoke GPA thresholds as listed in the document (e.g. GPA 2.85/2.5 for CUHK-Shenzhen/HKUST-Guangzhou/CityU Dongguan; GPA 2.8/2.6 for NYU Shanghai/Duke Kunshan/Wenzhou-Kean; '2:1'/'2:2' directly for Xi'an Jiaotong-Liverpool and Nottingham Ningbo). Document states grades are minimum entry requirements only, decisions are at University discretion, and per-programme classification requirement should be checked at gla.ac.uk/postgraduate/taught/.",
+      "gpa_requirement": "2.1 Hons (UK) or non-UK equivalent, with 5 Accounting/Finance modules; for Chinese applicants see china_university_list (Band A-E, 70-87%)",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "no subtest less than 6.0"
+      },
+      "toefl": {
+        "overall": 92,
+        "subscores": "For tests taken from 21 Jan 2026: Overall 92, no subtest lower than Reading 22/Listening 20/Speaking 23/Writing 21. (Earlier-test threshold not explicitly captured in this fetch; 官网未完整列出旧标准，仅确认新标准。)"
+      },
+      "gmat_gre": "官网未列明",
+      "prerequisites": "At least 5 credit-bearing modules in Accounting and/or Finance",
+      "work_experience": null
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-24",
+      "notes": "Official page lists '24 August 2026' as the application deadline for both International & EU and Home applicants, 2026/27 entry."
+    },
+    "materials": ["transcript", "degree_certificate", "reference", "english_test", "passport"],
+    "source_urls": [
+      "https://www.gla.ac.uk/postgraduate/taught/internationalaccountingfinancialmanagement/",
+      "https://www.gla.ac.uk/media/Media_1221495_smxx.pdf"
+    ],
+    "confidence": "high",
+    "notes": "Tuition/entry/English/deadline fields confirmed via WebFetch of official 2026/27 course page. Note: this is a MAcc (Master of Accounting), not MSc, but functionally the Accounting & Finance master's most comparable to 'MSc Accounting and Finance' referenced in the task brief; Glasgow does not offer a programme literally titled 'MSc Accounting and Finance'."
+  },
+  {
+    "school_name_en": "University of Glasgow",
+    "school_name_zh": "格拉斯哥大学",
+    "school_short": "Glasgow",
+    "region": "UK",
+    "program_name_en": "MSc International Strategic Marketing",
+    "program_name_zh": "国际战略营销理学硕士",
+    "faculty": "Adam Smith Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "£34,470",
+    "campus": "Glasgow: Gilmorehill campus",
+    "requirements": {
+      "undergrad_background": "2.1 Hons (or non-UK equivalent) in Business Management, Marketing or Commerce OR a Social Science degree with at least 5 credit bearing modules in Management and/or Marketing at an average grade of pass. Alternative route: 2.1 Hons in any subject with 2 years' work experience in a Marketing role.",
+      "china_university_list": "Same official University of Glasgow 'Accepted Chinese University List 2026' applies (PDF: https://www.gla.ac.uk/media/Media_1221495_smxx.pdf), using the 'Result Required 2:1' column since this programme requires 2.1 Hons: Band A = 70% (elite C9/985 universities); Band B = 75% (most '211'/strong universities); Band C = 80%; Band D = 85%; Band E = 87% (weakest tier). Sino-foreign/TNE institutions carry bespoke GPA thresholds per the document (e.g. GPA 2.85/2.5 for CUHK-Shenzhen/HKUST-Guangzhou/CityU Dongguan; GPA 2.8/2.6 for NYU Shanghai/Duke Kunshan/Wenzhou-Kean; direct '2:1'/'2:2' for Xi'an Jiaotong-Liverpool and Nottingham Ningbo; GPA 4.0-Good/3.7-Satisfactory for Shenzhen MSU-BIT). Document states grades are minimum entry requirements only, decisions rest with the University, and per-programme classification requirement should be checked at gla.ac.uk/postgraduate/taught/.",
+      "gpa_requirement": "2.1 Hons (UK) or non-UK equivalent; for Chinese applicants see china_university_list (Band A-E, 70-87%)",
+      "ielts": {
+        "overall": 6.5,
+        "subscores": "no subtest less than 6.0"
+      },
+      "toefl": {
+        "overall": 90,
+        "subscores": "Tests taken up to 20 Jan 2026: Overall 90, no subtest lower than Reading 20/Listening 19/Speaking 19/Writing 21. Tests from 21 Jan 2026: Overall 92, no subtest lower than Reading 22/Listening 20/Speaking 23/Writing 21."
+      },
+      "gmat_gre": "官网未列明",
+      "prerequisites": "At least 5 credit-bearing modules in Management/Marketing if from a Social Science background",
+      "work_experience": "Optional alternative entry route only: 2 years' work experience in a Marketing role can substitute for the Business/Marketing/Commerce degree background"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2026-08-24",
+      "notes": "Official page lists '24 August 2026' as the application deadline for both International & EU and Home applicants, 2026/27 entry."
+    },
+    "materials": ["transcript", "degree_certificate", "reference", "english_test", "passport"],
+    "source_urls": [
+      "https://www.gla.ac.uk/postgraduate/taught/internationalstrategicmarketing/",
+      "https://www.gla.ac.uk/media/Media_1221495_smxx.pdf"
+    ],
+    "confidence": "high",
+    "notes": "Tuition/entry/English/deadline fields confirmed via WebFetch of official 2026/27 course page."
+  }
+]

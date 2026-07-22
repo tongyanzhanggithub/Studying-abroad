@@ -1,0 +1,383 @@
+[
+  {
+    "school_name_en": "National University of Singapore",
+    "school_name_zh": "新加坡国立大学",
+    "school_short": "NUS",
+    "region": "SG",
+    "program_name_en": "Master of Science in Business Analytics (MSBA)",
+    "program_name_zh": "商业分析硕士",
+    "faculty": "NUS Business School (jointly with NUS School of Computing)",
+    "direction": "business_analytics",
+    "duration_months": 13,
+    "tuition": "SGD 85,000 (international students, inclusive of 9% GST, AY2026/27)",
+    "campus": "NUS Business Analytics Centre, BIZ 2, 1 Business Link, Kent Ridge, Singapore",
+    "requirements": {
+      "undergrad_background": "官网原文: \"A good Bachelors' degree, preferably from Business, Computing, Economics, Engineering, Mathematics, Science or Statistics, with a good honours classification\"; 或至少2年相关工作经验可替代。要求 \"Strong Mathematics foundation\"。",
+      "china_university_list": null,
+      "gpa_requirement": "官网未列出具体入学GPA分数线,仅要求'good honours classification'的本科学位;毕业要求CAP(累计平均分)≥3.0(满分5.0)。",
+      "ielts": {"overall": null, "subscores": null},
+      "toefl": {"overall": null, "subscores": null},
+      "gmat_gre": "非强制,但官网注明'(Highly Recommended) A good quantitative score in GRE/GMAT... GRE/GMAT is highly recommended from AY2025/26 onwards'。若申请人本科毕业于新加坡本地四所大学(NUS/NTU/SMU/SUTD)则无需提交。未公开具体最低分数线。",
+      "prerequisites": "偏好量化背景(商科、计算机、经济、工程、数学、理科或统计学专业),要求较强数学基础。",
+      "work_experience": "不强制要求工作经验;官网列出'preferably...or at least 2 years' relevant work experience'作为学术背景不足时的替代条件。",
+      "interview": "官网公开材料中未明确说明是否设有面试环节。"
+    },
+    "deadlines": {
+      "opens_at": "2025-10-06",
+      "rolling": false,
+      "rounds": [
+        {"name": "BAC Scholarship supplementary essay deadline", "deadline": "2025-12-15", "decision_by": null},
+        {"name": "Application closes", "deadline": "2026-01-31", "decision_by": null}
+      ],
+      "final_deadline": "2026-01-31",
+      "notes": "此为官网当前展示的AY2026/27(2026年8月入学)申请周期,官方PDF《Application-Guide-for-MSBA-AY2026_27》明确写明 Opens: 6 October 2025, Closes: 31 January 2026。由于采集日期为2026-07-20,该轮申请已截止(该批学生即将于2026年8月入学),官网尚未公布2027年8月入学(AY2027/28)的申请时间表。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "gmat_gre", "passport"],
+    "source_urls": [
+      "https://msba.nus.edu.sg/apply-now/",
+      "https://msba.nus.edu.sg/programme/admission-application/",
+      "https://msba.nus.edu.sg/programme/fees-scholarship/",
+      "https://msba.nus.edu.sg/wp-content/uploads/2025/09/Application-Guide-for-MSBA-AY2026_27-11-Sep_v2.pdf"
+    ],
+    "confidence": "high",
+    "notes": "materials中的two_references在官网《Application Guide for MSBA AY2026/27》document checklist中确认为'Referee Report'一项,要求最少2份推荐信(Step 9: 'This programme requires a minimum of two (2) referee reports'),并有一篇必交的Application Essay(关于AI与Business Analytics趋势,不超过350字或3分钟视频)。英语语言考试(IELTS/TOEFL)官网明确注明'Applicants do not have to submit any English Language Test'。学费方面新加坡公民/PR为SGD 76,500,NUS校友SGD 68,000,均含9% GST。项目时长官网未给出单一明确数字,课程本身为全日制2个学期,另加3-6个月顶点项目(capstone project),外部资料普遍描述为13个月全日制或2年兼读制,供参考。"
+  },
+  {
+    "school_name_en": "National University of Singapore",
+    "school_name_zh": "新加坡国立大学",
+    "school_short": "NUS",
+    "region": "SG",
+    "program_name_en": "MSc in Finance",
+    "program_name_zh": "金融学硕士",
+    "faculty": "NUS Business School",
+    "direction": "finance",
+    "duration_months": 16,
+    "tuition": "SGD 75,210 (inclusive of 9% GST, August 2026 intake, before GST: SGD 69,000)",
+    "campus": "Mochtar Riady Building, Kent Ridge, Singapore",
+    "requirements": {
+      "undergrad_background": "官网原文: \"A good undergraduate degree in any discipline.\" 在读或即将毕业者也可申请。",
+      "china_university_list": null,
+      "gpa_requirement": "官网未设具体入学GPA分数线;在读期间需维持GPA≥3.2(满分5.0)方能毕业(未达标准将先受警告,连续三学期低于3.2或连续两学期≤2.5将被退学)。",
+      "ielts": {"overall": 7.0, "subscores": null},
+      "toefl": {"overall": null, "subscores": null},
+      "gmat_gre": "可选,非强制。官网原文: \"Though it is not mandatory, a good GMAT or GRE score may enhance your application, particularly if your academic performance does not fully reflect your potential.\" 未公开最低分数线。",
+      "prerequisites": "无特定先修课程要求,不限本科专业背景。",
+      "work_experience": "不要求工作经验。官网原文: \"We do not require you to have work experience for admission into the programme.\"",
+      "interview": "需要面试,仅限入围者。官网原文: \"A strong performance in the interview (conducted for shortlisted candidates only).\""
+    },
+    "deadlines": {
+      "opens_at": "2025-09-01",
+      "rolling": false,
+      "rounds": [
+        {"name": "Round 1 cut-off / 奖学金截止", "deadline": "2025-11-15", "decision_by": null},
+        {"name": "Final deadline (all applicants)", "deadline": "2026-02-15", "decision_by": null}
+      ],
+      "final_deadline": "2026-02-15",
+      "notes": "官网当前展示的是2026年8月入学(August 2026 intake / AY2026/2027)周期:官网原文录取结果'By June 2026',开学'Late July 2026'。采集日为2026-07-20,该批学生即将于近期(2026年7月底)正式开学,即该周期已完全走完招生流程;官网尚未发布2027年8月入学下一轮的具体日期,仅通过官网活动页面看到已在为下一届安排线上宣讲会(如8月17日AMA session),说明下一轮申请渠道尚未正式开放。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "passport", "gmat_gre", "english_test"],
+    "source_urls": [
+      "https://mscfin.nus.edu.sg/admissions/admission-requirements/",
+      "https://mscfin.nus.edu.sg/admissions/application-process/",
+      "https://mscfin.nus.edu.sg/admissions/application-checklist/",
+      "https://mscfin.nus.edu.sg/fees-finances/programme-fees/",
+      "https://mscfin.nus.edu.sg/academics/programme-structure-and-curriculum/"
+    ],
+    "confidence": "high",
+    "notes": "官网英语语言要求原文为: \"For TOEFL, the internet-based test score must be at least 5.0. For IELTS, the overall band score must be at least 7.0.\" TOEFL '5.0分'这一数值与IELTS 7.0并列出现明显不合常理(TOEFL iBT满分120,IELTS 7.0通常对应托福100左右),疑似官网未修正的历史性笔误,因此本记录中toefl.overall留空,请以学校最新澄清为准,不要直接采用'5.0'这一数字。english_test在materials中标注为'如适用'(若本科授课语言为英语或以英语为母语可豁免)。无需提交推荐信(官网明确:Letters of recommendation, reference letters and referee details are not required)。项目设Corporate Finance/Investment Finance/Finance and Technology三个专项方向。"
+  },
+  {
+    "school_name_en": "National University of Singapore",
+    "school_name_zh": "新加坡国立大学",
+    "school_short": "NUS",
+    "region": "SG",
+    "program_name_en": "MSc in Accounting and Financial Analytics",
+    "program_name_zh": "会计与财务分析硕士",
+    "faculty": "NUS Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "SGD 75,210 (inclusive of 9% GST, August 2026 intake, before GST: SGD 69,000)",
+    "campus": "Mochtar Riady Building, Kent Ridge, Singapore",
+    "requirements": {
+      "undergrad_background": "官网原文: \"A good undergraduate degree in any discipline.\" 在读或即将毕业者也可申请。",
+      "china_university_list": null,
+      "gpa_requirement": "官网未设具体入学GPA分数线;在读期间需维持GPA≥3.2(满分5.0)方能毕业(未达标准将先受警告,连续三学期低于3.2或连续两学期≤2.5将被退学)。",
+      "ielts": {"overall": 7.0, "subscores": null},
+      "toefl": {"overall": null, "subscores": null},
+      "gmat_gre": "可选,非强制,'GMAT/GRE scores are optional'。可能会强化申请,尤其是学术表现不足以体现潜力时。未公开最低分数线。",
+      "prerequisites": "无特定先修课程要求,不限本科专业背景。",
+      "work_experience": "不要求工作经验。官网原文: \"We do not require you to have work experience for admission.\" 有工作经验的申请人同样欢迎申请。",
+      "interview": "需要面试,仅限入围者。官网原文: \"A strong performance in the interview (conducted for shortlisted candidates only).\""
+    },
+    "deadlines": {
+      "opens_at": "2025-09-01",
+      "rolling": false,
+      "rounds": [
+        {"name": "Round 1 cut-off / 奖学金截止", "deadline": "2025-11-15", "decision_by": null},
+        {"name": "Final deadline (all applicants)", "deadline": "2026-02-15", "decision_by": null}
+      ],
+      "final_deadline": "2026-02-15",
+      "notes": "官网当前展示的是2026年8月入学(August 2026 intake)周期,录取结果'By June 2026',开学'Late July 2026'。采集日为2026-07-20,该批学生即将开学,该周期招生流程已基本走完;2027年8月入学的下一轮申请日期官网尚未公布。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "passport", "gmat_gre", "english_test"],
+    "source_urls": [
+      "https://mscacc.nus.edu.sg/admissions/admission-requirements/",
+      "https://mscacc.nus.edu.sg/admissions/application-process/",
+      "https://mscacc.nus.edu.sg/admissions/application-checklist/",
+      "https://mscacc.nus.edu.sg/fees-finances/programme-fees/",
+      "https://mscacc.nus.edu.sg/academics/programme-structure-and-curriculum/"
+    ],
+    "confidence": "high",
+    "notes": "官网英语语言要求原文与MSc Finance完全一致: \"For TOEFL, the internet-based test score must be at least 5.0. For IELTS, the overall band score must be at least 7.0.\" 同样怀疑TOEFL '5.0'为官网未修正的笔误,故toefl.overall留空。无需提交推荐信。课程融合会计与数据分析(如Applied Data Science & Visualisation、Analytics & Data Management等课程)。"
+  },
+  {
+    "school_name_en": "National University of Singapore",
+    "school_name_zh": "新加坡国立大学",
+    "school_short": "NUS",
+    "region": "SG",
+    "program_name_en": "MSc in Management",
+    "program_name_zh": "管理学硕士",
+    "faculty": "NUS Business School",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "SGD 58,860 single degree (inclusive of 9% GST); double degree with CEMS MIM: SGD 73,030 (January 2027 intake)",
+    "campus": "Mochtar Riady Building, Kent Ridge, Singapore",
+    "requirements": {
+      "undergrad_background": "官网原文: \"A good undergraduate degree in any discipline.\" 在读或即将毕业者也可申请。",
+      "china_university_list": null,
+      "gpa_requirement": "官网未设具体入学GPA分数线;在读期间需维持GPA≥3.2(满分5.0)方能毕业。",
+      "ielts": {"overall": 7.0, "subscores": null},
+      "toefl": {"overall": null, "subscores": null},
+      "gmat_gre": "可选,非强制。'Though it is not mandatory, a good GMAT or GRE score may enhance your application.' 未公开最低分数线。",
+      "prerequisites": "无背景专业限制;无相关背景者需在读期间补修基础课程(如Corporate Accounting、Corporate Finance、Marketing Strategy等)。",
+      "work_experience": "不要求工作经验。学生通常有0-3年经验;5年以上工作经验者建议考虑NUS MBA。",
+      "interview": "需要面试,仅限入围者。官网原文: \"A strong performance in the interview (conducted for shortlisted candidates only).\""
+    },
+    "deadlines": {
+      "opens_at": "2025-09-01",
+      "rolling": false,
+      "rounds": [
+        {"name": "Round 1 cut-off / 奖学金截止", "deadline": "2025-11-15", "decision_by": null},
+        {"name": "Round 2 cut-off", "deadline": "2026-02-15", "decision_by": null},
+        {"name": "Final deadline (all applicants)", "deadline": "2026-06-30", "decision_by": null}
+      ],
+      "final_deadline": "2026-06-30",
+      "notes": "重要:官网Application Process页面标题写的是'January 2026 intake'的申请日期,但同一页面内容显示'开学时间为January 2027'(Orientation and Commencement of Classes: January 2027),且Programme Fees页面明确标注'January 2027 intake',两页面存在标签不一致(疑为官网未及时更新年份标签)。已按实际开学年份(2027年1月)理解本轮周期。采集日为2026-07-20,该轮申请已于2026-06-30截止,'第三轮'录取通知将于'July/August'(即当前月份前后)陆续发出,录取结果预计不晚于2026年10月公布,故本轮为当前正在进行中(等待放榜)的周期。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "passport", "gmat_gre", "english_test"],
+    "source_urls": [
+      "https://mim.nus.edu.sg/admissions/admission-requirements/",
+      "https://mim.nus.edu.sg/admissions/application-process/",
+      "https://mim.nus.edu.sg/admissions/application-checklist/",
+      "https://mim.nus.edu.sg/fees-finances/programme-fees/",
+      "https://mim.nus.edu.sg/academics/programme-structure-and-curriculum/"
+    ],
+    "confidence": "high",
+    "notes": "官网英语语言要求原文同样是: \"For TOEFL, the internet-based test score must be at least 5.0. For IELTS, the overall band score must be at least 7.0.\" 疑为官网笔误未修正,故toefl.overall留空。无需提交推荐信。项目为1年全日制,可选加读第三学期(实习/顶点项目,4学分),故总时长可延长。提供与CEMS的双学位选项(MSc in Management + CEMS MIM),需额外向CEMS申请。"
+  },
+  {
+    "school_name_en": "National University of Singapore",
+    "school_name_zh": "新加坡国立大学",
+    "school_short": "NUS",
+    "region": "SG",
+    "program_name_en": "MSc in Marketing Analytics and Insights",
+    "program_name_zh": "市场营销分析与洞察硕士",
+    "faculty": "NUS Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "SGD 75,210 single degree (inclusive of 9% GST); double degree with CEMS MIM: SGD 89,380 (August 2026 intake, before GST: SGD 69,000 / 82,000)",
+    "campus": "Mochtar Riady Building, Kent Ridge, Singapore",
+    "requirements": {
+      "undergrad_background": "单学位项目官网原文: \"A good undergraduate degree in any discipline.\" 双学位(+CEMS MIM)项目要求商科或商科相关本科背景。",
+      "china_university_list": null,
+      "gpa_requirement": "官网未设具体入学GPA分数线;在读期间需维持GPA≥3.2(满分5.0)方能毕业。",
+      "ielts": {"overall": 7.0, "subscores": null},
+      "toefl": {"overall": null, "subscores": null},
+      "gmat_gre": "可选,非强制。'Though it is not mandatory, a good GMAT or GRE score may enhance your application... Double degree programme applicants also stand a higher chance of getting their preferred placement in CEMS host schools.' 未公开最低分数线。",
+      "prerequisites": "无特定先修课程要求(单学位);双学位项目额外要求CEMS语言能力(除英语外至少掌握一门其他CEMS语言)。",
+      "work_experience": "不要求工作经验。官网原文: \"We do not require you to have work experience for admission into the programme.\"",
+      "interview": "需要面试,仅限入围者。官网原文: \"A strong performance in the interview (conducted for shortlisted candidates only).\""
+    },
+    "deadlines": {
+      "opens_at": "2025-09-01",
+      "rolling": false,
+      "rounds": [
+        {"name": "Round 1 cut-off / 奖学金截止 (单学位)", "deadline": "2025-11-15", "decision_by": null},
+        {"name": "Final deadline (单学位, all applicants)", "deadline": "2026-02-15", "decision_by": null},
+        {"name": "Final deadline (双学位 + CEMS MIM)", "deadline": "2025-11-15", "decision_by": null}
+      ],
+      "final_deadline": "2026-02-15",
+      "notes": "官网当前展示的是2026年8月入学(August 2026 intake)周期。单学位录取结果'By June 2026',开学'Late July 2026';双学位(+CEMS MIM)录取结果'By May 2026'。采集日为2026-07-20,该批学生即将开学,该周期招生流程已基本走完;2027年8月入学的下一轮申请日期官网尚未公布。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "passport", "gmat_gre", "english_test"],
+    "source_urls": [
+      "https://mscmarketing.nus.edu.sg/admissions/admission-requirements/",
+      "https://mscmarketing.nus.edu.sg/admissions/application-process/",
+      "https://mscmarketing.nus.edu.sg/fees-finances/programme-fees/",
+      "https://mscmarketing.nus.edu.sg/academics/"
+    ],
+    "confidence": "high",
+    "notes": "英语语言要求原文与其他NUS Business School MSc项目一致: \"For TOEFL, the internet-based test score must be at least 5.0. For IELTS, the overall band score must be at least 7.0.\" 疑为官网笔误未修正,故toefl.overall留空。materials清单基于该校MSc系列共用的Application Checklist模板(在Finance/Accounting/Management三个项目页面均已核实为:简历、身份证件、成绩单与学位证书、500字以内Letter of Motivation、财力证明、可选GMAT/GRE、如适用的TOEFL/IELTS,且明确不需要推荐信);因未能单独直接抓取Marketing项目自身的application-checklist页面,此处按同校共用模板推断,建议以官网当前该页面为准核实。项目全日制12-15个月,含1门0学分入学前置课程(Principles of Marketing)。"
+  },
+  {
+    "school_name_en": "National University of Singapore",
+    "school_name_zh": "新加坡国立大学",
+    "school_short": "NUS",
+    "region": "SG",
+    "program_name_en": "Master of Economics (Applied Economics track)",
+    "program_name_zh": "经济学硕士(应用经济学方向)",
+    "faculty": "Faculty of Arts and Social Sciences, Department of Economics",
+    "direction": "economics",
+    "duration_months": 12,
+    "tuition": "SGD 58,350 (inclusive of GST, August 2026 & January 2027 intake, entire programme)",
+    "campus": "Kent Ridge, Singapore",
+    "requirements": {
+      "undergrad_background": "官网原文: 申请人须具备以下之一: (a) NUS二等荣誉学位(Second Class and above)或国际同等学历(如平均成绩B以上的四年制学士学位),专业为经济学或相关领域(金融、会计、数学、统计、物理、工程、运筹学等); (b) 平均成绩B以上但无对应荣誉学位者,须通过由至少3名经济系Master of Economics委员会成员进行的口试形式placement test; (c) 其他资历经研究生院委员会批准。",
+      "china_university_list": null,
+      "gpa_requirement": "要求NUS二等荣誉学位或国际同等学历达到平均成绩B(或相应等级)以上。",
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 85, "subscores": "写作(Writing)单项最低22分;或计算机化考试(computer-based test)最低237分"},
+      "gmat_gre": "官网申请材料清单及录取要求页面均未提及GRE/GMAT要求,推测该项目不需要提交GRE/GMAT成绩。",
+      "prerequisites": "偏好经济学或相关量化背景(金融、会计、数学、统计、物理、工程、运筹学等)。",
+      "work_experience": "官网未列明工作经验要求。",
+      "interview": "仅适用于'无二等荣誉学位但平均成绩B以上'的申请人,须参加由至少3名委员会成员组成的口试形式placement test;拥有合格荣誉学位的申请人无需面试。"
+    },
+    "deadlines": {
+      "opens_at": "2026-07-01",
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": "2027-01-15",
+      "notes": "本项目为本次采集中唯一确认'当前正在开放申请'的周期:Applied Economics方向自AY2026起每年设两次入学(8月与1月),官网原文:'The application period for the August intake is from 1 July of the year preceding the intake year to 15 January of the intake year.' 即2027年8月入学的申请期为2026年7月1日至2027年1月15日,采集日2026-07-20正处于该窗口内。官网同时说明为滚动录取('Offers are made on a rolling basis, and early applications are strongly encouraged'),8月入学放榜时间为当年5月下旬。Quantitative Economics方向每年只有一次8月入学,申请期与Applied Economics的8月批次相同。"
+    },
+    "materials": ["transcript", "degree_certificate", "two_references", "english_test", "passport"],
+    "source_urls": [
+      "https://fass.nus.edu.sg/ecs/master-of-economics/",
+      "https://fass.nus.edu.sg/ecs/admission-requirement/",
+      "https://fass.nus.edu.sg/ecs/me-application-information/",
+      "https://fass.nus.edu.sg/ecs/me-programme-information/",
+      "https://fass.nus.edu.sg/ecs/me-fees-and-payment-2026-and-2027/"
+    ],
+    "confidence": "high",
+    "notes": "该项目下设Applied Economics(职业导向,面向企业/政府经济师及经济顾问)与Quantitative Economics(学术导向,为博士深造做准备)两个方向,申请时须声明意向方向。全日制学制官网原文:约25%学生1年内完成,约50%1.5年内完成,几乎所有学生2年内完成(全日制最长3年,兼读最长4年)。学费SGD 58,350为不分国籍统一收费(不因新加坡籍/PR/国际生而异,但新加坡籍/PR及东盟籍等有学费减免)。材料清单包含'两名学术推荐人的推荐信'(two_references)及英语测试(如适用),未见要求个人陈述、简历或GMAT/GRE。"
+  },
+  {
+    "school_name_en": "National University of Singapore",
+    "school_name_zh": "新加坡国立大学",
+    "school_short": "NUS",
+    "region": "SG",
+    "program_name_en": "MSc in Supply Chain Management",
+    "program_name_zh": "供应链管理硕士",
+    "faculty": "Department of Industrial Systems Engineering and Management (College of Design and Engineering), jointly with The Logistics Institute – Asia Pacific and NUS Business School Department of Analytics & Operations",
+    "direction": "supply_chain",
+    "duration_months": 12,
+    "tuition": "SGD 55,590 (inclusive of 9% GST, AY2026/2027, full programme, 40 units)",
+    "campus": "Kent Ridge, Singapore",
+    "requirements": {
+      "undergrad_background": "官网原文(经AI摘要转述,非逐字截图确认): 要求至少二等二级荣誉学位(second class lower honours),专业为工程、理科、计算机科学、数学、工商管理或相关技术学科;不具备上述背景但有相关工作经验者仍可申请。",
+      "china_university_list": null,
+      "gpa_requirement": "未见明确入学GPA分数线;毕业要求GPA达3.00(以最优6门相关课程计),2.75-3.00之间可能仅获Graduate Diploma。",
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 85, "subscores": null},
+      "gmat_gre": "非强制,可选提交作为补充材料,未公开最低分数线。",
+      "prerequisites": "偏好工程、理科、计算机、数学、工商管理或相关技术学科背景。",
+      "work_experience": "全日制不强制要求;兼读制建议有1-3年相关工作经验;拥有2年以上物流/供应链行业工作经验者在无对口学历背景时仍可能获酌情录取。",
+      "interview": "官网页面中未明确提及是否有面试环节。"
+    },
+    "deadlines": {
+      "opens_at": "2026-07-27",
+      "rolling": false,
+      "rounds": [
+        {"name": "January 2027 intake", "deadline": "2026-08-31", "decision_by": null},
+        {"name": "August 2027 intake (暂定/tentative)", "deadline": "2027-02-28", "decision_by": null}
+      ],
+      "final_deadline": "2026-08-31",
+      "notes": "官网(经AI摘要转述)显示两个入学批次:2027年1月入学申请期为2026年7月27日至2026年8月31日;2027年8月入学申请期为2026年10月1日至2027年2月28日(标注为'tentative'暂定)。采集日为2026-07-20,1月批次申请通道尚未开放(约一周后开放),8月批次更早尚未开放,故本项目截至采集日两个申请窗口均未正式开放。建议以官网cde.nus.edu.sg/isem当前页面为准核实具体开放/截止日期。"
+    },
+    "materials": ["transcript", "degree_certificate", "passport", "english_test", "personal_statement"],
+    "source_urls": [
+      "https://cde.nus.edu.sg/isem/graduate/coursework/masters-of-science-supply-chain-management-programme/",
+      "https://bschool.nus.edu.sg/analytics-operations/masters-degrees/msc-supply-chain-management/",
+      "https://cde.nus.edu.sg/wp-content/uploads/2024/07/CDE_Application_Instruction_Mastersbycoursework_Jan2025_intake.pdf"
+    ],
+    "confidence": "medium",
+    "notes": "本条目部分数据(admission requirements原文、具体申请截止日期、学费明细)通过网页摘要工具获取,未能逐字核对原始页面全文(浏览器访问该域名时多次出现连接问题),故整体confidence标记为medium,建议二次核实cde.nus.edu.sg/isem官网当前页面。materials清单参考College of Design and Engineering通用申请材料说明:身份证件/护照、成绩单、学位证书(或在读证明)、如非英语授课需附TOEFL/IELTS,以及'除非项目另有要求,推荐信、GRE、简历通常不需要'(Unless specified by the programme requirements, referee details/reports/letters, GRE...and CVs/resumes are usually not needed),但另有搜索结果提示可能需要不超过400字的个人陈述(personal_statement),具体是否要求CV/推荐信建议以SCM项目专属申请清单为准。"
+  },
+  {
+    "school_name_en": "National University of Singapore",
+    "school_name_zh": "新加坡国立大学",
+    "school_short": "NUS",
+    "region": "SG",
+    "program_name_en": "MSc in Digital Financial Technology (MSc DFinTech)",
+    "program_name_zh": "数字金融科技硕士",
+    "faculty": "School of Computing (jointly with NUS Business School)",
+    "direction": "other",
+    "duration_months": 18,
+    "tuition": "SGD 74,120 (inclusive of 9% GST, Semester 1 AY2026/2027 / August 2026 intake onwards, up to 52 units)",
+    "campus": "Computing 1, 13 Computing Drive, Kent Ridge, Singapore",
+    "requirements": {
+      "undergrad_background": "官网原文: \"A bachelor's degree in computing; or a bachelor's degree in a related discipline (such as Science, Technology, Engineering and Mathematics (STEM), Finance, Economics, Statistics or Business).\" 非计算机背景学生须提供Python编程能力及/或高阶量化课程学习证明。",
+      "china_university_list": null,
+      "gpa_requirement": "官网未设明确入学GPA分数线,但说明因竞争激烈,GPA达80%以上更具竞争力。",
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 90, "subscores": null},
+      "gmat_gre": "必须提交(与其他NUS商学院MSc项目不同,此项目GRE/GMAT为必需项)。GRE最低要求: Verbal & Quantitative各≥320,Analytical Writing≥3.5;GMAT最低≥650。印度高校毕业生可用GATE成绩替代。成绩有效期5年。",
+      "prerequisites": "非计算机专业背景须具备Python编程能力证明及/或学习过高阶量化课程的证明。",
+      "work_experience": "不强制要求,但具备FinTech/AI/数据分析相关工作或项目经验会加分。",
+      "interview": "官网公开材料中未提及面试环节。"
+    },
+    "deadlines": {
+      "opens_at": "2025-10-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2026-01-31",
+      "notes": "官网当前展示的是2026年8月入学(August 2026 intake)周期:申请开放于2025年10月1日,截止2026年1月31日,录取结果预计2026年5月底前公布。采集日为2026-07-20,该轮申请已截止(该批学生即将或已于2026年8月开学),官网尚未公布2027年8月入学下一轮的申请时间表。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "personal_statement", "two_references", "gmat_gre", "passport", "english_test"],
+    "source_urls": [
+      "https://www.comp.nus.edu.sg/programmes/pg/mdft/",
+      "https://www.comp.nus.edu.sg/programmes/pg/mdft/admissions/",
+      "https://www.comp.nus.edu.sg/programmes/pg/mdft/application/",
+      "https://www.comp.nus.edu.sg/programmes/pg/mdft/scholarships/"
+    ],
+    "confidence": "high",
+    "notes": "此项目与其他NUS Business School MSc项目的显著区别是:GRE/GMAT为必交项而非可选项,且需提交两份推荐人报告(two referee reports)。项目全日制1.5年(3学期,40学分课程+12学分顶点项目capstone),兼读制2.5年,最长学制3年。可选三个方向:Computing Technologies、Financial Data Analytics and Intelligence、Digital Financial Transactions and Risk Management。"
+  },
+  {
+    "school_name_en": "National University of Singapore",
+    "school_name_zh": "新加坡国立大学",
+    "school_short": "NUS",
+    "region": "SG",
+    "program_name_en": "MSc (Smart Industries and Digital Transformation) [formerly MSc (Industry 4.0)]",
+    "program_name_zh": "智能产业与数字化转型硕士(原工业4.0硕士)",
+    "faculty": "NUS School of Continuing and Lifelong Education (SCALE)",
+    "direction": "other",
+    "duration_months": 12,
+    "tuition": "SGD 58,860 (inclusive of 9% GST, before GST: SGD 54,000, for 40 units)",
+    "campus": "Kent Ridge, Singapore (NUS SCALE)",
+    "requirements": {
+      "undergrad_background": "官网原文(经AI摘要转述): \"Bachelor's Degree (preferably with Honours) in Science, Engineering, Computing, Analytics or equivalent disciplines\"。另设通过Graduate Certificate课程衔接入学的路径。",
+      "china_university_list": null,
+      "gpa_requirement": "标准申请者未列明具体入学GPA门槛;通过近5年内完成的Graduate Certificate课程路径申请者要求GPA≥3.5。",
+      "ielts": {"overall": 6.0, "subscores": null},
+      "toefl": {"overall": 85, "subscores": null},
+      "gmat_gre": "非强制,可选提交,'Applicants are welcome to submit additional test reports that they may have'。",
+      "prerequisites": "要求编程知识,不具备编程能力的申请人可能需按个案要求完成编程课程以证明能力。",
+      "work_experience": "官网未列为强制要求。",
+      "interview": "官网公开材料中未提及面试环节。"
+    },
+    "deadlines": {
+      "opens_at": "2026-11-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-01-31",
+      "notes": "该项目原名'Master of Science (Industry 4.0)',官网现已更名为'MSc (Smart Industries and Digital Transformation)'并注明'formerly Master of Science (Industry 4.0)'。下一届(2027年8月入学)申请期为2026年11月1日至2027年1月31日。采集日为2026-07-20,该申请窗口尚未开放(约3个多月后才开放),故本项目截至采集日暂无开放中的申请通道。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test"],
+    "source_urls": [
+      "https://scale.nus.edu.sg/programmes/graduate/msc-in-industry-4.0",
+      "https://scale.nus.edu.sg/programmes/graduate/msc-(smart-industries-and-digital-transformation)"
+    ],
+    "confidence": "medium",
+    "notes": "本条目数据主要通过网页摘要工具获取(浏览器直接访问scale.nus.edu.sg域名时多次连接失败/超时),未能逐字核对原始页面全文,故confidence标记为medium。官网未提供该项目完整的申请材料清单(如是否需要简历、个人陈述、推荐信等),此处materials仅列出可确认项(成绩单、学位证书、英语成绩),建议以官网当前申请系统内该项目专属清单为准。全日制学制12-24个月,兼读制24-36个月。"
+  }
+]

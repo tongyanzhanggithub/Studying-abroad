@@ -1,0 +1,1073 @@
+[
+  {
+    "school_name_en": "University of Amsterdam",
+    "school_name_zh": "阿姆斯特丹大学",
+    "school_short": "UvA",
+    "region": "NL",
+    "program_name_en": "MSc Business Administration",
+    "program_name_zh": "工商管理硕士",
+    "faculty": "Amsterdam Business School",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "EUR 24,050 per year (non-EEA institutional fee, Amsterdam Business School, academic year 2026/2027)",
+    "campus": "Amsterdam",
+    "requirements": {
+      "undergrad_background": "Academic bachelor's relevant to the chosen track; nine tracks offered: Consumer Marketing, Digital Marketing, Entrepreneurship and Innovation, Entrepreneurship and Management in the Creative Industries, International Business, Leadership and Management, Management of International Business and Trade, Strategy, Strategy and AI Transformation",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-10-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未公布2027年9月入学的具体截止日期；申请通道于2026年10月开放。参考上一周期(2026/27入学)规律：普通截止日约为6月1日，需要新签证/居留许可的申请者截止日约为4月1日。具体IELTS/TOEFL/GMAT分数未在此项目页面单独列出（Finance与Accountancy and Control项目页面有列出，见对应条目），故此处留空，confidence降为medium。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "motivation_letter", "reference", "english_test"],
+    "source_urls": [
+      "https://www.uva.nl/en/programmes/masters/business-administration/business-administration.html",
+      "https://www.uva.nl/en/education/fees-and-funding/tuition-fees/tuition-fees.html",
+      "https://www.uva.nl/en/programmes/masters/business-administration/application-and-admission/application-and-admission.html"
+    ],
+    "confidence": "medium",
+    "notes": "学费为Amsterdam Business School非欧盟/欧洲经济区学生2026/2027学年机构学费，Business Administration/Finance/Accountancy and Control三个项目共用同一学院学费标准。2027年9月入学截止日期官网尚未公布（申请系统2026年10月开放）。"
+  },
+  {
+    "school_name_en": "University of Amsterdam",
+    "school_name_zh": "阿姆斯特丹大学",
+    "school_short": "UvA",
+    "region": "NL",
+    "program_name_en": "MSc Finance",
+    "program_name_zh": "金融学硕士",
+    "faculty": "Amsterdam Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "EUR 24,050 per year (non-EEA institutional fee, Amsterdam Business School, academic year 2026/2027)",
+    "campus": "Amsterdam",
+    "requirements": {
+      "undergrad_background": "Academic Bachelor's or Master's in Finance, Business Economics, Economics, or Business Administration with a Finance specialisation; at least 15 ECTS of Finance coursework including intermediate-level Investments and Corporate Finance, and an intermediate-level Econometrics course covering multivariate linear regression",
+      "china_university_list": null,
+      "gpa_requirement": "Minimum 7.0 average (10-point scale) in Finance-related core courses and Econometrics",
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 per subscore"},
+      "toefl": {"overall": 92, "subscores": "minimum 22 per subscore"},
+      "gmat_gre": "Required. GMAT Focus Edition minimum 585 (preferably 595); GMAT old edition minimum 620 (preferably 640); GRE Quantitative Reasoning minimum 155 (preferably 158)",
+      "prerequisites": "Coursework in derivatives/risk management; course descriptions must be uploaded",
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-10-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "2026-2027学年（即2026年9月入学）申请已截止（无法再申请），2027年9月入学申请预计2026年10月开放，具体截止日尚未公布。上一周期(2026/27入学)截止日为2026年6月1日，需要新签证/居留许可者为2026年4月1日，可作为参考。"
+    },
+    "materials": ["transcript", "cv", "motivation_letter", "reference", "english_test", "gmat_gre", "course_descriptions"],
+    "source_urls": [
+      "https://abs.uva.nl/content/masters/finance/finance.html",
+      "https://abs.uva.nl/content/masters/finance/application-and-admission/students-with-international-prior-education/international-applicants.html",
+      "https://www.uva.nl/en/education/fees-and-funding/tuition-fees/tuition-fees.html"
+    ],
+    "confidence": "high",
+    "notes": "对内地申请者重要：无中国院校分档表述。GMAT/GRE为必需项而非仅推荐。动机信不超过一页A4，需要一封推荐信。"
+  },
+  {
+    "school_name_en": "University of Amsterdam",
+    "school_name_zh": "阿姆斯特丹大学",
+    "school_short": "UvA",
+    "region": "NL",
+    "program_name_en": "MSc Accountancy and Control",
+    "program_name_zh": "会计与控制硕士",
+    "faculty": "Amsterdam Business School",
+    "direction": "accounting",
+    "duration_months": 12,
+    "tuition": "EUR 24,050 per year (non-EEA institutional fee, Amsterdam Business School, academic year 2026/2027)",
+    "campus": "Amsterdam",
+    "requirements": {
+      "undergrad_background": "Academic Bachelor's/Master's in Business Economics, Economics, or Business Administration; two specialisations: Accountancy/Control (requires intermediate Management Accounting, intermediate Financial Accounting, introductory Finance, quantitative research methods) or Financial Management (introductory-level equivalents)",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 per subscore"},
+      "toefl": {"overall": 92, "subscores": "minimum 22 per subscore"},
+      "gmat_gre": "Required. GMAT Focus Edition minimum 535 (preferably 565); GMAT old edition minimum 560 (preferably 600); GRE Quantitative Reasoning minimum 152 (preferably 155). Exemptions possible for graduates of partner universities.",
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-10-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "2027年9月入学截止日期未公布。上一周期(2026/27入学)截止日为2026年6月1日，需要新签证/居留许可者为2026年4月1日。"
+    },
+    "materials": ["transcript", "cv", "motivation_letter", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://abs.uva.nl/content/masters/accountancy-and-control/accountancy-and-control.html",
+      "https://abs.uva.nl/content/masters/accountancy-and-control/application-and-admission/students-with-international-prior-education/international-applicants.html"
+    ],
+    "confidence": "high",
+    "notes": "如未达到入学要求可申请pre-Master's桥梁项目。无中国院校分档表述。"
+  },
+  {
+    "school_name_en": "Erasmus University Rotterdam",
+    "school_name_zh": "鹿特丹伊拉斯姆斯大学",
+    "school_short": "RSM",
+    "region": "NL",
+    "program_name_en": "MSc Finance & Investments",
+    "program_name_zh": "金融与投资硕士",
+    "faculty": "Rotterdam School of Management",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "EUR 25,800 (non-EEA, per year/total for 12-month programme, academic year 2026/2027)",
+    "campus": "Rotterdam",
+    "requirements": {
+      "undergrad_background": "Bachelor's in Finance/Economics/Business or quantitative field; three tracks: Asset Management, Financial Management, Financial Innovation",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 7.0, "subscores": "minimum 6.5 per subscore"},
+      "toefl": null,
+      "gmat_gre": "GMAT typically around 650 total for competitive applicants (general RSM MSc guidance); GRE accepted as alternative to GMAT",
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-10-05",
+      "rolling": false,
+      "rounds": [
+        {"name": "scholarship priority deadline (mainly non-EEA)", "deadline": "2027-03-01", "decision_by": null},
+        {"name": "non-EEA recommended deadline (visa processing)", "deadline": "2027-04-01", "decision_by": null}
+      ],
+      "final_deadline": "2027-05-15",
+      "notes": "此为capped/限额项目，2026-27周期于2025年10月满额截止，实际截止可能早于5月15日。2027年9月入学的具体招生要求预计2026年10月1日更新公布，此处日期为按历年规律推算，需在2026年10月后于官网复核。"
+    },
+    "materials": ["transcript", "cv", "motivation_letter", "reference", "english_test", "gmat_gre", "passport"],
+    "source_urls": [
+      "https://www.rsm.nl/education/master/msc-programmes/msc-finance-investments/",
+      "https://www.rsm.nl/education/deadlines/",
+      "https://admissions-support.rsm.nl/support/solutions/articles/80000889328-what-are-the-application-deadlines-for-the-msc-programmes-offered-by-rsm-"
+    ],
+    "confidence": "medium",
+    "notes": "RSM官网明确说明2027年9月入学的招生要求将于2026年10月1日前更新完毕，当前页面展示的是即将更新/上一周期的信息，故confidence设为medium。历年该项目因申请人数达上限（约595份）常早于5月15日截止。"
+  },
+  {
+    "school_name_en": "Erasmus University Rotterdam",
+    "school_name_zh": "鹿特丹伊拉斯姆斯大学",
+    "school_short": "RSM",
+    "region": "NL",
+    "program_name_en": "MSc Marketing Management",
+    "program_name_zh": "市场营销管理硕士",
+    "faculty": "Rotterdam School of Management",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "EUR 25,800 (non-EEA, per year/total for 12-month programme, academic year 2026/2027)",
+    "campus": "Rotterdam",
+    "requirements": {
+      "undergrad_background": "Bachelor's in Business/Marketing/related field; two elective tracks: Brand & Product Management, Digital Marketing & Analytics; individual study plan option also available",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 7.0, "subscores": "minimum 6.5 per subscore"},
+      "toefl": null,
+      "gmat_gre": "General RSM MSc guidance suggests GMAT around 650 total for competitive applicants; GRE accepted as alternative",
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-10-01",
+      "rolling": false,
+      "rounds": [
+        {"name": "non-EEA recommended deadline (visa processing)", "deadline": "2027-04-01", "decision_by": null}
+      ],
+      "final_deadline": "2027-05-15",
+      "notes": "该项目为capped项目，达到申请上限即提前截止（历史上常在5月15日前满额）。2027年9月入学的具体招生要求预计2026年10月1日更新，此处日期为按历年规律推算。"
+    },
+    "materials": ["transcript", "cv", "motivation_letter", "reference", "english_test", "gmat_gre", "passport"],
+    "source_urls": [
+      "https://www.rsm.nl/education/master/msc-programmes/msc-marketing-management/",
+      "https://www.rsm.nl/education/deadlines/"
+    ],
+    "confidence": "medium",
+    "notes": "官网声明招生要求页面\"目前正在更新，将于2026年10月1日前定稿\"，故confidence设为medium。"
+  },
+  {
+    "school_name_en": "Erasmus University Rotterdam",
+    "school_name_zh": "鹿特丹伊拉斯姆斯大学",
+    "school_short": "RSM",
+    "region": "NL",
+    "program_name_en": "MScBA Business Analytics & Management",
+    "program_name_zh": "商业分析与管理硕士",
+    "faculty": "Rotterdam School of Management",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "EUR 25,800 (non-EEA, per year/total for 12-month programme, academic year 2026/2027)",
+    "campus": "Rotterdam",
+    "requirements": {
+      "undergrad_background": "Bachelor's with quantitative/business background; focuses on decision-driven analytics methods",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 7.0, "subscores": "minimum 6.5 per subscore"},
+      "toefl": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-10-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-05-15",
+      "notes": "该项目为capped项目（名额约270），2025-26周期已于2025年10月即满额关闭申请通道，实际截止可能远早于5月15日，务必尽早申请。2027年9月入学要求预计2026年10月更新。"
+    },
+    "materials": ["transcript", "cv", "motivation_letter", "english_test", "passport"],
+    "source_urls": [
+      "https://www.rsm.nl/education/master/msc-programmes/mscba-business-analytics-management/",
+      "https://www.rsm.nl/education/deadlines/"
+    ],
+    "confidence": "medium",
+    "notes": "GMAT具体要求官网页面未明确列出（不同于Finance & Investments等项目），可先申请后补交英语/GMAT成绩（截止1月31日），confidence设为medium因2027周期要求未定稿。"
+  },
+  {
+    "school_name_en": "Tilburg University",
+    "school_name_zh": "蒂尔堡大学",
+    "school_short": "Tilburg",
+    "region": "NL",
+    "program_name_en": "MSc Finance",
+    "program_name_zh": "金融学硕士",
+    "faculty": "Tilburg School of Economics and Management (TiSEM)",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "EUR 19,900 (approx., non-EU/EEA institutional fee, TiSEM general rate, academic year 2026/2027)",
+    "campus": "Tilburg",
+    "requirements": {
+      "undergrad_background": "Solid academic training in Finance, Corporate Finance, Investments; CFA Institute Affiliated University partner programme",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 on Writing and Speaking"},
+      "toefl": null,
+      "gmat_gre": "GMAT Focus Edition minimum 525 (some sources indicate 550+ expected); GRE accepted via conversion; not obligatory before application, approximate test date can be indicated",
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-10-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-04-01",
+      "notes": "非欧盟/欧洲经济区学生截止日为4月1日（欧盟学生为6月1日）；对应2027年9月末入学。学校官网因反爬限制未能直接抓取具体页面文字，数据来自可靠检索结果交叉验证。"
+    },
+    "materials": ["transcript", "cv", "motivation_letter", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://www.tilburguniversity.edu/education/masters-programs/finance",
+      "https://www.tilburguniversity.edu/students/administration/tuition-fees"
+    ],
+    "confidence": "medium",
+    "notes": "官网对该校直接抓取被拒绝(403)，学费与部分细节来自搜索引擎对官网内容的摘要，建议申请前直接核实tilburguniversity.edu原页面。GMAT院校代码VMV-LT-02。"
+  },
+  {
+    "school_name_en": "Tilburg University",
+    "school_name_zh": "蒂尔堡大学",
+    "school_short": "Tilburg",
+    "region": "NL",
+    "program_name_en": "MSc Marketing Management",
+    "program_name_zh": "市场营销管理硕士",
+    "faculty": "Tilburg School of Economics and Management (TiSEM)",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "EUR 19,900 (approx., non-EU/EEA institutional fee, TiSEM general rate, academic year 2026/2027)",
+    "campus": "Tilburg",
+    "requirements": {
+      "undergrad_background": "Solid academic training in Business Research and Statistics; good knowledge of Marketing, Consumer Behavior, Management and Business Economics",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 on Writing and Speaking"},
+      "toefl": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-10-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-04-01",
+      "notes": "非欧盟学生截止日推算为4月1日（欧盟学生6月1日），对应2027年9月入学；官网未能直接抓取核实具体2027周期日期。"
+    },
+    "materials": ["transcript", "cv", "motivation_letter", "english_test"],
+    "source_urls": [
+      "https://www.tilburguniversity.edu/education/masters-programs/marketing-management",
+      "https://www.tilburguniversity.edu/students/administration/tuition-fees"
+    ],
+    "confidence": "medium",
+    "notes": "GMAT/GRE要求未在检索中明确列出；HBO背景学生需先完成pre-master桥梁项目。"
+  },
+  {
+    "school_name_en": "Tilburg University",
+    "school_name_zh": "蒂尔堡大学",
+    "school_short": "Tilburg",
+    "region": "NL",
+    "program_name_en": "MSc Supply Chain Management",
+    "program_name_zh": "供应链管理硕士",
+    "faculty": "Tilburg School of Economics and Management (TiSEM)",
+    "direction": "supply_chain",
+    "duration_months": 12,
+    "tuition": "EUR 15,100-18,900 (non-EU, sources vary; official per-programme figure not directly confirmed, academic year 2026/2027)",
+    "campus": "Tilburg",
+    "requirements": {
+      "undergrad_background": null,
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 on Writing and Speaking; online IELTS not accepted"},
+      "toefl": null,
+      "gmat_gre": "GMAT Focus Edition minimum 525 required (compulsory to submit a score); some sources cite 550+ as expected/competitive",
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-10-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-04-01",
+      "notes": "非欧盟学生截止日推算为4月1日，对应2027年9月入学；具体2027周期日期未能直接从官网核实。"
+    },
+    "materials": ["transcript", "cv", "motivation_letter", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://www.tilburguniversity.edu/education/masters-programs/supply-chain-management",
+      "https://www.tilburguniversity.edu/education/masters-programs/supply-chain-management/application"
+    ],
+    "confidence": "medium",
+    "notes": "学费数字在不同信息源间存在差异（EUR 15,100 vs 18,900），未能通过官网直接核实精确金额，故confidence为medium，建议以官网tuition-fees页面实际公布数字为准。"
+  },
+  {
+    "school_name_en": "Tilburg University",
+    "school_name_zh": "蒂尔堡大学",
+    "school_short": "Tilburg",
+    "region": "NL",
+    "program_name_en": "MSc International Management",
+    "program_name_zh": "国际管理硕士",
+    "faculty": "Tilburg School of Economics and Management (TiSEM)",
+    "direction": "international_business",
+    "duration_months": 12,
+    "tuition": "EUR 19,900 (approx., non-EU/EEA institutional fee, TiSEM general rate, academic year 2026/2027)",
+    "campus": "Tilburg",
+    "requirements": {
+      "undergrad_background": "EU/EEA statutory fee EUR 2,694/year applies to EU students; higher institutional fee applies to non-EU students",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 6.5, "subscores": "minimum 6.0 on Writing and Speaking; IELTS Online not accepted"},
+      "toefl": null,
+      "gmat_gre": "GMAT Focus Edition minimum 525; GRE accepted via conversion tool; not obligatory before application. Exemption possible for graduates of official TiSEM partner universities.",
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-10-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-04-01",
+      "notes": "非欧盟学生截止日推算为4月1日，对应2027年9月入学；具体日期未能直接从官网核实。"
+    },
+    "materials": ["transcript", "cv", "motivation_letter", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://www.tilburguniversity.edu/education/masters-programs/international-management",
+      "https://www.tilburguniversity.edu/education/masters-programs/international-management/application"
+    ],
+    "confidence": "medium",
+    "notes": "官网直接抓取被拒绝(403)，数据来自检索引擎对官网内容的摘要交叉验证。"
+  },
+  {
+    "school_name_en": "Delft University of Technology",
+    "school_name_zh": "代尔夫特理工大学",
+    "school_short": "TU Delft",
+    "region": "NL",
+    "program_name_en": "MSc Management of Technology",
+    "program_name_zh": "技术管理硕士",
+    "faculty": "Technology, Policy and Management (TPM)",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "EUR 25,633 (non-EU/EFTA institutional fee, per year, academic year 2026/2027)",
+    "campus": "Delft",
+    "requirements": {
+      "undergrad_background": "Only applicants with a monodisciplinary BSc degree in engineering, technology or natural sciences are admissible",
+      "china_university_list": null,
+      "gpa_requirement": "Minimum Bachelor's CGPA of 75% of the scale maximum (country-specific exceptions may apply)",
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "Not required",
+      "prerequisites": "Monodisciplinary BSc in engineering/technology/natural sciences; two proposed thesis project ideas required in motivation essay",
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-10-15",
+      "rolling": false,
+      "rounds": [
+        {"name": "non-EU/EFTA deadline", "deadline": "2027-01-15", "decision_by": null},
+        {"name": "EU/EFTA deadline", "deadline": "2027-04-01", "decision_by": null}
+      ],
+      "final_deadline": "2027-01-15",
+      "notes": "非欧盟/EFTA学生截止日为1月15日(23:59 CEST)，明显早于欧盟学生的4月1日截止日。该项目对非欧盟/EFTA学生有名额限制(numerus fixus)。以上日期对应2026年10月开放申请、2027年9月入学周期。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "motivation_letter", "english_test", "passport"],
+    "source_urls": [
+      "https://www.tudelft.nl/en/education/programmes/masters/mot/mot/application-and-admission",
+      "https://www.tudelft.nl/en/education/programmes/masters/mot/mot/application-and-admission/non-dutch-bsc-degree"
+    ],
+    "confidence": "high",
+    "notes": "非常重要：仅限工程/技术/自然科学背景本科生申请，纯商科/经管背景本科生不可申请。对非欧盟/EFTA学生设有名额上限(numerus fixus)。IELTS/TOEFL具体分数官网页面未直接列出，需查看English Language Proficiency专页。"
+  },
+  {
+    "school_name_en": "Delft University of Technology",
+    "school_name_zh": "代尔夫特理工大学",
+    "school_short": "TU Delft",
+    "region": "NL",
+    "program_name_en": "MSc Complex Systems Engineering and Management",
+    "program_name_zh": "复杂系统工程与管理硕士",
+    "faculty": "Technology, Policy and Management (TPM)",
+    "direction": "management",
+    "duration_months": 24,
+    "tuition": "EUR 17,310-22,290 (non-EU/EFTA institutional fee estimate, per year, academic year 2025/2026 figures found; 2026/27 likely similar with annual increase)",
+    "campus": "Delft",
+    "requirements": {
+      "undergrad_background": "Engineering/technology/quantitative BSc background typically expected (TPM faculty standard)",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [
+        {"name": "non-EU/international degree deadline", "deadline": "2027-04-01", "decision_by": null}
+      ],
+      "final_deadline": "2027-04-01",
+      "notes": "检索到的截止日为国际学位申请者4月1日、荷兰学位申请者5月1日，具体是否为非欧盟专属截止日未完全确认，需赴官网核实。也存在针对TPM学院优秀国际学生的奖学金项目，往年截止日约为2月1日。"
+    },
+    "materials": ["transcript", "cv", "motivation_letter", "english_test"],
+    "source_urls": [
+      "https://www.tudelft.nl/en/education/programmes/masters/cosem/msc-complex-systems-engineering-and-management",
+      "https://www.tudelft.nl/en/education/programmes/masters/cosem/msc-complex-systems-engineering-and-management/application-and-admission"
+    ],
+    "confidence": "medium",
+    "notes": "该项目为2年制(120 ECTS)，融合工程、政策分析与管理视角，非传统商科项目，适合有工程/理工背景想转管理方向的申请者。学费与截止日细节未能完全通过官网原始页面核实，来自检索结果交叉验证，confidence为medium。"
+  },
+  {
+    "school_name_en": "Technical University of Munich",
+    "school_name_zh": "慕尼黑工业大学",
+    "school_short": "TUM",
+    "region": "DE",
+    "program_name_en": "Master in Management",
+    "program_name_zh": "管理学硕士",
+    "faculty": "TUM School of Management",
+    "direction": "management",
+    "duration_months": 24,
+    "tuition": "EUR 4,000 per semester (non-EU/third-country students; total approx. EUR 16,000 over 4 semesters), academic year 2026/2027",
+    "campus": "Munich",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree in Mechanical Engineering, Electrical Engineering, Civil Engineering, Computer Science, Mathematics, Biology, Physics, Chemistry or related STEM fields ONLY. Industrial Engineering graduates are explicitly ineligible. Not open to general business/economics bachelor's holders.",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "GMAT (classic or Focus Edition) required specifically for applicants with a bachelor's degree from China, India, Pakistan, Egypt, or Bangladesh, minimum 65th percentile ranking. Optional (bonus points) for other countries.",
+      "prerequisites": "Aptitude assessment procedure (two-part evaluation)",
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "Up to 100% English (German knowledge increases course choice)"
+    },
+    "deadlines": {
+      "opens_at": "2027-02-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-05-31",
+      "notes": "冬季学期(Winter Semester)入学申请期为4月1日至5月31日；上述开放日期为按往年模式推算的下一周期。TUM分夏季/冬季学期，此项目通常仅冬季学期入学。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test", "gmat_gre", "aps_certificate"],
+    "source_urls": [
+      "https://www.tum.de/en/studies/degree-programs/detail/management-main-location-munich-master-of-science-msc",
+      "https://www.mgt.tum.de/programs/master-in-management/munich"
+    ],
+    "confidence": "high",
+    "notes": "对中国申请者极重要：(1) 中国大陆申请者必须提交GMAT成绩(65百分位以上)，其他国家可选；(2) 本项目专门面向理工科背景本科生，商科/经济学本科毕业生不符合申请资格（如需管理方向可考虑TUM Consumer Science或Finance & Information Management等项目）；(3) 中国学生通常还需要APS审核证书（德国使馆文化处学历审核）。"
+  },
+  {
+    "school_name_en": "Technical University of Munich",
+    "school_name_zh": "慕尼黑工业大学",
+    "school_short": "TUM",
+    "region": "DE",
+    "program_name_en": "Master in Finance & Information Management",
+    "program_name_zh": "金融与信息管理硕士",
+    "faculty": "TUM School of Management (jointly with University of Augsburg)",
+    "direction": "finance",
+    "duration_months": 24,
+    "tuition": "EUR 6,000 per semester (non-EU students; total approx. EUR 24,000 over 4 semesters), academic year 2026/2027",
+    "campus": "Munich",
+    "requirements": {
+      "undergrad_background": "Bachelor's (min. 6 semesters, min. 140 ECTS) in Information Systems, Industrial Engineering, Mathematics, Economics, Statistics or related fields; at least 5 ECTS in scientific writing",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "GMAT required specifically for applicants with a bachelor's degree from China, India, Pakistan, Egypt, or Bangladesh, minimum 65th percentile ranking",
+      "prerequisites": "At least 12 ECTS of English-taught coursework or fully English-taught degree accepted as English proficiency proof",
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "100% English"
+    },
+    "deadlines": {
+      "opens_at": "2027-01-01",
+      "rolling": false,
+      "rounds": [
+        {"name": "first application period", "deadline": "2027-03-15", "decision_by": null},
+        {"name": "second application period", "deadline": "2027-05-31", "decision_by": null}
+      ],
+      "final_deadline": "2027-05-31",
+      "notes": "两个申请批次：1月1日-3月15日为第一批，3月16日-5月31日为第二批，建议尽早提交。以上为按招生周期规律推算的2027年入学（对应2026/27学年官网信息）。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://www.mgt.tum.de/programs/master-in-finance-information-management",
+      "https://www.mgt.tum.de/programs/master-in-finance-information-management/how-to-apply"
+    ],
+    "confidence": "high",
+    "notes": "中国大陆申请者需GMAT成绩(65百分位以上)。入学后第二学期结束前需具备德语A1水平证明。"
+  },
+  {
+    "school_name_en": "Technical University of Munich",
+    "school_name_zh": "慕尼黑工业大学",
+    "school_short": "TUM",
+    "region": "DE",
+    "program_name_en": "Master in Consumer Science",
+    "program_name_zh": "消费者科学硕士",
+    "faculty": "TUM School of Management",
+    "direction": "marketing",
+    "duration_months": 24,
+    "tuition": "EUR 6,000 per semester (non-EU students; total approx. EUR 24,000 over 4 semesters), academic year 2026/2027",
+    "campus": "Munich",
+    "requirements": {
+      "undergrad_background": "Bachelor's in Business Administration/Economics/Social Sciences or comparable, including at least 15 ECTS in Empirical Research Methods/Statistics/Mathematics",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "GMAT required specifically for applicants with a bachelor's degree from China, India, Pakistan, Egypt, or Bangladesh, minimum 65th percentile ranking",
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "Up to 100% English"
+    },
+    "deadlines": {
+      "opens_at": "2027-04-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-05-31",
+      "notes": "冬季学期入学申请期为4月1日至5月31日（按往年周期推算的2027年入学）。"
+    },
+    "materials": ["transcript", "degree_certificate", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://www.mgt.tum.de/programs/master-in-consumer-science"
+    ],
+    "confidence": "high",
+    "notes": "该项目对商科/经济学/社科背景本科生开放（与TUM其他要求理工背景的项目不同），适合希望在德国读营销/消费者行为方向的商科生。中国大陆申请者需GMAT成绩。"
+  },
+  {
+    "school_name_en": "University of Mannheim",
+    "school_name_zh": "曼海姆大学",
+    "school_short": "Mannheim",
+    "region": "DE",
+    "program_name_en": "Mannheim Master in Management (MMM)",
+    "program_name_zh": "曼海姆管理学硕士",
+    "faculty": "Mannheim Business School / University of Mannheim Business School",
+    "direction": "management",
+    "duration_months": 24,
+    "tuition": "EUR 1,500 per semester (estimated, non-EU/EEA students, consistent with other Mannheim Business School master programmes; official figure not directly confirmed on MMM page itself), academic year 2026/2027",
+    "campus": "Mannheim",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree with minimum 180 ECTS or 3 years of study, plus at least 36 ECTS in business administration coursework",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "Not mandatory but strengthens application. GMAT (10th edition) minimum 600 for ranking points, or GMAT Focus Edition minimum 555; GRE equivalent accepted via conversion",
+      "prerequisites": "Additional points for economics/mathematics/statistics background, study abroad experience, professional experience",
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "Approximately 85% English (German-English track, 80% of places) or fully English-only track (20% of places); C1-level English required for all applicants"
+    },
+    "deadlines": {
+      "opens_at": "2027-04-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-05-15",
+      "notes": "申请期为2027年4月1日至5月15日，对应2027/2028学年秋季入学（Fall Semester）。"
+    },
+    "materials": ["transcript", "cv", "motivation_letter", "english_test"],
+    "source_urls": [
+      "https://www.bwl.uni-mannheim.de/en/programs/master/mmm/application-information/"
+    ],
+    "confidence": "medium",
+    "notes": "学费按曼海姆商学院其他硕士项目(MMFACT/MMOSCM均为非欧盟1,500欧元/学期)推算，MMM页面本身未直接列出具体学费数字，故confidence为medium。选拔采用打分制：本科成绩(最高60分)+标化考试(最高60分)+海外经历(22分)+经济/数学/统计背景(32分)+实习工作经验(6分)。"
+  },
+  {
+    "school_name_en": "University of Mannheim",
+    "school_name_zh": "曼海姆大学",
+    "school_short": "Mannheim",
+    "region": "DE",
+    "program_name_en": "Mannheim Master in Finance, Accounting & Taxation (MMFACT)",
+    "program_name_zh": "曼海姆金融、会计与税务硕士",
+    "faculty": "Mannheim Business School",
+    "direction": "finance",
+    "duration_months": 24,
+    "tuition": "EUR 1,500 per semester (non-EU/international students; second-degree students EUR 650/semester), academic year 2026/2027",
+    "campus": "Mannheim",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree with min. 180 ECTS or 3 years of study, plus at least 36 ECTS in core business administration courses",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "GMAT or GRE considered in selection (not stated as strictly mandatory but factored into scoring)",
+      "prerequisites": "At least 30 ECTS in Economics, Mathematics, or Statistics, of which at least 12 ECTS in Economics, favoured in selection",
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "100% English"
+    },
+    "deadlines": {
+      "opens_at": "2027-04-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-05-15",
+      "notes": "申请期为2027年4月1日至5月15日，对应秋季学期入学。"
+    },
+    "materials": ["transcript", "cv", "english_test"],
+    "source_urls": [
+      "https://www.bwl.uni-mannheim.de/en/programs/master/mmfact/"
+    ],
+    "confidence": "high",
+    "notes": "可在公司财务、会计、可持续与透明度、国际税务策略、数据分析与计量经济学等方向中选修专项。C1级别英语能力要求。"
+  },
+  {
+    "school_name_en": "University of Mannheim",
+    "school_name_zh": "曼海姆大学",
+    "school_short": "Mannheim",
+    "region": "DE",
+    "program_name_en": "Mannheim Master in Operations and Supply Chain Management (MMOSCM)",
+    "program_name_zh": "曼海姆运营与供应链管理硕士",
+    "faculty": "Mannheim Business School",
+    "direction": "supply_chain",
+    "duration_months": 24,
+    "tuition": "EUR 1,500 per semester (non-EU/international students), academic year 2026/2027",
+    "campus": "Mannheim",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree with min. 180 ECTS or 3 years of study, plus at least 36 ECTS in core business administration courses",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "Required for selection (GMAT or GRE); considered alongside GPA, academic background, international experience, work experience",
+      "prerequisites": "At least 30 ECTS in Economics, Mathematics, or Statistics favoured in selection",
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "100% English"
+    },
+    "deadlines": {
+      "opens_at": "2027-04-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2027-05-15",
+      "notes": "申请期为2027年4月1日至5月15日，对应秋季学期入学。"
+    },
+    "materials": ["transcript", "cv", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://www.bwl.uni-mannheim.de/en/programs/master/mmoscm/"
+    ],
+    "confidence": "high",
+    "notes": "C1级别英语能力要求；IELTS/TOEFL具体分数官网页面未列出确切数值。"
+  },
+  {
+    "school_name_en": "Frankfurt School of Finance & Management",
+    "school_name_zh": "法兰克福金融管理学院",
+    "school_short": "Frankfurt School",
+    "region": "DE",
+    "program_name_en": "Master in Management",
+    "program_name_zh": "管理学硕士",
+    "faculty": "Frankfurt School of Finance & Management",
+    "direction": "management",
+    "duration_months": 24,
+    "tuition": "EUR 35,500 total programme cost, plus EUR 400 enrolment fee and EUR 100 application fee (private institution; early-bird discounts of up to EUR 4,000 available for early applicants)",
+    "campus": "Frankfurt am Main",
+    "requirements": {
+      "undergrad_background": "First academic degree (Bachelor's) of at least 180 ECTS credits; open to graduates of economics, social sciences, or other disciplines",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 7.0, "subscores": null},
+      "toefl": {"overall": 90, "subscores": null},
+      "gmat_gre": "Valid GMAT/GRE score OR Frankfurt School's own Admission Test (BT Methods, can only be taken once)",
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": "Successful admissions interview required",
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [
+        {"name": "early bird discount 1", "deadline": "2025-11-30", "decision_by": null},
+        {"name": "early bird discount 2", "deadline": "2026-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2026-06-30",
+      "notes": "官网当前显示的入学批次为2026年8月24日开学、申请截止2026年6月30日——该批次截止日期在数据采集时(2026年7月20日)已过期，说明官网页面尚未更新至下一入学周期，下一次(可能是2027年)开学时间与截止日期需直接向学校确认。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://www.frankfurt-school.de/en/study/master/master-in-management",
+      "https://www.frankfurt-school.de/en/home/programmes/master/pre-experience"
+    ],
+    "confidence": "medium",
+    "notes": "私立商学院，学费远高于德国公立大学。官网所示申请周期(截止2026年6月30日、开学2026年8月24日)在采集时已过期，未找到2027年入学的更新日期，confidence降为medium，建议直接联系学校确认下一开学批次。"
+  },
+  {
+    "school_name_en": "Frankfurt School of Finance & Management",
+    "school_name_zh": "法兰克福金融管理学院",
+    "school_short": "Frankfurt School",
+    "region": "DE",
+    "program_name_en": "Master of Finance",
+    "program_name_zh": "金融学硕士",
+    "faculty": "Frankfurt School of Finance & Management",
+    "direction": "finance",
+    "duration_months": 24,
+    "tuition": "EUR 42,000 total programme cost, plus EUR 400 enrolment fee and EUR 100 application fee (early-bird discounts of up to EUR 4,000 available)",
+    "campus": "Frankfurt am Main",
+    "requirements": {
+      "undergrad_background": "Bachelor's degree (min. 180 ECTS), preferably in business, economics, or quantitative disciplines",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 7.0, "subscores": null},
+      "toefl": {"overall": 90, "subscores": null},
+      "gmat_gre": "GMAT/GRE score OR Frankfurt School Admission Test (BT Methods) mandatory, cannot be waived",
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": "Successful admissions interview required",
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [
+        {"name": "early bird discount 1", "deadline": "2025-11-30", "decision_by": null},
+        {"name": "early bird discount 2", "deadline": "2026-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2026-06-30",
+      "notes": "官网当前显示的批次(截止2026年6月30日、开学2026年8月24日)在采集时(2026年7月20日)已过期，下一入学批次的具体日期需直接向学校确认。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://www.frankfurt-school.de/en/study/master/master-of-finance"
+    ],
+    "confidence": "medium",
+    "notes": "专项方向：Corporate Finance、Capital Markets & Risk Management、Central Banking and Financial Regulation。采用\"3-Day Model\"教学模式（每周两个工作日+一个周六上课），便于学生兼职工作。学费为该校最贵的pre-experience硕士项目。"
+  },
+  {
+    "school_name_en": "Frankfurt School of Finance & Management",
+    "school_name_zh": "法兰克福金融管理学院",
+    "school_short": "Frankfurt School",
+    "region": "DE",
+    "program_name_en": "Master of Artificial Intelligence & Data Science",
+    "program_name_zh": "人工智能与数据科学硕士",
+    "faculty": "Frankfurt School of Finance & Management",
+    "direction": "business_analytics",
+    "duration_months": 24,
+    "tuition": "EUR 35,500 total programme cost, plus EUR 400 enrolment fee and EUR 100 application fee (early-bird discounts of up to EUR 4,000 available)",
+    "campus": "Frankfurt am Main",
+    "requirements": {
+      "undergrad_background": "Strong mathematical foundations from mathematics, engineering, computer science, physics, or comparable STEM/quantitative degree",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": {"overall": 7.0, "subscores": null},
+      "toefl": {"overall": 90, "subscores": null},
+      "gmat_gre": "Valid GMAT/GRE score OR Frankfurt School Admission Test (BT Methods)",
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": "Successful admissions interview required",
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [
+        {"name": "early bird discount 1", "deadline": "2025-11-30", "decision_by": null},
+        {"name": "early bird discount 2", "deadline": "2026-03-31", "decision_by": null}
+      ],
+      "final_deadline": "2026-06-30",
+      "notes": "官网当前显示批次的截止日期(2026年6月30日)在采集时已过期，下一入学批次日期需直接向学校确认。"
+    },
+    "materials": ["transcript", "degree_certificate", "cv", "english_test", "gmat_gre"],
+    "source_urls": [
+      "https://www.frankfurt-school.de/en/study/master/master-of-artificial-intelligence-and-data-science"
+    ],
+    "confidence": "medium",
+    "notes": "英语测试可在本科为全英文授课时豁免。要求较强数理背景（数学/工程/计算机/物理等），非典型商科背景申请者。"
+  },
+  {
+    "school_name_en": "Trinity College Dublin",
+    "school_name_zh": "都柏林圣三一学院",
+    "school_short": "TCD",
+    "region": "IE",
+    "program_name_en": "MSc in Finance",
+    "program_name_zh": "金融学硕士",
+    "faculty": "Trinity Business School",
+    "direction": "finance",
+    "duration_months": 12,
+    "tuition": "EUR 27,300 (non-EU, first year of course, academic year 2026/2027)",
+    "campus": "Dublin",
+    "requirements": {
+      "undergrad_background": null,
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-11-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "该项目2026/27入学申请已关闭（官网建议转而考虑MSc in Financial Risk Management）。2027年9月入学申请预计2026年11月重新开放，具体截止日尚未公布。"
+    },
+    "materials": ["transcript", "cv", "english_test"],
+    "source_urls": [
+      "https://www.tcd.ie/business/programmes/masters-programmes/msc-in-finance/",
+      "https://www.tcd.ie/courses/postgraduate/fees/"
+    ],
+    "confidence": "medium",
+    "notes": "非欧盟学费按第一年计（非全程总费用）。GMAT/IELTS具体分数未能在官网页面直接核实，建议查看entry-requirements子页面或联系business.masters@tcd.ie确认。EU学费另有较低标准（基于居住地而非国籍认定）。"
+  },
+  {
+    "school_name_en": "Trinity College Dublin",
+    "school_name_zh": "都柏林圣三一学院",
+    "school_short": "TCD",
+    "region": "IE",
+    "program_name_en": "MSc in Management",
+    "program_name_zh": "管理学硕士",
+    "faculty": "Trinity Business School",
+    "direction": "management",
+    "duration_months": 12,
+    "tuition": "EUR 24,000 (non-EU, first year of course, academic year 2026/2027)",
+    "campus": "Dublin",
+    "requirements": {
+      "undergrad_background": "Designed exclusively for non-business graduates; equips graduates without prior business education with management skills",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未能核实具体2027年入学截止日期。所有Trinity Business School一年制硕士项目均于每年9月开学。"
+    },
+    "materials": ["transcript", "cv", "english_test"],
+    "source_urls": [
+      "https://www.tcd.ie/business/programmes/masters-programmes/msc-in-management/",
+      "https://www.tcd.ie/business/programmes/masters-programmes/msc-in-management/fees/"
+    ],
+    "confidence": "medium",
+    "notes": "重要：本项目专为非商科本科背景学生设计（面向理工/文科等背景转商科方向），已有商科本科背景者可能不适合，应考虑其他TCD商科硕士项目。EU学费EUR 16,575/年。"
+  },
+  {
+    "school_name_en": "Trinity College Dublin",
+    "school_name_zh": "都柏林圣三一学院",
+    "school_short": "TCD",
+    "region": "IE",
+    "program_name_en": "MSc in Business Analytics and AI for Management",
+    "program_name_zh": "商业分析与人工智能管理硕士",
+    "faculty": "Trinity Business School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "EUR 23,950 (non-EU, first year of course, academic year 2026/2027)",
+    "campus": "Dublin",
+    "requirements": {
+      "undergrad_background": "Semi-technical approach to data analytics",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-11-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2026-07-10",
+      "notes": "官网明确说明：\"由于需求量大，全日制申请已关闭；申请通道将于2026年11月重新开放，对应2027年9月入学\"。最近一次(2026/27入学)截止日为2026年7月10日23:59(GMT+1)，说明该项目往届截止日较晚（临近学年开学前），实际2027年9月入学截止日预计在2027年年中，需官网11月开放后确认。"
+    },
+    "materials": ["transcript", "cv", "english_test"],
+    "source_urls": [
+      "https://www.tcd.ie/business/programmes/masters-programmes/msc-in-business-analytics-and-ai-for-management/"
+    ],
+    "confidence": "medium",
+    "notes": "QS 2026商业分析硕士排名：爱尔兰第1、欧洲第14、全球第34。final_deadline字段记录的是上一周期(2026/27入学)实际发生的截止日期，供参考，并非2027/28周期的截止日。"
+  },
+  {
+    "school_name_en": "Trinity College Dublin",
+    "school_name_zh": "都柏林圣三一学院",
+    "school_short": "TCD",
+    "region": "IE",
+    "program_name_en": "MSc in Operations and Supply Chain Management",
+    "program_name_zh": "运营与供应链管理硕士",
+    "faculty": "Trinity Business School",
+    "direction": "supply_chain",
+    "duration_months": 12,
+    "tuition": "EUR 24,000 (non-EU, first year of course, academic year 2026/2027)",
+    "campus": "Dublin",
+    "requirements": {
+      "undergrad_background": null,
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": "2026-11-01",
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": "2026-07-10",
+      "notes": "官网说明：\"由于需求量大，申请已关闭；申请通道将于2026年11月重新开放\"，对应2027年9月入学。记录的截止日2026年7月10日为上一周期(2026/27入学)实际截止日，供参考。"
+    },
+    "materials": ["transcript", "cv", "english_test"],
+    "source_urls": [
+      "https://www.tcd.ie/business/programmes/masters-programmes/msc-in-operations-and-supply-chain-management/",
+      "https://www.tcd.ie/business/programmes/masters-programmes/msc-in-operations-and-supply-chain-management/fees/"
+    ],
+    "confidence": "medium",
+    "notes": "EU学费EUR 16,575/年。学生还需缴纳Student Levies & Charges (SLC)约EUR 311(2025/26数据)。"
+  },
+  {
+    "school_name_en": "Trinity College Dublin",
+    "school_name_zh": "都柏林圣三一学院",
+    "school_short": "TCD",
+    "region": "IE",
+    "program_name_en": "MSc in Marketing",
+    "program_name_zh": "市场营销硕士",
+    "faculty": "Trinity Business School",
+    "direction": "marketing",
+    "duration_months": 12,
+    "tuition": "EUR 24,000 (non-EU, first year of course, academic year 2026/2027)",
+    "campus": "Dublin",
+    "requirements": {
+      "undergrad_background": "Focus on marketing strategy, branding, and consumer psychology",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": null,
+      "prerequisites": null,
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": false,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网未能核实具体截止日期，仅确认学费信息；一年制项目通常9月开学。"
+    },
+    "materials": ["transcript", "cv", "english_test"],
+    "source_urls": [
+      "https://www.tcd.ie/business/programmes/masters-programmes/msc-in-marketing/",
+      "https://www.tcd.ie/courses/postgraduate/fees/"
+    ],
+    "confidence": "medium",
+    "notes": "QS 2026市场营销硕士排名：爱尔兰第1、欧洲第22、全球第26。GMAT/IELTS具体分数官网未能核实。"
+  },
+  {
+    "school_name_en": "University College Dublin",
+    "school_name_zh": "都柏林大学",
+    "school_short": "UCD Smurfit",
+    "region": "IE",
+    "program_name_en": "MSc in Business Analytics",
+    "program_name_zh": "商业分析硕士",
+    "faculty": "UCD Michael Smurfit Graduate Business School",
+    "direction": "business_analytics",
+    "duration_months": 12,
+    "tuition": "EUR 26,180 (non-EU, full-time, academic year 2026/2027)",
+    "campus": "Dublin (Blackrock, Co. Dublin)",
+    "requirements": {
+      "undergrad_background": "Minimum second class honours primary degree (or equivalent) including quantitative techniques (Engineering, Computer Science, other Sciences); Business studies background applicants need MIS/Maths/other quantitative coursework",
+      "china_university_list": null,
+      "gpa_requirement": null,
+      "ielts": null,
+      "toefl": null,
+      "gmat_gre": "May be asked to undertake the GMAT or GRE at the Director's discretion (not always required)",
+      "prerequisites": "Quantitative coursework required if from a business studies background",
+      "work_experience": null,
+      "interview": null,
+      "teaching_language": "English"
+    },
+    "deadlines": {
+      "opens_at": null,
+      "rolling": true,
+      "rounds": [],
+      "final_deadline": null,
+      "notes": "官网明确说明：申请采用滚动录取(rolling basis)，名额招满即关闭申请，建议尽早申请；部分奖学金可能有单独的截止日期。"
+    },
+    "materials": ["transcript", "cv", "english_test", "reference", "essay"],
+    "source_urls": [
+      "https://www.smurfitschool.ie/programmes/masters/mscinbusinessanalytics/eligibilityfees/",
+      "https://www.smurfitschool.ie/programmes/masters/mscinbusinessanalytics/howtoapply/"
+    ],
+    "confidence": "high",
+    "notes": "申请材料含两篇约300字的essay问答（非传统单一motivation letter形式）。UCD校友申请可享5%学费减免。EU学费为EUR 17,750/年(2026/2027)。IELTS/TOEFL具体分数需查看英语语言要求专页(未能直接核实数值)。"
+  }
+]
