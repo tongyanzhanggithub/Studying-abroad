@@ -39,11 +39,23 @@ async function verify<T>(token: string): Promise<T | null> {
   }
 }
 
+/**
+ * cookie 的 Secure 标志必须跟着**实际协议**走,不能只看 NODE_ENV。
+ *
+ * ⚠️ 这里踩过一次:原来写的是 `secure: env.isProd`。生产环境但还没配 HTTPS
+ *    (刚上云、只有 IP 没有域名)时,浏览器会**直接丢弃**带 Secure 的 cookie。
+ *    表现极具迷惑性:密码验证通过、服务端也 set 了 cookie,但浏览器没存下,
+ *    下一个请求依旧是未登录 → 布局把人弹回登录页 → 用户看到的是
+ *    「点登录没有任何反应」,连错误提示都没有(因为服务端认为登录成功了)。
+ *
+ * 按 NEXT_PUBLIC_SITE_URL 的协议判断:https 才加 Secure。
+ * 配上域名和证书后自动变回 Secure,不用记得回来改。
+ */
 function cookieOptions() {
   return {
     httpOnly: true,
     sameSite: 'lax' as const,
-    secure: env.isProd,
+    secure: env.siteUrl.startsWith('https://'),
     path: '/',
     maxAge: MAX_AGE_SECONDS,
   }

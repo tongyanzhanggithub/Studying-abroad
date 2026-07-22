@@ -109,6 +109,18 @@ export function assertProductionConfig() {
   }
 
   const missing: string[] = []
+  if (!env.siteUrl.startsWith('https://')) {
+    /**
+     * 不设为致命 —— 「只有 IP、还没域名和证书」的演示阶段是正常过渡态,
+     * 一律拒绝启动会把这条合理路径堵死。但必须说清代价:
+     * 此时会话 cookie 不带 Secure(带了浏览器会丢弃,导致根本登录不上),
+     * 也就是说 cookie 在网络上是明文传输的,可被同网络的人截获。
+     */
+    missing.push(
+      '站点跑在 HTTP 上(没有 HTTPS)—— 会话 cookie 明文传输,可被截获;' +
+        '绑域名后执行 certbot --nginx 并把 NEXT_PUBLIC_SITE_URL 改成 https://',
+    )
+  }
   if (env.sms.provider === 'mock') {
     missing.push(
       env.sms.allowMockInProd
