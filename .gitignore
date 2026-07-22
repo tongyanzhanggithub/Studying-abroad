@@ -1,0 +1,29 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+
+.env
+.env.local
+.env.*.local
+
+*.log
+npm-debug.log*
+
+.DS_Store
+Thumbs.db
+
+# 本地上传文件(生产走对象存储)
+/uploads/
+
+# 采集到的原始数据快照(体积大,按需保留)
+/data/raw/*.json
+!/data/raw/.gitkeep
+
+next-env.d.ts
+tsconfig.tsbuildinfo
+.pgdata/
+
+# 部署用的打包产物
+compass.tar.gz

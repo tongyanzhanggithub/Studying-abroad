@@ -1,0 +1,1144 @@
+// Compass · AI 留学申请系统 数据模型
+// 对应 PRD v1.0 第 6 章,并补全状态机、埋点与合规所需字段。
+//
+// 约定:
+//   1. 所有金额字段一律以「分」为单位的 Int 存储(PRD 4.8)
+//   2. 所有面向用户展示的院校数据必须带 lastVerifiedAt / confidence(PRD 4.2 红线)
+//   3. 推荐规则、SKU、通知模板、prompt 全部配置化,不硬编码(PRD 7.2)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ════════════════════════════════════════════════════════════
+// 枚举
+// ════════════════════════════════════════════════════════════
+
+/**
+ * 目的地。刻意不做美国 —— 美国申请的规则差异很大(标化、文书数量、
+ * EA/ED 轮次、面试机制),需要一套单独的产品逻辑,不该硬塞进同一套模型。
+ *
+ * ⚠️ 加了枚举值不等于有数据。前端只展示**库里真的有项目**的地区,
+ *    避免用户选了一个空目的地却得到「没有匹配结果」。
+ */
+enum Region {
+  UK // 英国
+  HK // 中国香港
+  SG // 新加坡
+  AU // 澳大利亚
+  CA // 加拿大
+  MO // 中国澳门
+  JP // 日本
+  KR // 韩国
+  NZ // 新西兰
+  IE // 爱尔兰
+  NL // 荷兰
+  DE // 德国
+  FR // 法国
+  CH // 瑞士
+}
+
+/// 申请方向。按海外院校常见 subject area 归类,用于选校定位与项目筛选。
+enum Direction {
+  finance
+  accounting
+  management
+  marketing
+  business_analytics
+  economics
+  international_business
+  supply_chain
+  hr
+  computer_science
+  data_science_ai
+  engineering
+  architecture
+  mathematics_statistics
+  natural_sciences
+  life_sciences_medicine
+  social_sciences
+  media_communication
+  law_public_policy
+  education
+  arts_design
+  humanities
+  environment_sustainability
+  agriculture_food_science
+  hospitality_tourism
+  public_health
+  other
+}
+
+/// 本科院校层级 —— 评估表单第 1 步,也是定位规则引擎的主系数
+enum UndergradTier {
+  c985_211 // 985/211
+  double_non_first // 双非一本
+  tier_two_other // 二本及其他
+  overseas // 海外本科
+}
+
+enum LanguageType {
+  ielts
+  toefl
+  none // 还没考
+}
+
+/// 数据置信度 —— ai_collected 的数据在人工核对前不得作为确定值展示(PRD 4.2)
+enum Confidence {
+  verified // 运营人工核对过,可正常展示
+  ai_collected // AI 采集,待核对
+  stale // 曾核对过但已超期
+  unknown
+}
+
+enum BarChangeFlag {
+  up
+  down
+  unchanged
+  unknown
+}
+
+/// 选校档位
+enum TierTag {
+  reach // 冲刺
+  match // 匹配
+  safe // 保底
+}
+
+/// 单校申请状态机(PRD 4.3)
+enum ApplicationStatus {
+  not_started // 未开始
+  preparing_materials // 材料准备中
+  writing_essay // 文书中
+  ready_to_submit // 待递交
+  submitted // 已递交
+  interview_invited // 面试邀请
+  admitted // 录取
+  rejected // 拒绝
+  waitlisted // 候补
+}
+
+enum MaterialStatus {
+  not_started
+  in_progress
+  completed
+}
+
+enum EssayStatus {
+  drafting // 素材/写作中
+  polishing // 润色中
+  final // 已终稿
+}
+
+enum EssayAiSessionType {
+  interview // 苏格拉底式素材访谈
+  outline // 结构建议
+  polish // 逐句润色
+  compliance // 合规检查
+}
+
+enum EssayVersionAuthor {
+  user
+  ai_suggestion
+}
+
+/// 院校 AI 使用政策分档(PRD 10.2)
+enum AiPolicyLevel {
+  zero_tolerance // 零容忍 —— 文书工作台显著警告
+  limited_allowed // 有限允许
+  unspecified // 未明确
+}
+
+enum OrderType {
+  subscription // 系统季票
+  service // 增值服务 SKU
+}
+
+enum OrderStatus {
+  pending_payment
+  paid
+  assigned // 服务单已派给交付人
+  delivering
+  delivered
+  /// 学生提出异议 —— 进入此状态后**不会**被 48h 自动确认,需运营介入
+  disputed
+  confirmed // 学生验收 / 48h 自动确认
+  cancelled
+  refunding
+  refunded
+}
+
+enum PaymentStatus {
+  created
+  succeeded
+  failed
+  closed
+  refunded
+}
+
+enum SubscriptionStatus {
+  active
+  expired
+  refunded
+}
+
+enum NotificationChannel {
+  wechat_subscribe // 小程序订阅消息(最高优先级)
+  sms // 仅截止 3 天内强提醒
+  email // 汇总周报
+  in_app
+}
+
+enum NotificationStatus {
+  pending
+  sent
+  failed
+  clicked
+}
+
+enum RecommendationAction {
+  shown
+  clicked
+  dismissed
+  purchased
+}
+
+/**
+ * 后台角色。
+ *
+ * ⚠️ 学生**不在这里**。学生用手机号登录、走 User 表,和后台是两套完全独立的
+ *    身份体系 —— 把客户和员工放进同一个角色枚举,迟早会出现「某个学生被误设成
+ *    运营」这类事故。
+ *
+ * advisor(交付顾问)是一条**独立轴**,不是权限阶梯的一级:
+ * 他不该看到院校库、价格、线索这些运营页面,只能看派给自己的单。
+ * 所以在 requireAdmin 的排序里 advisor 低于所有运营角色,
+ * 顾问端另走 requireAdvisor。
+ */
+enum AdminRole {
+  super_admin
+  operator
+  data_entry
+  advisor
+}
+
+// ════════════════════════════════════════════════════════════
+// 用户与线索
+// ════════════════════════════════════════════════════════════
+
+model User {
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  name      String?
+  wxOpenid  String?  @unique @map("wx_openid")
+  wxUnionid String?  @unique @map("wx_unionid")
+
+  /// 隐私政策/用户协议同意留痕(PRD 10.3 要求首次注册强制确认)
+  agreedTermsAt      DateTime? @map("agreed_terms_at")
+  agreedTermsVersion String?   @map("agreed_terms_version")
+
+  /// 数据导出与账号注销(PRD 10.3)
+  deletionRequestedAt DateTime? @map("deletion_requested_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  profile           Profile?
+  subscriptions     Subscription[]
+  schoolChoices     UserSchoolChoice[]
+  materials         UserMaterial[]
+  essays            Essay[]
+  serviceOrders     ServiceOrder[]
+  payments          Payment[]
+  notifications     Notification[]
+  recommendationEvents RecommendationEvent[]
+  analyticsEvents   AnalyticsEvent[]
+  aiUsage           AiUsageDaily[]
+  lead              Lead?
+
+  @@map("users")
+}
+
+model Profile {
+  userId String @id @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  undergradTier  UndergradTier? @map("undergrad_tier")
+  undergradMajor String?        @map("undergrad_major")
+  gpa            Float?
+  gpaScale       String?        @map("gpa_scale") // "100" | "4.0"
+  languageType   LanguageType?  @map("language_type")
+  languageScore  Float?         @map("language_score")
+
+  /**
+   * 语言成绩的**最低单项**(雅思小分 / 托福单项)。
+   *
+   * ⚠️ 只比总分会给出错误的「达标」结论:总分 7.0 但写作 5.5 的学生,
+   *    申请「单项不低于 6.0」的项目一定被拒,而我们会告诉他达标 ——
+   *    这是直接违背产品承诺的错误。院校库里 61% 的项目写明了单项要求,
+   *    数据支持这个判断,所以必须比。
+   */
+  languageMinBand Float? @map("language_min_band")
+  targetRegions  Region[]       @map("target_regions")
+  targetDirection Direction?    @map("target_direction")
+
+  /// 转专业标记 —— 推荐引擎「疑难 case 会诊」触发条件之一
+  isMajorSwitch Boolean @default(false) @map("is_major_switch")
+
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("profiles")
+}
+
+/// 免费评估留资表。未付费用户 48h 后触发跟进(PRD 4.1)
+model Lead {
+  id             String   @id @default(cuid())
+  phone          String
+  assessPayload  Json     @map("assess_payload_json")
+  assessResult   Json?    @map("assess_result_json")
+  sourceChannel  String?  @map("source_channel") // 带参小程序码 / 内容位归因
+  followedUpAt   DateTime? @map("followed_up_at")
+
+  /// ── 分享裂变(PRD 9 P0)──────────────────────────────
+  /// 分享短码,进入 /r/{shareCode} 可归因回这条线索
+  shareCode      String   @unique @default(cuid()) @map("share_code")
+  /// 这条线索由谁分享而来
+  referredById   String?  @map("referred_by_id")
+  referredBy     Lead?    @relation("LeadReferral", fields: [referredById], references: [id], onDelete: SetNull)
+  referrals      Lead[]   @relation("LeadReferral")
+  /// 成功带来的完成评估人数 —— 达标即解锁附加院校推荐
+  referralCount  Int      @default(0) @map("referral_count")
+
+  convertedUserId String? @unique @map("converted_user_id")
+  convertedUser   User?   @relation(fields: [convertedUserId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([phone])
+  @@index([createdAt])
+  @@index([referredById])
+  @@map("leads")
+}
+
+/// 手机号验证码(登录 / 注册)。开发环境 code 明文,生产存 hash。
+model VerificationCode {
+  id        String   @id @default(cuid())
+  phone     String
+  /// sha256(phone + code + AUTH_SECRET)。不存明文 —— 拖库不该等于拿到所有在途验证码
+  code      String
+  consumed  Boolean  @default(false)
+
+  /**
+   * 校验失败次数。
+   *
+   * ⚠️ 没有这个字段的时候,6 位验证码是可以**无限次爆破**的:
+   *    知道手机号 → 请求一次验证码 → 在 10 分钟有效期内随便猜。
+   *    100 万种组合在自动化面前不算多,而用户账号里有护照和身份证扫描件。
+   */
+  attempts  Int      @default(0)
+
+  /**
+   * 发起请求的来源 IP。
+   *
+   * ⚠️ 只按手机号限流挡不住短信轰炸:攻击者换一批合法格式的号码
+   *    (1[3-9] 开头随便凑)就能绕过每号限制,一旦接了真实短信,
+   *    每次调用都是钱,还会骚扰真实机主。按 IP 再加一道全局闸门。
+   */
+  ip        String?
+
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([phone, consumed])
+  @@index([ip, createdAt])
+  @@map("verification_codes")
+}
+
+// ════════════════════════════════════════════════════════════
+// 商品与订阅
+// ════════════════════════════════════════════════════════════
+
+model Plan {
+  id         String  @id @default(cuid())
+  code       String  @unique // "basic" | "pro"
+  name       String
+  priceCents Int     @map("price_cents")
+  features   Json    @map("features_json")
+  /// 每日 AI 调用限额(PRD 4.5:基础版 30/日,Pro 100/日)
+  aiDailyQuota Int   @default(30) @map("ai_daily_quota")
+  active     Boolean @default(true)
+  sort       Int     @default(0)
+
+  subscriptions Subscription[]
+
+  @@map("plans")
+}
+
+model Subscription {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planId String @map("plan_id")
+  plan   Plan   @relation(fields: [planId], references: [id])
+
+  season    String // "2027fall"
+  status    SubscriptionStatus @default(active)
+  paidAt    DateTime?          @map("paid_at")
+  expiresAt DateTime?          @map("expires_at")
+
+  /// 退款判定依据:7 天内且核心模块使用 <3 次可全退(PRD 4.8)
+  coreModuleUseCount Int @default(0) @map("core_module_use_count")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, status])
+  @@map("subscriptions")
+}
+
+// ════════════════════════════════════════════════════════════
+// 院校数据库(护城河)
+// ════════════════════════════════════════════════════════════
+
+/**
+ * 地区开放状态(分批上线)。
+ *
+ * 为什么需要这个:PRD 11.3 规定未核对数据占比 >10% 就该暂停投放。
+ * 但地区一多,「全部核对完才能上线」就永远上不了线。
+ * 所以按地区分批 —— 哪个地区核对达标就先开哪个,其余对用户完全不可见。
+ *
+ * ⚠️ 判定是**人工的**:达标只是让后台把「可以开放了」这个建议显示出来,
+ *    真正开放仍需运营点一下。数据质量的责任不能交给一个自动阈值。
+ */
+model RegionSetting {
+  region Region @id
+
+  /// 是否对用户开放。false 时该地区的项目完全不出现在评估、选校、首页
+  isPublic    Boolean   @default(false) @map("is_public")
+  publishedAt DateTime? @map("published_at")
+  publishedBy String?   @map("published_by")
+
+  /// 开放门槛(可按地区单独调整)
+  minVerifiedRate Float @default(0.9) @map("min_verified_rate") // 核对率下限
+  minPrograms     Int   @default(25) @map("min_programs") // 项目数下限
+
+  /// 运营备注,比如「日本数据太薄,等补到 20 条再开」
+  note String?
+
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("region_settings")
+}
+
+model School {
+  id        String  @id @default(cuid())
+  nameEn    String  @map("name_en")
+  nameZh    String? @map("name_zh")
+  shortName String? @map("short_name")
+  region    Region
+
+  /// AI 使用政策分档(PRD 10.2)—— 零容忍院校在文书工作台显著警告
+  aiPolicyLevel AiPolicyLevel @default(unspecified) @map("ai_policy_level")
+  aiPolicyNote  String?       @map("ai_policy_note")
+  aiPolicyUrl   String?       @map("ai_policy_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  programs Program[]
+
+  @@unique([nameEn, region])
+  @@index([region])
+  @@map("schools")
+}
+
+model Program {
+  id       String @id @default(cuid())
+  schoolId String @map("school_id")
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  nameEn    String    @map("name_en")
+  nameZh    String?   @map("name_zh")
+  faculty   String?
+  direction Direction
+  region    Region // 冗余自 school,便于筛选
+
+  durationMonths Int?    @map("duration_months")
+  tuition        String? // 原币种原文,不做换算
+  campus         String?
+
+  /// 结构化录取要求。形状见 src/lib/programs/types.ts 的 ProgramRequirements
+  requirements Json @default("{}")
+  /// 结构化时间线(开放日 / 轮次 / rolling / 最终截止)
+  deadlines    Json @default("{}")
+
+  /// 便于排序与倒计时查询的冗余字段
+  finalDeadline DateTime? @map("final_deadline")
+  isRolling     Boolean   @default(false) @map("is_rolling")
+
+  /**
+   * 纯线上 / 远程授课项目。
+   *
+   * ⚠️ 这类项目**通常不支持学生签证**,拿不到当地身份和工作签。
+   *    如果和普通项目混在一起展示,学生可能选了一个根本去不了当地的项目 ——
+   *    对一个「留学」产品来说这是很严重的误导,必须显著标注。
+   */
+  isOnlineOnly Boolean @default(false) @map("is_online_only")
+
+  /// 该专业所需材料模板
+  materialTemplates ProgramMaterialTemplate[]
+
+  /// 运营人工标注
+  barChangeFlag  BarChangeFlag @default(unknown) @map("bar_change_flag")
+  competitiveness String?      @map("competitiveness") // 名额紧张度
+
+  /// ── 数据可信度三件套(PRD 4.2 生命线)────────────────
+  lastVerifiedAt DateTime?  @map("last_verified_at")
+  verifiedBy     String?    @map("verified_by")
+  confidence     Confidence @default(ai_collected)
+  sourceUrls     String[]   @map("source_urls")
+  notes          String?
+
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  schoolChoices UserSchoolChoice[]
+  essays        Essay[]
+  changeLogs    ProgramChangeLog[]
+  drafts        ProgramDraft[]
+
+  @@unique([schoolId, nameEn])
+  @@index([region, direction])
+  @@index([finalDeadline])
+  @@index([confidence, lastVerifiedAt])
+  @@map("programs")
+}
+
+/// 数据变更记录 —— 驱动 PRD 5.4「数据变更 → 用户触达」流程
+model ProgramChangeLog {
+  id        String  @id @default(cuid())
+  programId String  @map("program_id")
+  program   Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  field     String // 变更字段,如 "requirements.gpa_requirement"
+  oldValue  String? @map("old_value")
+  newValue  String? @map("new_value")
+  summary   String // 推给用户的人话摘要
+  sourceUrl String? @map("source_url")
+  changedBy String? @map("changed_by")
+
+  /// 是否已向受影响用户推送
+  notifiedAt DateTime? @map("notified_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([programId, createdAt])
+  @@index([notifiedAt])
+  @@map("program_change_logs")
+}
+
+// ════════════════════════════════════════════════════════════
+// 选校单
+// ════════════════════════════════════════════════════════════
+
+model UserSchoolChoice {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  programId String  @map("program_id")
+  program   Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  tierTag TierTag
+  status  ApplicationStatus @default(not_started)
+  sort    Int               @default(0)
+
+  /// 学生手动修正过状态后,不再被材料勾选联动自动推进
+  statusManuallySet Boolean @default(false) @map("status_manually_set")
+
+  submittedAt DateTime? @map("submitted_at")
+  interviewAt DateTime? @map("interview_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, programId])
+  @@index([userId, status])
+  @@map("user_school_choices")
+}
+
+// ════════════════════════════════════════════════════════════
+// 材料中心
+// ════════════════════════════════════════════════════════════
+
+model MaterialTemplate {
+  id          String  @id @default(cuid())
+  code        String  @unique // "transcript" | "cv" | "personal_statement" ...
+  name        String
+  description String?
+  /// 怎么办理的说明(markdown),含模板下载
+  guideMd     String? @map("guide_md")
+  fileRequired Boolean @default(true) @map("file_required")
+  /// 同一份材料多校共用(成绩单等),生成清单时去重
+  sharedAcrossPrograms Boolean @default(true) @map("shared_across_programs")
+
+  /**
+   * 从开始办到拿到手的天数。
+   *
+   * ⚠️ 这是「提前预警」的唯一依据。推荐信要提前 4-6 周联系推荐人、
+   *    雅思从报名到出分两个月 —— 如果只在截止日临近时提醒,
+   *    用户看到提醒时早就来不及了。有了这个字段才能算出
+   *    「按你现在的进度,这所学校赶不上了」。
+   */
+  leadTimeDays Int @default(3) @map("lead_time_days")
+
+  sort        Int     @default(0)
+
+  programs      ProgramMaterialTemplate[]
+  userMaterials UserMaterial[]
+
+  @@map("material_templates")
+}
+
+model ProgramMaterialTemplate {
+  programId  String           @map("program_id")
+  program    Program          @relation(fields: [programId], references: [id], onDelete: Cascade)
+  templateId String           @map("template_id")
+  template   MaterialTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@id([programId, templateId])
+  @@map("program_material_templates")
+}
+
+model UserMaterial {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  templateId String           @map("template_id")
+  template   MaterialTemplate @relation(fields: [templateId], references: [id])
+
+  /// 该材料适用的院校(去重后一份材料对应多校)
+  programIds String[] @map("program_ids")
+
+  status  MaterialStatus @default(not_started)
+  fileUrl String?        @map("file_url")
+  fileName String?       @map("file_name")
+  fileSize Int?          @map("file_size")
+  note    String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, templateId])
+  @@index([userId, status])
+  @@map("user_materials")
+}
+
+// ════════════════════════════════════════════════════════════
+// 文书工作台
+// ════════════════════════════════════════════════════════════
+
+model Essay {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  programId String?  @map("program_id")
+  program   Program? @relation(fields: [programId], references: [id], onDelete: SetNull)
+
+  title      String
+  promptText String?     @map("prompt_text") // 该校文书题目
+  wordLimit  Int?        @map("word_limit")
+  status     EssayStatus @default(drafting)
+
+  /// 素材访谈产出的结构化素材卡片
+  materialCards Json @default("[]") @map("material_cards_json")
+  /// AI 结构建议(要点式大纲,非成文)
+  outline       Json? @map("outline_json")
+
+  currentVersionId String? @unique @map("current_version_id")
+
+  /// 润色轮次 —— 达到第 3 轮触发「人工终审」推荐卡(PRD 4.7)
+  polishRound Int @default(0) @map("polish_round")
+
+  /// 合规检查结果快照,终稿前必须通过
+  complianceCheck Json?     @map("compliance_check_json")
+  finalizedAt     DateTime? @map("finalized_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  versions   EssayVersion[] @relation("EssayVersions")
+  aiSessions EssayAiSession[]
+
+  @@index([userId, status])
+  @@map("essays")
+}
+
+model EssayVersion {
+  id      String @id @default(cuid())
+  essayId String @map("essay_id")
+  essay   Essay  @relation("EssayVersions", fields: [essayId], references: [id], onDelete: Cascade)
+
+  content   String
+  wordCount Int                @default(0) @map("word_count")
+  createdBy EssayVersionAuthor @default(user) @map("created_by")
+  label     String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([essayId, createdAt])
+  @@map("essay_versions")
+}
+
+model EssayAiSession {
+  id      String @id @default(cuid())
+  essayId String @map("essay_id")
+  essay   Essay  @relation(fields: [essayId], references: [id], onDelete: Cascade)
+
+  type       EssayAiSessionType
+  messages   Json               @default("[]") @map("messages_json")
+  tokensUsed Int                @default(0) @map("tokens_used")
+  provider   String?
+  model      String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([essayId, type])
+  @@map("essay_ai_sessions")
+}
+
+/// AI prompt 模板,后台可热更新(PRD 4.5 / 7.2)
+model PromptTemplate {
+  id        String  @id @default(cuid())
+  code      String // "essay_interview" | "essay_outline" | "essay_polish"
+  version   Int     @default(1)
+  system    String
+  userTpl   String  @map("user_template")
+  active    Boolean @default(true)
+  notes     String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([code, version])
+  @@map("prompt_templates")
+}
+
+/// 每用户每日 AI 调用配额计数,防滥用(PRD 4.5)
+model AiUsageDaily {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  day    String // "2027-01-15"
+  count  Int    @default(0)
+  tokens Int    @default(0)
+
+  @@unique([userId, day])
+  @@map("ai_usage_daily")
+}
+
+// ════════════════════════════════════════════════════════════
+// 增值服务
+// ════════════════════════════════════════════════════════════
+
+model ServiceSku {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name        String
+  description String?
+  priceCents  Int     @map("price_cents")
+  delivererRole String @map("deliverer_role") // 顾问 / 文书编辑 / 学长学姐
+  deliveryForm  String @map("delivery_form")  // 视频会议 / 批注文档回传 ...
+  slaHours    Int     @map("sla_hours")
+  active      Boolean @default(true)
+  sort        Int     @default(0)
+
+  orders             ServiceOrder[]
+  recommendationRules RecommendationRule[]
+
+  @@map("service_skus")
+}
+
+model Deliverer {
+  id         String  @id @default(cuid())
+  name       String
+  role       String
+  wxContact  String? @map("wx_contact")
+  phone      String?
+  /**
+   * 交付人分成比例(0-1)。
+   *
+   * ⚠️ 派单时会把当时的比例快照到 ServiceOrder.splitRatio,
+   *    之后改这里不影响已派出的单 —— 否则调一次比例会把历史账全改了。
+   */
+  splitRatio Float   @default(0.6) @map("split_ratio")
+  rating     Float?
+  /// 擅长领域 / 内部备注,派单时参考
+  note       String?
+  active     Boolean @default(true)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  orders ServiceOrder[]
+  /// 顾问的登录账号(可选)—— 没有账号的交付人仍能被派单,只是自己看不到
+  account AdminUser?
+
+  @@map("deliverers")
+}
+
+model ServiceOrder {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skuId  String     @map("sku_id")
+  sku    ServiceSku @relation(fields: [skuId], references: [id])
+
+  delivererId String?    @map("deliverer_id")
+  deliverer   Deliverer? @relation(fields: [delivererId], references: [id], onDelete: SetNull)
+
+  status     OrderStatus @default(pending_payment)
+  amountCents Int        @map("amount_cents")
+  splitRatio Float?      @map("split_ratio")
+
+  paidAt      DateTime? @map("paid_at")
+  assignedAt  DateTime? @map("assigned_at")
+  deliveredAt DateTime? @map("delivered_at")
+  /// 学生验收;48h 无异议自动确认
+  confirmedAt DateTime? @map("confirmed_at")
+  /// 是否由系统自动确认(而非学生主动点确认)—— 结算争议时需要区分
+  autoConfirmed Boolean @default(false) @map("auto_confirmed")
+
+  /// 派单时留给交付人的说明(学生背景、注意事项)
+  assignNote String? @map("assign_note")
+
+  /**
+   * 交付留痕。
+   *
+   * ⚠️ 必填不是形式主义:服务是线下交付的(视频会议、批注文档),
+   *    系统里如果只有一个「已交付」状态位,出纠纷时双方各执一词,
+   *    运营没有任何依据判断。交付说明 + 交付物链接是唯一的凭据。
+   */
+  deliveryNote String? @map("delivery_note")
+  deliveryUrl  String? @map("delivery_url")
+
+  /// 学生提出的异议内容与时间
+  disputedAt     DateTime? @map("disputed_at")
+  disputeReason  String?   @map("dispute_reason")
+  /// 异议处理结论 —— 谁、什么时候、怎么处理的
+  disputeResolution String?   @map("dispute_resolution")
+  disputeResolvedAt DateTime? @map("dispute_resolved_at")
+  disputeResolvedBy String?   @map("dispute_resolved_by")
+
+  /// ── 月结分成(PRD 4.6)────────────────────────────
+  /// 结算批次,格式 YYYY-MM。已结算的订单不可重复结算
+  settlementMonth String?   @map("settlement_month")
+  settledAt       DateTime? @map("settled_at")
+  /// 结算时锁定的交付人应得金额(分)—— 不实时计算,避免分成比例变更影响历史账
+  payoutCents     Int?      @map("payout_cents")
+
+  /// 归因:由哪条推荐规则带来的成交
+  fromRuleId String? @map("from_rule_id")
+
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([status])
+  @@index([userId])
+  @@index([settlementMonth])
+  @@map("service_orders")
+}
+
+// ════════════════════════════════════════════════════════════
+// 支付
+// ════════════════════════════════════════════════════════════
+
+model Payment {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  orderType OrderType @map("order_type")
+  orderId   String    @map("order_id") // Subscription.id 或 ServiceOrder.id
+
+  channel     String // "mock" | "wechat" | "alipay"
+  amountCents Int           @map("amount_cents")
+  status      PaymentStatus @default(created)
+
+  outTradeNo    String  @unique @map("out_trade_no") // 商户订单号
+  transactionId String? @map("transaction_id") // 渠道流水号
+  rawCallback   Json?   @map("raw_callback_json")
+
+  refundedCents Int?      @map("refunded_cents")
+  refundReason  String?   @map("refund_reason")
+  refundedAt    DateTime? @map("refunded_at")
+
+  paidAt    DateTime? @map("paid_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  @@index([orderType, orderId])
+  @@index([status])
+  @@map("payments")
+}
+
+// ════════════════════════════════════════════════════════════
+// 情境化推荐引擎(商业模式核心)
+// ════════════════════════════════════════════════════════════
+
+/// 规则表驱动,禁止硬编码(PRD 4.7)
+model RecommendationRule {
+  id       String @id @default(cuid())
+  code     String @unique
+  name     String
+
+  /// 触发条件 DSL,形状见 src/lib/recommendation/types.ts
+  trigger  Json   @map("trigger_json")
+
+  skuId    String     @map("sku_id")
+  sku      ServiceSku @relation(fields: [skuId], references: [id], onDelete: Cascade)
+
+  /// 文案模板,支持 {n} {pct} {school} 占位符
+  copyTemplate String @map("copy_template")
+  /// 展示位置,如 "schools_top" | "essay_sidebar" | "dashboard_school_row"
+  placement    String
+
+  /// 克制约束(PRD 4.7):7 天内最多展示 2 次;关闭后 14 天不再出现
+  maxShow      Int     @default(2) @map("max_show")
+  showWindowDays Int   @default(7) @map("show_window_days")
+  cooldownDays Int     @default(14) @map("cooldown_days")
+
+  priority Int     @default(0) // 每页最多 1 张,按优先级取最高
+  active   Boolean @default(true)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  events RecommendationEvent[]
+
+  @@map("recommendation_rules")
+}
+
+model RecommendationEvent {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ruleId String             @map("rule_id")
+  rule   RecommendationRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+
+  action    RecommendationAction
+  createdAt DateTime             @default(now()) @map("created_at")
+
+  @@index([userId, ruleId, action, createdAt])
+  @@map("recommendation_events")
+}
+
+// ════════════════════════════════════════════════════════════
+// 通知
+// ════════════════════════════════════════════════════════════
+
+model NotificationTemplate {
+  id       String              @id @default(cuid())
+  code     String              @unique
+  channel  NotificationChannel
+  title    String
+  bodyTpl  String              @map("body_template")
+  /// 截止日提醒不可关闭,仅可降频(PRD 4.9)
+  mandatory Boolean            @default(false)
+  active   Boolean             @default(true)
+
+  notifications Notification[]
+
+  @@map("notification_templates")
+}
+
+model Notification {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  templateId String               @map("template_id")
+  template   NotificationTemplate @relation(fields: [templateId], references: [id])
+
+  channel NotificationChannel
+  payload Json                @default("{}") @map("payload_json")
+  status  NotificationStatus  @default(pending)
+
+  /// 幂等键,防止同一提醒重复下发
+  dedupeKey String? @unique @map("dedupe_key")
+
+  sentAt    DateTime? @map("sent_at")
+  clickedAt DateTime? @map("clicked_at")
+  error     String?
+  retryCount Int      @default(0) @map("retry_count")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, createdAt])
+  @@index([status])
+  @@map("notifications")
+}
+
+// ════════════════════════════════════════════════════════════
+// 埋点(PRD 11.2:第一天就要有)
+// ════════════════════════════════════════════════════════════
+
+model AnalyticsEvent {
+  id     String  @id @default(cuid())
+  userId String? @map("user_id")
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  /// 未登录访客用匿名 id 串联
+  anonymousId String? @map("anonymous_id")
+
+  name       String // assess_start / pay_success / rec_card_shown ...
+  properties Json   @default("{}")
+  sourceChannel String? @map("source_channel")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([name, createdAt])
+  @@index([userId, createdAt])
+  @@map("analytics_events")
+}
+
+// ════════════════════════════════════════════════════════════
+// 运营后台
+// ════════════════════════════════════════════════════════════
+
+model AdminUser {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  /// 格式见 src/lib/auth/password.ts。存量的裸 sha256 在登录成功时自动升级
+  passwordHash String    @map("password_hash")
+  role         AdminRole @default(operator)
+  active       Boolean   @default(true)
+
+  /**
+   * 登录失败限流。
+   *
+   * ⚠️ 后台登录页在公网上,没有限流就是一个可以无限试的密码接口 ——
+   *    再强的哈希也挡不住慢慢撞。失败计数落库而不是放内存:
+   *    进程一重启内存计数就清零,攻击者只要制造重启就能绕过。
+   */
+  failedAttempts Int       @default(0) @map("failed_attempts")
+  lockedUntil    DateTime? @map("locked_until")
+  lastLoginAt    DateTime? @map("last_login_at")
+
+  /**
+   * role = advisor 时指向他对应的交付人记录。
+   *
+   * 为什么复用 AdminUser 而不是给 Deliverer 单独做一套登录:
+   * 密码哈希、失败限流、会话签发这些都已经在这里了,再开一套
+   * 等于多一个要维护、要防护的认证面,而且两套的锁定策略一定会走偏。
+   */
+  delivererId String?    @unique @map("deliverer_id")
+  deliverer   Deliverer? @relation(fields: [delivererId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("admin_users")
+}
+
+/// 定位规则引擎的系数表,由运营在后台维护(PRD 4.1:不要上模型)
+model AdmissionRule {
+  id        String    @id @default(cuid())
+  region    Region
+  direction Direction
+  /// 目标院校档位(如 "t1" / "t2" / "t3"),与 Program.competitiveness 呼应
+  schoolTier String   @map("school_tier")
+
+  undergradTier UndergradTier @map("undergrad_tier")
+  /// GPA 区间(百分制)
+  gpaMin        Float         @map("gpa_min")
+  gpaMax        Float         @map("gpa_max")
+
+  /// 预估录取概率区间,仅作参考展示,必须带「预估」字样(PRD 10.1)
+  probabilityLow  Float @map("probability_low")
+  probabilityHigh Float @map("probability_high")
+
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([region, direction, schoolTier, undergradTier, gpaMin])
+  @@map("admission_rules")
+}
+
+/// ── AI 采集 ─────────────────────────────────────────────
+
+/**
+ * 后台可改的运行时配置(目前只用来放 LLM key)。
+ *
+ * ⚠️ value 是**加密存储**的(AES-256-GCM,密钥从 AUTH_SECRET 派生)。
+ *    这只防「数据库备份/导出泄露」这一类场景 —— 能读到服务器上 .env 的人
+ *    照样能解开。不要把它当成完整的密钥托管方案。
+ */
+model AppSetting {
+  key       String   @id
+  value     String
+  /// 给运营看的掩码(如 sk-ant-****cd12),避免为了确认填没填而去解密
+  hint      String?
+  updatedAt DateTime @updatedAt @map("updated_at")
+  updatedBy String?  @map("updated_by")
+
+  @@map("app_settings")
+}
+
+enum DraftStatus {
+  pending // 等待人工审核
+  approved // 已采纳,写入 Program
+  rejected // 已丢弃
+}
+
+/**
+ * AI 采集的院校数据草稿。
+ *
+ * ⚠️ 这张表是**隔离带**,存在的唯一理由是:AI 抽取的结果绝不允许直接进
+ *    Program 表。PRD 4.2 把数据准确性列为产品生命线,而 LLM 从网页里抽字段
+ *    一定会有错 —— 抽错学费、把去年的截止日当成今年的、把「建议」读成「要求」。
+ *    这些错误一旦进了主表就会直接展示给学生,学生会照着它规划申请。
+ *
+ *    所以流程是硬性的两段:采集 → 落到这里 → 人工逐字段审核 → 才写 Program。
+ *    没有任何代码路径可以跳过中间那一步。
+ */
+model ProgramDraft {
+  id     String      @id @default(cuid())
+  status DraftStatus @default(pending)
+
+  /// 采集来源
+  sourceUrl String  @map("source_url")
+  region    Region
+  /// 抓到的正文(截断保存)—— 审核时用来核对 AI 有没有编,以及事后追责
+  sourceText String? @map("source_text")
+
+  /// AI 抽取出的结构化结果,形状见 src/lib/collect/schema.ts
+  payload Json @default("{}")
+
+  /// 从 payload 冗余出来便于列表展示与查重
+  schoolNameEn  String  @map("school_name_en")
+  programNameEn String  @map("program_name_en")
+
+  /// 命中的已有项目(说明这是一次更新而不是新增)
+  matchedProgramId String?  @map("matched_program_id")
+  matchedProgram   Program? @relation(fields: [matchedProgramId], references: [id], onDelete: SetNull)
+
+  /// 采集元信息 —— 出问题时要能说清是哪个模型哪次抽的
+  model      String?
+  tokensUsed Int     @default(0) @map("tokens_used")
+  error      String?
+
+  reviewedBy   String?   @map("reviewed_by")
+  reviewedAt   DateTime? @map("reviewed_at")
+  rejectReason String?   @map("reject_reason")
+  /// 采纳后生成/更新的项目
+  resultProgramId String? @map("result_program_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([status, createdAt])
+  @@map("program_drafts")
+}

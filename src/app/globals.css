@@ -1,0 +1,284 @@
+@import 'tailwindcss';
+
+/**
+ * 视觉基调(PRD 14):干净克制;信息密度服务于焦虑管理 ——
+ * 倒计时要清晰但不制造恐慌,所以「危险色」只在真正紧迫时出现。
+ */
+
+@theme {
+  --color-ink-50: #f6f7f9;
+  --color-ink-100: #eceef2;
+  --color-ink-200: #d5dae2;
+  --color-ink-400: #8b95a6;
+  --color-ink-600: #4a5568;
+  --color-ink-800: #232a35;
+  --color-ink-900: #141920;
+
+  /* 主色:首页走社交产品质感,产品内页仍保持可读的工具色阶 */
+  --color-brand-50: #fff1f6;
+  --color-brand-100: #ffe1ec;
+  --color-brand-500: #e1306c;
+  --color-brand-600: #c13584;
+  --color-brand-700: #833ab4;
+
+  --color-insta-surface: #fff7fb;
+  --color-insta-pink: #e1306c;
+  --color-insta-orange: #f77737;
+  --color-insta-violet: #833ab4;
+  --color-insta-blue: #3b82f6;
+
+  /* 倒计时紧迫度 */
+  --color-urgent-warning: #c2761a;
+  --color-urgent-critical: #c0392b;
+  --color-safe: #2f7a5a;
+
+  /**
+   * 营销页专用的暖色底。
+   *
+   * 产品内部用冷灰(ink-50)保持工具感;首页用暖米色 ——
+   * 留学申请本身已经够焦虑了,落地页不该再是一片冷冰冰的灰。
+   */
+  --color-sand-50: #faf8f5;
+  --color-sand-100: #f4f0e9;
+  --color-sand-200: #e8e1d5;
+
+  /* 强调色,只用于点缀,不喧宾夺主 */
+  --color-accent-clay: #c9755a;
+  --color-accent-sage: #7a8b6f;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  /* 微信内置浏览器与 iOS Safari 会按系统设置放大字号,锁掉避免布局错乱 */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-ink-50);
+  color: var(--color-ink-800);
+  -webkit-font-smoothing: antialiased;
+  /* 任何一处小疏漏都不该让整个页面横向滚动 */
+  overflow-x: hidden;
+  font-family:
+    system-ui,
+    -apple-system,
+    'PingFang SC',
+    'Microsoft YaHei',
+    'Hiragino Sans GB',
+    sans-serif;
+}
+
+/**
+ * iOS Safari 会在聚焦字号 <16px 的输入框时自动放大整个页面,
+ * 放大后不会自动缩回,体验很差。移动端强制 16px,桌面端恢复设计尺寸。
+ */
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* 文书编辑器 —— PC 优先,移动端只读 */
+.tiptap {
+  min-height: 24rem;
+  outline: none;
+  line-height: 1.9;
+}
+
+.tiptap p {
+  margin-bottom: 1rem;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--color-ink-400);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/**
+ * 营销页排版。
+ * 中文大字号需要收紧字距、放宽行距,否则会显得松散。
+ */
+.display-heading {
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+.insta-gradient {
+  background: linear-gradient(135deg, #f77737 0%, #e1306c 42%, #833ab4 72%, #3b82f6 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #f77737, #e1306c 45%, #833ab4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--color-ink-900);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.brand-word {
+  letter-spacing: 0;
+}
+
+.brand-mark {
+  position: relative;
+  display: inline-block;
+  width: 1.85rem;
+  height: 1.85rem;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 0.56rem;
+  background:
+    radial-gradient(circle at 76% 18%, rgba(255, 255, 255, 0.95) 0 0.12rem, transparent 0.13rem),
+    linear-gradient(135deg, #f77737 0%, #e1306c 39%, #833ab4 70%, #3b82f6 100%);
+  box-shadow:
+    0 12px 26px rgba(225, 48, 108, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.32);
+}
+
+.brand-mark::before {
+  content: '';
+  position: absolute;
+  inset: 0.34rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.86);
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.96) 0 0.12rem, transparent 0.13rem),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.18), transparent 64%);
+}
+
+.brand-mark__needle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.58rem;
+  height: 1.13rem;
+  clip-path: polygon(50% 0, 100% 100%, 50% 78%, 0 100%);
+  background: #ffffff;
+  filter: drop-shadow(0 2px 4px rgba(20, 25, 32, 0.18));
+  transform: translate(-50%, -50%) rotate(36deg);
+  transform-origin: center;
+}
+
+.brand-mark__route {
+  position: absolute;
+  right: 0.33rem;
+  bottom: 0.35rem;
+  width: 0.24rem;
+  height: 0.24rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    -0.72rem -0.68rem 0 -0.06rem rgba(255, 255, 255, 0.84),
+    -1.12rem 0.14rem 0 -0.07rem rgba(255, 255, 255, 0.72);
+}
+
+.insta-button {
+  background: linear-gradient(135deg, #f77737 0%, #e1306c 46%, #833ab4 100%);
+  box-shadow: 0 14px 32px rgba(225, 48, 108, 0.22);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease;
+}
+
+.insta-button:hover {
+  filter: saturate(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px rgba(225, 48, 108, 0.28);
+}
+
+.hero-stage {
+  background: #fff7fb;
+}
+
+.hero-bg {
+  object-position: 62% center;
+}
+
+.hero-overlay {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.86) 42%, rgba(255, 255, 255, 0.42) 68%, rgba(255, 255, 255, 0.1) 100%),
+    linear-gradient(180deg, rgba(255, 247, 251, 0.42) 0%, rgba(255, 255, 255, 0.18) 58%, rgba(255, 255, 255, 0.72) 100%);
+}
+
+.glass-chip {
+  border: 1px solid rgba(255, 255, 255, 0.74);
+  background: rgba(255, 255, 255, 0.66);
+  box-shadow: 0 14px 38px rgba(131, 58, 180, 0.12);
+  backdrop-filter: blur(18px);
+}
+
+.story-strip {
+  scrollbar-width: none;
+}
+
+.story-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.story-ring {
+  background: linear-gradient(135deg, #f77737, #e1306c 45%, #833ab4 74%, #3b82f6);
+  box-shadow: 0 10px 24px rgba(193, 53, 132, 0.16);
+}
+
+.soft-section {
+  background: linear-gradient(180deg, #fff7fb 0%, #ffffff 52%, #f7fbff 100%);
+}
+
+.feed-card {
+  border: 1px solid rgba(213, 218, 226, 0.78);
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 14px 34px rgba(35, 42, 53, 0.07);
+}
+
+.cta-band {
+  background:
+    linear-gradient(135deg, rgba(255, 247, 251, 0.96) 0%, rgba(255, 255, 255, 0.96) 46%, rgba(247, 251, 255, 0.98) 100%),
+    linear-gradient(120deg, rgba(247, 119, 55, 0.2), rgba(225, 48, 108, 0.16), rgba(59, 130, 246, 0.18));
+}
+
+/**
+ * 营销页把 body 底色也换成暖米色。
+ * 否则移动端橡皮筋回弹时,页面顶/底会露出产品内部的冷灰底,像穿帮。
+ */
+body:has(.marketing-page) {
+  background: var(--color-insta-surface);
+}
+
+/* FAQ:去掉浏览器默认的三角标记(旋转动效交给 Tailwind 的 group-open 变体) */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* 润色 diff 展示 */
+.diff-del {
+  background: #fdecea;
+  color: #a03027;
+  text-decoration: line-through;
+}
+
+.diff-ins {
+  background: #e6f4ec;
+  color: #1e6b4a;
+}

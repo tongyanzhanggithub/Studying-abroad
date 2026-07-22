@@ -1,0 +1,38 @@
+[Unit]
+Description=Compass 留学申请系统
+After=network.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+WorkingDirectory=__APP_DIR__
+EnvironmentFile=__APP_DIR__/.env
+
+# NODE_ENV=production 很关键 —— /api/dev/* 自检路由在生产环境直接 404
+Environment=NODE_ENV=production
+Environment=PORT=3000
+# 只监听回环,公网流量一律经 Nginx 进来
+Environment=HOSTNAME=127.0.0.1
+# 2GB 内存的机器上给 Node 设个上限,避免它吃到系统 OOM
+Environment=NODE_OPTIONS=--max-old-space-size=1024
+
+ExecStart=/usr/bin/npm run start
+Restart=always
+RestartSec=5
+
+# 崩溃重启太频繁时不再无限重试,避免刷爆日志
+StartLimitBurst=5
+StartLimitIntervalSec=120
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=compass
+
+# 基础加固
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

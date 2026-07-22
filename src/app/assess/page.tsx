@@ -1,0 +1,684 @@
+'use client'
+
+import { Suspense, useState, useTransition, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { Button, Field, RadioGroup } from '@/components/ui'
+import { BrandLogo } from '@/components/BrandLogo'
+import { submitAssessment, trackAssessStart, getAvailableRegions } from './actions'
+import type { AssessFormInput } from './actions'
+import {
+  DIRECTION_ORDER,
+  REGION_LABEL,
+  REGION_ORDER,
+  UNDERGRAD_MAJOR_OPTIONS as MAJOR_OPTIONS,
+} from '@/lib/programs/types'
+
+/**
+ * 免费评估 3 步表单(PRD 4.1)。
+ * 每步 ≤3 个字段,移动端每步一屏 —— 目标是 60 秒内完成。
+ */
+
+const TIER_OPTIONS = [
+  { value: 'c985_211' as const, label: '985 / 211' },
+  { value: 'double_non_first' as const, label: '双非一本' },
+  { value: 'tier_two_other' as const, label: '二本及其他' },
+  { value: 'overseas' as const, label: '海外本科' },
+]
+
+
+type DirectionValue = (typeof DIRECTION_ORDER)[number]
+type DirectionOption = {
+  value: DirectionValue
+  label: string
+  description: string
+}
+
+const LANG_OPTIONS = [
+  { value: 'ielts' as const, label: '雅思' },
+  { value: 'toefl' as const, label: '托福' },
+  { value: 'none' as const, label: '还没考' },
+]
+
+// 地区列表在运行时从数据库取(只列真有项目的),不在这里写死
+const FALLBACK_REGIONS = [
+  { region: 'UK', count: 139 },
+  { region: 'AU', count: 78 },
+  { region: 'HK', count: 51 },
+  { region: 'SG', count: 34 },
+  { region: 'CA', count: 49 },
+  { region: 'NZ', count: 22 },
+  { region: 'IE', count: 26 },
+  { region: 'NL', count: 38 },
+  { region: 'DE', count: 35 },
+  { region: 'JP', count: 18 },
+  { region: 'KR', count: 16 },
+  { region: 'MO', count: 10 },
+  { region: 'FR', count: 28 },
+  { region: 'CH', count: 22 },
+]
+
+const DIRECTION_OPTIONS: DirectionOption[] = [
+  { value: 'finance', label: 'Finance', description: '金融 / 投资 / 风控' },
+  { value: 'accounting', label: 'Accounting', description: '会计 / 审计 / 税务' },
+  { value: 'management', label: 'Management', description: '管理 / 战略 / 创业' },
+  { value: 'marketing', label: 'Marketing', description: '市场 / 品牌 / 消费者' },
+  { value: 'business_analytics', label: 'Business Analytics', description: '商业分析 / 管理科学' },
+  { value: 'economics', label: 'Economics', description: '经济学 / 计量经济' },
+  { value: 'international_business', label: 'International Business', description: '国际商务 / 全球管理' },
+  { value: 'supply_chain', label: 'Supply Chain & Operations', description: '供应链 / 运营 / 物流' },
+  { value: 'hr', label: 'Human Resource Management', description: '人力资源 / 组织行为' },
+  { value: 'computer_science', label: 'Computer Science', description: '计算机 / 软件工程' },
+  { value: 'data_science_ai', label: 'Data Science & AI', description: '数据科学 / 人工智能' },
+  { value: 'engineering', label: 'Engineering & Technology', description: '工程 / 技术管理' },
+  { value: 'architecture', label: 'Architecture & Built Env.', description: '建筑 / 城市 / 房地产' },
+  { value: 'mathematics_statistics', label: 'Mathematics & Statistics', description: '数学 / 统计 / 运筹' },
+  { value: 'natural_sciences', label: 'Natural Sciences', description: '物理 / 化学 / 地球科学' },
+  { value: 'life_sciences_medicine', label: 'Life Sciences & Medicine', description: '生命科学 / 医学 / 健康' },
+  { value: 'social_sciences', label: 'Social Sciences', description: '社会学 / 心理 / 政治' },
+  { value: 'media_communication', label: 'Media & Communication', description: '传媒 / 新闻 / 公关' },
+  { value: 'law_public_policy', label: 'Law & Public Policy', description: '法律 / 公共政策' },
+  { value: 'education', label: 'Education', description: '教育 / TESOL' },
+  { value: 'arts_design', label: 'Arts & Design', description: '艺术 / 设计 / 时尚' },
+  { value: 'humanities', label: 'Humanities', description: '语言 / 历史 / 哲学' },
+  { value: 'environment_sustainability', label: 'Environment & Sustainability', description: '环境 / 可持续发展' },
+  { value: 'agriculture_food_science', label: 'Agriculture & Food Science', description: '农业 / 食品科学' },
+  { value: 'hospitality_tourism', label: 'Hospitality & Tourism', description: '酒店 / 旅游 / 会展' },
+  { value: 'public_health', label: 'Public Health', description: '公共卫生 / 健康政策' },
+  { value: 'other', label: 'Other / Interdisciplinary', description: '其他 / 跨学科' },
+]
+
+const MAJOR_DIRECTION_MAP: Record<string, { primary: DirectionValue[]; adjacent: DirectionValue[] }> = {
+  'Business & Management': {
+    primary: ['management', 'marketing', 'international_business', 'hr'],
+    adjacent: ['finance', 'accounting', 'business_analytics', 'supply_chain', 'economics'],
+  },
+  'Economics & Finance': {
+    primary: ['finance', 'economics', 'business_analytics'],
+    adjacent: ['accounting', 'management', 'data_science_ai', 'mathematics_statistics'],
+  },
+  'Accounting & Quantitative Finance': {
+    primary: ['accounting', 'finance', 'business_analytics'],
+    adjacent: ['economics', 'mathematics_statistics', 'data_science_ai'],
+  },
+  'Computer Science & Data': {
+    primary: ['computer_science', 'data_science_ai'],
+    adjacent: ['business_analytics', 'engineering', 'mathematics_statistics', 'finance'],
+  },
+  'Engineering & Technology': {
+    primary: ['engineering', 'computer_science', 'data_science_ai'],
+    adjacent: ['management', 'supply_chain', 'environment_sustainability', 'mathematics_statistics'],
+  },
+  'Mathematics & Statistics': {
+    primary: ['mathematics_statistics', 'data_science_ai', 'business_analytics'],
+    adjacent: ['finance', 'economics', 'computer_science'],
+  },
+  'Natural Sciences': {
+    primary: ['natural_sciences', 'engineering', 'environment_sustainability'],
+    adjacent: ['data_science_ai', 'mathematics_statistics', 'education'],
+  },
+  'Life Sciences & Medicine': {
+    primary: ['life_sciences_medicine', 'public_health'],
+    adjacent: ['data_science_ai', 'management', 'education', 'environment_sustainability'],
+  },
+  'Architecture & Built Environment': {
+    primary: ['architecture', 'environment_sustainability'],
+    adjacent: ['engineering', 'management', 'arts_design'],
+  },
+  'Social Sciences': {
+    primary: ['social_sciences', 'law_public_policy', 'education'],
+    adjacent: ['media_communication', 'management', 'public_health', 'economics'],
+  },
+  'Media & Communication': {
+    primary: ['media_communication', 'marketing'],
+    adjacent: ['social_sciences', 'management', 'arts_design', 'international_business'],
+  },
+  'Law & Public Policy': {
+    primary: ['law_public_policy', 'social_sciences'],
+    adjacent: ['international_business', 'management', 'economics', 'public_health'],
+  },
+  Education: {
+    primary: ['education'],
+    adjacent: ['social_sciences', 'media_communication', 'public_health', 'management'],
+  },
+  'Arts & Design': {
+    primary: ['arts_design', 'media_communication'],
+    adjacent: ['architecture', 'marketing', 'management', 'humanities'],
+  },
+  Humanities: {
+    primary: ['humanities', 'education'],
+    adjacent: ['media_communication', 'social_sciences', 'law_public_policy', 'arts_design'],
+  },
+  'Environment & Agriculture': {
+    primary: ['environment_sustainability', 'agriculture_food_science'],
+    adjacent: ['natural_sciences', 'engineering', 'public_health', 'management'],
+  },
+  'Hospitality & Tourism': {
+    primary: ['hospitality_tourism', 'management', 'marketing'],
+    adjacent: ['international_business', 'supply_chain', 'arts_design'],
+  },
+  'Other / Interdisciplinary': {
+    primary: ['other'],
+    adjacent: ['management', 'business_analytics', 'education', 'social_sciences'],
+  },
+}
+
+function getMajorLabel(major?: string | null) {
+  const option = MAJOR_OPTIONS.find((m) => m.value === major)
+  return option ? `${option.label} · ${option.description}` : '还未选择本科门类'
+}
+
+function directionGroupsFor(major?: string | null) {
+  const relation = major ? MAJOR_DIRECTION_MAP[major] : null
+  if (!relation) {
+    return [
+      {
+        title: '全部申请方向',
+        body: '先在第 1 步选择本科门类后,这里会按你的起点重新排序。',
+        options: DIRECTION_OPTIONS,
+      },
+    ]
+  }
+
+  const used = new Set<DirectionValue>()
+  const pick = (values: DirectionValue[]) =>
+    values
+      .map((value) => DIRECTION_OPTIONS.find((option) => option.value === value))
+      .filter((option): option is DirectionOption => {
+        if (!option || used.has(option.value)) return false
+        used.add(option.value)
+        return true
+      })
+
+  const primary = pick(relation.primary)
+  const adjacent = pick(relation.adjacent)
+  const rest = DIRECTION_OPTIONS.filter((option) => !used.has(option.value))
+
+  return [
+    {
+      title: '和你的本科起点最顺',
+      body: '课程背景通常衔接更自然,适合作为主申请线。',
+      options: primary,
+    },
+    {
+      title: '常见转向',
+      body: '需要解释动机或补充技能,但在申请里比较常见。',
+      options: adjacent,
+    },
+    {
+      title: '跨学科 / 其他方向',
+      body: '跨度更大,建议后续重点看先修课、作品集或实习要求。',
+      options: rest,
+    },
+  ].filter((group) => group.options.length > 0)
+}
+
+const STEP_META = [
+  {
+    n: '01',
+    label: '起点',
+    title: '先把你的申请坐标定住',
+    body: '学校层级和专业背景决定第一层筛选。别急着自我否定,先把你站在哪里说清楚。',
+  },
+  {
+    n: '02',
+    label: '实力',
+    title: '把分数放回它该在的位置',
+    body: '均分和语言很重要,但它们不是全部。我们会把可冲、可稳、该谨慎分开呈现。',
+  },
+  {
+    n: '03',
+    label: '野心',
+    title: '告诉我你想把履历投向哪里',
+    body: '从你的本科起点出发,先看顺延方向,再看常见转向。结果保存到手机号,之后可以继续回来调整。',
+  },
+]
+
+const TRUST_POINTS = ['不讲玄学', '不卖焦虑', '不替你做决定']
+
+const NEXT_LABEL: Record<number, string> = {
+  1: '继续,看实力区间',
+  2: '继续,圈定申请地图',
+}
+
+type Draft = Partial<AssessFormInput>
+
+/**
+ * ⚠️ useSearchParams() 必须包在 Suspense 里,否则 `next build` 直接失败。
+ *    这个错只有生产构建会报,`next dev` 一切正常 —— 见 src/app/login/page.tsx 的同类说明。
+ */
+export default function AssessPage() {
+  return (
+    <Suspense fallback={null}>
+      <AssessForm />
+    </Suspense>
+  )
+}
+
+function AssessForm() {
+  const router = useRouter()
+  const params = useSearchParams()
+  const sourceChannel = params.get('ch')
+  /** 分享裂变归因码,由 /r/{shareCode} 落地页带过来 */
+  const referralCode = params.get('ref')
+
+  const [step, setStep] = useState(1)
+  const [d, setD] = useState<Draft>({ gpaScale: '100', gpa: 82, targetRegions: [] })
+  const [error, setError] = useState<string | null>(null)
+  const [showAllDirections, setShowAllDirections] = useState(false)
+  const [pending, startTransition] = useTransition()
+
+  /** 只展示**已开放且**库里真有项目的地区,按申请量顺序排 */
+  const [regions, setRegions] = useState<Array<{ region: string; count: number }>>([])
+  /** 区分「还在加载」和「确实一个地区都没开放」—— 两者要给完全不同的提示 */
+  const [regionsLoaded, setRegionsLoaded] = useState(false)
+
+  useEffect(() => {
+    void trackAssessStart(sourceChannel)
+    const sortRegions = (rs: Array<{ region: string; count: number }>) =>
+      [...rs].sort(
+        (a, b) =>
+          REGION_ORDER.indexOf(a.region as never) -
+          REGION_ORDER.indexOf(b.region as never),
+      )
+    void getAvailableRegions()
+      .then((rs) => setRegions(sortRegions(rs)))
+      .catch(() => setRegions(sortRegions(FALLBACK_REGIONS)))
+      .finally(() => setRegionsLoaded(true))
+  }, [sourceChannel])
+
+  const set = <K extends keyof Draft>(k: K, v: Draft[K]) => setD((p) => ({ ...p, [k]: v }))
+
+  function setUndergradMajor(v: NonNullable<Draft['undergradMajor']>) {
+    setD((p) => ({ ...p, undergradMajor: v, targetDirection: undefined }))
+    setShowAllDirections(false)
+  }
+
+  const directionGroups = directionGroupsFor(d.undergradMajor)
+  const hiddenDirectionGroup =
+    directionGroups.find((group) => group.title === '跨学科 / 其他方向') ?? null
+  const visibleDirectionGroups = showAllDirections
+    ? directionGroups
+    : directionGroups.filter((group) => group.title !== '跨学科 / 其他方向')
+
+  const canNext =
+    step === 1
+      ? !!d.undergradTier && !!d.undergradMajor
+      : step === 2
+        ? d.gpa != null && !!d.languageType && (d.languageType === 'none' || d.languageScore != null)
+        : !!d.targetRegions?.length &&
+          !!d.targetDirection &&
+          d.phone?.length === 11 &&
+          d.agreedPrivacy
+
+  function handleSubmit() {
+    setError(null)
+    startTransition(async () => {
+      const res = await submitAssessment({ ...d, sourceChannel, referralCode })
+      if (!res.ok) {
+        setError(res.error)
+        return
+      }
+      router.push(`/assess/result/${res.leadId}`)
+    })
+  }
+
+  return (
+    <main className="marketing-page min-h-screen bg-insta-surface text-ink-800">
+      <header className="border-b border-white/70 bg-white/78 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+          <BrandLogo className="text-lg" />
+          <span className="hidden text-sm text-ink-500 sm:inline">60 秒,把申请迷雾先拨开一层</span>
+        </div>
+      </header>
+
+      <section className="soft-section border-b border-white/70">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-8 lg:grid-cols-[0.92fr_1.08fr] lg:py-14">
+          <aside className="lg:sticky lg:top-8 lg:self-start">
+            <div className="glass-chip rounded-lg p-5">
+              <p className="gradient-text text-sm font-semibold">APPLICATION SNAPSHOT</p>
+              <h1 className="display-heading mt-3 text-4xl font-semibold text-ink-900 sm:text-5xl">
+                别先焦虑,
+                <br />
+                先看地图
+              </h1>
+              <p className="mt-4 text-base leading-relaxed text-ink-600">
+                留学申请最难的不是填表,是看不清自己站在哪儿。用 3 步把背景、
+                成绩和目标摆上桌面,先得到一张能讨论、能调整的申请快照。
+              </p>
+
+              <div className="mt-7 grid grid-cols-3 gap-2">
+                {TRUST_POINTS.map((item) => (
+                  <div key={item} className="feed-card px-3 py-3 text-center text-xs text-ink-600">
+                    {item}
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-7 space-y-3">
+                {STEP_META.map((item, index) => (
+                  <button
+                    key={item.n}
+                    type="button"
+                    onClick={() => setStep(index + 1)}
+                    className={`flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left transition-colors ${
+                      step === index + 1
+                        ? 'border-insta-pink bg-white text-ink-900 shadow-[0_12px_28px_rgba(225,48,108,0.12)]'
+                        : 'border-white/70 bg-white/55 text-ink-500 hover:bg-white'
+                    }`}
+                  >
+                    <span className="story-ring mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full p-[2px] text-xs font-semibold">
+                      <span className="grid h-full w-full place-items-center rounded-full bg-white">
+                        {item.n}
+                      </span>
+                    </span>
+                    <span>
+                      <span className="block text-sm font-medium">{item.label}</span>
+                      <span className="mt-0.5 block text-xs leading-relaxed text-ink-500">
+                        {item.body}
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </aside>
+
+          <div className="feed-card overflow-hidden bg-white">
+            <div className="border-b border-ink-100 px-5 py-5 sm:px-7">
+              <div className="mb-4 flex items-center gap-2">
+                {[1, 2, 3].map((s) => (
+                  <div
+                    key={s}
+                    className={`h-1.5 flex-1 rounded-full ${
+                      s <= step ? 'insta-gradient' : 'bg-ink-100'
+                    }`}
+                  />
+                ))}
+                <span className="ml-2 text-xs text-ink-400">{step}/3</span>
+              </div>
+              <p className="gradient-text text-sm font-semibold">{STEP_META[step - 1].n}</p>
+              <h2 className="mt-2 text-2xl font-semibold text-ink-900">
+                {STEP_META[step - 1].title}
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-ink-500">
+                {STEP_META[step - 1].body}
+              </p>
+            </div>
+
+            <div className="px-5 py-6 sm:px-7">
+              {step === 1 && (
+                <div className="space-y-6">
+                  <Field
+                    label="你的本科背景,更接近哪条起跑线"
+                    hint="不确定也没关系,先选最接近的一档。结果出来后还能回头改。"
+                  >
+                    <RadioGroup
+                      options={TIER_OPTIONS}
+                      value={d.undergradTier ?? null}
+                      onChange={(v) => set('undergradTier', v)}
+                    />
+                  </Field>
+                  <Field
+                    label="你的本科专业属于哪个学科门类"
+                    hint="按国外院校常见 faculty / subject area 归类。选最接近的一项即可。"
+                  >
+                    <RadioGroup
+                      options={MAJOR_OPTIONS}
+                      value={d.undergradMajor ?? null}
+                      onChange={setUndergradMajor}
+                    />
+                  </Field>
+                </div>
+              )}
+
+              {step === 2 && (
+                <div className="space-y-6">
+                  <Field label="现在这份成绩单,大概写着多少" hint="填当前成绩就好。申请季里,分数本来就是一边推进一边更新的。">
+                    <div className="mb-4 inline-flex rounded-lg border border-ink-100 bg-ink-50 p-1">
+                      <button
+                        type="button"
+                        onClick={() => setD((p) => ({ ...p, gpaScale: '100', gpa: 82 }))}
+                        className={`rounded px-3 py-1.5 text-xs font-medium ${
+                          d.gpaScale === '100'
+                            ? 'insta-gradient text-white'
+                            : 'text-ink-500 hover:text-ink-900'
+                        }`}
+                      >
+                        百分制
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setD((p) => ({ ...p, gpaScale: '4.0', gpa: 3.2 }))}
+                        className={`rounded px-3 py-1.5 text-xs font-medium ${
+                          d.gpaScale === '4.0'
+                            ? 'insta-gradient text-white'
+                            : 'text-ink-500 hover:text-ink-900'
+                        }`}
+                      >
+                        4 分制
+                      </button>
+                    </div>
+                    <input
+                      type="range"
+                      min={d.gpaScale === '100' ? 70 : 2}
+                      max={d.gpaScale === '100' ? 95 : 4}
+                      step={d.gpaScale === '100' ? 1 : 0.1}
+                      value={d.gpa ?? 82}
+                      onChange={(e) => set('gpa', Number(e.target.value))}
+                      className="w-full accent-brand-600"
+                    />
+                    <div className="mt-3 rounded-lg bg-ink-50 px-4 py-4 text-center">
+                      <span className="text-3xl font-semibold text-ink-900">
+                        {d.gpaScale === '100' ? d.gpa : (d.gpa ?? 3.2).toFixed(1)}
+                      </span>
+                      <span className="ml-2 text-sm text-ink-400">
+                        {d.gpaScale === '100' ? '分' : '/ 4.0'}
+                      </span>
+                    </div>
+                  </Field>
+
+                  <Field label="语言成绩到了哪一步" hint="还没考也可以继续。结果页会把需要补的门槛单独拎出来。">
+                    <RadioGroup
+                      options={LANG_OPTIONS}
+                      value={d.languageType ?? null}
+                      onChange={(v) => set('languageType', v)}
+                      columns={1}
+                    />
+                    {d.languageType && d.languageType !== 'none' && (
+                      <>
+                        <div className="mt-2 grid grid-cols-2 gap-2">
+                          <input
+                            type="number"
+                            step="0.5"
+                            value={d.languageScore ?? ''}
+                            onChange={(e) => set('languageScore', Number(e.target.value))}
+                            placeholder={d.languageType === 'ielts' ? '总分 如 6.5' : '总分 如 95'}
+                            className="w-full rounded-lg border border-ink-200 px-3 py-3 text-sm outline-none focus:border-brand-500"
+                          />
+                          <input
+                            type="number"
+                            step="0.5"
+                            value={d.languageMinBand ?? ''}
+                            onChange={(e) =>
+                              set(
+                                'languageMinBand',
+                                e.target.value ? Number(e.target.value) : null,
+                              )
+                            }
+                            placeholder={d.languageType === 'ielts' ? '最低单项 如 6.0' : '最低单项'}
+                            className="w-full rounded-lg border border-ink-200 px-3 py-3 text-sm outline-none focus:border-brand-500"
+                          />
+                        </div>
+                        {d.languageType === 'ielts' && (
+                          <p className="mt-2 text-xs leading-relaxed text-ink-500">
+                            很多学校要求「总分 6.5 且<strong>单项不低于 6.0</strong>」。
+                            填上最低那一项,我们才不会把实际会拒你的项目标成「达标」。不填也能继续。
+                          </p>
+                        )}
+                      </>
+                    )}
+                  </Field>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="space-y-6">
+                  <Field label="你想把申请投向哪些地方" hint="美国之外的主流英语授课地区都可以多选。右侧数字是当前收录的项目数。">
+                    <div className="grid grid-cols-2 gap-2">
+                      {regions.map((r) => {
+                        const value = r.region as NonNullable<Draft['targetRegions']>[number]
+                        const on = d.targetRegions?.includes(value)
+                        return (
+                          <button
+                            key={r.region}
+                            type="button"
+                            onClick={() =>
+                              set(
+                                'targetRegions',
+                                on
+                                  ? d.targetRegions!.filter((x) => x !== value)
+                                  : [...(d.targetRegions ?? []), value],
+                              )
+                            }
+                            className={`flex min-h-11 items-center justify-between gap-2 rounded-lg border px-3 py-2.5 text-sm transition-colors ${
+                              on
+                                ? 'border-insta-pink bg-brand-50 text-brand-700'
+                                : 'border-ink-200 bg-white text-ink-600 hover:border-ink-400'
+                            }`}
+                          >
+                            <span>{REGION_LABEL[r.region] ?? r.region}</span>
+                            <span className="text-xs text-ink-400">{r.count}</span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                    {regions.length === 0 &&
+                      (regionsLoaded ? (
+                        // 一个地区都没开放:如实说明,不要让用户对着空白页面猜
+                        <div className="mt-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5">
+                          <p className="text-sm leading-relaxed text-amber-900">
+                            暂时没有可选地区。我们正在逐条核对院校数据,
+                            只有核对完的地区才会开放 —— 宁可先不开放,
+                            也不想拿没核对过的数字给你做决定。
+                          </p>
+                          <p className="mt-1.5 text-xs text-amber-800">
+                            很快就好,过几天再来看看。
+                          </p>
+                        </div>
+                      ) : (
+                        <p className="mt-2 text-sm text-ink-400">正在载入可选地区...</p>
+                      ))}
+                  </Field>
+
+                  <Field
+                    label="从你的本科起点出发,你想申请哪个方向"
+                    hint="已按第 1 步的本科门类排序。顺延更稳,转向要重点看先修课、作品集或实习证据。"
+                  >
+                    <div className="mb-3 rounded-lg border border-brand-100 bg-brand-50/70 px-3 py-2 text-xs leading-relaxed text-brand-700">
+                      你的起点: {getMajorLabel(d.undergradMajor)}
+                    </div>
+                    <div className="space-y-4">
+                      {visibleDirectionGroups.map((group) => (
+                        <section key={group.title}>
+                          <div className="mb-2">
+                            <p className="text-xs font-semibold text-ink-700">{group.title}</p>
+                            <p className="mt-0.5 text-xs leading-relaxed text-ink-400">
+                              {group.body}
+                            </p>
+                          </div>
+                          <RadioGroup
+                            options={group.options}
+                            value={d.targetDirection ?? null}
+                            onChange={(v) => set('targetDirection', v)}
+                          />
+                        </section>
+                      ))}
+                      {hiddenDirectionGroup && (
+                        <button
+                          type="button"
+                          onClick={() => setShowAllDirections((open) => !open)}
+                          className="inline-flex min-h-11 items-center rounded-lg border border-dashed border-ink-200 bg-white px-3 text-sm font-medium text-ink-600 transition-colors hover:border-insta-pink hover:text-insta-pink"
+                        >
+                          {showAllDirections
+                            ? '收起跨学科方向'
+                            : `查看更多跨学科方向(${hiddenDirectionGroup.options.length})`}
+                        </button>
+                      )}
+                    </div>
+                  </Field>
+
+                  <Field label="把这次测评结果存到哪里" hint="手机号只用于保存和找回结果,不会向第三方出售。">
+                    <input
+                      type="tel"
+                      inputMode="numeric"
+                      value={d.phone ?? ''}
+                      onChange={(e) => set('phone', e.target.value.replace(/\D/g, '').slice(0, 11))}
+                      placeholder="11 位手机号"
+                      className="w-full rounded-lg border border-ink-200 px-3 py-3 text-sm outline-none focus:border-brand-500"
+                    />
+                  </Field>
+
+                  <label className="flex items-start gap-2 rounded-lg bg-ink-50 px-3 py-3 text-xs leading-relaxed text-ink-600">
+                    <input
+                      type="checkbox"
+                      checked={!!d.agreedPrivacy}
+                      onChange={(e) => set('agreedPrivacy', e.target.checked as true)}
+                      className="mt-0.5"
+                    />
+                    <span>
+                      我同意 Compass 存储上述信息,用于生成和找回这次选校评估,并同意
+                      <Link
+                        href="/legal/privacy"
+                        target="_blank"
+                        className="text-brand-600 hover:underline"
+                      >
+                        《隐私政策》
+                      </Link>
+                      。
+                    </span>
+                  </label>
+                </div>
+              )}
+
+              {error && (
+                <p className="mt-5 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+                  {error}
+                </p>
+              )}
+
+              <div className="mt-7 flex gap-2">
+                {step > 1 && (
+                  <Button variant="secondary" onClick={() => setStep(step - 1)} disabled={pending}>
+                    上一步
+                  </Button>
+                )}
+                {step < 3 ? (
+                  <Button
+                    onClick={() => setStep(step + 1)}
+                    disabled={!canNext}
+                    className="insta-button flex-1 border-0"
+                  >
+                    {NEXT_LABEL[step]}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={!canNext || pending}
+                    className="insta-button flex-1 border-0"
+                  >
+                    {pending ? '正在整理你的申请快照...' : '生成我的申请快照'}
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p className="mx-auto max-w-6xl px-5 pb-8 text-center text-xs leading-relaxed text-ink-400">
+          这是一份基于公开信息和规则模型的申请参考,不是录取承诺。最终要求和截止日期,永远以学校官网为准。
+        </p>
+      </section>
+    </main>
+  )
+}
