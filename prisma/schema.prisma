@@ -239,6 +239,20 @@ model User {
   wxUnionid String?  @unique @map("wx_unionid")
 
   /// 隐私政策/用户协议同意留痕(PRD 10.3 要求首次注册强制确认)
+  /**
+   * 密码登录(可选)。
+   *
+   * 学生端主路径仍是手机号 + 验证码 —— 不强制设密码,也不要求注册时设。
+   * 但两种场景必须有密码兜底:
+   *   · 演示 / 内网环境没接短信,验证码根本发不出去
+   *   · 用户换号、收不到短信时的备用登录方式
+   * scrypt 存储,和后台账号同一套(见 lib/auth/password.ts)。
+   */
+  passwordHash String? @map("password_hash")
+  /** 连续失败次数与锁定截止 —— 密码登录必须限流,否则就是个可无限试的接口 */
+  failedAttempts Int       @default(0) @map("failed_attempts")
+  lockedUntil    DateTime? @map("locked_until")
+
   agreedTermsAt      DateTime? @map("agreed_terms_at")
   agreedTermsVersion String?   @map("agreed_terms_version")
 

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { db } from '@/lib/db'
 import { requireUser } from '@/lib/auth/session'
 import { Card } from '@/components/ui'
-import { DataControls } from './Controls'
+import { DataControls, PasswordControls } from './Controls'
 import { UNDERGRAD_TIER_LABEL, UNDERGRAD_MAJOR_OPTIONS } from '@/lib/programs/types'
 
 /**
@@ -80,6 +80,11 @@ export default async function SettingsPage() {
             </Link>
           </p>
         )}
+      </Card>
+
+      <Card>
+        <h2 className="mb-2 font-medium text-ink-900">登录密码</h2>
+        <PasswordControls hasPassword={!!user.passwordHash} />
       </Card>
 
       <Card>

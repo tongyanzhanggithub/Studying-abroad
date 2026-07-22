@@ -11,6 +11,7 @@ import {
   VerificationError,
 } from '@/lib/auth/verification'
 import { TERMS_VERSION } from '@/lib/constants'
+import { hashPassword, verifyPassword, checkPasswordStrength } from '@/lib/auth/password'
 
 /**
  * 取客户端真实 IP。
@@ -128,6 +129,110 @@ export async function loginWithCode(params: {
   await createSession({ userId: user.id, phone: user.phone })
 
   return { ok: true as const, isNewUser: !existing }
+}
+
+/** 连续失败几次开始锁 */
+const MAX_PASSWORD_ATTEMPTS = 5
+/** 锁多久(分钟)—— 15 分钟足够让自动化撞库不划算,又不至于把本人关太久 */
+const LOCK_MINUTES = 15
+
+/**
+ * 密码登录(可选路径,主路径仍是验证码)。
+ *
+ * ⚠️ 两条防线,和后台登录同一套标准:
+ *    1. scrypt 存储 —— 拖库之后不能被秒破
+ *    2. 失败次数限流 —— 登录接口在公网上,不限流就是个可无限试的接口
+ *
+ * ⚠️ 「没设过密码」「手机号不存在」「密码错」返回**同一句话**。
+ *    分开提示等于送给攻击者一个枚举「哪些手机号注册过」的接口。
+ */
+export async function loginWithPassword(params: {
+  phone: string
+  password: string
+  next?: string
+}) {
+  const { phone, password } = params
+
+  if (!isValidPhone(phone)) {
+    return { ok: false as const, error: '手机号格式不正确' }
+  }
+
+  const GENERIC = '手机号或密码不正确'
+  const user = await db.user.findUnique({ where: { phone } })
+
+  if (!user || !user.passwordHash) {
+    return { ok: false as const, error: GENERIC }
+  }
+
+  if (user.lockedUntil && user.lockedUntil > new Date()) {
+    const mins = Math.ceil((user.lockedUntil.getTime() - Date.now()) / 60_000)
+    return {
+      ok: false as const,
+      error: `登录失败次数过多,账号已临时锁定,请 ${mins} 分钟后再试(或改用验证码登录)。`,
+    }
+  }
+
+  const { ok, needsUpgrade } = await verifyPassword(password, user.passwordHash)
+
+  if (!ok) {
+    const attempts = user.failedAttempts + 1
+    await db.user.update({
+      where: { id: user.id },
+      data: {
+        failedAttempts: attempts,
+        lockedUntil:
+          attempts >= MAX_PASSWORD_ATTEMPTS
+            ? new Date(Date.now() + LOCK_MINUTES * 60_000)
+            : null,
+      },
+    })
+    if (attempts >= MAX_PASSWORD_ATTEMPTS) {
+      return {
+        ok: false as const,
+        error: `登录失败次数过多,账号已锁定 ${LOCK_MINUTES} 分钟。可以改用验证码登录。`,
+      }
+    }
+    const left = MAX_PASSWORD_ATTEMPTS - attempts
+    return {
+      ok: false as const,
+      error: left <= 2 ? `${GENERIC}(再错 ${left} 次将锁定账号)` : GENERIC,
+    }
+  }
+
+  // 成功:清计数,顺手把旧哈希升级到当前算法
+  await db.user.update({
+    where: { id: user.id },
+    data: {
+      failedAttempts: 0,
+      lockedUntil: null,
+      ...(needsUpgrade ? { passwordHash: await hashPassword(password) } : {}),
+    },
+  })
+
+  await createSession({ userId: user.id, phone: user.phone })
+  return { ok: true as const }
+}
+
+/**
+ * 设置 / 修改自己的登录密码。需要已登录 —— 也就是说必须先通过验证码进来一次,
+ * 密码只是之后的便捷入口,不能成为绕过手机号验证的注册途径。
+ */
+export async function setMyPassword(newPassword: string) {
+  const { requireUser } = await import('@/lib/auth/session')
+  const user = await requireUser()
+
+  const weak = checkPasswordStrength(newPassword)
+  if (weak) return { ok: false as const, error: weak }
+
+  await db.user.update({
+    where: { id: user.id },
+    data: {
+      passwordHash: await hashPassword(newPassword),
+      failedAttempts: 0,
+      lockedUntil: null,
+    },
+  })
+  return { ok: true as const }
 }
 
 export async function logout() {

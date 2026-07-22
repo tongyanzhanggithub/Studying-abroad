@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button, Field, RadioGroup } from '@/components/ui'
 import { updateProfile, exportMyData, deleteAccount } from './actions'
+import { setMyPassword } from '@/app/login/actions'
 import { UNDERGRAD_MAJOR_OPTIONS } from '@/lib/programs/types'
 import type { LanguageType, UndergradTier } from '@prisma/client'
 
@@ -165,6 +166,67 @@ export function ProfileForm({
           </span>
         )}
       </div>
+    </div>
+  )
+}
+
+/**
+ * 设置 / 修改登录密码。
+ *
+ * 学生端主路径是手机号 + 验证码,密码是可选的便捷入口 ——
+ * 换手机、收不到短信、或部署环境没接短信时,它是唯一能进来的路。
+ */
+export function PasswordControls({ hasPassword }: { hasPassword: boolean }) {
+  const [pwd, setPwd] = useState('')
+  const [pwd2, setPwd2] = useState('')
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
+  const [pending, startTransition] = useTransition()
+
+  return (
+    <div className="space-y-3">
+      <p className="text-sm leading-relaxed text-ink-600">
+        {hasPassword
+          ? '你已设置过登录密码,可以在下面修改。'
+          : '设置密码后,除了验证码,也可以直接用「手机号 + 密码」登录。'}
+      </p>
+      <input
+        type="password"
+        value={pwd}
+        onChange={(e) => setPwd(e.target.value)}
+        placeholder={hasPassword ? '新密码' : '设置密码'}
+        className="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
+      />
+      <input
+        type="password"
+        value={pwd2}
+        onChange={(e) => setPwd2(e.target.value)}
+        placeholder="再输一次"
+        className="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
+      />
+      {msg && (
+        <p className={`text-sm ${msg.ok ? 'text-green-700' : 'text-red-700'}`}>{msg.text}</p>
+      )}
+      <Button
+        disabled={pending || !pwd || !pwd2}
+        onClick={() =>
+          startTransition(async () => {
+            if (pwd !== pwd2) {
+              setMsg({ ok: false, text: '两次输入的密码不一致' })
+              return
+            }
+            const res = await setMyPassword(pwd)
+            if (!res.ok) {
+              setMsg({ ok: false, text: res.error })
+              return
+            }
+            setPwd('')
+            setPwd2('')
+            setMsg({ ok: true, text: '密码已保存,下次可以用手机号 + 密码登录' })
+          })
+        }
+      >
+        {pending ? '保存中…' : hasPassword ? '修改密码' : '设置密码'}
+      </Button>
     </div>
   )
 }

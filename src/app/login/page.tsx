@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button, Card, Field } from '@/components/ui'
 import { BrandLogo } from '@/components/BrandLogo'
-import { requestCode, loginWithCode } from './actions'
+import { requestCode, loginWithCode, loginWithPassword } from './actions'
 
 /**
  * ⚠️ useSearchParams() 必须包在 Suspense 里,否则 `next build` 会直接失败:
@@ -26,8 +26,15 @@ function LoginForm() {
   const params = useSearchParams()
   const next = params.get('next') ?? '/app/dashboard'
 
+  /**
+   * 两种登录方式并存。验证码是主路径(不用记密码、且天然验证手机号);
+   * 密码是便捷/兜底路径 —— 没接短信的环境、或收不到短信时用。
+   */
+  const [mode, setMode] = useState<'code' | 'password'>('code')
+
   const [phone, setPhone] = useState('')
   const [code, setCode] = useState('')
+  const [password, setPassword] = useState('')
   const [agreed, setAgreed] = useState(false)
   const [codeSent, setCodeSent] = useState(false)
   const [devCode, setDevCode] = useState<string | null>(null)
@@ -72,6 +79,18 @@ function LoginForm() {
     })
   }
 
+  function handlePasswordLogin() {
+    setError(null)
+    startTransition(async () => {
+      const res = await loginWithPassword({ phone, password })
+      if (!res.ok) {
+        setError(res.error)
+        return
+      }
+      router.push(next)
+    })
+  }
+
   return (
     <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-5 py-12">
       <BrandLogo className="mb-6 text-lg" />
@@ -80,7 +99,32 @@ function LoginForm() {
         <h1 className="mb-1 text-xl font-semibold text-ink-900">登录 / 注册</h1>
         <p className="mb-5 text-sm text-ink-600">未注册的手机号将自动创建账号</p>
 
+        {/* 登录方式切换 */}
+        <div className="mb-5 flex gap-1 rounded-lg bg-ink-50 p-1 text-sm">
+          {(
+            [
+              ['code', '验证码登录'],
+              ['password', '密码登录'],
+            ] as const
+          ).map(([m, label]) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => {
+                setMode(m)
+                setError(null)
+              }}
+              className={`flex-1 rounded-md py-1.5 transition-colors ${
+                mode === m ? 'bg-white font-medium text-ink-900 shadow-sm' : 'text-ink-500'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
         {/* 两步指示 —— 让用户知道「填手机号 → 填验证码」是两步,不是缺了直接登录 */}
+        {mode === 'code' && (
         <ol className="mb-5 flex items-center gap-2 text-xs">
           <li className={codeSent ? 'text-ink-400' : 'font-medium text-brand-600'}>
             <span className="mr-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-600 text-[10px] text-white">
@@ -100,6 +144,7 @@ function LoginForm() {
             填验证码登录
           </li>
         </ol>
+        )}
 
         <div className="space-y-4">
           <Field label="手机号">
@@ -117,7 +162,25 @@ function LoginForm() {
             />
           </Field>
 
-          {codeSent && (
+          {mode === 'password' && (
+            <Field label="密码">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && phone.length === 11 && password) handlePasswordLogin()
+                }}
+                placeholder="登录密码"
+                className="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
+              />
+              <p className="mt-1.5 text-xs leading-relaxed text-ink-400">
+                密码在「设置」里自行设定。没设过就用验证码登录,进去之后再设。
+              </p>
+            </Field>
+          )}
+
+          {mode === 'code' && codeSent && (
             <Field label="验证码">
               <input
                 ref={codeRef}
@@ -144,6 +207,9 @@ function LoginForm() {
             </Field>
           )}
 
+          {/* 协议勾选只在验证码路径出现 —— 那是唯一会「首次注册建号」的入口。
+              密码登录只对已有账号生效,协议在注册时就已经确认并留痕了。 */}
+          {mode === 'code' && (
           <label className="flex items-start gap-2 text-xs leading-relaxed text-ink-600">
             <input
               type="checkbox"
@@ -163,12 +229,22 @@ function LoginForm() {
               。我们收集手机号仅用于账号登录与申请提醒,不会向第三方出售。
             </span>
           </label>
+          )}
 
           {error && (
             <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
           )}
 
-          {!codeSent ? (
+          {mode === 'password' ? (
+            <Button
+              onClick={handlePasswordLogin}
+              disabled={pending || phone.length !== 11 || !password}
+              className="w-full"
+              size="lg"
+            >
+              {pending ? '登录中…' : '登录'}
+            </Button>
+          ) : !codeSent ? (
             <Button
               onClick={handleSendCode}
               disabled={pending || phone.length !== 11}

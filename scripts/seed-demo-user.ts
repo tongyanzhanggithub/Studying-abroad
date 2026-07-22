@@ -19,6 +19,7 @@
 import { db } from '@/lib/db'
 import { regenerateMaterials } from '@/lib/materials/generate'
 import { CURRENT_SEASON, TERMS_VERSION } from '@/lib/constants'
+import { hashPassword, generatePassword, checkPasswordStrength } from '@/lib/auth/password'
 
 function seasonExpiry(): Date {
   const year = Number(CURRENT_SEASON.slice(0, 4))
@@ -42,6 +43,25 @@ async function main() {
       agreedTermsVersion: TERMS_VERSION,
     },
     update: {},
+  })
+
+  /**
+   * 1.5) 登录密码。
+   * 没接短信的环境(演示 / 内网)靠它登录,不用去日志里翻验证码。
+   * 不给 PASSWORD 就现场随机生成一个强密码,只打印一次。
+   */
+  const provided = process.env.PASSWORD
+  if (provided) {
+    const weak = checkPasswordStrength(provided)
+    if (weak) {
+      console.error(`✗ 密码太弱:${weak}`)
+      process.exit(1)
+    }
+  }
+  const password = provided ?? generatePassword()
+  await db.user.update({
+    where: { id: user.id },
+    data: { passwordHash: await hashPassword(password), failedAttempts: 0, lockedUntil: null },
   })
 
   // 2) Pro 季票
@@ -122,9 +142,10 @@ async function main() {
   console.log('─'.repeat(56))
   console.log('演示学生账号已就绪')
   console.log('─'.repeat(56))
-  console.log(`  登录地址   /login`)
+  console.log(`  登录地址   /login  →  切到「密码登录」`)
   console.log(`  手机号     ${phone}`)
-  console.log(`  验证码     生产环境看服务端日志(需 ALLOW_MOCK_SMS=true)`)
+  console.log(`  密码       ${password}`)
+  console.log(`  (另一种)  验证码登录需 ALLOW_MOCK_SMS=true,码在服务端日志里:`)
   console.log(`             journalctl -u compass -f | grep SMS:demo`)
   console.log(`  季票       Pro · 至 ${seasonExpiry().toISOString().slice(0, 10)}`)
   console.log(`  选校单     ${choices} 所`)
