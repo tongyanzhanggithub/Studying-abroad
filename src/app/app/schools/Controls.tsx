@@ -1,11 +1,9 @@
 'use client'
 
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { cn, deadlineUrgency } from '@/lib/utils'
 import { APPLICATION_STATUS_LABEL, TIER_TAG_LABEL } from '@/lib/programs/types'
-import { removeFromShortlist, updateStatus, updateTier } from './actions'
 import type { ApplicationStatus, TierTag } from '@prisma/client'
 
 const TIERS: TierTag[] = ['reach', 'match', 'safe']
@@ -33,9 +31,37 @@ export function ShortlistControls({
   deadline: string
   daysLeft: number | null
 }) {
-  const router = useRouter()
+  const [busy, setBusy] = useState<'tier' | 'status' | 'remove' | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const [, startTransition] = useTransition()
   const urgency = deadlineUrgency(daysLeft)
+
+  const run = (
+    nextBusy: 'tier' | 'status' | 'remove',
+    payload: { action: 'tier'; tierTag: TierTag } | { action: 'status'; status: ApplicationStatus } | { action: 'remove' },
+  ) => {
+    setError(null)
+    setBusy(nextBusy)
+    startTransition(async () => {
+      try {
+        const res = await fetch('/api/shortlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ choiceId, ...payload }),
+        })
+        const json = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null
+        if (!res.ok || !json?.ok) {
+          setError(json?.error ?? '操作失败,请刷新后再试')
+          setBusy(null)
+          return
+        }
+        window.location.reload()
+      } catch {
+        setError('网络开小差了,请再试一次')
+        setBusy(null)
+      }
+    })
+  }
 
   const countdown =
     daysLeft === null
@@ -57,7 +83,7 @@ export function ShortlistControls({
    * 现在名字独占一行不截断,操作放第二行。
    */
   return (
-    <div className="space-y-2">
+    <div className="space-y-2" data-choice-id={choiceId}>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <Link
@@ -85,12 +111,8 @@ export function ShortlistControls({
         <select
           value={tierTag}
           aria-label="选校档位"
-          onChange={(e) =>
-            startTransition(async () => {
-              await updateTier(choiceId, e.target.value as TierTag)
-              router.refresh()
-            })
-          }
+          disabled={busy !== null}
+          onChange={(e) => run('tier', { action: 'tier', tierTag: e.target.value as TierTag })}
           className="min-h-9 rounded-lg border border-ink-200 px-2 text-xs text-ink-700"
         >
           {TIERS.map((t) => (
@@ -106,12 +128,8 @@ export function ShortlistControls({
         <select
           value={status}
           aria-label="申请状态"
-          onChange={(e) =>
-            startTransition(async () => {
-              await updateStatus(choiceId, e.target.value as ApplicationStatus)
-              router.refresh()
-            })
-          }
+          disabled={busy !== null}
+          onChange={(e) => run('status', { action: 'status', status: e.target.value as ApplicationStatus })}
           className="min-h-9 rounded-lg border border-ink-100 bg-ink-50 px-2 text-xs text-ink-600"
         >
           {STATUSES.map((s) => (
@@ -120,17 +138,21 @@ export function ShortlistControls({
         </select>
 
         <button
-          onClick={() =>
-            startTransition(async () => {
-              await removeFromShortlist(choiceId)
-              router.refresh()
-            })
-          }
-          className="ml-auto inline-flex min-h-9 items-center px-1 text-xs text-ink-400 hover:text-red-600"
+          type="button"
+          disabled={busy !== null}
+          onClick={() => run('remove', { action: 'remove' })}
+          className="ml-auto inline-flex min-h-9 items-center px-1 text-xs text-ink-400 hover:text-red-600 disabled:opacity-50"
         >
-          移除
+          {busy === 'remove' ? '移除中…' : '移除'}
         </button>
       </div>
+
+      {busy && busy !== 'remove' && (
+        <p className="text-xs text-brand-600">
+          {busy === 'tier' ? '正在更新档位…' : '正在更新状态…'}
+        </p>
+      )}
+      {error && <p className="text-xs text-red-600">{error}</p>}
     </div>
   )
 }

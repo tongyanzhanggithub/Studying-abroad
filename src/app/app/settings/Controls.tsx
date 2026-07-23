@@ -268,18 +268,18 @@ export function DataControls() {
             onClick={() => setConfirming(true)}
             className="text-sm text-ink-400 hover:text-red-700 hover:underline"
           >
-            注销账号
+            注销账号并清除全部数据
           </button>
         ) : (
           <div className="space-y-3">
             <p className="text-sm leading-relaxed text-red-700">
-              注销将<strong>永久删除</strong>你的选校单、材料、文书全部版本和个人资料,
+              注销账号会同时<strong>清除账号内全部数据</strong>,包括选校单、材料、文书全部版本和个人资料,
               且不可恢复。建议先导出数据。
             </p>
             <input
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="输入你的手机号以确认"
+              placeholder="输入你的手机号以确认注销"
               className="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-red-400"
             />
             {error && <p className="text-xs text-red-700">{error}</p>}
@@ -298,7 +298,7 @@ export function DataControls() {
                 }
                 className="rounded-lg border border-red-300 px-4 py-2 text-sm text-red-700 hover:bg-red-50 disabled:opacity-50"
               >
-                {pending ? '处理中…' : '确认注销'}
+                {pending ? '处理中…' : '确认注销并清除数据'}
               </button>
             </div>
           </div>

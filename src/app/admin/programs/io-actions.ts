@@ -49,6 +49,9 @@ export async function exportPrograms(filter: string = 'all') {
         case 'id': return p.id
         case 'schoolNameEn': return p.school.nameEn
         case 'schoolNameZh': return p.school.nameZh ?? ''
+        case 'schoolQsRank': return p.school.qsRank ?? ''
+        case 'schoolQsRankYear': return p.school.qsRankYear ?? ''
+        case 'schoolQsRankSourceUrl': return p.school.qsRankSourceUrl ?? ''
         case 'region': return p.region
         case 'nameEn': return p.nameEn
         case 'nameZh': return p.nameZh ?? ''
@@ -81,6 +84,8 @@ export async function exportProgramTemplate() {
     const sample: Partial<Record<ColumnKey, string>> = {
       schoolNameEn: 'University of Example',
       schoolNameZh: '示例大学',
+      schoolQsRank: '25',
+      schoolQsRankYear: '2026',
       region: 'UK',
       nameEn: 'MSc Example Studies',
       nameZh: '示例学理学硕士',
@@ -176,10 +181,24 @@ export async function importPrograms(csvText: string) {
       }
 
       // 学校:按(英文名+地区)找,没有就建
+      const qsRank = parseIntOrNull(cell(row, 'schoolQsRank'))
+      const qsRankYear = parseIntOrNull(cell(row, 'schoolQsRankYear'))
       const school = await db.school.upsert({
         where: { nameEn_region: { nameEn: schoolNameEn, region } },
-        create: { nameEn: schoolNameEn, nameZh: cell(row, 'schoolNameZh') || null, region },
-        update: { nameZh: cell(row, 'schoolNameZh') || undefined },
+        create: {
+          nameEn: schoolNameEn,
+          nameZh: cell(row, 'schoolNameZh') || null,
+          region,
+          qsRank,
+          qsRankYear,
+          qsRankSourceUrl: cell(row, 'schoolQsRankSourceUrl') || null,
+        },
+        update: {
+          nameZh: cell(row, 'schoolNameZh') || undefined,
+          qsRank: cell(row, 'schoolQsRank') ? qsRank : undefined,
+          qsRankYear: cell(row, 'schoolQsRankYear') ? qsRankYear : undefined,
+          qsRankSourceUrl: cell(row, 'schoolQsRankSourceUrl') || undefined,
+        },
       })
 
       // 过期截止日兜底

@@ -139,6 +139,27 @@ const WORKSPACE_PREVIEWS = [
   },
 ]
 
+const ADVISOR_GROUPS = [
+  {
+    label: '申请策略导师',
+    title: '先把方向判断准',
+    body: '从本科背景、成绩区间、目标地区和预算出发,帮你判断哪些学校值得冲、哪些应该稳住。',
+    tags: ['定位', '选校', '节奏'],
+  },
+  {
+    label: '文书表达导师',
+    title: '把经历讲得更有辨识度',
+    body: '不替你编故事,而是把真实经历里的动机、行动和结果挖出来,让文书更像你本人。',
+    tags: ['素材', '结构', '表达'],
+  },
+  {
+    label: '项目研究导师',
+    title: '盯住要求和截止日',
+    body: '围绕专业要求、语言小分、材料清单和截止日期做核对,减少临门一脚才发现不匹配。',
+    tags: ['官网核对', '材料', '截止日'],
+  },
+]
+
 const REGION_HERO_COPY = '美国之外主流英语授课地区'
 const SUPPORTED_REGION_COUNT = REGION_ORDER.length
 
@@ -348,36 +369,82 @@ export default async function HomePage() {
 
       {/* ── 工作台预览 ─────────────────────────────── */}
       <section className="border-t border-white/70 bg-white">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-5 py-10 sm:py-14">
           <div className="max-w-2xl">
             <p className="gradient-text text-sm font-semibold">WORKSPACE PREVIEW</p>
             <h2 className="display-heading mt-2 text-2xl font-semibold text-ink-900 sm:text-3xl">
               测完之后,不是只给你一张名单
             </h2>
-            <p className="mt-3 text-ink-600">
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink-600">
               真正省心的是后面的申请管理:哪些学校值得申、哪些材料已经够用、哪篇文书还没收尾、哪个截止日快到了。
             </p>
           </div>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {WORKSPACE_PREVIEWS.map((item) => (
-              <article key={item.label} className="feed-card overflow-hidden p-0">
-                <div className="border-b border-ink-100 px-5 py-4">
+              <article key={item.label} className="feed-card overflow-hidden p-0 shadow-[0_12px_30px_rgba(35,42,53,0.05)]">
+                <div className="px-4 py-4">
                   <p className="text-xs font-semibold text-insta-pink">{item.label}</p>
-                  <h3 className="mt-1 text-lg font-medium text-ink-900">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-600">{item.body}</p>
+                  <h3 className="mt-1 text-base font-medium leading-snug text-ink-900">{item.title}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-ink-500">{item.body}</p>
                 </div>
-                <div className="space-y-2 bg-ink-50/60 px-5 py-4">
-                  {item.rows.map((row, index) => (
+                <div className="space-y-1.5 border-t border-ink-100 bg-ink-50/50 px-4 py-3">
+                  {item.rows.slice(0, 2).map((row, index) => (
                     <div
                       key={row}
-                      className="flex items-center justify-between rounded-lg border border-white bg-white px-3 py-2 text-sm"
+                      className="flex items-center justify-between rounded-lg bg-white px-2.5 py-2 text-xs"
                     >
                       <span className="text-ink-700">{row}</span>
                       <span className="text-xs text-ink-400">
                         {index === 0 ? '优先' : index === 1 ? '进行中' : '待确认'}
                       </span>
                     </div>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 名师团队 ─────────────────────────────── */}
+      <section className="border-t border-white/70 bg-[linear-gradient(180deg,#fff_0%,#fff7fb_100%)]">
+        <div className="mx-auto max-w-6xl px-5 py-12 sm:py-16">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="gradient-text text-sm font-semibold">MENTOR PANEL</p>
+              <h2 className="display-heading mt-2 text-2xl font-semibold text-ink-900 sm:text-3xl">
+                名师团队,关键判断有人把关
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-ink-600">
+                AI 负责整理信息和提醒节点,真正需要取舍的地方,由懂地区、懂专业、懂文书的老师帮你把关。
+              </p>
+            </div>
+            <p className="max-w-xs text-sm leading-relaxed text-ink-500">
+              重要选择不靠感觉,也不被模板牵着走。你会看到建议背后的理由,再决定要不要采纳。
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {ADVISOR_GROUPS.map((advisor, index) => (
+              <article key={advisor.label} className="feed-card p-5">
+                <div className="flex items-start gap-3">
+                  <span className="story-ring grid h-11 w-11 shrink-0 place-items-center rounded-full p-[2px] text-sm font-semibold">
+                    <span className="grid h-full w-full place-items-center rounded-full bg-white text-ink-900">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold text-insta-pink">{advisor.label}</p>
+                    <h3 className="mt-1 text-lg font-medium text-ink-900">{advisor.title}</h3>
+                  </div>
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-ink-600">{advisor.body}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {advisor.tags.map((tag) => (
+                    <span key={tag} className="rounded-full border border-brand-100 bg-white px-3 py-1 text-xs text-ink-500">
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </article>
@@ -446,7 +513,7 @@ export default async function HomePage() {
                   一张通行证,管完整个申请季
                 </h2>
                 <p className="mt-3 max-w-xl text-ink-600">
-                  从选校名单到材料清单、文书打磨和截止提醒一次解锁。需要顾问精修时,再按需加购人工服务。
+                  从选校名单到材料清单、文书打磨和截止提醒一次解锁。需要老师精修时,再按需加购人工服务。
                 </p>
               </div>
               <Link

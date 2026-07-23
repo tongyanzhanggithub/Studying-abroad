@@ -103,6 +103,14 @@ enum BarChangeFlag {
   unknown
 }
 
+/// 国际排名体系。只存可被运营核对来源的排名,不要把不明来源榜单混进来。
+enum RankingProvider {
+  qs
+  the
+  arwu
+  us_news
+}
+
 /// 选校档位
 enum TierTag {
   reach // 冲刺
@@ -455,6 +463,11 @@ model School {
   shortName String? @map("short_name")
   region    Region
 
+  /// QS 世界大学排名。排名每年更新,所以年份必须和排名一起存。
+  qsRank          Int?    @map("qs_rank")
+  qsRankYear      Int?    @map("qs_rank_year")
+  qsRankSourceUrl String? @map("qs_rank_source_url")
+
   /// AI 使用政策分档(PRD 10.2)—— 零容忍院校在文书工作台显著警告
   aiPolicyLevel AiPolicyLevel @default(unspecified) @map("ai_policy_level")
   aiPolicyNote  String?       @map("ai_policy_note")
@@ -464,10 +477,31 @@ model School {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   programs Program[]
+  rankings SchoolRanking[]
 
   @@unique([nameEn, region])
   @@index([region])
   @@map("schools")
+}
+
+/// 院校综合排名,如 QS / THE / ARWU / U.S. News 世界大学排名。
+model SchoolRanking {
+  id       String @id @default(cuid())
+  schoolId String @map("school_id")
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  provider  RankingProvider
+  year      Int
+  rank      Int?
+  rankText  String? @map("rank_text")
+  sourceUrl String? @map("source_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([schoolId, provider, year])
+  @@index([provider, year, rank])
+  @@map("school_rankings")
 }
 
 model Program {
@@ -505,6 +539,7 @@ model Program {
 
   /// 该专业所需材料模板
   materialTemplates ProgramMaterialTemplate[]
+  rankings          ProgramRanking[]
 
   /// 运营人工标注
   barChangeFlag  BarChangeFlag @default(unknown) @map("bar_change_flag")
@@ -531,6 +566,28 @@ model Program {
   @@index([finalDeadline])
   @@index([confidence, lastVerifiedAt])
   @@map("programs")
+}
+
+/// 专业 / 学科排名,如 QS Business & Management、THE Business & Economics。
+/// 这里挂在 Program 上,便于学生在当前专业卡片里直接看到对应方向的排名。
+model ProgramRanking {
+  id        String  @id @default(cuid())
+  programId String  @map("program_id")
+  program   Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  provider    RankingProvider
+  year        Int
+  subjectName String? @map("subject_name")
+  rank        Int?
+  rankText    String? @map("rank_text")
+  sourceUrl   String? @map("source_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([programId, provider, year])
+  @@index([provider, year, rank])
+  @@map("program_rankings")
 }
 
 /// 数据变更记录 —— 驱动 PRD 5.4「数据变更 → 用户触达」流程

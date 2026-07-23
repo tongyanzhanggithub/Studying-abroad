@@ -71,6 +71,9 @@ interface RawProgram {
   school_name_en?: string
   school_name_zh?: string | null
   school_short?: string | null
+  school_qs_rank?: number | null
+  school_qs_rank_year?: number | null
+  school_qs_rank_source_url?: string | null
   region?: string
   program_name_en?: string
   program_name_zh?: string | null
@@ -308,6 +311,9 @@ function normalizeRow(raw: Record<string, unknown>): RawProgram {
     school_name_en: asText(pick('university_name_en', 'school_name_en')) ?? undefined,
     school_name_zh: cleanName(asText(pick('school_name_zh', 'school_name_cn'))),
     school_short: asText(pick('school_short', 'school_abbr')),
+    school_qs_rank: asNumber(pick('school_qs_rank', 'qs_rank', 'qs_world_rank')),
+    school_qs_rank_year: asNumber(pick('school_qs_rank_year', 'qs_year', 'qs_rank_year')),
+    school_qs_rank_source_url: asText(pick('school_qs_rank_source_url', 'qs_source_url')),
     region: asText(pick('region', 'country')) ?? undefined,
     program_name_en: asText(pick('program_name_en', 'programme_name_en')) ?? undefined,
     program_name_zh: cleanName(asText(pick('program_name_zh', 'program_name_cn'))),
@@ -490,11 +496,17 @@ async function importFile(path: string, fileName: string, today: Date): Promise<
         nameEn: schoolNameEn,
         nameZh: row.school_name_zh ?? null,
         shortName: row.school_short ?? null,
+        qsRank: row.school_qs_rank ?? null,
+        qsRankYear: row.school_qs_rank_year ?? null,
+        qsRankSourceUrl: row.school_qs_rank_source_url ?? null,
         region,
       },
       update: {
         nameZh: row.school_name_zh ?? undefined,
         shortName: row.school_short ?? undefined,
+        qsRank: row.school_qs_rank ?? undefined,
+        qsRankYear: row.school_qs_rank_year ?? undefined,
+        qsRankSourceUrl: row.school_qs_rank_source_url ?? undefined,
       },
     })
 

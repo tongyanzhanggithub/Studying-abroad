@@ -8,6 +8,7 @@ import { BrandLogo } from '@/components/BrandLogo'
 import { submitAssessment, trackAssessStart, getAvailableRegions } from './actions'
 import type { AssessFormInput } from './actions'
 import {
+  DIRECTION_LABEL,
   DIRECTION_ORDER,
   REGION_LABEL,
   REGION_ORDER,
@@ -168,6 +169,10 @@ function getMajorLabel(major?: string | null) {
   return option ? `${option.label} · ${option.description}` : '还未选择本科门类'
 }
 
+function getDirectionName(direction?: string | null) {
+  return direction ? (DIRECTION_LABEL[direction] ?? direction) : '还没圈定方向'
+}
+
 function directionGroupsFor(major?: string | null) {
   const relation = major ? MAJOR_DIRECTION_MAP[major] : null
   if (!relation) {
@@ -311,6 +316,25 @@ function AssessForm() {
           d.phone?.length === 11 &&
           d.agreedPrivacy
 
+  const progress = Math.round((step / 3) * 100)
+  const selectedRegions =
+    d.targetRegions?.map((region) => REGION_LABEL[region] ?? region).join(' / ') || '还没选地区'
+  const languageSummary =
+    d.languageType === 'none'
+      ? '语言还没考'
+      : d.languageType && d.languageScore
+        ? `${d.languageType === 'ielts' ? '雅思' : '托福'} ${d.languageScore}${
+            d.languageMinBand ? ` · 最低单项 ${d.languageMinBand}` : ''
+          }`
+        : '还没填语言'
+  const mapRows = [
+    { label: '本科起点', value: d.undergradMajor ? getMajorLabel(d.undergradMajor) : '先选本科门类' },
+    { label: '成绩信号', value: d.gpaScale === '4.0' ? `${d.gpa ?? 3.2}/4.0` : `${d.gpa ?? 82} 分` },
+    { label: '语言状态', value: languageSummary },
+    { label: '目标地区', value: selectedRegions },
+    { label: '申请方向', value: getDirectionName(d.targetDirection) },
+  ]
+
   function handleSubmit() {
     setError(null)
     startTransition(async () => {
@@ -324,81 +348,115 @@ function AssessForm() {
   }
 
   return (
-    <main className="marketing-page min-h-screen bg-insta-surface text-ink-800">
-      <header className="border-b border-white/70 bg-white/78 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+    <main className="marketing-page min-h-screen bg-[#fff9fc] text-ink-800">
+      <header className="sticky top-0 z-30 border-b border-white/70 bg-white/78 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
           <BrandLogo className="text-lg" />
-          <span className="hidden text-sm text-ink-500 sm:inline">60 秒,把申请迷雾先拨开一层</span>
+          <span className="hidden text-sm text-ink-500 sm:inline">60 秒生成你的申请地图</span>
         </div>
       </header>
 
-      <section className="soft-section border-b border-white/70">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-8 lg:grid-cols-[0.92fr_1.08fr] lg:py-14">
+      <section className="relative overflow-hidden border-b border-white/70 bg-[linear-gradient(180deg,#fff7fb_0%,#ffffff_48%,#f6fbff_100%)]">
+        <div className="absolute inset-x-0 top-0 h-40 bg-[linear-gradient(90deg,rgba(247,119,55,0.12),rgba(225,48,108,0.10),rgba(59,130,246,0.10))]" />
+        <div className="relative mx-auto grid max-w-7xl gap-6 px-5 py-6 lg:grid-cols-[0.82fr_1.18fr] lg:py-10">
           <aside className="lg:sticky lg:top-8 lg:self-start">
-            <div className="glass-chip rounded-lg p-5">
-              <p className="gradient-text text-sm font-semibold">APPLICATION SNAPSHOT</p>
-              <h1 className="display-heading mt-3 text-4xl font-semibold text-ink-900 sm:text-5xl">
-                别先焦虑,
-                <br />
-                先看地图
-              </h1>
-              <p className="mt-4 text-base leading-relaxed text-ink-600">
-                留学申请最难的不是填表,是看不清自己站在哪儿。用 3 步把背景、
-                成绩和目标摆上桌面,先得到一张能讨论、能调整的申请快照。
-              </p>
-
-              <div className="mt-7 grid grid-cols-3 gap-2">
-                {TRUST_POINTS.map((item) => (
-                  <div key={item} className="feed-card px-3 py-3 text-center text-xs text-ink-600">
-                    {item}
-                  </div>
-                ))}
+            <div className="overflow-hidden rounded-lg border border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(255,246,251,0.92)_48%,rgba(244,250,255,0.94))] text-ink-800 shadow-[0_24px_70px_rgba(225,48,108,0.10)] backdrop-blur-xl">
+              <div className="relative border-b border-ink-100/70 p-5">
+                <div className="absolute inset-x-0 top-0 h-1 insta-gradient" />
+                <p className="gradient-text text-sm font-semibold">APPLICATION MAP</p>
+                <h1 className="display-heading mt-3 text-3xl font-semibold text-ink-950 sm:text-4xl">
+                  不是填表,
+                  <br />
+                  是在画你的申请地图
+                </h1>
+                <p className="mt-4 text-sm leading-relaxed text-ink-500">
+                  每回答一步,下面这张地图都会变得更清楚。先定位,再看实力,最后圈定地区和方向。
+                </p>
               </div>
 
-              <div className="mt-7 space-y-3">
+              <div className="p-5">
+                <div className="rounded-lg border border-ink-100 bg-white/80 p-4 shadow-[0_12px_32px_rgba(35,42,53,0.05)]">
+                  <div className="flex items-center justify-between text-xs text-ink-500">
+                    <span>地图完成度</span>
+                    <span>{progress}%</span>
+                  </div>
+                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-ink-100">
+                    <div className="insta-gradient h-full rounded-full" style={{ width: `${progress}%` }} />
+                  </div>
+                </div>
+
+                <div className="mt-4 grid gap-2">
+                  {mapRows.map((row) => (
+                    <div
+                      key={row.label}
+                      className="rounded-lg border border-ink-100 bg-white/75 px-3 py-2.5 shadow-[0_10px_24px_rgba(35,42,53,0.04)]"
+                    >
+                      <p className="text-[11px] font-medium text-ink-400">{row.label}</p>
+                      <p className="mt-1 line-clamp-2 text-sm leading-snug text-ink-800">{row.value}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-5 grid grid-cols-3 gap-2">
+                  {TRUST_POINTS.map((item) => (
+                    <div
+                      key={item}
+                      className="rounded-lg border border-brand-100 bg-white/70 px-2 py-2 text-center text-xs font-medium text-ink-600"
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-5 space-y-2">
                 {STEP_META.map((item, index) => (
                   <button
                     key={item.n}
                     type="button"
                     onClick={() => setStep(index + 1)}
-                    className={`flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left transition-colors ${
+                    className={`flex w-full items-start gap-3 rounded-lg border px-3 py-3 text-left transition-colors ${
                       step === index + 1
-                        ? 'border-insta-pink bg-white text-ink-900 shadow-[0_12px_28px_rgba(225,48,108,0.12)]'
-                        : 'border-white/70 bg-white/55 text-ink-500 hover:bg-white'
+                        ? 'border-brand-200 bg-white text-ink-900 shadow-[0_14px_36px_rgba(225,48,108,0.14)]'
+                        : 'border-ink-100 bg-white/60 text-ink-600 hover:border-brand-100 hover:bg-white'
                     }`}
                   >
-                    <span className="story-ring mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full p-[2px] text-xs font-semibold">
-                      <span className="grid h-full w-full place-items-center rounded-full bg-white">
+                    <span className="story-ring mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full p-[2px] text-xs font-semibold">
+                      <span className="grid h-full w-full place-items-center rounded-full bg-white text-ink-900">
                         {item.n}
                       </span>
                     </span>
                     <span>
                       <span className="block text-sm font-medium">{item.label}</span>
-                      <span className="mt-0.5 block text-xs leading-relaxed text-ink-500">
+                      <span
+                        className={`mt-0.5 block text-xs leading-relaxed ${
+                          step === index + 1 ? 'text-ink-500' : 'text-ink-400'
+                        }`}
+                      >
                         {item.body}
                       </span>
                     </span>
                   </button>
                 ))}
+                </div>
               </div>
             </div>
           </aside>
 
-          <div className="feed-card overflow-hidden bg-white">
-            <div className="border-b border-ink-100 px-5 py-5 sm:px-7">
-              <div className="mb-4 flex items-center gap-2">
+          <div className="overflow-hidden rounded-lg border border-white/80 bg-white shadow-[0_22px_60px_rgba(35,42,53,0.08)]">
+            <div className="border-b border-ink-100 bg-white px-5 py-5 sm:px-7">
+              <div className="mb-5 flex items-center gap-2">
                 {[1, 2, 3].map((s) => (
                   <div
                     key={s}
-                    className={`h-1.5 flex-1 rounded-full ${
+                    className={`h-2 flex-1 rounded-full ${
                       s <= step ? 'insta-gradient' : 'bg-ink-100'
                     }`}
                   />
                 ))}
                 <span className="ml-2 text-xs text-ink-400">{step}/3</span>
               </div>
-              <p className="gradient-text text-sm font-semibold">{STEP_META[step - 1].n}</p>
-              <h2 className="mt-2 text-2xl font-semibold text-ink-900">
+              <p className="gradient-text text-sm font-semibold">问题 {STEP_META[step - 1].n}</p>
+              <h2 className="mt-2 text-3xl font-semibold tracking-tight text-ink-900">
                 {STEP_META[step - 1].title}
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-ink-500">
@@ -406,7 +464,7 @@ function AssessForm() {
               </p>
             </div>
 
-            <div className="px-5 py-6 sm:px-7">
+            <div className="px-5 py-6 sm:px-7 sm:py-7">
               {step === 1 && (
                 <div className="space-y-6">
                   <Field
@@ -675,7 +733,7 @@ function AssessForm() {
           </div>
         </div>
 
-        <p className="mx-auto max-w-6xl px-5 pb-8 text-center text-xs leading-relaxed text-ink-400">
+        <p className="mx-auto max-w-7xl px-5 pb-8 text-center text-xs leading-relaxed text-ink-400">
           这是一份基于公开信息和规则模型的申请参考,不是录取承诺。最终要求和截止日期,永远以学校官网为准。
         </p>
       </section>

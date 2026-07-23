@@ -32,21 +32,30 @@ import type {
 const TIER_META = {
   reach: {
     label: '冲刺',
-    desc: '有难度,但值得试',
+    desc: '有难度,但值得留名额试',
     accent: 'text-urgent-warning',
     bar: 'bg-urgent-warning',
+    panel: 'border-amber-200 bg-amber-50/55',
+    dot: 'bg-urgent-warning',
+    chip: 'bg-amber-50 text-amber-700',
   },
   match: {
     label: '匹配',
-    desc: '与你的背景比较契合',
+    desc: '主申请线,最值得认真推进',
     accent: 'text-brand-600',
     bar: 'bg-brand-500',
+    panel: 'border-brand-200 bg-brand-50/65',
+    dot: 'bg-brand-500',
+    chip: 'bg-brand-50 text-brand-700',
   },
   safe: {
-    label: '保底',
-    desc: '把握相对较大',
+    label: '稳妥',
+    desc: '提高名单稳定性,不代表结果承诺',
     accent: 'text-safe',
     bar: 'bg-safe',
+    panel: 'border-green-200 bg-green-50/60',
+    dot: 'bg-safe',
+    chip: 'bg-green-50 text-green-700',
   },
 } as const
 
@@ -67,7 +76,7 @@ const TEST_BADGE = {
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div>
+    <div className="rounded-lg border border-ink-100 bg-white/80 px-3 py-3">
       <p className="text-xl font-semibold text-ink-900">{value}</p>
       <p className="mt-0.5 text-xs leading-relaxed text-ink-500">{label}</p>
     </div>
@@ -78,19 +87,26 @@ function ProgramCard({ m }: { m: ProgramMatch }) {
   const lang = LANGUAGE_BADGE[m.languageStatus]
   const test = TEST_BADGE[m.testRequirement]
   const days = daysUntil(m.finalDeadline)
+  const tier = TIER_META[m.tier]
 
   return (
-    <div className="rounded-lg border border-ink-200 bg-white p-4">
+    <div className="rounded-lg border border-ink-200 bg-white p-4 shadow-[0_10px_26px_rgba(35,42,53,0.05)]">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
+          <div className="mb-1 flex items-center gap-2">
+            <span className={`h-2 w-2 rounded-full ${tier.dot}`} />
+            <span className={`rounded px-1.5 py-0.5 text-[11px] font-medium ${tier.chip}`}>
+              {tier.label}
+            </span>
+          </div>
           <p className="truncate font-medium text-ink-900">{m.schoolName}</p>
           <p className="truncate text-sm text-ink-600">{m.programName}</p>
         </div>
-        <div className="shrink-0 text-right">
-          <p className="text-sm font-semibold text-ink-900">
+        <div className="shrink-0 rounded-lg border border-ink-100 bg-ink-50 px-2.5 py-2 text-right">
+          <p className="text-sm font-semibold leading-none text-ink-900">
             {m.probabilityLow}–{m.probabilityHigh}%
           </p>
-          <p className="text-xs text-ink-400">预估</p>
+          <p className="mt-1 text-[11px] text-ink-400">预估区间</p>
         </div>
       </div>
 
@@ -131,9 +147,71 @@ function ProgramCard({ m }: { m: ProgramMatch }) {
       )}
 
       {!m.verified && (
-        <p className="mt-2 text-xs text-ink-400">⚠ 该项目数据待人工核对,请以官网为准</p>
+        <p className="mt-2 rounded bg-ink-50 px-2 py-1.5 text-xs text-ink-500">
+          待核实 · 请以官网为准
+        </p>
       )}
     </div>
+  )
+}
+
+function resultHeadline(result: AssessmentResult) {
+  if (result.totalMatched === 0) return '这组条件暂时没有足够可靠的数据,先别硬下结论'
+  const counts = {
+    reach: result.reach.length,
+    match: result.match.length,
+    safe: result.safe.length,
+  }
+  if (counts.safe === 0 && counts.reach + counts.match > 0) {
+    return '这份名单偏进攻,建议补几所更稳的项目'
+  }
+  if (counts.match >= counts.reach && counts.match >= counts.safe) {
+    return '你现在最适合主攻匹配档,冲刺和稳妥各留位置'
+  }
+  if (counts.reach > counts.match) return '你的冲刺机会不少,但需要控制投入比例'
+  return '这份地图比较稳,可以再挑几所更有野心的项目'
+}
+
+function TierLane({
+  tier,
+  list,
+  bonusReach = [],
+}: {
+  tier: 'reach' | 'match' | 'safe'
+  list: ProgramMatch[]
+  bonusReach?: ProgramMatch[]
+}) {
+  const meta = TIER_META[tier]
+  const cards = tier === 'reach' ? [...list, ...bonusReach] : list
+  if (!cards.length) return null
+
+  return (
+    <section className={`rounded-lg border p-4 ${meta.panel}`}>
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <div>
+          <h2 className={`text-lg font-semibold ${meta.accent}`}>{meta.label}</h2>
+          <p className="mt-0.5 text-xs leading-relaxed text-ink-500">{meta.desc}</p>
+        </div>
+        <span className="rounded-full bg-white px-2.5 py-1 text-xs font-medium text-ink-500">
+          {cards.length} 个
+        </span>
+      </div>
+
+      <div className="space-y-2">
+        {list.map((m) => (
+          <ProgramCard key={m.programId} m={m} />
+        ))}
+        {tier === 'reach' &&
+          bonusReach.map((m) => (
+            <div key={m.programId} className="relative">
+              <span className="absolute -top-2 left-3 z-10 rounded bg-brand-600 px-1.5 py-0.5 text-xs text-white">
+                分享解锁
+              </span>
+              <ProgramCard m={m} />
+            </div>
+          ))}
+      </div>
+    </section>
   )
 }
 
@@ -311,118 +389,158 @@ export default async function ResultPage({
 
   const gpaText =
     payload.gpaScale === '4.0' ? `GPA ${payload.gpa}/4.0` : `均分 ${payload.gpa}`
+  const languageText =
+    payload.languageType !== 'none' && payload.languageScore
+      ? `${payload.languageType === 'ielts' ? '雅思' : '托福'} ${payload.languageScore}${
+          payload.languageMinBand ? ` · 最低单项 ${payload.languageMinBand}` : ''
+        }`
+      : '语言未考'
+  const targetRegionText = Array.isArray(payload.targetRegions)
+    ? payload.targetRegions.map((r) => REGION_LABEL[String(r)] ?? String(r)).join(' / ')
+    : ins.regionBreakdown.map((r) => REGION_LABEL[r.region]).join(' / ')
+  const headline = resultHeadline(result)
+  const verifiedRate = result.totalMatched
+    ? Math.round((ins.dataQuality.verified / result.totalMatched) * 100)
+    : 0
 
   return (
-    <main className="mx-auto max-w-2xl px-5 py-10">
-      <BrandLogo className="text-lg" />
+    <main className="marketing-page min-h-screen bg-[linear-gradient(180deg,#fff7fb_0%,#ffffff_44%,#f6fbff_100%)] text-ink-800">
+      <header className="sticky top-0 z-30 border-b border-white/70 bg-white/78 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
+          <BrandLogo className="text-lg" />
+          <Link
+            href="/assess"
+            className="inline-flex min-h-11 items-center rounded-lg border border-ink-200 bg-white px-3 text-sm font-medium text-ink-700 hover:border-insta-pink hover:text-insta-pink"
+          >
+            重新测一次
+          </Link>
+        </div>
+      </header>
 
-      <h1 className="mt-6 text-2xl font-semibold text-ink-900">你的选校定位</h1>
-
-      {/* 背景回显 —— 让用户确认输入没填错 */}
-      <p className="mt-1.5 text-sm text-ink-600">
-        {UNDERGRAD_TIER_LABEL[String(payload.undergradTier)]} · {gpaText}
-        {payload.languageType !== 'none' && payload.languageScore
-          ? ` · ${payload.languageType === 'ielts' ? '雅思' : '托福'} ${payload.languageScore}`
-          : ' · 语言未考'}
-        {' · '}
-        {DIRECTION_LABEL[String(payload.targetDirection)]}
-      </p>
-
-      {shown === 0 ? (
-        <Card className="mt-6">
-          <p className="text-sm leading-relaxed text-ink-600">
-            按你填写的条件,我们暂时没有可以给出<strong>有依据</strong>的定位结果 ——
-            可能是该地区/方向的数据还在录入中,也可能是你的条件组合比较特殊。
-            <br />
-            <br />
-            我们宁可先不给结论,也不想给你一个编出来的数字。你可以换个方向再试,
-            或者直接联系我们人工看一下。
-          </p>
-        </Card>
-      ) : (
-        <>
-          {/* 匹配概览 */}
-          <Card className="mt-6">
-            <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <h2 className="font-medium text-ink-900">
-                匹配到 {result.totalMatched} 个项目
-              </h2>
-              <span className="text-xs text-ink-400">
-                {ins.regionBreakdown
-                  .map((r) => `${REGION_LABEL[r.region]} ${r.count}`)
-                  .join(' · ')}
-              </span>
+      <section className="relative overflow-hidden border-b border-white/70">
+        <div className="absolute inset-x-0 top-0 h-36 bg-[linear-gradient(90deg,rgba(247,119,55,0.12),rgba(225,48,108,0.10),rgba(59,130,246,0.10))]" />
+        <div className="relative mx-auto max-w-7xl px-5 py-10 sm:py-14">
+          <p className="gradient-text text-sm font-semibold">APPLICATION MAP READY</p>
+          <div className="mt-4 grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
+            <div>
+              <h1 className="display-heading max-w-4xl text-4xl font-semibold text-ink-900 sm:text-6xl">
+                {headline}
+              </h1>
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-ink-600">
+                这不是录取承诺,而是一张可以讨论、调整、继续推进的申请地图。你可以先看三档结构,
+                再决定要补语言、调名单,还是进入工作台继续做材料。
+              </p>
             </div>
 
-            {/* 三档分布条 */}
-            <div className="mt-3 flex h-2 overflow-hidden rounded-full bg-ink-100">
-              {(['reach', 'match', 'safe'] as const).map((tier) => {
-                const count = result[tier].length
-                const total = shown || 1
-                return (
-                  <div
-                    key={tier}
-                    className={TIER_META[tier].bar}
-                    style={{ width: `${(count / total) * 100}%` }}
-                  />
-                )
-              })}
-            </div>
-            <div className="mt-2 flex gap-4 text-xs text-ink-500">
-              {(['reach', 'match', 'safe'] as const).map((tier) => (
-                <span key={tier}>
-                  <span className={TIER_META[tier].accent}>■</span> {TIER_META[tier].label}{' '}
-                  {result[tier].length}
-                </span>
-              ))}
-            </div>
-          </Card>
-
-          {/* 三档院校卡片 */}
-          <div className="mt-6 space-y-6">
-            {(['reach', 'match', 'safe'] as const).map((tier) => {
-              const list = result[tier]
-              if (!list.length) return null
-              const meta = TIER_META[tier]
-              return (
-                <section key={tier}>
-                  <div className="mb-2 flex items-baseline gap-2">
-                    <h2 className={`font-semibold ${meta.accent}`}>{meta.label}</h2>
-                    <span className="text-xs text-ink-400">{meta.desc}</span>
+            <div className="rounded-lg border border-white/80 bg-white/88 p-5 shadow-[0_18px_50px_rgba(35,42,53,0.08)]">
+              <p className="text-xs font-semibold text-ink-400">你的输入</p>
+              <div className="mt-3 grid gap-2 text-sm">
+                {[
+                  ['背景', `${UNDERGRAD_TIER_LABEL[String(payload.undergradTier)]} · ${gpaText}`],
+                  ['语言', languageText],
+                  ['地区', targetRegionText],
+                  ['方向', DIRECTION_LABEL[String(payload.targetDirection)]],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex gap-3 border-t border-ink-100 pt-2 first:border-t-0 first:pt-0">
+                    <span className="w-12 shrink-0 text-ink-400">{label}</span>
+                    <span className="min-w-0 flex-1 text-ink-700">{value}</span>
                   </div>
-                  <div className="space-y-2">
-                    {list.map((m) => (
-                      <ProgramCard key={m.programId} m={m} />
-                    ))}
-
-                    {/* 分享解锁的附加院校,只挂在冲刺档下 */}
-                    {tier === 'reach' &&
-                      bonusReach.map((m) => (
-                        <div key={m.programId} className="relative">
-                          <span className="absolute -top-2 left-3 z-10 rounded bg-brand-600 px-1.5 py-0.5 text-xs text-white">
-                            分享解锁
-                          </span>
-                          <ProgramCard m={m} />
-                        </div>
-                      ))}
-                  </div>
-                </section>
-              )
-            })}
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* 数据驱动的洞察 */}
-          <div className="mt-6 space-y-4">
+          <div className="mt-8 grid gap-3 sm:grid-cols-4">
+            <Stat value={String(result.totalMatched)} label="匹配项目" />
+            <Stat value={String(shown)} label={isMember ? '已展示项目' : '当前可看项目'} />
+            <Stat value={`${verifiedRate}%`} label="已人工核对占比" />
+            <Stat value={locked ? String(locked) : '0'} label="待解锁项目" />
+          </div>
+        </div>
+      </section>
+
+      {shown === 0 ? (
+        <section className="mx-auto max-w-3xl px-5 py-10">
+          <Card>
+            <p className="text-sm leading-relaxed text-ink-600">
+              按你填写的条件,我们暂时没有可以给出<strong>有依据</strong>的定位结果。可能是该地区/方向的数据还在录入中,
+              也可能是你的条件组合比较特殊。
+              <br />
+              <br />
+              我们宁可先不给结论,也不想给你一个编出来的数字。你可以换个方向再试,或者联系我们人工看一下。
+            </p>
+          </Card>
+        </section>
+      ) : (
+        <section className="mx-auto grid max-w-7xl gap-6 px-5 py-8 lg:grid-cols-[1.18fr_0.82fr] lg:py-10">
+          <div className="space-y-4">
+            <Card className="border-white/80 bg-white/92 shadow-[0_18px_50px_rgba(35,42,53,0.07)]">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h2 className="text-xl font-semibold text-ink-900">三档申请地图</h2>
+                <span className="text-xs text-ink-400">
+                  {ins.regionBreakdown
+                    .map((r) => `${REGION_LABEL[r.region]} ${r.count}`)
+                    .join(' · ')}
+                </span>
+              </div>
+              <div className="mt-4 flex h-3 overflow-hidden rounded-full bg-ink-100">
+                {(['reach', 'match', 'safe'] as const).map((tier) => {
+                  const count = tier === 'reach' ? result[tier].length + bonusReach.length : result[tier].length
+                  const total = shown || 1
+                  return (
+                    <div
+                      key={tier}
+                      className={TIER_META[tier].bar}
+                      style={{ width: `${(count / total) * 100}%` }}
+                    />
+                  )
+                })}
+              </div>
+              <div className="mt-3 grid gap-2 text-xs text-ink-500 sm:grid-cols-3">
+                {(['reach', 'match', 'safe'] as const).map((tier) => (
+                  <div key={tier} className="flex items-center gap-2">
+                    <span className={`h-2.5 w-2.5 rounded-full ${TIER_META[tier].dot}`} />
+                    <span>
+                      {TIER_META[tier].label}{' '}
+                      {tier === 'reach'
+                        ? result[tier].length + bonusReach.length
+                        : result[tier].length}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            <div className="grid gap-4 xl:grid-cols-3">
+              <TierLane tier="reach" list={result.reach} bonusReach={bonusReach} />
+              <TierLane tier="match" list={result.match} />
+              <TierLane tier="safe" list={result.safe} />
+            </div>
+          </div>
+
+          <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+            <Card className="border-ink-900 bg-ink-900 text-white shadow-[0_18px_50px_rgba(20,25,32,0.18)]">
+              <p className="text-sm font-semibold text-white/55">NEXT MOVES</p>
+              <h2 className="mt-2 text-2xl font-semibold">接下来先做三件事</h2>
+              <div className="mt-5 space-y-3 text-sm">
+                {[
+                  ['校准名单', '先确认三档比例,稳妥档为 0 时优先补项目。'],
+                  ['补语言短板', '总分和最低单项分开看,不要只盯一个数字。'],
+                  ['进入工作台', '把选校、材料、文书和截止日接到同一条进度线上。'],
+                ].map(([title, body]) => (
+                  <div key={title} className="border-t border-white/12 pt-3">
+                    <p className="font-medium">{title}</p>
+                    <p className="mt-1 text-xs leading-relaxed text-white/55">{body}</p>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
             <LanguageSection ins={ins} />
             <TestingSection ins={ins} />
             <TimelineSection ins={ins} />
-          </div>
 
-          {/* 分享裂变(PRD 9 P0)。
-              候补池本身为空(冲刺档不足 4 所)时不展示 —— 没东西可解锁就别劝人分享;
-              池子已全部解锁则仍展示,让用户看到成果。 */}
-          {(result.reachPool?.length ?? 0) > 0 && (
-            <div className="mt-4">
+            {(result.reachPool?.length ?? 0) > 0 && (
               <ShareCard
                 shareCode={lead.shareCode}
                 referralCount={lead.referralCount}
@@ -430,64 +548,65 @@ export default async function ResultPage({
                 poolRemaining={(result.reachPool?.length ?? 0) - bonusReach.length}
                 siteUrl={env.siteUrl}
               />
+            )}
+          </aside>
+        </section>
+      )}
+
+      <section className="mx-auto max-w-7xl px-5 pb-10">
+        {!isMember && locked > 0 && (
+          <Card className="border-dashed bg-white/92">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p className="font-medium text-ink-900">还有 {locked} 个匹配项目可以继续展开</p>
+                <p className="mt-1 text-sm leading-relaxed text-ink-600">
+                  完整院校对比表、各校截止日期、申请轮次和按选校单生成的材料清单都会接进工作台。
+                </p>
+              </div>
+              <Link
+                href="/pricing"
+                className="insta-button inline-flex min-h-11 items-center rounded-full px-5 text-sm font-medium text-white"
+              >
+                解锁完整系统
+              </Link>
             </div>
-          )}
-        </>
-      )}
+          </Card>
+        )}
 
-      {/* 付费引导只对没买的人出。已付费还看到「解锁 ¥1,999」等于告诉他钱白花了 */}
-      {!isMember && locked > 0 && (
-        <Card className="mt-6 border-dashed">
-          <p className="font-medium text-ink-900">还有 {locked} 个匹配项目</p>
-          <ul className="mt-2 space-y-1 text-sm text-ink-600">
-            <li>· 完整院校对比表(录取要求逐项对照)</li>
-            <li>· 各校截止日期与申请轮次</li>
-            <li>· 按你的选校单自动生成的材料清单</li>
-          </ul>
-          <Link
-            href="/pricing"
-            className="mt-4 inline-block rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-700"
-          >
-            解锁完整系统 ¥1,999 起
-          </Link>
-        </Card>
-      )}
+        {isMember && shown > 0 && (
+          <Card className="border-brand-200 bg-brand-50/50">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p className="font-medium text-ink-900">
+                  {subscription!.plan.name} · 已展示全部 {result.totalMatched} 个匹配项目
+                </p>
+                <p className="mt-1 text-sm leading-relaxed text-ink-600">
+                  可以整批加进选校单。已经在选校单里的不会重复添加,档位沿用这里的冲刺 / 匹配 / 稳妥。
+                </p>
+              </div>
+              <ImportToShortlist leadId={lead.id} count={shown} />
+            </div>
+          </Card>
+        )}
 
-      {isMember && shown > 0 && (
-        <Card className="mt-6 border-brand-200 bg-brand-50/50">
-          <p className="font-medium text-ink-900">
-            {subscription!.plan.name} · 已展示全部 {result.totalMatched} 个匹配项目
-          </p>
-          <p className="mt-1 text-sm leading-relaxed text-ink-600">
-            这是完整名单,没有隐藏项。可以整批加进选校单,之后在工作台里逐个跟进 ——
-            材料清单会按选校单自动生成。
-          </p>
-          <div className="mt-4">
-            <ImportToShortlist leadId={lead.id} count={shown} />
-          </div>
-          <p className="mt-3 text-xs text-ink-500">
-            已经在选校单里的不会重复添加,档位沿用这里的冲刺 / 匹配 / 保底。
-          </p>
-        </Card>
-      )}
-
-      <div className="mt-6">
-        <Disclaimer>
-          {result.disclaimer}
-          <br />
-          <br />
-          概率区间由规则引擎基于公开录取数据估算,受当年申请人数、名额变化、
-          个人软背景等因素影响,实际结果可能有较大偏差。我们不承诺任何录取结果。
-          {ins.dataQuality.unverified > 0 && (
-            <>
-              <br />
-              <br />
-              本次匹配的 {result.totalMatched} 个项目中,有 {ins.dataQuality.unverified} 个
-              尚未经人工核对,请务必以院校官网为准。
-            </>
-          )}
-        </Disclaimer>
-      </div>
+        <div className="mt-6">
+          <Disclaimer>
+            {result.disclaimer}
+            <br />
+            <br />
+            概率区间由规则引擎基于公开录取数据估算,受当年申请人数、名额变化、
+            个人软背景等因素影响,实际结果可能有较大偏差。我们不承诺任何录取结果。
+            {ins.dataQuality.unverified > 0 && (
+              <>
+                <br />
+                <br />
+                本次匹配的 {result.totalMatched} 个项目中,有 {ins.dataQuality.unverified} 个
+                尚未经人工核对,请务必以院校官网为准。
+              </>
+            )}
+          </Disclaimer>
+        </div>
+      </section>
     </main>
   )
 }

@@ -4,6 +4,7 @@ import { requireAdmin } from '@/lib/auth/session'
 import { Card } from '@/components/ui'
 import { formatDate } from '@/lib/utils'
 import { REGION_LABEL, DIRECTION_LABEL, VERIFY_STALE_DAYS } from '@/lib/programs/types'
+import { formatQsRank } from '@/lib/programs/ranking'
 import { ProgramList } from './ProgramList'
 import { ImportExport } from './ImportExport'
 
@@ -81,29 +82,51 @@ export default async function AdminProgramsPage({
     }&page=${n}`
 
   const TABS = [
-    { key: 'pending', label: `待核对 ${pendingCount}` },
-    { key: 'stale', label: `已过期 ${staleCount}` },
-    { key: 'verified', label: `已核对 ${verifiedCount}` },
-    { key: 'all', label: `全部 ${totalCount}` },
+    { key: 'pending', label: '待核对', count: pendingCount },
+    { key: 'stale', label: '已过期', count: staleCount },
+    { key: 'verified', label: '已核对', count: verifiedCount },
+    { key: 'all', label: '全部', count: totalCount },
   ]
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h1 className="text-2xl font-semibold text-ink-900">院校库</h1>
+      <div className="flex flex-col gap-1">
+        <p className="text-xs font-semibold uppercase tracking-wide text-brand-600">Program Review</p>
+        <h1 className="text-2xl font-semibold text-ink-900">院校库核对台</h1>
+        <p className="max-w-3xl text-sm leading-relaxed text-ink-500">
+          AI 采集和 Excel 导入的数据都会先进入待核对队列。只有人工核对通过后,才会展示给学生。
+        </p>
       </div>
 
-      {/* Excel 导入 / 导出 */}
-      <ImportExport filter={filter} />
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        {TABS.map((t) => {
+          const active = filter === t.key
+          return (
+            <Link
+              key={t.key}
+              href={`/admin/programs?filter=${t.key}${region ? `&region=${region}` : ''}`}
+              className={`rounded-xl border bg-white p-4 shadow-sm shadow-ink-100/50 transition-colors ${
+                active
+                  ? 'border-brand-500 ring-1 ring-brand-100'
+                  : 'border-ink-100 hover:border-ink-200'
+              }`}
+            >
+              <span className="block text-sm text-ink-500">{t.label}</span>
+              <span className="mt-2 block text-2xl font-semibold text-ink-900">{t.count}</span>
+            </Link>
+          )
+        })}
+      </div>
 
       {/* PRD 11.3 健康度红线 */}
       {stalePercent > 10 && (
-        <Card className="border-red-200 bg-red-50">
-          <p className="text-sm leading-relaxed text-red-900">
-            <strong>数据健康度告警:</strong>
-            {stalePercent}% 的条目未核对或已过期(红线是 10%)。
-            按 PRD 11.3,此时应<strong>暂停投放</strong>,优先补数据。
-          </p>
+        <Card className="border-red-100 bg-[#fff7f7]">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm font-semibold text-red-900">数据健康度告警</p>
+            <p className="text-sm leading-relaxed text-red-800">
+              {stalePercent}% 的条目未核对或已过期。建议先处理待核对项目,再继续扩大对外展示。
+            </p>
+          </div>
         </Card>
       )}
 
@@ -124,34 +147,30 @@ export default async function AdminProgramsPage({
         </Card>
       )}
 
-      <div className="flex flex-wrap gap-2">
-        {TABS.map((t) => (
-          <Link
-            key={t.key}
-            // 切 tab 时保留地区筛选,否则一点就跳回全库
-            href={`/admin/programs?filter=${t.key}${region ? `&region=${region}` : ''}`}
-            className={`rounded-lg border px-3 py-1.5 text-sm ${
-              filter === t.key
-                ? 'border-brand-500 bg-brand-50 text-brand-700'
-                : 'border-ink-200 bg-white text-ink-600'
-            }`}
-          >
-            {t.label}
-          </Link>
-        ))}
-      </div>
+      <div className="grid gap-3 xl:grid-cols-[1fr_1.05fr]">
+        {/* Excel 导入 / 导出 */}
+        <ImportExport filter={filter} />
 
-      <form action="/admin/programs" className="flex gap-2">
-        <input type="hidden" name="filter" value={filter} />
-        {region && <input type="hidden" name="region" value={region} />}
-        <input
-          name="q"
-          defaultValue={q}
-          placeholder="搜索院校或专业"
-          className="flex-1 rounded-lg border border-ink-200 px-3 py-2 text-sm"
-        />
-        <button className="rounded-lg bg-brand-600 px-4 py-2 text-sm text-white">搜索</button>
-      </form>
+        <Card className="shadow-sm shadow-ink-100/60">
+          <h2 className="text-sm font-semibold text-ink-900">筛选记录</h2>
+          <form action="/admin/programs" className="mt-3 flex flex-col gap-2 sm:flex-row">
+            <input type="hidden" name="filter" value={filter} />
+            {region && <input type="hidden" name="region" value={region} />}
+            <input
+              name="q"
+              defaultValue={q}
+              placeholder="搜索院校或专业"
+              className="min-h-11 flex-1 rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
+            />
+            <button className="min-h-11 rounded-lg bg-brand-600 px-5 py-2 text-sm font-medium text-white">
+              搜索
+            </button>
+          </form>
+          <p className="mt-2 text-xs text-ink-400">
+            当前筛选: {TABS.find((t) => t.key === filter)?.label ?? '全部'} · {matchCount} 条结果
+          </p>
+        </Card>
+      </div>
 
       {programs.length === 0 ? (
         <Card><p className="text-sm text-ink-600">没有符合条件的记录。</p></Card>
@@ -162,6 +181,7 @@ export default async function AdminProgramsPage({
               id: p.id,
               schoolName: p.school.nameZh ?? p.school.nameEn,
               programName: p.nameEn,
+              qsRankLabel: formatQsRank(p.school.qsRank, p.school.qsRankYear),
               region: REGION_LABEL[p.region] ?? p.region,
               direction: DIRECTION_LABEL[p.direction] ?? p.direction,
               verifiedLabel: p.lastVerifiedAt ? `核对于 ${formatDate(p.lastVerifiedAt)}` : '未核对',
@@ -172,7 +192,7 @@ export default async function AdminProgramsPage({
           {/* 分页 —— 早先固定 take: 200,全库超过 200 条之后
               多出来的记录在后台完全看不到,也就永远核对不了 */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between gap-3 text-sm">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-ink-100 bg-white px-4 py-3 text-sm">
               <span className="text-ink-500">
                 第 {pageNum} / {totalPages} 页 · 共 {matchCount} 条
               </span>

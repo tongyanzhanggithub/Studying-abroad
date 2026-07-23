@@ -3,6 +3,7 @@ import { db } from '@/lib/db'
 import { Disclaimer } from '@/components/ui'
 import { BrandLogo } from '@/components/BrandLogo'
 import { formatCents } from '@/lib/utils'
+import { serviceDisplay } from '@/lib/service-display'
 import { track } from '@/lib/analytics'
 import { getCurrentUser } from '@/lib/auth/session'
 import { BuyButton } from './BuyButton'
@@ -23,6 +24,7 @@ type PricingPlan = {
 
 type PricingSku = {
   id: string
+  code: string
   name: string
   description: string | null
   priceCents: number
@@ -105,6 +107,7 @@ async function getPricingData(): Promise<{
         orderBy: { sort: 'asc' },
         select: {
           id: true,
+          code: true,
           name: true,
           description: true,
           priceCents: true,
@@ -305,34 +308,37 @@ export default async function PricingPage() {
           <div className="space-y-3">
             {skus.length === 0 && <PriceUnavailable what="人工服务价格" />}
 
-            {skus.map((sku) => (
-              <article key={sku.id} className="feed-card p-5">
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-medium text-ink-900">{sku.name}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-ink-600">
-                      {sku.description}
-                    </p>
-                    <p className="mt-2 text-xs text-ink-400">
-                      {sku.delivererRole} · {sku.deliveryForm} · {sku.slaHours} 小时内交付
+            {skus.map((sku) => {
+              const display = serviceDisplay(sku)
+              return (
+                <article key={sku.id} className="feed-card p-5">
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-medium text-ink-900">{display.name}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-ink-600">
+                        {display.description}
+                      </p>
+                      <p className="mt-2 text-xs text-ink-400">
+                        {display.delivererRole} · {display.deliveryForm} · {sku.slaHours} 小时内交付
+                      </p>
+                    </div>
+                    <p className="shrink-0 text-lg font-semibold text-ink-900">
+                      {formatCents(sku.priceCents)}
                     </p>
                   </div>
-                  <p className="shrink-0 text-lg font-semibold text-ink-900">
-                    {formatCents(sku.priceCents)}
-                  </p>
-                </div>
-                <div className="mt-4 max-w-xs">
-                  <BuyButton
-                    kind="service"
-                    id={sku.id}
-                    label="加购这项服务"
-                    loggedIn={!!user}
-                    variant="secondary"
-                    size="sm"
-                  />
-                </div>
-              </article>
-            ))}
+                  <div className="mt-4 max-w-xs">
+                    <BuyButton
+                      kind="service"
+                      id={sku.id}
+                      label="加购这项服务"
+                      loggedIn={!!user}
+                      variant="secondary"
+                      size="sm"
+                    />
+                  </div>
+                </article>
+              )
+            })}
           </div>
         </div>
       </section>

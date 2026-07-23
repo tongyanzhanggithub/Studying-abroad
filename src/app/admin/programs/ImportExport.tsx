@@ -50,35 +50,34 @@ export function ImportExport({ filter }: { filter: string }) {
   }
 
   return (
-    <div className="rounded-xl border border-ink-100 bg-white p-4">
-      <div className="flex flex-wrap items-center gap-2">
-        <Button variant="secondary" disabled={pending} onClick={onExport}>
-          {pending ? '处理中…' : `导出 Excel(当前筛选)`}
-        </Button>
-        <Button variant="ghost" disabled={pending} onClick={onTemplate}>
-          下载空模板
-        </Button>
+    <div className="rounded-xl border border-ink-100 bg-white p-4 shadow-sm shadow-ink-100/60">
+      <div>
+        <div>
+          <h2 className="text-sm font-semibold text-ink-900">批量导入 / 导出</h2>
+          <p className="mt-1 text-xs leading-relaxed text-ink-500">
+            Excel 用于批量维护,导入后仍进入待核对队列,不会直接展示给用户。
+          </p>
+        </div>
+        <div className="mt-4 grid gap-2 sm:grid-cols-3">
+          <Button className="w-full" variant="secondary" disabled={pending} onClick={onExport}>
+            {pending ? '处理中…' : `导出 Excel(当前筛选)`}
+          </Button>
+          <Button className="w-full" variant="ghost" disabled={pending} onClick={onTemplate}>
+            下载空模板
+          </Button>
 
-        <span className="mx-1 h-5 w-px bg-ink-100" />
-
-        <input
-          ref={fileRef}
-          type="file"
-          accept=".csv,text/csv"
-          className="hidden"
-          onChange={onFile}
-        />
-        <Button variant="primary" disabled={pending} onClick={() => fileRef.current?.click()}>
-          从 Excel 导入
-        </Button>
+          <input
+            ref={fileRef}
+            type="file"
+            accept=".csv,text/csv"
+            className="hidden"
+            onChange={onFile}
+          />
+          <Button className="w-full" variant="primary" disabled={pending} onClick={() => fileRef.current?.click()}>
+            从 Excel 导入
+          </Button>
+        </div>
       </div>
-
-      <p className="mt-2 text-xs text-ink-500">
-        导出的是 CSV,Excel 双击即可打开编辑;改完「另存为 CSV UTF-8」再导回来。
-        <br />
-        <strong className="text-ink-700">导入的数据一律进「待核对」队列</strong>
-        ,核对通过后才会展示给用户 —— Excel 导入不等于已核实。
-      </p>
 
       {result && !result.ok && (
         <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">

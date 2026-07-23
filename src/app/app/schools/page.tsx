@@ -14,6 +14,16 @@ import {
   programFreshness,
   readRequirements,
 } from '@/lib/programs/types'
+import {
+  RANKING_PROVIDER_LABEL,
+  formatQsRank,
+  formatRanking,
+  latestRanking,
+  parseRankingProvider,
+  parseRankingSort,
+  rankingSortValue,
+  type RankingLike,
+} from '@/lib/programs/ranking'
 import { ShortlistControls } from './Controls'
 import { ProgramCard } from './ProgramCard'
 import type { Direction, Region } from '@prisma/client'
@@ -101,7 +111,13 @@ function deadlineText(days: number | null, hasDeadline: boolean): string {
 export default async function SchoolsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ region?: string; direction?: string; q?: string; sort?: string }>
+  searchParams: Promise<{
+    region?: string
+    direction?: string
+    q?: string
+    sort?: string
+    rankingProvider?: string
+  }>
 }) {
   const user = await requireUser()
   const sp = await searchParams
@@ -109,7 +125,10 @@ export default async function SchoolsPage({
   const region = sp.region as Region | undefined
   const direction = sp.direction as Direction | undefined
   const q = sp.q?.trim()
-  const sort = sp.sort === 'deadline' ? 'deadline' : 'default'
+  const sort = parseRankingSort(sp.sort)
+  const selectedProvider = parseRankingProvider(sp.rankingProvider)
+  const rankingProvider =
+    selectedProvider ?? (sort === 'overall_rank' || sort === 'subject_rank' ? 'qs' : null)
 
   const [choices, programs, recCard] = await Promise.all([
     db.userSchoolChoice.findMany({
@@ -135,18 +154,50 @@ export default async function SchoolsPage({
             }
           : {}),
       },
-      include: { school: true },
+      include: { school: { include: { rankings: true } }, rankings: true },
       orderBy:
         sort === 'deadline'
           ? // nulls last:截止日待公布的排在最后,而不是因为 null 排到最前面
             [{ finalDeadline: { sort: 'asc', nulls: 'last' } }, { schoolId: 'asc' }]
           : [{ region: 'asc' }, { schoolId: 'asc' }],
-      take: 120,
+      take: rankingProvider ? 500 : 120,
     }),
     selectCard(user.id, 'schools_top'),
   ])
 
   const chosenIds = new Set(choices.map((c) => c.programId))
+  const overallRankingOf = (p: (typeof programs)[number]): RankingLike | null => {
+    if (!rankingProvider) return null
+    const stored = latestRanking(p.school.rankings, rankingProvider)
+    if (stored) return stored
+    if (rankingProvider === 'qs' && p.school.qsRank) {
+      return {
+        provider: 'qs',
+        year: p.school.qsRankYear,
+        rank: p.school.qsRank,
+        rankText: null,
+        sourceUrl: p.school.qsRankSourceUrl,
+      }
+    }
+    return null
+  }
+  const subjectRankingOf = (p: (typeof programs)[number]): RankingLike | null => {
+    if (!rankingProvider) return null
+    return latestRanking(p.rankings, rankingProvider)
+  }
+  const rankedPrograms = [...programs].sort((a, b) => {
+    if (sort === 'overall_rank') {
+      const byRank = rankingSortValue(overallRankingOf(a)) - rankingSortValue(overallRankingOf(b))
+      if (byRank !== 0) return byRank
+    }
+    if (sort === 'subject_rank') {
+      const byRank = rankingSortValue(subjectRankingOf(a)) - rankingSortValue(subjectRankingOf(b))
+      if (byRank !== 0) return byRank
+      const byOverall = rankingSortValue(overallRankingOf(a)) - rankingSortValue(overallRankingOf(b))
+      if (byOverall !== 0) return byOverall
+    }
+    return 0
+  }).slice(0, 120)
 
   return (
     <div className="space-y-6">
@@ -244,12 +295,24 @@ export default async function SchoolsPage({
             ))}
           </select>
           <select
+            name="rankingProvider"
+            defaultValue={rankingProvider ?? ''}
+            className="rounded-lg border border-ink-200 px-3 py-2 text-sm"
+          >
+            <option value="">不看排名</option>
+            {Object.entries(RANKING_PROVIDER_LABEL).map(([k, v]) => (
+              <option key={k} value={k}>{v}</option>
+            ))}
+          </select>
+          <select
             name="sort"
             defaultValue={sort}
             className="rounded-lg border border-ink-200 px-3 py-2 text-sm"
           >
             <option value="default">默认排序</option>
             <option value="deadline">最近截止优先</option>
+            <option value="overall_rank">综合排名优先</option>
+            <option value="subject_rank">专业排名优先</option>
           </select>
           <button className="rounded-lg bg-brand-600 px-4 py-2 text-sm text-white hover:bg-brand-700">
             筛选
@@ -264,9 +327,19 @@ export default async function SchoolsPage({
           </Card>
         ) : (
           <div className="space-y-2">
-            {programs.map((p) => {
+            {rankedPrograms.map((p) => {
               const freshness = programFreshness(p)
               const days = daysUntil(p.finalDeadline)
+              const overallRanking = rankingProvider ? overallRankingOf(p) : null
+              const subjectRanking = rankingProvider ? subjectRankingOf(p) : null
+              const rankingBadges = rankingProvider
+                ? [
+                    formatRanking(rankingProvider, overallRanking, 'overall'),
+                    formatRanking(rankingProvider, subjectRanking, 'subject'),
+                  ].filter((x): x is string => Boolean(x))
+                : [
+                    formatQsRank(p.school.qsRank, p.school.qsRankYear),
+                  ].filter((x): x is string => Boolean(x))
               return (
                 <ProgramCard
                   key={p.id}
@@ -275,6 +348,7 @@ export default async function SchoolsPage({
                     schoolName: p.school.nameZh ?? p.school.nameEn,
                     programName: p.nameZh ?? p.nameEn,
                     regionLabel: REGION_LABEL[p.region] ?? p.region,
+                    rankingBadges,
                     freshness,
                     freshnessLabel: FRESHNESS_LABEL[freshness],
                     isOnlineOnly: p.isOnlineOnly,

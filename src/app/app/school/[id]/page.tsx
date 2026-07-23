@@ -12,6 +12,7 @@ import {
   readDeadlines,
   readRequirements,
 } from '@/lib/programs/types'
+import { formatQsRank } from '@/lib/programs/ranking'
 
 /**
  * 院校详情(PRD 3.1 `/app/school/:id`)。
@@ -47,6 +48,7 @@ export default async function SchoolDetailPage({
   const req = readRequirements(program)
   const dl = readDeadlines(program)
   const freshness = programFreshness(program)
+  const qsRankLabel = formatQsRank(program.school.qsRank, program.school.qsRankYear)
 
   return (
     <div className="space-y-6">
@@ -60,6 +62,11 @@ export default async function SchoolDetailPage({
             {program.school.nameZh ?? program.school.nameEn}
           </h1>
           <span className="text-sm text-ink-400">{REGION_LABEL[program.region]}</span>
+          {qsRankLabel && (
+            <span className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700">
+              {qsRankLabel}
+            </span>
+          )}
           <FreshnessBadge freshness={freshness} label={FRESHNESS_LABEL[freshness]} />
         </div>
         <p className="mt-1 text-lg text-ink-600">{program.nameZh ?? program.nameEn}</p>
@@ -90,6 +97,25 @@ export default async function SchoolDetailPage({
 
       <Card>
         <h2 className="mb-2 font-medium text-ink-900">基本信息</h2>
+        <Row
+          label="QS 世界排名"
+          value={
+            qsRankLabel
+              ? program.school.qsRankSourceUrl
+                ? (
+                    <a
+                      href={program.school.qsRankSourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-brand-600 hover:underline"
+                    >
+                      {qsRankLabel}
+                    </a>
+                  )
+                : qsRankLabel
+              : null
+          }
+        />
         <Row label="学院" value={program.faculty} />
         <Row label="方向" value={DIRECTION_LABEL[program.direction]} />
         <Row label="学制" value={program.durationMonths ? `${program.durationMonths} 个月` : null} />

@@ -134,29 +134,29 @@ async function seedMaterialTemplates() {
 async function seedServiceSkus() {
   const skus = [
     {
-      code: 'strategy_consult', name: '1对1选校战略咨询 60min', priceCents: 120000,
-      delivererRole: '签约顾问', deliveryForm: '视频会议(腾讯会议)', slaHours: 72, sort: 1,
-      description: '资深顾问结合你的背景与目标,梳理冲刺/匹配/保底梯度,给出可执行的选校方案。',
+      code: 'strategy_consult', name: '1对1选校规划课 60min', priceCents: 120000,
+      delivererRole: '选校规划老师', deliveryForm: '视频会议(腾讯会议)', slaHours: 72, sort: 1,
+      description: '选校规划老师结合你的背景与目标,梳理冲刺/匹配/保底梯度,给出可执行的选校方案。',
     },
     {
-      code: 'essay_review', name: '文书人工深度终审(单篇)', priceCents: 150000,
-      delivererRole: '文书编辑', deliveryForm: '批注文档回传 + 15min 语音讲解', slaHours: 48, sort: 2,
+      code: 'essay_review', name: '文书老师深度终审(单篇)', priceCents: 150000,
+      delivererRole: '文书老师', deliveryForm: '批注文档回传 + 15min 语音讲解', slaHours: 48, sort: 2,
       description: '招生官视角的结构与说服力审阅,逐段批注修改建议。不代写,只给判断。',
     },
     {
       code: 'mock_interview', name: '真人模拟面试', priceCents: 100000,
-      delivererRole: '在读学长学姐', deliveryForm: '视频面试 45min + 书面反馈', slaHours: 72, sort: 3,
+      delivererRole: '面试老师', deliveryForm: '视频面试 45min + 书面反馈', slaHours: 72, sort: 3,
       description: '目标院校在读学生模拟真实面试流程,面后给出书面改进建议。',
     },
     {
-      code: 'hard_case', name: '疑难 case 会诊', priceCents: 200000,
-      delivererRole: '资深顾问', deliveryForm: '视频 60min + 书面方案', slaHours: 72, sort: 4,
-      description: '低 GPA、转专业、跨度大、有 gap year 等复杂背景的针对性策略方案。',
+      code: 'hard_case', name: '疑难背景会诊课', priceCents: 200000,
+      delivererRole: '资深规划老师', deliveryForm: '视频 60min + 书面方案', slaHours: 72, sort: 4,
+      description: '资深规划老师针对低 GPA、转专业、跨度大、gap year 等背景,给出申请策略。',
     },
     {
-      code: 'full_service', name: '全程陪跑包', priceCents: 1280000,
-      delivererRole: '主顾问', deliveryForm: '全季跟进', slaHours: 72, sort: 5,
-      description: '整个申请季一对一跟进。已购单点服务可抵扣升级差价。',
+      code: 'full_service', name: '全程主理老师陪跑', priceCents: 1280000,
+      delivererRole: '主理老师', deliveryForm: '全季跟进', slaHours: 72, sort: 5,
+      description: '整个申请季由主理老师一对一跟进。已购单点服务可抵扣升级差价。',
     },
   ]
 
@@ -208,7 +208,7 @@ async function seedRecommendationRules() {
         { type: 'gpa_below', value: 80 },
         { type: 'major_switch' },
       ] },
-      copyTemplate: '你的背景有一些需要特别策略的地方。如果想听听资深顾问怎么看,可以约一次会诊。',
+      copyTemplate: '你的背景有一些需要特别策略的地方。如果想听听资深规划老师怎么看,可以约一次会诊。',
     },
     {
       code: 'upgrade_bundle', name: '已购2项 → 陪跑包升级',

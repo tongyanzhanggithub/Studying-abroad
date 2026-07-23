@@ -10,7 +10,7 @@ import { logout } from '@/app/login/actions'
  *
  * 之前手机上是 8 个入口横向滚动 —— 得左右划才够得着,拇指也难点准。
  * 留学生大量用手机,底部固定 Tab 是这个场景的标准解:4 个高频直达 + 「更多」。
- * 桌面端隐藏(sm:hidden),桌面走顶部导航。
+ * 桌面端隐藏(sm:hidden),桌面走左侧工作台导航。
  */
 
 const TABS = [
@@ -22,7 +22,7 @@ const TABS = [
 
 const MORE = [
   { href: '/app/assessments', label: '评估方案' },
-  { href: '/app/services', label: '人工服务' },
+  { href: '/app/services', label: '老师服务' },
   { href: '/app/orders', label: '我的订单' },
   { href: '/app/settings', label: '账号设置' },
 ]

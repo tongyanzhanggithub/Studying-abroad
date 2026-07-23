@@ -51,6 +51,9 @@ export async function unverifyProgram(programId: string) {
 
 export interface ProgramEditInput {
   nameZh: string
+  qsRank: string
+  qsRankYear: string
+  qsRankSourceUrl: string
   faculty: string
   durationMonths: string
   tuition: string
@@ -93,6 +96,11 @@ function num(v: string): number | null {
   return Number.isFinite(n) ? n : null
 }
 
+function int(v: string): number | null {
+  const n = num(v)
+  return n === null ? null : Math.round(n)
+}
+
 /**
  * 日期字段只接受 YYYY-MM-DD。
  * 解析不出来时**保持原值不动**而不是置空 —— 运营手滑打错一个字符,
@@ -125,6 +133,9 @@ const FIELD_LABEL: Record<string, string> = {
   durationMonths: '学制',
   campus: '校区',
   isOnlineOnly: '授课形式',
+  'school.qsRank': 'QS 排名',
+  'school.qsRankYear': 'QS 年份',
+  'school.qsRankSourceUrl': 'QS 来源',
 }
 
 /**
@@ -146,7 +157,10 @@ export async function saveProgram(
 ) {
   const admin = await requireAdmin('data_entry')
 
-  const before = await db.program.findUnique({ where: { id: programId } })
+  const before = await db.program.findUnique({
+    where: { id: programId },
+    include: { school: true },
+  })
   if (!before) return { ok: false as const, error: '项目不存在' }
 
   const beforeReq = readRequirements(before)
@@ -190,31 +204,41 @@ export async function saveProgram(
     notes: nn(input.deadlineNotes),
   }
 
-  await db.program.update({
-    where: { id: programId },
-    data: {
-      nameZh: nn(input.nameZh),
-      faculty: nn(input.faculty),
-      durationMonths: num(input.durationMonths),
-      tuition: nn(input.tuition),
-      campus: nn(input.campus),
-      isOnlineOnly: input.isOnlineOnly,
-      competitiveness: nn(input.competitiveness),
-      barChangeFlag: input.barChangeFlag,
-      notes: nn(input.notes),
-      sourceUrls: input.sourceUrls
-        .split('\n')
-        .map((s) => s.trim())
-        .filter(Boolean),
-      requirements: requirements as object,
-      deadlines: deadlines as object,
-      finalDeadline: finalDeadline.value,
-      isRolling: input.rolling,
-      confidence: 'verified',
-      lastVerifiedAt: new Date(),
-      verifiedBy: admin.adminId,
-    },
-  })
+  await db.$transaction([
+    db.school.update({
+      where: { id: before.schoolId },
+      data: {
+        qsRank: int(input.qsRank),
+        qsRankYear: int(input.qsRankYear),
+        qsRankSourceUrl: nn(input.qsRankSourceUrl),
+      },
+    }),
+    db.program.update({
+      where: { id: programId },
+      data: {
+        nameZh: nn(input.nameZh),
+        faculty: nn(input.faculty),
+        durationMonths: num(input.durationMonths),
+        tuition: nn(input.tuition),
+        campus: nn(input.campus),
+        isOnlineOnly: input.isOnlineOnly,
+        competitiveness: nn(input.competitiveness),
+        barChangeFlag: input.barChangeFlag,
+        notes: nn(input.notes),
+        sourceUrls: input.sourceUrls
+          .split('\n')
+          .map((s) => s.trim())
+          .filter(Boolean),
+        requirements: requirements as object,
+        deadlines: deadlines as object,
+        finalDeadline: finalDeadline.value,
+        isRolling: input.rolling,
+        confidence: 'verified',
+        lastVerifiedAt: new Date(),
+        verifiedBy: admin.adminId,
+      },
+    }),
+  ])
 
   // ── 算出用户能看见的字段有哪些变了 ──────────────────────
   const fmt = (v: unknown): string => {
@@ -234,6 +258,9 @@ export async function saveProgram(
   }
 
   cmp('tuition', before.tuition, nn(input.tuition))
+  cmp('school.qsRank', before.school.qsRank, int(input.qsRank))
+  cmp('school.qsRankYear', before.school.qsRankYear, int(input.qsRankYear))
+  cmp('school.qsRankSourceUrl', before.school.qsRankSourceUrl, nn(input.qsRankSourceUrl))
   cmp('durationMonths', before.durationMonths, num(input.durationMonths))
   cmp('campus', before.campus, nn(input.campus))
   cmp('isOnlineOnly', before.isOnlineOnly, input.isOnlineOnly)

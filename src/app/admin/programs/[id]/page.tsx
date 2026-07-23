@@ -6,6 +6,7 @@ import { Card } from '@/components/ui'
 import { formatDate } from '@/lib/utils'
 import { readDeadlines, readRequirements, REGION_LABEL } from '@/lib/programs/types'
 import { getPublicRegions } from '@/lib/regions/gate'
+import { formatQsRank } from '@/lib/programs/ranking'
 import { EditForm } from './EditForm'
 import type { ProgramEditInput } from './actions'
 
@@ -35,9 +36,13 @@ export default async function AdminProgramDetail({
 
   const req = readRequirements(program)
   const dl = readDeadlines(program)
+  const qsRankLabel = formatQsRank(program.school.qsRank, program.school.qsRankYear)
 
   const initial: ProgramEditInput = {
     nameZh: program.nameZh ?? '',
+    qsRank: program.school.qsRank?.toString() ?? '',
+    qsRankYear: program.school.qsRankYear?.toString() ?? '',
+    qsRankSourceUrl: program.school.qsRankSourceUrl ?? '',
     faculty: program.faculty ?? '',
     durationMonths: program.durationMonths?.toString() ?? '',
     tuition: program.tuition ?? '',
@@ -80,6 +85,7 @@ export default async function AdminProgramDetail({
         <p className="text-ink-600">{program.nameEn}</p>
         <p className="mt-1 text-xs text-ink-400">
           {REGION_LABEL[program.region] ?? program.region} ·{' '}
+          {qsRankLabel ? `${qsRankLabel} · ` : ''}
           {program.confidence === 'verified' ? '已核对' : '待核对'}
           {program.lastVerifiedAt && ` · 最后核对 ${formatDate(program.lastVerifiedAt)}`}
         </p>
@@ -94,6 +100,29 @@ export default async function AdminProgramDetail({
         />
 
         <div className="space-y-4 lg:sticky lg:top-4 lg:self-start">
+          <Card>
+            <h2 className="mb-2 font-medium text-ink-900">院校信息</h2>
+            <p className="text-sm text-ink-700">
+              QS 世界排名:{' '}
+              {qsRankLabel ? (
+                program.school.qsRankSourceUrl ? (
+                  <a
+                    href={program.school.qsRankSourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-brand-600 hover:underline"
+                  >
+                    {qsRankLabel}
+                  </a>
+                ) : (
+                  qsRankLabel
+                )
+              ) : (
+                <span className="text-ink-400">待补</span>
+              )}
+            </p>
+          </Card>
+
           <Card>
             <h2 className="mb-2 font-medium text-ink-900">官网来源</h2>
             {program.sourceUrls.length === 0 ? (

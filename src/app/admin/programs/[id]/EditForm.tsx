@@ -95,6 +95,18 @@ export function EditForm({
         hint="学费保留原币种原文,不要换算成人民币 —— 汇率会变,换算过的数字很快就是错的。"
       >
         <Text label="中文名" value={f.nameZh} onChange={(v) => set('nameZh', v)} />
+        <Text
+          label="QS 世界排名"
+          value={f.qsRank}
+          onChange={(v) => set('qsRank', v)}
+          placeholder="25"
+        />
+        <Text
+          label="QS 年份"
+          value={f.qsRankYear}
+          onChange={(v) => set('qsRankYear', v)}
+          placeholder="2026"
+        />
         <Text label="学院 / Faculty" value={f.faculty} onChange={(v) => set('faculty', v)} />
         <Text
           label="学制(月)"
@@ -103,6 +115,15 @@ export function EditForm({
           placeholder="12"
         />
         <Text label="校区" value={f.campus} onChange={(v) => set('campus', v)} />
+        <div className="sm:col-span-2">
+          <Text
+            label="QS 排名来源链接"
+            value={f.qsRankSourceUrl}
+            onChange={(v) => set('qsRankSourceUrl', v)}
+            placeholder="https://www.topuniversities.com/..."
+            hint="QS 排名每年变化,建议写来源链接和年份。"
+          />
+        </div>
         <div className="sm:col-span-2">
           <Text
             label="学费"

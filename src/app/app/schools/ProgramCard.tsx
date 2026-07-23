@@ -1,12 +1,11 @@
 'use client'
 
 import Link from 'next/link'
+import { useState } from 'react'
 import { useTransition } from 'react'
-import { useRouter } from 'next/navigation'
 import { Card, FreshnessBadge } from '@/components/ui'
 import { cn, deadlineUrgency } from '@/lib/utils'
 import { TIER_TAG_LABEL } from '@/lib/programs/types'
-import { addToShortlist } from './actions'
 import type { TierTag } from '@prisma/client'
 
 const TIERS: TierTag[] = ['reach', 'match', 'safe']
@@ -16,6 +15,7 @@ export interface ProgramCardData {
   schoolName: string
   programName: string
   regionLabel: string
+  rankingBadges: string[]
   freshness: 'fresh' | 'stale' | 'unverified'
   freshnessLabel: string
   isOnlineOnly: boolean
@@ -44,14 +44,32 @@ export interface ProgramCardData {
  * 现在把「决定加不加」需要的字段直接摆上卡片,英文原文留给详情页。
  */
 export function ProgramCard({ p }: { p: ProgramCardData }) {
-  const router = useRouter()
+  const [addingTier, setAddingTier] = useState<TierTag | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const [pending, startTransition] = useTransition()
   const urgency = deadlineUrgency(p.daysLeft)
 
   const add = (tier: TierTag) =>
     startTransition(async () => {
-      await addToShortlist(p.id, tier)
-      router.refresh()
+      setError(null)
+      setAddingTier(tier)
+      try {
+        const res = await fetch('/api/shortlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'add', programId: p.id, tierTag: tier }),
+        })
+        const json = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null
+        if (!res.ok || !json?.ok) {
+          setError(json?.error ?? '加入失败,请刷新后再试')
+          setAddingTier(null)
+          return
+        }
+        window.location.reload()
+      } catch {
+        setError('网络开小差了,请再试一次')
+        setAddingTier(null)
+      }
     })
 
   return (
@@ -66,6 +84,14 @@ export function ProgramCard({ p }: { p: ProgramCardData }) {
               {p.schoolName}
             </Link>
             <span className="text-xs text-ink-400">{p.regionLabel}</span>
+            {p.rankingBadges.map((badge) => (
+              <span
+                key={badge}
+                className="rounded-full bg-brand-50 px-2 py-0.5 text-[11px] font-medium text-brand-700"
+              >
+                {badge}
+              </span>
+            ))}
             <FreshnessBadge freshness={p.freshness} label={p.freshnessLabel} />
             {p.isOnlineOnly && (
               <span className="rounded bg-amber-50 px-1.5 py-0.5 text-xs text-amber-800">
@@ -114,11 +140,13 @@ export function ProgramCard({ p }: { p: ProgramCardData }) {
                     onClick={() => add(t)}
                     className="min-h-9 rounded-lg border border-ink-200 px-2.5 text-xs text-ink-600 transition-colors hover:border-brand-500 hover:bg-brand-50 hover:text-brand-700 disabled:opacity-50 sm:min-h-8"
                   >
-                    {TIER_TAG_LABEL[t]}
+                    {addingTier === t ? '加入中…' : TIER_TAG_LABEL[t]}
                   </button>
                 ))}
               </div>
-              <span className="text-[11px] text-ink-400">加入选校单</span>
+              <span className={`text-[11px] ${error ? 'text-red-600' : 'text-ink-400'}`}>
+                {error ?? '加入选校单'}
+              </span>
             </div>
           )}
         </div>
