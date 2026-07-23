@@ -90,12 +90,20 @@ export default async function AdminProgramsPage({
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-col gap-1">
-        <p className="text-xs font-semibold uppercase tracking-wide text-brand-600">Program Review</p>
-        <h1 className="text-2xl font-semibold text-ink-900">院校库核对台</h1>
-        <p className="max-w-3xl text-sm leading-relaxed text-ink-500">
-          AI 采集和 Excel 导入的数据都会先进入待核对队列。只有人工核对通过后,才会展示给学生。
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex flex-col gap-1">
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-600">Program Review</p>
+          <h1 className="text-2xl font-semibold text-ink-900">院校库核对台</h1>
+          <p className="max-w-3xl text-sm leading-relaxed text-ink-500">
+            AI 采集、Excel 导入和人工录入的数据都会先进入待核对队列。只有人工核对通过后,才会展示给学生。
+          </p>
+        </div>
+        <Link
+          href="/admin/programs/new"
+          className="inline-flex min-h-10 shrink-0 items-center rounded-lg bg-brand-600 px-4 text-sm font-medium text-white hover:bg-brand-700"
+        >
+          + 人工新增院校
+        </Link>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">

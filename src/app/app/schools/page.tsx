@@ -130,43 +130,40 @@ export default async function SchoolsPage({
   const rankingProvider =
     selectedProvider ?? (sort === 'overall_rank' || sort === 'subject_rank' ? 'qs' : null)
 
-  const [choices, programs, recCard] = await Promise.all([
-    db.userSchoolChoice.findMany({
-      where: { userId: user.id },
-      include: { program: { include: { school: true } } },
-      orderBy: { sort: 'asc' },
-    }),
-    db.program.findMany({
-      where: {
-        // 只检索已开放地区 —— 未开放地区的数据核对率不达标,不该进选校单。
-        // 闸门在 AND 里,下面用户自选的 region 覆盖不掉它(两者是并且关系)
-        ...(await publicProgramWhere()),
-        ...(region ? { region } : {}),
-        ...(direction ? { direction } : {}),
-        ...(q
-          ? {
-              OR: [
-                { nameEn: { contains: q, mode: 'insensitive' } },
-                { nameZh: { contains: q } },
-                { school: { nameEn: { contains: q, mode: 'insensitive' } } },
-                { school: { nameZh: { contains: q } } },
-              ],
-            }
-          : {}),
-      },
-      include: { school: { include: { rankings: true } }, rankings: true },
-      orderBy:
-        sort === 'deadline'
-          ? // nulls last:截止日待公布的排在最后,而不是因为 null 排到最前面
-            [{ finalDeadline: { sort: 'asc', nulls: 'last' } }, { schoolId: 'asc' }]
-          : [{ region: 'asc' }, { schoolId: 'asc' }],
-      take: rankingProvider ? 500 : 120,
-    }),
-    selectCard(user.id, 'schools_top'),
-  ])
+  const PAGE_SIZE = 120
 
-  const chosenIds = new Set(choices.map((c) => c.programId))
-  const overallRankingOf = (p: (typeof programs)[number]): RankingLike | null => {
+  const programWhere = {
+    // 只检索已开放地区 —— 未开放地区的数据核对率不达标,不该进选校单。
+    // 闸门在 AND 里,下面用户自选的 region 覆盖不掉它(两者是并且关系)
+    ...(await publicProgramWhere()),
+    ...(region ? { region } : {}),
+    ...(direction ? { direction } : {}),
+    ...(q
+      ? {
+          OR: [
+            { nameEn: { contains: q, mode: 'insensitive' as const } },
+            { nameZh: { contains: q } },
+            { school: { nameEn: { contains: q, mode: 'insensitive' as const } } },
+            { school: { nameZh: { contains: q } } },
+          ],
+        }
+      : {}),
+  }
+
+  /**
+   * 排名取值。写成结构化入参,是为了让「只查排名字段的轻量行」和
+   * 「带全部关联的完整行」都能用同一套比较逻辑,不必写两份。
+   */
+  type RankBearing = {
+    rankings: RankingLike[]
+    school: {
+      qsRank: number | null
+      qsRankYear: number | null
+      qsRankSourceUrl: string | null
+      rankings: RankingLike[]
+    }
+  }
+  const overallRankingOf = (p: RankBearing): RankingLike | null => {
     if (!rankingProvider) return null
     const stored = latestRanking(p.school.rankings, rankingProvider)
     if (stored) return stored
@@ -181,23 +178,85 @@ export default async function SchoolsPage({
     }
     return null
   }
-  const subjectRankingOf = (p: (typeof programs)[number]): RankingLike | null => {
+  const subjectRankingOf = (p: RankBearing): RankingLike | null => {
     if (!rankingProvider) return null
     return latestRanking(p.rankings, rankingProvider)
   }
-  const rankedPrograms = [...programs].sort((a, b) => {
+  const byRanking = (a: RankBearing, b: RankBearing): number => {
     if (sort === 'overall_rank') {
-      const byRank = rankingSortValue(overallRankingOf(a)) - rankingSortValue(overallRankingOf(b))
-      if (byRank !== 0) return byRank
+      return rankingSortValue(overallRankingOf(a)) - rankingSortValue(overallRankingOf(b))
     }
-    if (sort === 'subject_rank') {
-      const byRank = rankingSortValue(subjectRankingOf(a)) - rankingSortValue(subjectRankingOf(b))
-      if (byRank !== 0) return byRank
-      const byOverall = rankingSortValue(overallRankingOf(a)) - rankingSortValue(overallRankingOf(b))
-      if (byOverall !== 0) return byOverall
-    }
-    return 0
-  }).slice(0, 120)
+    // 专业排名优先,同名次再看综合排名
+    const bySubject =
+      rankingSortValue(subjectRankingOf(a)) - rankingSortValue(subjectRankingOf(b))
+    if (bySubject !== 0) return bySubject
+    return rankingSortValue(overallRankingOf(a)) - rankingSortValue(overallRankingOf(b))
+  }
+
+  const isRankingSort = sort === 'overall_rank' || sort === 'subject_rank'
+
+  const fullInclude = {
+    school: { include: { rankings: true } },
+    rankings: true,
+  } as const
+
+  const [choices, recCard] = await Promise.all([
+    db.userSchoolChoice.findMany({
+      where: { userId: user.id },
+      include: { program: { include: { school: true } } },
+      orderBy: { sort: 'asc' },
+    }),
+    selectCard(user.id, 'schools_top'),
+  ])
+
+  /**
+   * ⚠️ 按排名排序必须**先排序再截断**,不能反过来。
+   *
+   *    早先的写法是「数据库按地区取前 500 条 → 再在内存里按排名排序」。
+   *    只要符合条件的项目超过 500,排名第一的学校就可能落在第 501 位被切掉 ——
+   *    用户明明选了「综合排名优先」,却看不到最好的学校,而且页面不会有任何提示。
+   *    这类「不报错、只是结果悄悄是错的」问题,对一个把数据准确性当卖点的产品最致命。
+   *
+   *    改成两段查询:先只取排名字段(轻量,不带其它关联)把**全部**候选排好序,
+   *    取前 120 个 id,再查这 120 条的完整数据。任何规模都正确。
+   */
+  let programs: Awaited<ReturnType<typeof fetchFull>>
+  async function fetchFull(ids?: string[]) {
+    return db.program.findMany({
+      where: ids ? { id: { in: ids } } : programWhere,
+      include: fullInclude,
+      orderBy: ids
+        ? undefined
+        : sort === 'deadline'
+          ? // nulls last:截止日待公布的排在最后,而不是因为 null 排到最前面
+            [{ finalDeadline: { sort: 'asc' as const, nulls: 'last' as const } }, { schoolId: 'asc' as const }]
+          : [{ region: 'asc' as const }, { schoolId: 'asc' as const }],
+      take: ids ? undefined : PAGE_SIZE,
+    })
+  }
+
+  if (isRankingSort) {
+    const lite = await db.program.findMany({
+      where: programWhere,
+      select: {
+        id: true,
+        rankings: true,
+        school: {
+          select: { qsRank: true, qsRankYear: true, qsRankSourceUrl: true, rankings: true },
+        },
+      },
+    })
+    const topIds = [...lite].sort(byRanking).slice(0, PAGE_SIZE).map((p) => p.id)
+    const rows = await fetchFull(topIds)
+    // in 查询不保证顺序,按排好的 id 次序还原
+    const order = new Map(topIds.map((id, i) => [id, i]))
+    programs = rows.sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0))
+  } else {
+    programs = await fetchFull()
+  }
+
+  const chosenIds = new Set(choices.map((c) => c.programId))
+  const rankedPrograms = programs
 
   return (
     <div className="space-y-6">

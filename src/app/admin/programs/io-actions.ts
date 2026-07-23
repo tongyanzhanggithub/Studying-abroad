@@ -180,7 +180,33 @@ export async function importPrograms(csvText: string) {
         continue
       }
 
-      // 学校:按(英文名+地区)找,没有就建
+      /**
+       * 排名列:**填错要报错,不能当成"清空"**。
+       *
+       * ⚠️ 早先写的是 `cell(...) ? qsRank : undefined` —— 单元格非空但填了非数字
+       *    (比如手滑写成「第25名」「N/A」)时,parseIntOrNull 返回 null,
+       *    而"非空"判断为真,于是把 null 写进库,**静默抹掉原有排名**,
+       *    既不报错也不计入失败行。运营对着 Excel 改数据时很容易踩到,
+       *    而这是个把数据准确性当生命线的产品 —— 悄悄改错比改不动严重得多。
+       *
+       * 现在:空 = 不改动(undefined),有值且能解析 = 更新,有值但解析不了 = 整行报错跳过。
+       */
+      const rankCells = [
+        ['schoolQsRank', 'QS 排名'],
+        ['schoolQsRankYear', 'QS 排名年份'],
+      ] as const
+      const badRank = rankCells.find(([key]) => {
+        const raw = cell(row, key)
+        return raw !== '' && parseIntOrNull(raw) === null
+      })
+      if (badRank) {
+        errors.push({
+          line,
+          reason: `${badRank[1]}「${cell(row, badRank[0])}」不是数字。留空表示不改动,不会清除原值`,
+        })
+        continue
+      }
+
       const qsRank = parseIntOrNull(cell(row, 'schoolQsRank'))
       const qsRankYear = parseIntOrNull(cell(row, 'schoolQsRankYear'))
       const school = await db.school.upsert({
@@ -195,8 +221,9 @@ export async function importPrograms(csvText: string) {
         },
         update: {
           nameZh: cell(row, 'schoolNameZh') || undefined,
-          qsRank: cell(row, 'schoolQsRank') ? qsRank : undefined,
-          qsRankYear: cell(row, 'schoolQsRankYear') ? qsRankYear : undefined,
+          // 走到这里 qsRank 必定已解析成功(或单元格为空 → undefined = 不改动)
+          qsRank: qsRank ?? undefined,
+          qsRankYear: qsRankYear ?? undefined,
           qsRankSourceUrl: cell(row, 'schoolQsRankSourceUrl') || undefined,
         },
       })
