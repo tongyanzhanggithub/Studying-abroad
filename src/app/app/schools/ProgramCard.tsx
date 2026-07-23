@@ -12,6 +12,8 @@ const TIERS: TierTag[] = ['reach', 'match', 'safe']
 
 export interface ProgramCardData {
   id: string
+  /** 学校 id —— 学校名链到学校总览页,和项目详情页是两个去处 */
+  schoolId: string
   schoolName: string
   programName: string
   regionLabel: string
@@ -77,8 +79,13 @@ export function ProgramCard({ p }: { p: ProgramCardData }) {
       <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            {/*
+              学校名 → 学校总览(排名 + 该校全部项目)
+              专业名 → 专业详情(见下方)
+              早先两个都指向专业详情,点学校名却进了某一个专业,和预期不符。
+            */}
             <Link
-              href={`/app/school/${p.id}`}
+              href={`/app/university/${p.schoolId}`}
               className="font-medium text-ink-900 hover:underline"
             >
               {p.schoolName}
@@ -101,7 +108,12 @@ export function ProgramCard({ p }: { p: ProgramCardData }) {
           </div>
 
           {/* 项目名不截断 —— 学生就是靠它区分同一所学校的十几个项目 */}
-          <p className="mt-0.5 text-sm leading-snug text-ink-700">{p.programName}</p>
+          <Link
+            href={`/app/school/${p.id}`}
+            className="mt-0.5 block text-sm leading-snug text-ink-700 hover:text-brand-700 hover:underline"
+          >
+            {p.programName}
+          </Link>
 
           {p.facts.length > 0 && (
             <p className="mt-1.5 text-xs text-ink-500">{p.facts.join(' · ')}</p>

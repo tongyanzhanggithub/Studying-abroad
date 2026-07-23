@@ -404,6 +404,7 @@ export default async function SchoolsPage({
                   key={p.id}
                   p={{
                     id: p.id,
+                    schoolId: p.schoolId,
                     schoolName: p.school.nameZh ?? p.school.nameEn,
                     programName: p.nameZh ?? p.nameEn,
                     regionLabel: REGION_LABEL[p.region] ?? p.region,

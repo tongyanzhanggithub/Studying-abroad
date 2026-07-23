@@ -58,9 +58,13 @@ export default async function SchoolDetailPage({
 
       <div>
         <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-2xl font-semibold text-ink-900">
+          {/* 学校名可点回学校总览 —— 看完这个专业,常常想看看这所学校还开了什么 */}
+          <Link
+            href={`/app/university/${program.schoolId}`}
+            className="text-2xl font-semibold text-ink-900 hover:underline"
+          >
             {program.school.nameZh ?? program.school.nameEn}
-          </h1>
+          </Link>
           <span className="text-sm text-ink-400">{REGION_LABEL[program.region]}</span>
           {qsRankLabel && (
             <span className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700">
