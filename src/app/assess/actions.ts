@@ -5,7 +5,7 @@ import { db } from '@/lib/db'
 import { track } from '@/lib/analytics'
 import { runAssessment, isDifficultCase, type AssessmentInput } from '@/lib/assessment/engine'
 import { isValidPhone } from '@/lib/auth/verification'
-import { DIRECTION_ORDER } from '@/lib/programs/types'
+import { DIRECTION_ORDER, REGION_ORDER } from '@/lib/programs/types'
 import { getPublicRegions } from '@/lib/regions/gate'
 import { getSession } from '@/lib/auth/session'
 import { saveAssessmentToProfile } from '@/lib/profile/from-assessment'
@@ -50,23 +50,6 @@ const AssessSchema = z.object({
 })
 
 export type AssessFormInput = z.input<typeof AssessSchema>
-
-const FALLBACK_REGIONS = [
-  { region: 'UK', count: 139 },
-  { region: 'AU', count: 78 },
-  { region: 'HK', count: 51 },
-  { region: 'SG', count: 34 },
-  { region: 'CA', count: 49 },
-  { region: 'NZ', count: 22 },
-  { region: 'IE', count: 26 },
-  { region: 'NL', count: 38 },
-  { region: 'DE', count: 35 },
-  { region: 'JP', count: 18 },
-  { region: 'KR', count: 16 },
-  { region: 'MO', count: 10 },
-  { region: 'FR', count: 28 },
-  { region: 'CH', count: 22 },
-]
 
 export async function submitAssessment(raw: unknown) {
   const parsed = AssessSchema.safeParse(raw)
@@ -152,29 +135,48 @@ export async function trackAssessStart(sourceChannel?: string | null) {
   await track('assess_start', { sourceChannel: sourceChannel ?? null })
 }
 
+export interface RegionOption {
+  region: string
+  count: number
+  /** 已开放且有数据,才可选。false = 前端标「即将开放」并禁用 */
+  available: boolean
+}
+
 /**
- * 表单可选的地区 + 各自的项目数。
+ * 表单地区选项 —— **列出全部支持的英语授课目的地(美国之外)**,
+ * 每个带项目数和是否可选。
  *
- * ⚠️ 两层过滤,缺一不可:
- *   1. **已开放**(RegionSetting.isPublic)—— 数据核对率不达标的地区不放出来
- *   2. **真有数据** —— 枚举里加了国家不等于有项目
+ * ⚠️ 「全部列出来」和「不让用户选到空地区」两者都要:
+ *    - 未开放 / 无数据的地区**照样显示**(让用户看到完整版图),
+ *      但 available=false,前端禁用并标「即将开放」。
+ *    - 只有 已开放(RegionSetting.isPublic)且真有项目 的才可选。
  *
- * 让用户选一个空目的地、或者选一个全是「待核实」数据的目的地,
- * 再告诉他结果不可靠,都是很糟糕的体验。
+ *    可选性由 available 表达,而不是靠"从列表里删掉" —— 删掉的话
+ *    用户根本不知道我们还覆盖哪些国家;但让他选一个空目的地、
+ *    再回一句"没有匹配结果",同样是糟糕体验。两难之间用禁用态化解。
  */
-export async function getAvailableRegions() {
+export async function getAvailableRegions(): Promise<RegionOption[]> {
   try {
     const publicRegions = await getPublicRegions()
-    if (publicRegions.length === 0) return []
+    const publicSet = new Set(publicRegions)
 
     const groups = await db.program.groupBy({
       by: ['region'],
-      where: { active: true, region: { in: publicRegions } },
+      where: { active: true },
       _count: true,
     })
-    return groups.map((g) => ({ region: g.region as string, count: g._count }))
+    const countByRegion = new Map(groups.map((g) => [g.region as string, g._count]))
+
+    // 按 REGION_ORDER 输出全部地区,可选的排前面
+    return [...REGION_ORDER]
+      .map((region) => {
+        const count = countByRegion.get(region) ?? 0
+        return { region, count, available: publicSet.has(region) && count > 0 }
+      })
+      .sort((a, b) => Number(b.available) - Number(a.available))
   } catch (error) {
     console.warn('[assess] 使用地区兜底数据,数据库暂不可用', error)
-    return FALLBACK_REGIONS
+    // 兜底:全部标为不可选,避免在数据库不可用时误开
+    return [...REGION_ORDER].map((region) => ({ region, count: 0, available: false }))
   }
 }

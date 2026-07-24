@@ -5,8 +5,9 @@ import { BrandLogo } from '@/components/BrandLogo'
 import { formatCents } from '@/lib/utils'
 import { serviceDisplay } from '@/lib/service-display'
 import { track } from '@/lib/analytics'
-import { getCurrentUser } from '@/lib/auth/session'
+import { getCurrentUser, getActiveSubscription } from '@/lib/auth/session'
 import { BuyButton } from './BuyButton'
+import { TeacherMarquee } from '@/components/TeacherMarquee'
 
 /**
  * 定价页(PRD 3.1 `/pricing`)。
@@ -17,8 +18,12 @@ import { BuyButton } from './BuyButton'
 
 type PricingPlan = {
   id: string
+  /** "monthly" | "season" | "annual" —— 用于判断哪一档打「推荐」 */
+  code: string
   name: string
   priceCents: number
+  /** 有效期月数,决定价格后缀显示「/月」「/9 个月」还是「/年」 */
+  durationMonths: number
   features: unknown
 }
 
@@ -100,7 +105,14 @@ async function getPricingData(): Promise<{
       db.plan.findMany({
         where: { active: true },
         orderBy: { sort: 'asc' },
-        select: { id: true, name: true, priceCents: true, features: true },
+        select: {
+          id: true,
+          code: true,
+          name: true,
+          priceCents: true,
+          features: true,
+          durationMonths: true,
+        },
       }),
       db.serviceSku.findMany({
         where: { active: true },
@@ -130,6 +142,17 @@ async function getPricingData(): Promise<{
 export default async function PricingPage() {
   const { plans, skus, user, usingFallback } = await getPricingData()
 
+  /**
+   * 已有生效季票的人不该再看到「购买季票」。
+   *
+   * ⚠️ 之前这一页只看「登录没登录」,不看订阅状态 —— 已经付过 ¥1,999 的用户
+   *    回到定价页,看到的还是「购买基础版季票」,点下去就是**重复付款**。
+   *    这不是观感问题,是真金白银。
+   *
+   * 单点服务不受影响:那本来就是可以反复加购的。
+   */
+  const subscription = user ? await getActiveSubscription(user.id) : null
+
   await track('pricing_view', {
     userId: user?.id ?? null,
     properties: { usingFallback },
@@ -147,11 +170,16 @@ export default async function PricingPage() {
             >
               首页
             </Link>
+            {/*
+              已登录就该指向工作台。对一个已经注册、甚至已经买了季票的用户,
+              页面顶部最醒目的按钮还是「免费测一测」是错的号召 ——
+              他要回去的是自己的申请进度,不是再做一次免费评估。
+            */}
             <Link
-              href="/assess"
+              href={user ? '/app/dashboard' : '/assess'}
               className="insta-button ml-1 inline-flex min-h-11 items-center rounded-full px-4 text-sm font-medium text-white"
             >
-              免费测一测
+              {user ? '进入工作台' : '免费测一测'}
             </Link>
           </nav>
         </div>
@@ -205,6 +233,9 @@ export default async function PricingPage() {
         </div>
       </section>
 
+      {/* 老师栏 —— 没有已勾选「在官网展示」的老师时,这一整块不渲染 */}
+      <TeacherMarquee />
+
       <section id="plans" className="soft-section border-b border-white/70">
         <div className="mx-auto max-w-6xl px-5 py-16 sm:py-20">
           <div className="max-w-2xl">
@@ -217,18 +248,37 @@ export default async function PricingPage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
+          {/*
+            ⚠️ 网格列数要跟着套餐数量走。
+               原来写死成 lg:grid-cols-[0.95fr_1.05fr] —— 那是「基础版 / Pro」
+               两档时的布局。改成月票/季票/年票三档后,三张卡 + 下面那张
+               「WHY THIS PRICE」正好凑成 4 格,第 4 格塌成一个空白框。
+               现在按实际档数排:3 档三列,2 档两列。
+          */}
+          <div
+            className={`mt-10 grid gap-4 ${
+              plans.length >= 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2'
+            }`}
+          >
             {plans.length === 0 && <PriceUnavailable what="通行证价格" />}
 
-            {plans.map((plan, index) => {
+            {plans.map((plan) => {
               const features = featureItems(plan.features)
+              /**
+               * 「推荐」给申请季票 —— 它最贴合真实场景(一个申请季通常 9 个月),
+               * 而不是简单地给列表里的第一个。早先写的是 index === 0,
+               * 加了月票之后,推荐角标就跑到最短最便宜的那档上去了。
+               */
+              const recommended = plan.code === 'season'
               return (
                 <article
                   key={plan.id}
                   className={
-                    index === 0
-                      ? 'feed-card border-insta-pink bg-white p-6 shadow-[0_18px_45px_rgba(225,48,108,0.14)]'
-                      : 'feed-card bg-white p-6'
+                    // h-full + flex 列:三张卡等高,权益列表撑开中间,把购买按钮压到卡片底部,
+                    // 这样月票(5 条权益)和其它档(6 条)的按钮也在同一水平线上。
+                    recommended
+                      ? 'feed-card flex h-full flex-col border-insta-pink bg-white p-6 shadow-[0_18px_45px_rgba(225,48,108,0.14)]'
+                      : 'feed-card flex h-full flex-col bg-white p-6'
                   }
                 >
                   <div className="flex items-start justify-between gap-4">
@@ -236,8 +286,8 @@ export default async function PricingPage() {
                       <h3 className="text-xl font-semibold text-ink-900">{plan.name}</h3>
                       <p className="mt-1 text-sm text-ink-500">从测评到递交前的申请管理系统</p>
                     </div>
-                    {index === 0 && (
-                      <span className="insta-gradient rounded-full px-2.5 py-0.5 text-xs text-white">
+                    {recommended && (
+                      <span className="insta-gradient shrink-0 rounded-full px-2.5 py-0.5 text-xs text-white">
                         推荐
                       </span>
                     )}
@@ -245,10 +295,18 @@ export default async function PricingPage() {
 
                   <p className="mt-6 text-5xl font-semibold tracking-tight text-ink-900">
                     {formatCents(plan.priceCents)}
-                    <span className="ml-1.5 text-sm font-normal text-ink-400">/ 申请季</span>
+                    {/* 后缀跟着套餐时长走 —— 三档都写「/ 申请季」会让月票看着像 ¥30 管一整季 */}
+                    <span className="ml-1.5 text-sm font-normal text-ink-400">
+                      {plan.durationMonths === 1
+                        ? '/ 月'
+                        : plan.durationMonths === 12
+                          ? '/ 年'
+                          : `/ ${plan.durationMonths} 个月`}
+                    </span>
                   </p>
 
-                  <ul className="mt-6 space-y-3 text-sm text-ink-600">
+                  {/* flex-1:权益少的卡片在这里被撑开,把下面的按钮顶到底部对齐 */}
+                  <ul className="mt-6 flex-1 space-y-3 text-sm text-ink-600">
                     {features.map((feature) => (
                       <li key={feature} className="flex gap-2">
                         <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-insta-pink" />
@@ -258,36 +316,65 @@ export default async function PricingPage() {
                   </ul>
 
                   <div className="mt-7">
-                    <BuyButton
-                      kind="plan"
-                      id={plan.id}
-                      label={`购买${plan.name}`}
-                      loggedIn={!!user}
-                    />
+                    {subscription ? (
+                      // 已有生效季票 —— 给去处,而不是再放一个会重复付款的按钮
+                      <div className="rounded-lg bg-ink-50 px-4 py-3">
+                        <p className="text-sm text-ink-700">
+                          你已持有
+                          <strong className="text-ink-900">{subscription.plan.name}</strong>
+                          {subscription.expiresAt && (
+                            <span className="text-ink-500">
+                              ,有效期至 {subscription.expiresAt.toLocaleDateString('zh-CN')}
+                            </span>
+                          )}
+                        </p>
+                        <Link
+                          href="/app/dashboard"
+                          className="mt-2 inline-flex text-sm font-medium text-brand-600 hover:underline"
+                        >
+                          进入工作台 →
+                        </Link>
+                      </div>
+                    ) : (
+                      <BuyButton
+                        kind="plan"
+                        id={plan.id}
+                        label={`购买${plan.name}`}
+                        loggedIn={!!user}
+                      />
+                    )}
                   </div>
                 </article>
               )
             })}
 
-            <div className="feed-card bg-ink-900 p-6 text-white">
-              <p className="text-sm font-semibold text-white/55">WHY THIS PRICE</p>
-              <h3 className="mt-2 text-2xl font-semibold">把钱花在判断和推进上</h3>
-              <p className="mt-4 text-sm leading-relaxed text-white/65">
-                留学申请真正贵的不是表格,是试错成本。Compass 用系统先把高频流程跑顺,
-                让你在需要人类经验的时候再请专家介入,而不是从第一天就被迫买一整套全包服务。
-              </p>
-              <div className="mt-7 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-                {[
-                  ['定位', '先判断学校档位和方向匹配度'],
-                  ['执行', '材料、文书、截止日同步推进'],
-                  ['加购', '名单精修、文书批改按需购买'],
-                ].map(([title, body]) => (
-                  <div key={title} className="border-t border-white/15 pt-3">
-                    <p className="font-medium">{title}</p>
-                    <p className="mt-1 text-xs leading-relaxed text-white/55">{body}</p>
-                  </div>
-                ))}
-              </div>
+          </div>
+
+          {/*
+            「WHY THIS PRICE」原本混在套餐网格里当第 N 张卡 ——
+            套餐从 2 档变成 3 档后就凑出了第 4 格,留下一个空白框。
+            它讲的是定价理由,不是一件商品,本来就不该和套餐并排。
+            移到网格外面做成整幅通栏,格子数量再怎么变都不会塌。
+          */}
+          {/* 浅色渐变,和整站一致 —— 之前是纯黑底,在这一片粉白里像块补丁 */}
+          <div className="mt-4 rounded-xl border border-brand-100 bg-[linear-gradient(135deg,#fff7fb,#f6fbff)] p-6 sm:p-8">
+            <p className="gradient-text text-sm font-semibold">WHY THIS PRICE</p>
+            <h3 className="mt-2 text-2xl font-semibold text-ink-900">把钱花在判断和推进上</h3>
+            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-ink-600">
+              留学申请真正贵的不是表格,是试错成本。Compass 用系统先把高频流程跑顺,
+              让你在需要人类经验的时候再请专家介入,而不是从第一天就被迫买一整套全包服务。
+            </p>
+            <div className="mt-7 grid gap-3 sm:grid-cols-3">
+              {[
+                ['定位', '先判断学校档位和方向匹配度'],
+                ['执行', '材料、文书、截止日同步推进'],
+                ['加购', '名单精修、文书批改按需购买'],
+              ].map(([title, body]) => (
+                <div key={title} className="border-t border-brand-100/70 pt-3">
+                  <p className="font-medium text-ink-900">{title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-ink-500">{body}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

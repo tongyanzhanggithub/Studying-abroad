@@ -387,11 +387,21 @@ model VerificationCode {
 
 model Plan {
   id         String  @id @default(cuid())
-  code       String  @unique // "basic" | "pro"
+  code       String  @unique // "monthly" | "season" | "annual"
   name       String
   priceCents Int     @map("price_cents")
   features   Json    @map("features_json")
-  /// 每日 AI 调用限额(PRD 4.5:基础版 30/日,Pro 100/日)
+
+  /**
+   * 有效期月数。月票 1、申请季票 9、年票 12。
+   *
+   * ⚠️ 必须由套餐自己带,不能写死在履约代码里。
+   *    早先履约一律把到期日设成「次年 10 月 31 日」—— 那是只有一种季票时
+   *    的权宜写法。现在三种时长并存,写死会让月票也白送一整年。
+   */
+  durationMonths Int @default(1) @map("duration_months")
+
+  /// 每日 AI 调用限额(PRD 4.5)
   aiDailyQuota Int   @default(30) @map("ai_daily_quota")
   active     Boolean @default(true)
   sort       Int     @default(0)
@@ -852,6 +862,28 @@ model Deliverer {
   /// 擅长领域 / 内部备注,派单时参考
   note       String?
   active     Boolean @default(true)
+
+  /**
+   * ── 对外展示(官网老师栏)────────────────────────────
+   *
+   * ⚠️ 这些是**给潜在客户看的资质信息**,只填能核实的内容。
+   *    编造毕业院校、从业年限或案例数等于伪造资质 ——
+   *    既违背「数据准确是生命线」,也是实打实的法律风险。
+   *
+   * showOnSite 默认 false:新建的老师**不会自动出现在官网**,
+   * 必须运营确认资料属实后显式勾选。宁可栏位空着,也不放没核实过的人。
+   */
+  showOnSite  Boolean @default(false) @map("show_on_site")
+  /// 对外头衔,如「选校规划老师」;留空则回退到 role
+  publicTitle String? @map("public_title")
+  /// 教育背景,如「爱丁堡大学 教育学硕士」
+  education   String?
+  /// 从业年限
+  yearsExp    Int?    @map("years_exp")
+  /// 擅长地区/方向标签,逗号分隔,如「英国,商科,数据科学」—— 卡片上做成小标签
+  specialties String?
+  /// 一句话亮点,如「主要负责英港新商科方向」
+  highlight   String?
 
   createdAt DateTime @default(now()) @map("created_at")
 

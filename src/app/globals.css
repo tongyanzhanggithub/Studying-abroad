@@ -282,3 +282,42 @@ details > summary::-webkit-details-marker {
   background: #e6f4ec;
   color: #1e6b4a;
 }
+
+/* ── 官网老师展示栏:无缝横向滚动 ─────────────────────
+   内容渲染两遍首尾相接,平移 -50% 正好接回起点。
+   悬停暂停,让人能停下来看清某一位;
+   prefers-reduced-motion 下直接不动 —— 持续滚动对前庭敏感人群不友好,
+   而这一栏是信息展示,静止也完全读得了。                        */
+.marquee-viewport {
+  overflow: hidden;
+  /* 两侧淡出,避免卡片在边缘被硬切 */
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll var(--marquee-duration, 24s) linear infinite;
+}
+
+.marquee-viewport:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    /* 不滚动时允许手动横向查看,内容不会看不到 */
+    overflow-x: auto;
+  }
+}

@@ -5,7 +5,7 @@ import { Card } from '@/components/ui'
 import { PlanEditor } from './SkuEditor'
 
 /**
- * 季票价格维护。人工服务在 /admin/services。
+ * 套餐定价维护(月票 / 申请季票 / 年票)。人工服务在 /admin/services。
  *
  * 改价只影响之后的新订单:下单时 Subscription/Payment 已经把价格快照下来,
  * 支付回调只跟快照对账。已下单/已支付的一律不动。
@@ -13,17 +13,19 @@ import { PlanEditor } from './SkuEditor'
 export default async function AdminPricingPage() {
   await requireAdmin('super_admin')
 
-  const [plans, skus] = await Promise.all([
+  const [plans, skus, subCounts] = await Promise.all([
     db.plan.findMany({ orderBy: { sort: 'asc' } }),
     db.serviceSku.findMany({ select: { id: true } }),
+    db.subscription.groupBy({ by: ['planId'], _count: true }),
   ])
+  const subsByPlan = new Map(subCounts.map((s) => [s.planId, s._count]))
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-ink-900">季票价格</h1>
+        <h1 className="text-2xl font-semibold text-ink-900">套餐定价</h1>
         <p className="mt-1 text-sm leading-relaxed text-ink-600">
-          改动会立刻反映到定价页。
+          月票 / 申请季票 / 年票的价格与上下架。改动会立刻反映到定价页。
         </p>
       </div>
 
@@ -37,7 +39,7 @@ export default async function AdminPricingPage() {
       </Card>
 
       <section className="space-y-3">
-        <h2 className="text-lg font-medium text-ink-900">季票</h2>
+        <h2 className="text-lg font-medium text-ink-900">订阅套餐</h2>
         {plans.length === 0 ? (
           <Card><p className="text-sm text-ink-600">没有套餐,先跑 npm run db:seed。</p></Card>
         ) : (
@@ -52,6 +54,8 @@ export default async function AdminPricingPage() {
                 aiDailyQuota: p.aiDailyQuota,
                 active: p.active,
               }}
+              usage={{ subscriptions: subsByPlan.get(p.id) ?? 0 }}
+              allowDelete
             />
           ))
         )}

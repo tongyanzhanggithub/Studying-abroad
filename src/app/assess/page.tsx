@@ -12,8 +12,9 @@ import {
   DIRECTION_ORDER,
   REGION_LABEL,
   REGION_ORDER,
-  UNDERGRAD_MAJOR_OPTIONS as MAJOR_OPTIONS,
 } from '@/lib/programs/types'
+import { UNDERGRAD_DISCIPLINES } from '@/lib/programs/undergrad-catalog'
+import { MajorPicker } from '@/components/MajorPicker'
 
 /**
  * 免费评估 3 步表单(PRD 4.1)。
@@ -39,24 +40,6 @@ const LANG_OPTIONS = [
   { value: 'ielts' as const, label: '雅思' },
   { value: 'toefl' as const, label: '托福' },
   { value: 'none' as const, label: '还没考' },
-]
-
-// 地区列表在运行时从数据库取(只列真有项目的),不在这里写死
-const FALLBACK_REGIONS = [
-  { region: 'UK', count: 139 },
-  { region: 'AU', count: 78 },
-  { region: 'HK', count: 51 },
-  { region: 'SG', count: 34 },
-  { region: 'CA', count: 49 },
-  { region: 'NZ', count: 22 },
-  { region: 'IE', count: 26 },
-  { region: 'NL', count: 38 },
-  { region: 'DE', count: 35 },
-  { region: 'JP', count: 18 },
-  { region: 'KR', count: 16 },
-  { region: 'MO', count: 10 },
-  { region: 'FR', count: 28 },
-  { region: 'CH', count: 22 },
 ]
 
 const DIRECTION_OPTIONS: DirectionOption[] = [
@@ -89,84 +72,22 @@ const DIRECTION_OPTIONS: DirectionOption[] = [
   { value: 'other', label: 'Other / Interdisciplinary', description: '其他 / 跨学科' },
 ]
 
-const MAJOR_DIRECTION_MAP: Record<string, { primary: DirectionValue[]; adjacent: DirectionValue[] }> = {
-  'Business & Management': {
-    primary: ['management', 'marketing', 'international_business', 'hr'],
-    adjacent: ['finance', 'accounting', 'business_analytics', 'supply_chain', 'economics'],
-  },
-  'Economics & Finance': {
-    primary: ['finance', 'economics', 'business_analytics'],
-    adjacent: ['accounting', 'management', 'data_science_ai', 'mathematics_statistics'],
-  },
-  'Accounting & Quantitative Finance': {
-    primary: ['accounting', 'finance', 'business_analytics'],
-    adjacent: ['economics', 'mathematics_statistics', 'data_science_ai'],
-  },
-  'Computer Science & Data': {
-    primary: ['computer_science', 'data_science_ai'],
-    adjacent: ['business_analytics', 'engineering', 'mathematics_statistics', 'finance'],
-  },
-  'Engineering & Technology': {
-    primary: ['engineering', 'computer_science', 'data_science_ai'],
-    adjacent: ['management', 'supply_chain', 'environment_sustainability', 'mathematics_statistics'],
-  },
-  'Mathematics & Statistics': {
-    primary: ['mathematics_statistics', 'data_science_ai', 'business_analytics'],
-    adjacent: ['finance', 'economics', 'computer_science'],
-  },
-  'Natural Sciences': {
-    primary: ['natural_sciences', 'engineering', 'environment_sustainability'],
-    adjacent: ['data_science_ai', 'mathematics_statistics', 'education'],
-  },
-  'Life Sciences & Medicine': {
-    primary: ['life_sciences_medicine', 'public_health'],
-    adjacent: ['data_science_ai', 'management', 'education', 'environment_sustainability'],
-  },
-  'Architecture & Built Environment': {
-    primary: ['architecture', 'environment_sustainability'],
-    adjacent: ['engineering', 'management', 'arts_design'],
-  },
-  'Social Sciences': {
-    primary: ['social_sciences', 'law_public_policy', 'education'],
-    adjacent: ['media_communication', 'management', 'public_health', 'economics'],
-  },
-  'Media & Communication': {
-    primary: ['media_communication', 'marketing'],
-    adjacent: ['social_sciences', 'management', 'arts_design', 'international_business'],
-  },
-  'Law & Public Policy': {
-    primary: ['law_public_policy', 'social_sciences'],
-    adjacent: ['international_business', 'management', 'economics', 'public_health'],
-  },
-  Education: {
-    primary: ['education'],
-    adjacent: ['social_sciences', 'media_communication', 'public_health', 'management'],
-  },
-  'Arts & Design': {
-    primary: ['arts_design', 'media_communication'],
-    adjacent: ['architecture', 'marketing', 'management', 'humanities'],
-  },
-  Humanities: {
-    primary: ['humanities', 'education'],
-    adjacent: ['media_communication', 'social_sciences', 'law_public_policy', 'arts_design'],
-  },
-  'Environment & Agriculture': {
-    primary: ['environment_sustainability', 'agriculture_food_science'],
-    adjacent: ['natural_sciences', 'engineering', 'public_health', 'management'],
-  },
-  'Hospitality & Tourism': {
-    primary: ['hospitality_tourism', 'management', 'marketing'],
-    adjacent: ['international_business', 'supply_chain', 'arts_design'],
-  },
-  'Other / Interdisciplinary': {
-    primary: ['other'],
-    adjacent: ['management', 'business_analytics', 'education', 'social_sciences'],
-  },
+
+/** 专业类名 / 门类名 → 所属门类(含方向映射)。找不到返回 null。 */
+function disciplineOf(major?: string | null) {
+  if (!major) return null
+  return (
+    UNDERGRAD_DISCIPLINES.find(
+      (d) => d.name === major || d.categories.some((c) => c.name === major),
+    ) ?? null
+  )
 }
 
 function getMajorLabel(major?: string | null) {
-  const option = MAJOR_OPTIONS.find((m) => m.value === major)
-  return option ? `${option.label} · ${option.description}` : '还未选择本科门类'
+  if (!major) return '还没选本科专业'
+  const d = disciplineOf(major)
+  // 专业类:显示「金融学类 · 经济学」;门类本身或"其他":直接显示
+  return d && d.name !== major ? `${major} · ${d.name}` : major
 }
 
 function getDirectionName(direction?: string | null) {
@@ -174,7 +95,7 @@ function getDirectionName(direction?: string | null) {
 }
 
 function directionGroupsFor(major?: string | null) {
-  const relation = major ? MAJOR_DIRECTION_MAP[major] : null
+  const relation = disciplineOf(major)
   if (!relation) {
     return [
       {
@@ -239,8 +160,6 @@ const STEP_META = [
   },
 ]
 
-const TRUST_POINTS = ['不讲玄学', '不卖焦虑', '不替你做决定']
-
 const NEXT_LABEL: Record<number, string> = {
   1: '继续,看实力区间',
   2: '继续,圈定申请地图',
@@ -273,22 +192,16 @@ function AssessForm() {
   const [showAllDirections, setShowAllDirections] = useState(false)
   const [pending, startTransition] = useTransition()
 
-  /** 只展示**已开放且**库里真有项目的地区,按申请量顺序排 */
-  const [regions, setRegions] = useState<Array<{ region: string; count: number }>>([])
-  /** 区分「还在加载」和「确实一个地区都没开放」—— 两者要给完全不同的提示 */
+  // 服务端返回全部支持的地区(可选的排前面),这里直接用
+  const [regions, setRegions] = useState<
+    Array<{ region: string; count: number; available: boolean }>
+  >([])
   const [regionsLoaded, setRegionsLoaded] = useState(false)
 
   useEffect(() => {
     void trackAssessStart(sourceChannel)
-    const sortRegions = (rs: Array<{ region: string; count: number }>) =>
-      [...rs].sort(
-        (a, b) =>
-          REGION_ORDER.indexOf(a.region as never) -
-          REGION_ORDER.indexOf(b.region as never),
-      )
     void getAvailableRegions()
-      .then((rs) => setRegions(sortRegions(rs)))
-      .catch(() => setRegions(sortRegions(FALLBACK_REGIONS)))
+      .then((rs) => setRegions(rs))
       .finally(() => setRegionsLoaded(true))
   }, [sourceChannel])
 
@@ -397,17 +310,6 @@ function AssessForm() {
                   ))}
                 </div>
 
-                <div className="mt-5 grid grid-cols-3 gap-2">
-                  {TRUST_POINTS.map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-lg border border-brand-100 bg-white/70 px-2 py-2 text-center text-xs font-medium text-ink-600"
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-
                 <div className="mt-5 space-y-2">
                 {STEP_META.map((item, index) => (
                   <button
@@ -478,14 +380,10 @@ function AssessForm() {
                     />
                   </Field>
                   <Field
-                    label="你的本科专业属于哪个学科门类"
-                    hint="按国外院校常见 faculty / subject area 归类。选最接近的一项即可。"
+                    label="你的本科专业"
+                    hint="按教育部《本科专业目录》的学科门类 + 专业类来选,或直接搜关键词。选最接近的一项即可。"
                   >
-                    <RadioGroup
-                      options={MAJOR_OPTIONS}
-                      value={d.undergradMajor ?? null}
-                      onChange={setUndergradMajor}
-                    />
+                    <MajorPicker value={d.undergradMajor ?? null} onChange={setUndergradMajor} />
                   </Field>
                 </div>
               )}
@@ -582,11 +480,26 @@ function AssessForm() {
 
               {step === 3 && (
                 <div className="space-y-6">
-                  <Field label="你想把申请投向哪些地方" hint="美国之外的主流英语授课地区都可以多选。右侧数字是当前收录的项目数。">
+                  <Field label="你想把申请投向哪些地方" hint="美国之外的主流英语授课地区都在这里。标「即将开放」的正在核对数据,暂不可选。右侧数字是当前收录的项目数。">
                     <div className="grid grid-cols-2 gap-2">
                       {regions.map((r) => {
                         const value = r.region as NonNullable<Draft['targetRegions']>[number]
                         const on = d.targetRegions?.includes(value)
+                        // 未开放/无数据:显示但禁用 —— 让用户看到完整版图,又不会选到空地区
+                        if (!r.available) {
+                          return (
+                            <div
+                              key={r.region}
+                              className="flex min-h-11 cursor-not-allowed items-center justify-between gap-2 rounded-lg border border-dashed border-ink-200 bg-ink-50/60 px-3 py-2.5 text-sm text-ink-400"
+                              title="正在核对院校数据,开放后即可选择"
+                            >
+                              <span>{REGION_LABEL[r.region] ?? r.region}</span>
+                              <span className="rounded-full bg-ink-100 px-1.5 py-0.5 text-[10px] text-ink-500">
+                                即将开放
+                              </span>
+                            </div>
+                          )
+                        }
                         return (
                           <button
                             key={r.region}
@@ -611,22 +524,15 @@ function AssessForm() {
                         )
                       })}
                     </div>
-                    {regions.length === 0 &&
-                      (regionsLoaded ? (
-                        // 一个地区都没开放:如实说明,不要让用户对着空白页面猜
-                        <div className="mt-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5">
-                          <p className="text-sm leading-relaxed text-amber-900">
-                            暂时没有可选地区。我们正在逐条核对院校数据,
-                            只有核对完的地区才会开放 —— 宁可先不开放,
-                            也不想拿没核对过的数字给你做决定。
-                          </p>
-                          <p className="mt-1.5 text-xs text-amber-800">
-                            很快就好,过几天再来看看。
-                          </p>
-                        </div>
-                      ) : (
-                        <p className="mt-2 text-sm text-ink-400">正在载入可选地区...</p>
-                      ))}
+                    {regionsLoaded && regions.every((r) => !r.available) && (
+                      // 一个地区都还没开放:如实说明
+                      <div className="mt-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5">
+                        <p className="text-sm leading-relaxed text-amber-900">
+                          上面这些是我们覆盖的目的地,但都还在核对数据 ——
+                          只有核对完的地区才会开放,宁可先不开放,也不拿没核对过的数字给你做决定。
+                        </p>
+                      </div>
+                    )}
                   </Field>
 
                   <Field

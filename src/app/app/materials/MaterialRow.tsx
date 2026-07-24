@@ -13,6 +13,39 @@ const STATUS_LABEL: Record<MaterialStatus, string> = {
   completed: '已完成',
 }
 
+/**
+ * 到手倒计时预警。
+ *   overdue = 按常规办理周期已赶不上最近截止日(要加急)
+ *   urgent  = 余量不足两周
+ *   ample   = 余量充足(仍显示倒计时,让人心里有数)
+ *   none    = 未完成但相关学校都没公布截止日
+ *   done    = 已办好
+ */
+export type MaterialWarning =
+  | { level: 'done' | 'none' }
+  | { level: 'overdue' | 'urgent' | 'ample'; days: number; lead: number; slack: number }
+
+function WarningBadge({ w }: { w: MaterialWarning }) {
+  if (!('slack' in w)) return null
+  const cls =
+    w.level === 'overdue'
+      ? 'bg-red-50 text-red-700'
+      : w.level === 'urgent'
+        ? 'bg-amber-50 text-amber-700'
+        : 'bg-ink-100 text-ink-500'
+  const text =
+    w.level === 'overdue'
+      ? `常规办不及,尽快加急`
+      : w.level === 'urgent'
+        ? `余量仅 ${w.slack} 天`
+        : `余量 ${w.slack} 天`
+  return (
+    <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium ${cls}`}>
+      {text}
+    </span>
+  )
+}
+
 export function MaterialRow({
   id,
   name,
@@ -22,6 +55,7 @@ export function MaterialRow({
   fileName,
   fileRequired,
   appliesTo,
+  warning,
 }: {
   id: string
   name: string
@@ -31,6 +65,7 @@ export function MaterialRow({
   fileName: string | null
   fileRequired: boolean
   appliesTo: string[]
+  warning: MaterialWarning
 }) {
   const router = useRouter()
   const [expanded, setExpanded] = useState(false)
@@ -76,6 +111,7 @@ export function MaterialRow({
               {name}
             </span>
             <span className="text-xs text-ink-400">{STATUS_LABEL[status]}</span>
+            <WarningBadge w={warning} />
           </div>
 
           {description && (
@@ -84,6 +120,12 @@ export function MaterialRow({
 
           {uniqueSchools.length > 0 && (
             <p className="mt-1 pl-7 text-xs text-ink-400">
+              {/* 一份材料覆盖哪几所 —— 去重后学生一眼看清「办一次管几所」 */}
+              {uniqueSchools.length > 1 && (
+                <span className="mr-1 font-medium text-brand-600">
+                  {uniqueSchools.length} 所共用
+                </span>
+              )}
               适用:{uniqueSchools.join('、')}
             </p>
           )}

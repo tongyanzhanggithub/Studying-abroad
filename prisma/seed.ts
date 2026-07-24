@@ -14,38 +14,58 @@ import { hashPassword } from '../src/lib/auth/password'
 const db = new PrismaClient()
 
 async function seedPlans() {
+  /**
+   * 三档只有**时长**不同,功能完全一样 —— 买得久单价更低。
+   *
+   * 定价:月票 ¥30/月;申请季票 = 30×9 打 9 折;年票 = 30×12 打 8.5 折。
+   * 不再区分「基础版 / Pro」:在 ¥30 这个价位再分两档,差价小到没有意义,
+   * 却要用户多做一次选择,还得琢磨「Pro 那些权益我用不用得上」。
+   */
+  /**
+   * ⚠️ 这里**刻意不写 AI 文书**那一条。
+   *
+   *    LLM 还没接(LLM_PROVIDER=mock),把一个还不能用的能力写进付费权益,
+   *    等于卖一个不存在的东西 —— 用户付了钱点进去发现是占位内容,
+   *    这是最容易招退款和投诉的一类文案。真正接上并跑通之后再加回来。
+   */
+  const FEATURES = [
+    '看全部学校的完整要求,自己组选校名单',
+    '材料清单自动列好,交没交一眼看清',
+    '快截止了提前提醒你',
+    '学校要求有变,第一时间告诉你',
+  ]
+
   const plans = [
     {
-      code: 'basic',
-      name: '基础版季票',
-      priceCents: 199900, // ¥1,999
+      code: 'monthly',
+      name: '月票',
+      priceCents: 3000, // ¥30 / 月
+      durationMonths: 1,
       aiDailyQuota: 30,
       sort: 1,
       // 面向学生的说法,不用「院校库」「工作台」这类内部用词
+      features: { items: [...FEATURES, '按月付,随时不续'] },
+    },
+    {
+      code: 'season',
+      name: '申请季票 · 9 个月',
+      priceCents: 24300, // 30×9=270,9 折 → ¥243
+      durationMonths: 9,
+      aiDailyQuota: 30,
+      sort: 2,
       features: {
-        items: [
-          '看全部学校的完整要求,自己组选校名单',
-          '材料清单自动列好,交没交一眼看清',
-          'AI 陪你聊出文书素材、逐句改语法',
-          '快截止了提前提醒你',
-          '学校要求有变,第一时间告诉你',
-          '每天可以用 30 次 AI',
-        ],
+        items: [...FEATURES, '覆盖一个完整申请季', '相当于每月 ¥27,比月付省 ¥27'],
       },
     },
     {
-      code: 'pro',
-      name: 'Pro 季票',
-      priceCents: 499900, // ¥4,999
-      aiDailyQuota: 100,
-      sort: 2,
+      code: 'annual',
+      name: '年票 · 12 个月',
+      priceCents: 30600, // 30×12=360,8.5 折 → ¥306
+      durationMonths: 12,
+      aiDailyQuota: 30,
+      sort: 3,
       features: {
-        items: [
-          '基础版的全部功能',
-          '每天可以用 100 次 AI',
-          '单买人工服务打 9 折',
-          '客服优先回你',
-        ],
+        items: [...FEATURES, '够跨两个申请季', '相当于每月 ¥25.5,比月付省 ¥54'],
       },
     },
   ]
@@ -54,9 +74,29 @@ async function seedPlans() {
     await db.plan.upsert({
       where: { code: p.code },
       create: p,
-      update: { name: p.name, priceCents: p.priceCents, features: p.features, aiDailyQuota: p.aiDailyQuota },
+      update: {
+        name: p.name,
+        priceCents: p.priceCents,
+        features: p.features,
+        aiDailyQuota: p.aiDailyQuota,
+        durationMonths: p.durationMonths,
+        sort: p.sort,
+      },
     })
   }
+  /**
+   * 停用已下架的旧套餐(basic / pro)。
+   *
+   * ⚠️ 不能删:已有订阅通过外键指向它们,删了会让老用户的订阅记录断链,
+   *    「我买的是什么」这个问题就再也答不上来了。停用即可 ——
+   *    active=false 的套餐不出现在定价页,但历史订阅照常可查。
+   */
+  const retired = await db.plan.updateMany({
+    where: { code: { notIn: plans.map((p) => p.code) }, active: true },
+    data: { active: false },
+  })
+  if (retired.count > 0) console.log(`· 已停用 ${retired.count} 个旧套餐(历史订阅不受影响)`)
+
   console.log(`✓ 套餐 ${plans.length} 个`)
 }
 

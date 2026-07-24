@@ -26,6 +26,7 @@ import {
 } from '@/lib/programs/ranking'
 import { ShortlistControls } from './Controls'
 import { ProgramCard } from './ProgramCard'
+import { SchoolFilters } from './SchoolFilters'
 import type { Direction, Region } from '@prisma/client'
 
 /**
@@ -326,57 +327,16 @@ export default async function SchoolsPage({
       <section>
         <h2 className="mb-3 font-semibold text-ink-900">院校库</h2>
 
-        <form className="mb-4 flex flex-wrap gap-2" action="/app/schools">
-          <input
-            name="q"
-            defaultValue={q}
-            placeholder="搜索院校或专业"
-            className="min-w-40 flex-1 rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
-          />
-          <select
-            name="region"
-            defaultValue={region ?? ''}
-            className="rounded-lg border border-ink-200 px-3 py-2 text-sm"
-          >
-            <option value="">全部地区</option>
-            {Object.entries(REGION_LABEL).map(([k, v]) => (
-              <option key={k} value={k}>{v}</option>
-            ))}
-          </select>
-          <select
-            name="direction"
-            defaultValue={direction ?? ''}
-            className="rounded-lg border border-ink-200 px-3 py-2 text-sm"
-          >
-            <option value="">全部方向</option>
-            {Object.entries(DIRECTION_LABEL).map(([k, v]) => (
-              <option key={k} value={k}>{v}</option>
-            ))}
-          </select>
-          <select
-            name="rankingProvider"
-            defaultValue={rankingProvider ?? ''}
-            className="rounded-lg border border-ink-200 px-3 py-2 text-sm"
-          >
-            <option value="">不看排名</option>
-            {Object.entries(RANKING_PROVIDER_LABEL).map(([k, v]) => (
-              <option key={k} value={k}>{v}</option>
-            ))}
-          </select>
-          <select
-            name="sort"
-            defaultValue={sort}
-            className="rounded-lg border border-ink-200 px-3 py-2 text-sm"
-          >
-            <option value="default">默认排序</option>
-            <option value="deadline">最近截止优先</option>
-            <option value="overall_rank">综合排名优先</option>
-            <option value="subject_rank">专业排名优先</option>
-          </select>
-          <button className="rounded-lg bg-brand-600 px-4 py-2 text-sm text-white hover:bg-brand-700">
-            筛选
-          </button>
-        </form>
+        <SchoolFilters
+          q={q}
+          region={region}
+          direction={direction}
+          rankingProvider={rankingProvider ?? undefined}
+          sort={sort}
+          regionOptions={Object.entries(REGION_LABEL).map(([value, label]) => ({ value, label }))}
+          directionOptions={Object.entries(DIRECTION_LABEL).map(([value, label]) => ({ value, label }))}
+          rankingOptions={Object.entries(RANKING_PROVIDER_LABEL).map(([value, label]) => ({ value, label }))}
+        />
 
         {programs.length === 0 ? (
           <Card>

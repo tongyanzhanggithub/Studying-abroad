@@ -92,7 +92,7 @@ async function main() {
   ok('注册并关联线索')
 
   // ── 4. 支付开通季票 ────────────────────────────────
-  const plan = await db.plan.findUniqueOrThrow({ where: { code: 'basic' } })
+  const plan = await db.plan.findFirstOrThrow({ where: { active: true }, orderBy: { sort: 'asc' } })
   const sub = await db.subscription.create({
     data: { userId: user.id, planId: plan.id, season: CURRENT_SEASON, status: 'expired' },
   })

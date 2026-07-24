@@ -92,7 +92,16 @@ export function MobileTabBar() {
                 </Link>
               ))}
             </div>
-            <form action={logout} className="mt-3">
+            {/* 回营销站的出口 —— 定价、协议、FAQ 都在那边,工作台里原本无处可去 */}
+            <Link
+              href="/"
+              onClick={() => setMoreOpen(false)}
+              className="mt-3 block rounded-xl border border-ink-100 py-3 text-center text-sm text-ink-500"
+            >
+              ← 返回网站首页
+            </Link>
+
+            <form action={logout} className="mt-2">
               <button className="w-full rounded-xl border border-ink-100 py-3 text-sm text-ink-500">
                 退出登录
               </button>

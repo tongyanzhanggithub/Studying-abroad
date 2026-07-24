@@ -1,32 +1,7 @@
 import type { Confidence, Program, School } from '@prisma/client'
 
-/**
- * 本科学科门类选项。
- *
- * ⚠️ 评估流程和「我的背景」表单共用这一份 —— 早先只写在 assess/page.tsx 里,
- *    背景表单要用就得复制一份,两边迟早会不一致(而这个值会存进 Profile
- *    并参与方向推荐,不一致就意味着推荐错)。
- */
-export const UNDERGRAD_MAJOR_OPTIONS = [
-  { value: 'Business & Management', label: 'Business & Management', description: '商科 / 管理' },
-  { value: 'Economics & Finance', label: 'Economics & Finance', description: '经济 / 金融' },
-  { value: 'Accounting & Quantitative Finance', label: 'Accounting & Quant Finance', description: '会计 / 量化金融' },
-  { value: 'Computer Science & Data', label: 'Computer Science & Data', description: '计算机 / 数据科学 / AI' },
-  { value: 'Engineering & Technology', label: 'Engineering & Technology', description: '工程 / 技术' },
-  { value: 'Mathematics & Statistics', label: 'Mathematics & Statistics', description: '数学 / 统计 / 运筹' },
-  { value: 'Natural Sciences', label: 'Natural Sciences', description: '物理 / 化学 / 地球科学' },
-  { value: 'Life Sciences & Medicine', label: 'Life Sciences & Medicine', description: '生命科学 / 医学 / 健康' },
-  { value: 'Architecture & Built Environment', label: 'Architecture & Built Env.', description: '建筑 / 城市 / 房地产' },
-  { value: 'Social Sciences', label: 'Social Sciences', description: '社会学 / 心理 / 政治' },
-  { value: 'Media & Communication', label: 'Media & Communication', description: '传媒 / 新闻 / 公关' },
-  { value: 'Law & Public Policy', label: 'Law & Public Policy', description: '法律 / 公共政策' },
-  { value: 'Education', label: 'Education', description: '教育 / TESOL' },
-  { value: 'Arts & Design', label: 'Arts & Design', description: '艺术 / 设计 / 时尚' },
-  { value: 'Humanities', label: 'Humanities', description: '语言 / 历史 / 哲学' },
-  { value: 'Environment & Agriculture', label: 'Environment & Agriculture', description: '环境 / 农业 / 可持续' },
-  { value: 'Hospitality & Tourism', label: 'Hospitality & Tourism', description: '酒店 / 旅游 / 会展' },
-  { value: 'Other / Interdisciplinary', label: 'Other / Interdisciplinary', description: '其他 / 跨学科' },
-]
+// 本科专业分类已迁到 @/lib/programs/undergrad-catalog(教育部《本科专业目录》国标),
+// 由 @/components/MajorPicker 消费。原来那份手拼的海外 subject area 列表已废弃。
 
 /**
  * Program.requirements 与 Program.deadlines 是 Json 列,

@@ -185,6 +185,13 @@ export interface DelivererInput {
   splitPercent: string
   note: string
   active: boolean
+  /** ── 对外展示(官网老师栏)—— 只填能核实的内容 ── */
+  showOnSite: boolean
+  publicTitle: string
+  education: string
+  yearsExp: string
+  specialties: string
+  highlight: string
 }
 
 function parseSplit(input: string): number | null {
@@ -207,6 +214,25 @@ export async function saveDeliverer(id: string | null, input: DelivererInput) {
     return { ok: false as const, error: '分成比例填 0-100 的数字,如 60 表示交付人拿 60%。' }
   }
 
+  /**
+   * 从业年限:留空 = 不展示;填了就必须是合理的数字。
+   * 不做静默兜底 —— 这是给客户看的资质,写错比不写严重。
+   */
+  const yearsRaw = input.yearsExp.trim()
+  let yearsExp: number | null = null
+  if (yearsRaw) {
+    const n = Number(yearsRaw)
+    if (!Number.isFinite(n) || n < 0 || n > 60) {
+      return { ok: false as const, error: '从业年限填 0-60 的数字,或留空不展示。' }
+    }
+    yearsExp = Math.round(n)
+  }
+
+  // 勾了「在官网展示」就至少得有个头衔,否则卡片上只有名字,没有信息量
+  if (input.showOnSite && !input.publicTitle.trim() && !input.role.trim()) {
+    return { ok: false as const, error: '要在官网展示,请先填对外头衔。' }
+  }
+
   const data = {
     name: input.name.trim(),
     role: input.role.trim(),
@@ -215,6 +241,12 @@ export async function saveDeliverer(id: string | null, input: DelivererInput) {
     splitRatio,
     note: input.note.trim() || null,
     active: input.active,
+    showOnSite: input.showOnSite,
+    publicTitle: input.publicTitle.trim() || null,
+    education: input.education.trim() || null,
+    yearsExp,
+    specialties: input.specialties.trim() || null,
+    highlight: input.highlight.trim() || null,
   }
 
   if (id) await db.deliverer.update({ where: { id }, data })

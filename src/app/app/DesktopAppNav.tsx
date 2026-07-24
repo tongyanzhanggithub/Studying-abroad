@@ -76,6 +76,22 @@ export function DesktopAppNav() {
             </div>
           ))}
         </nav>
+
+        {/*
+          显式的返回首页入口。
+          只靠左上角 logo 不够 —— 「点 logo 回首页」虽然是通用惯例,
+          但工作台里 logo 不显眼,而定价、用户协议、隐私政策、FAQ 都在营销站上,
+          用户想去看时得手动改地址栏。
+        */}
+        <div className="mt-5 border-t border-ink-100 pt-3">
+          <Link
+            href="/"
+            className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs text-ink-400 transition-colors hover:bg-ink-50 hover:text-ink-700"
+          >
+            <span aria-hidden>←</span>
+            返回网站首页
+          </Link>
+        </div>
       </div>
     </aside>
   )

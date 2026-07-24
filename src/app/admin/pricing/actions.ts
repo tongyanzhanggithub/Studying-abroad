@@ -235,3 +235,43 @@ export async function savePlan(id: string, input: PlanInput) {
     toCents: priceCents,
   }
 }
+
+/**
+ * 删除套餐。
+ *
+ * ⚠️ 有人订阅过的一律不给删:Subscription 引用着 planId(且关系是 Restrict,
+ *    数据库本身也会拦)。删了之后那些订阅查不到买的是哪个套餐,
+ *    月结对账、退款、有效期判定全断。这种情况只能「停售」。
+ *    退役旧档(如 basic/pro)时:没有真实订阅的可以直接删,有订阅的停售即可。
+ */
+export async function deletePlan(id: string) {
+  await requireAdmin(PRICE_ROLE)
+
+  const subs = await db.subscription.count({ where: { planId: id } })
+  if (subs > 0) {
+    return {
+      ok: false as const,
+      error: `这个套餐已经有 ${subs} 位用户订阅过,不能删除 —— 删了之后这些订阅记录会查不到买的是哪个套餐,月结对账、退款、有效期判定都会断。要下架的话把「在售」取消勾选即可,前台不再出现,老订阅照常。`,
+    }
+  }
+
+  try {
+    await db.plan.delete({ where: { id } })
+  } catch {
+    return {
+      ok: false as const,
+      error: '删除失败,这个套餐可能还被订阅记录引用。改用「停售」即可。',
+    }
+  }
+
+  revalidatePath('/admin/pricing')
+  revalidatePath('/pricing')
+  return { ok: true as const }
+}
+
+/** 删除前用来提示影响面 */
+export async function getPlanUsage(id: string) {
+  await requireAdmin(PRICE_ROLE)
+  const subscriptions = await db.subscription.count({ where: { planId: id } })
+  return { subscriptions }
+}

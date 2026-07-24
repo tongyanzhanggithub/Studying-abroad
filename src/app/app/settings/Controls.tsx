@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Button, Field, RadioGroup } from '@/components/ui'
 import { updateProfile, exportMyData, deleteAccount } from './actions'
 import { setMyPassword } from '@/app/login/actions'
-import { UNDERGRAD_MAJOR_OPTIONS } from '@/lib/programs/types'
+import { MajorPicker } from '@/components/MajorPicker'
 import type { LanguageType, UndergradTier } from '@prisma/client'
 
 const TIER_OPTIONS = [
@@ -50,21 +50,13 @@ export function ProfileForm({
         />
       </Field>
 
-      <Field label="本科学科门类">
-        <select
-          value={f.undergradMajor ?? ''}
-          onChange={(e) => setF({ ...f, undergradMajor: e.target.value || null })}
-          className="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
-        >
-          <option value="">请选择</option>
-          {UNDERGRAD_MAJOR_OPTIONS.map((m) => (
-            <option key={m.value} value={m.value}>
-              {m.description} · {m.label}
-            </option>
-          ))}
-        </select>
+      <Field label="本科专业">
+        <MajorPicker
+          value={f.undergradMajor}
+          onChange={(v) => setF({ ...f, undergradMajor: v })}
+        />
         <p className="mt-1 text-xs text-ink-400">
-          决定方向推荐里哪些算「顺延」、哪些算「转向」。
+          按教育部《本科专业目录》选。它决定方向推荐里哪些算「顺延」、哪些算「转向」。
         </p>
       </Field>
 

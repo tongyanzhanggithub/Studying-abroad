@@ -64,6 +64,12 @@ export default async function AdminDeliverersPage() {
               phone: d.phone,
               splitRatio: d.splitRatio,
               note: d.note,
+              showOnSite: d.showOnSite,
+              publicTitle: d.publicTitle,
+              education: d.education,
+              yearsExp: d.yearsExp,
+              specialties: d.specialties,
+              highlight: d.highlight,
               active: d.active,
             }}
             stats={{ open: open.get(d.id) ?? 0, done: done.get(d.id) ?? 0 }}

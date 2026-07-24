@@ -290,7 +290,11 @@ export function EditForm({
         </div>
       </Section>
 
-      <Card className="sticky bottom-4 border-brand-200 bg-brand-50/60 backdrop-blur">
+      {/*
+        以前这块是 sticky bottom-4 + 半透明背景 —— 它会浮在表单内容之上、跟着滚动跑,
+        还半透着底下的文字,运营反馈「核对怎么到处跑」。改成实底、静止,老实待在表单末尾。
+      */}
+      <Card className="border-brand-200 bg-brand-50">
         {canNotify ? (
           <label className="flex items-start gap-2">
             <input

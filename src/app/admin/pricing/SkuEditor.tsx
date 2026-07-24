@@ -7,6 +7,7 @@ import {
   saveServiceSku,
   savePlan,
   deleteServiceSku,
+  deletePlan,
   type SkuInput,
   type PlanInput,
 } from './actions'
@@ -304,6 +305,8 @@ export function SkuEditor({
 
 export function PlanEditor({
   plan,
+  usage,
+  allowDelete = false,
 }: {
   plan: {
     id: string
@@ -313,6 +316,9 @@ export function PlanEditor({
     aiDailyQuota: number
     active: boolean
   }
+  /** 影响面:被多少个订阅引用 —— 有订阅就不能删,只能停售 */
+  usage?: { subscriptions: number }
+  allowDelete?: boolean
 }) {
   const router = useRouter()
   const [f, setF] = useState<PlanInput>({
@@ -322,10 +328,30 @@ export function PlanEditor({
     active: plan.active,
   })
   const [msg, setMsg] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null)
+  const [confirmDelete, setConfirmDelete] = useState(false)
   const [pending, startTransition] = useTransition()
 
   const set = <K extends keyof PlanInput>(k: K, v: PlanInput[K]) =>
     setF((p) => ({ ...p, [k]: v }))
+
+  const doSave = () =>
+    startTransition(async () => {
+      setMsg(null)
+      const res = await savePlan(plan.id, f)
+      if (!res.ok) {
+        setMsg({ kind: 'err', text: res.error })
+        return
+      }
+      setMsg({
+        kind: 'ok',
+        text: res.changedPrice
+          ? `已保存。价格 ¥${yuan(res.fromCents)} → ¥${yuan(res.toCents)}。`
+          : '已保存。',
+      })
+      router.refresh()
+    })
+
+  const subs = usage?.subscriptions ?? 0
 
   return (
     <Card className={plan.active ? '' : 'bg-ink-50'}>
@@ -348,7 +374,7 @@ export function PlanEditor({
             className={`${inputCls} font-mono`}
           />
         </Field>
-        <Field label="每日 AI 次数" hint="PRD 4.5:基础版 30,Pro 100">
+        <Field label="每日 AI 次数" hint="订阅用户每天可用的 AI 文书辅助次数上限">
           <input
             value={f.aiDailyQuota}
             onChange={(e) => set('aiDailyQuota', e.target.value)}
@@ -366,30 +392,64 @@ export function PlanEditor({
         </label>
       </div>
 
-      <div className="mt-4">
-        <Button
-          disabled={pending}
-          onClick={() =>
-            startTransition(async () => {
-              setMsg(null)
-              const res = await savePlan(plan.id, f)
-              if (!res.ok) {
-                setMsg({ kind: 'err', text: res.error })
-                return
-              }
-              setMsg({
-                kind: 'ok',
-                text: res.changedPrice
-                  ? `已保存。价格 ¥${yuan(res.fromCents)} → ¥${yuan(res.toCents)}。`
-                  : '已保存。',
-              })
-              router.refresh()
-            })
-          }
-        >
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <Button disabled={pending} onClick={doSave}>
           {pending ? '保存中…' : '保存'}
         </Button>
+        {allowDelete && !confirmDelete && (
+          <button
+            type="button"
+            onClick={() => setConfirmDelete(true)}
+            className="ml-auto text-xs text-ink-400 underline hover:text-red-600"
+          >
+            删除
+          </button>
+        )}
       </div>
+
+      {confirmDelete && (
+        <div className="mt-3 rounded-lg bg-red-50 px-3 py-2.5">
+          {subs > 0 ? (
+            <>
+              <p className="text-xs leading-relaxed text-red-800">
+                这个套餐已经有 <strong>{subs}</strong> 位用户订阅过,不能删除 ——
+                删了之后这些订阅查不到买的是哪个套餐,月结对账、退款、有效期判定都会断。
+                需要下架的话,把上面的「在售」取消勾选即可,前台不再出现,老订阅照常。
+              </p>
+              <Button size="sm" variant="ghost" className="mt-2" onClick={() => setConfirmDelete(false)}>
+                知道了
+              </Button>
+            </>
+          ) : (
+            <>
+              <p className="text-xs leading-relaxed text-red-800">删除后不可恢复。</p>
+              <div className="mt-2 flex gap-2">
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  disabled={pending}
+                  onClick={() =>
+                    startTransition(async () => {
+                      const res = await deletePlan(plan.id)
+                      if (!res.ok) {
+                        setMsg({ kind: 'err', text: res.error })
+                        setConfirmDelete(false)
+                        return
+                      }
+                      router.refresh()
+                    })
+                  }
+                >
+                  确认删除
+                </Button>
+                <Button size="sm" variant="ghost" onClick={() => setConfirmDelete(false)}>
+                  取消
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
 
       <Result msg={msg} />
     </Card>

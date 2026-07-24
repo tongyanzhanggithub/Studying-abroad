@@ -93,7 +93,7 @@ async function main() {
     })
 
     // 给 Pro 季票,这样前台每一个付费功能都看得到
-    const pro = await db.plan.findUnique({ where: { code: 'pro' } })
+    const pro = await db.plan.findFirst({ where: { active: true }, orderBy: { durationMonths: 'desc' } })
     if (!pro) {
       console.error('\n✗ 找不到 Pro 套餐,先跑 npm run db:seed。用户端季票没有开通。')
     } else {

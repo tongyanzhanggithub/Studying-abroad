@@ -16,6 +16,13 @@ const EMPTY: DelivererInput = {
   splitPercent: '60',
   note: '',
   active: true,
+  // 默认不上官网 —— 必须确认资料属实后再显式勾选
+  showOnSite: false,
+  publicTitle: '',
+  education: '',
+  yearsExp: '',
+  specialties: '',
+  highlight: '',
 }
 
 const ROLE_PRESETS = ['签约顾问', '资深顾问', '文书编辑', '在读学长学姐', '主顾问']
@@ -107,6 +114,72 @@ function Form({
         </div>
       </div>
 
+      {/* ── 官网展示 ──────────────────────────────── */}
+      <div className="rounded-lg border border-brand-100 bg-brand-50/40 p-4">
+        <label className="flex items-start gap-2">
+          <input
+            type="checkbox"
+            checked={f.showOnSite}
+            onChange={(e) => set('showOnSite', e.target.checked)}
+            className="mt-1"
+          />
+          <span>
+            <span className="text-sm font-medium text-ink-900">在官网「带你申请的老师」栏展示</span>
+            <span className="mt-0.5 block text-xs leading-relaxed text-ink-600">
+              这是给潜在客户看的资质。<strong>只填能核实的内容</strong> ——
+              编造学历或年限等于伪造资质,是实打实的法律风险。不勾选则不出现在官网。
+            </span>
+          </span>
+        </label>
+
+        {f.showOnSite && (
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <Field label="对外头衔" hint="如「选校规划老师」;留空则用上面的角色">
+              <input
+                value={f.publicTitle}
+                onChange={(e) => set('publicTitle', e.target.value)}
+                className={inputCls}
+              />
+            </Field>
+            <Field label="从业年限" hint="填数字,留空则不展示">
+              <input
+                value={f.yearsExp}
+                onChange={(e) => set('yearsExp', e.target.value)}
+                placeholder="如 5"
+                className={inputCls}
+              />
+            </Field>
+            <div className="sm:col-span-2">
+              <Field label="教育背景" hint="如「爱丁堡大学 教育学硕士」">
+                <input
+                  value={f.education}
+                  onChange={(e) => set('education', e.target.value)}
+                  className={inputCls}
+                />
+              </Field>
+            </div>
+            <div className="sm:col-span-2">
+              <Field label="擅长方向" hint="逗号分隔,最多显示 3 个,如「英国,商科,数据科学」">
+                <input
+                  value={f.specialties}
+                  onChange={(e) => set('specialties', e.target.value)}
+                  className={inputCls}
+                />
+              </Field>
+            </div>
+            <div className="sm:col-span-2">
+              <Field label="一句话亮点" hint="如「主要负责英港新商科方向」。不要写录取承诺">
+                <input
+                  value={f.highlight}
+                  onChange={(e) => set('highlight', e.target.value)}
+                  className={inputCls}
+                />
+              </Field>
+            </div>
+          </div>
+        )}
+      </div>
+
       <p className="rounded-lg bg-ink-50 px-3 py-2 text-xs leading-relaxed text-ink-600">
         改分成比例<strong>只影响之后派的单</strong>。已派出的订单在派单那一刻就把比例
         快照下来了,不会被改写 —— 否则调一次比例会把历史账全改了。
@@ -168,6 +241,12 @@ export function DelivererRow({
     splitRatio: number
     note: string | null
     active: boolean
+    showOnSite: boolean
+    publicTitle: string | null
+    education: string | null
+    yearsExp: number | null
+    specialties: string | null
+    highlight: string | null
   }
   stats: { open: number; done: number }
 }) {
@@ -235,6 +314,12 @@ export function DelivererRow({
               splitPercent: String(Math.round(d.splitRatio * 100)),
               note: d.note ?? '',
               active: d.active,
+              showOnSite: d.showOnSite,
+              publicTitle: d.publicTitle ?? '',
+              education: d.education ?? '',
+              yearsExp: d.yearsExp != null ? String(d.yearsExp) : '',
+              specialties: d.specialties ?? '',
+              highlight: d.highlight ?? '',
             }}
             onDone={() => setEditing(false)}
             onCancel={() => setEditing(false)}

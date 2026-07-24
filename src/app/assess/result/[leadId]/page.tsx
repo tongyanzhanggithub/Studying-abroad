@@ -156,7 +156,7 @@ function ProgramCard({ m }: { m: ProgramMatch }) {
 }
 
 function resultHeadline(result: AssessmentResult) {
-  if (result.totalMatched === 0) return '这组条件暂时没有足够可靠的数据,先别硬下结论'
+  if (result.totalMatched === 0) return '这个组合我们还在补数据,先不急着下结论'
   const counts = {
     reach: result.reach.length,
     match: result.match.length,
@@ -399,21 +399,29 @@ export default async function ResultPage({
     ? payload.targetRegions.map((r) => REGION_LABEL[String(r)] ?? String(r)).join(' / ')
     : ins.regionBreakdown.map((r) => REGION_LABEL[r.region]).join(' / ')
   const headline = resultHeadline(result)
-  const verifiedRate = result.totalMatched
-    ? Math.round((ins.dataQuality.verified / result.totalMatched) * 100)
-    : 0
 
   return (
     <main className="marketing-page min-h-screen bg-[linear-gradient(180deg,#fff7fb_0%,#ffffff_44%,#f6fbff_100%)] text-ink-800">
       <header className="sticky top-0 z-30 border-b border-white/70 bg-white/78 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
           <BrandLogo className="text-lg" />
-          <Link
-            href="/assess"
-            className="inline-flex min-h-11 items-center rounded-lg border border-ink-200 bg-white px-3 text-sm font-medium text-ink-700 hover:border-insta-pink hover:text-insta-pink"
-          >
-            重新测一次
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/assess"
+              className="inline-flex min-h-11 items-center rounded-lg border border-ink-200 bg-white px-3 text-sm font-medium text-ink-700 hover:border-insta-pink hover:text-insta-pink"
+            >
+              重新测一次
+            </Link>
+            {/* 已登录的人看完结果,下一步是回工作台推进,而不是停在这一页 */}
+            {user && (
+              <Link
+                href="/app/dashboard"
+                className="insta-button inline-flex min-h-11 items-center rounded-full px-4 text-sm font-medium text-white"
+              >
+                进入工作台
+              </Link>
+            )}
+          </div>
         </div>
       </header>
 
@@ -450,12 +458,26 @@ export default async function ResultPage({
             </div>
           </div>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-4">
-            <Stat value={String(result.totalMatched)} label="匹配项目" />
-            <Stat value={String(shown)} label={isMember ? '已展示项目' : '当前可看项目'} />
-            <Stat value={`${verifiedRate}%`} label="已人工核对占比" />
-            <Stat value={locked ? String(locked) : '0'} label="待解锁项目" />
-          </div>
+          {/*
+            这排数字只给学生看**对他做决定有用**的。
+            删掉了「已人工核对占比」——那是内部数据质量指标(后台看板有),
+            对学生是行话,而且显示 0% 反而在砸自己招牌;数据可靠性已经由
+            每个项目上的「待核实」标签在决策点表达了。
+            「待解锁」只在免费用户确实有可解锁项目时才出现;0 结果时整排不显示。
+          */}
+          {result.totalMatched > 0 && (
+            <div
+              className={`mt-8 grid gap-3 ${
+                !isMember && locked > 0 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'
+              }`}
+            >
+              <Stat value={String(result.totalMatched)} label="匹配到的项目" />
+              <Stat value={String(shown)} label={isMember ? '已展示项目' : '当前可看项目'} />
+              {!isMember && locked > 0 && (
+                <Stat value={String(locked)} label="分享可解锁" />
+              )}
+            </div>
+          )}
         </div>
       </section>
 
@@ -463,11 +485,12 @@ export default async function ResultPage({
         <section className="mx-auto max-w-3xl px-5 py-10">
           <Card>
             <p className="text-sm leading-relaxed text-ink-600">
-              按你填写的条件,我们暂时没有可以给出<strong>有依据</strong>的定位结果。可能是该地区/方向的数据还在录入中,
-              也可能是你的条件组合比较特殊。
+              这个方向和地区的组合,我们手上还没有<strong>核对过的</strong>数据可以给你一个有依据的定位。
+              可能是这块的院校数据还在录入核对中,也可能你的组合本身比较小众。
               <br />
               <br />
-              我们宁可先不给结论,也不想给你一个编出来的数字。你可以换个方向再试,或者联系我们人工看一下。
+              比起给你一个看着专业、其实没依据的数字,我们更愿意如实说「还不够」。
+              你可以换个相近的方向或地区再看看,也可以找我们的老师人工帮你判断一下。
             </p>
           </Card>
         </section>
@@ -519,21 +542,34 @@ export default async function ResultPage({
           </div>
 
           <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-            <Card className="border-ink-900 bg-ink-900 text-white shadow-[0_18px_50px_rgba(20,25,32,0.18)]">
-              <p className="text-sm font-semibold text-white/55">NEXT MOVES</p>
-              <h2 className="mt-2 text-2xl font-semibold">接下来先做三件事</h2>
-              <div className="mt-5 space-y-3 text-sm">
+            {/*
+              这张卡原本是纯黑底(bg-ink-900)+ 白字,和整页的浅色渐变完全不搭 ——
+              旁边「语言成绩体检」那几张都是白底,只有它黑得像从别的设计里搬来的。
+              改成品牌粉的浅色调:靠左侧色条和渐变底做强调,而不是靠反色。
+              强调「这是行动指引」用的是层级,不是把它变成另一种视觉语言。
+            */}
+            <Card className="border-brand-100 bg-[linear-gradient(135deg,#fff7fb,#fdf2f8)]">
+              <p className="gradient-text text-sm font-semibold">NEXT MOVES</p>
+              <h2 className="mt-2 text-2xl font-semibold text-ink-900">接下来先做三件事</h2>
+              <ol className="mt-5 space-y-3 text-sm">
                 {[
                   ['校准名单', '先确认三档比例,稳妥档为 0 时优先补项目。'],
                   ['补语言短板', '总分和最低单项分开看,不要只盯一个数字。'],
                   ['进入工作台', '把选校、材料、文书和截止日接到同一条进度线上。'],
-                ].map(([title, body]) => (
-                  <div key={title} className="border-t border-white/12 pt-3">
-                    <p className="font-medium">{title}</p>
-                    <p className="mt-1 text-xs leading-relaxed text-white/55">{body}</p>
-                  </div>
+                ].map(([title, body], i) => (
+                  <li key={title} className="flex gap-3 border-t border-brand-100/70 pt-3">
+                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-insta-pink text-[11px] font-semibold text-white">
+                      {i + 1}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block font-medium text-ink-900">{title}</span>
+                      <span className="mt-1 block text-xs leading-relaxed text-ink-500">
+                        {body}
+                      </span>
+                    </span>
+                  </li>
                 ))}
-              </div>
+              </ol>
             </Card>
 
             <LanguageSection ins={ins} />

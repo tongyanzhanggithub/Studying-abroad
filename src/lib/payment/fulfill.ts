@@ -46,10 +46,26 @@ export async function fulfillPayment(params: {
     })
 
     if (payment.orderType === 'subscription') {
-      // 季票有效期:覆盖整个申请季,给到次年 10 月底
-      const expiresAt = new Date(now)
-      expiresAt.setFullYear(expiresAt.getFullYear() + 1)
-      expiresAt.setMonth(9, 31)
+      /**
+       * 到期日 = 付款时间 + 套餐时长。
+       *
+       * ⚠️ 早先这里写死成「次年 10 月 31 日」—— 那是只有一种季票时的权宜写法。
+       *    现在月票/季票/年票三种时长并存,写死会让 ¥30 的月票白送一整年。
+       *    时长由套餐自己带(Plan.durationMonths),定价改了不用动这段代码。
+       *
+       * ⚠️ 续费要从**原到期日**往后接,而不是从今天算 ——
+       *    否则提前续费的人会白白损失掉剩余天数。
+       */
+      const sub = await tx.subscription.findUnique({
+        where: { id: payment.orderId },
+        include: { plan: true },
+      })
+      if (!sub) throw new Error(`订阅不存在:${payment.orderId}`)
+
+      const base =
+        sub.expiresAt && sub.expiresAt > now ? new Date(sub.expiresAt) : new Date(now)
+      const expiresAt = new Date(base)
+      expiresAt.setMonth(expiresAt.getMonth() + sub.plan.durationMonths)
 
       await tx.subscription.update({
         where: { id: payment.orderId },

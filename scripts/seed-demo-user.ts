@@ -5,7 +5,7 @@
  *
  * 做四件事:
  *   1. 账号(手机号已存在就复用)
- *   2. Pro 季票 —— 解锁 /app 下全部付费功能
+ *   2. 最长的那档订阅 —— 解锁 /app 下全部付费功能
  *   3. 一份可信的背景资料 —— 这样「重算」「文书合规检查」立刻能用
  *   4. 5 所选校 + 自动生成的材料清单
  *
@@ -21,9 +21,11 @@ import { regenerateMaterials } from '@/lib/materials/generate'
 import { CURRENT_SEASON, TERMS_VERSION } from '@/lib/constants'
 import { hashPassword, generatePassword, checkPasswordStrength } from '@/lib/auth/password'
 
-function seasonExpiry(): Date {
-  const year = Number(CURRENT_SEASON.slice(0, 4))
-  return new Date(Date.UTC(year, 9, 31, 23, 59, 59))
+/** 到期日 = 今天 + 套餐时长,和真实履约(lib/payment/fulfill.ts)算法一致 */
+function expiryFrom(durationMonths: number): Date {
+  const d = new Date()
+  d.setMonth(d.getMonth() + durationMonths)
+  return d
 }
 
 async function main() {
@@ -64,29 +66,30 @@ async function main() {
     data: { passwordHash: await hashPassword(password), failedAttempts: 0, lockedUntil: null },
   })
 
-  // 2) Pro 季票
-  const pro = await db.plan.findUnique({ where: { code: 'pro' } })
-  if (!pro) {
-    console.error('✗ 找不到 Pro 套餐,先跑 npm run db:seed')
+  // 2) 订阅 —— 取时长最长的在售套餐,演示期间不用担心到期
+  const plan = await db.plan.findFirst({ where: { active: true }, orderBy: { durationMonths: 'desc' } })
+  if (!plan) {
+    console.error('✗ 找不到在售套餐,先跑 npm run db:seed')
     process.exit(1)
   }
+  const expiresAt = expiryFrom(plan.durationMonths)
   const active = await db.subscription.findFirst({
     where: { userId: user.id, status: 'active' },
   })
   if (active) {
     await db.subscription.update({
       where: { id: active.id },
-      data: { planId: pro.id, expiresAt: seasonExpiry() },
+      data: { planId: plan.id, expiresAt },
     })
   } else {
     await db.subscription.create({
       data: {
         userId: user.id,
-        planId: pro.id,
+        planId: plan.id,
         season: CURRENT_SEASON,
         status: 'active',
         paidAt: new Date(),
-        expiresAt: seasonExpiry(),
+        expiresAt,
       },
     })
   }
@@ -147,7 +150,7 @@ async function main() {
   console.log(`  密码       ${password}`)
   console.log(`  (另一种)  验证码登录需 ALLOW_MOCK_SMS=true,码在服务端日志里:`)
   console.log(`             journalctl -u compass -f | grep SMS:demo`)
-  console.log(`  季票       Pro · 至 ${seasonExpiry().toISOString().slice(0, 10)}`)
+  console.log(`  订阅       ${plan.name} · 至 ${expiresAt.toISOString().slice(0, 10)}`)
   console.log(`  选校单     ${choices} 所`)
   console.log(`  材料清单   ${materials} 项`)
   console.log('─'.repeat(56))
