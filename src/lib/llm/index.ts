@@ -31,6 +31,34 @@ export interface LlmProvider {
   complete(messages: LlmMessage[], opts?: { maxTokens?: number }): Promise<LlmResult>
 }
 
+/**
+ * 调 LLM 并把失败转成可读结果,**不抛异常**。
+ *
+ * ⚠️ 为什么必须有这个:server action 里裸 `await llm.complete(...)` 一旦抛错,
+ *    Next 会把整页替换成 error boundary —— 文书工作台的编辑器随之卸载,
+ *    用户**没保存的正文一起消失**。而且 Next 在生产会屏蔽 Error message,
+ *    这里精心写的中文提示(超时、端点未配置)一个字都到不了用户。
+ *    所以统一在服务端 catch,把消息当**数据**返回,由前端渲染。
+ */
+export async function completeSafe(
+  llm: LlmProvider,
+  messages: LlmMessage[],
+  opts?: { maxTokens?: number },
+): Promise<{ ok: true; result: LlmResult } | { ok: false; error: string }> {
+  try {
+    return { ok: true, result: await llm.complete(messages, opts) }
+  } catch (e) {
+    console.error('[llm] 调用失败', { provider: llm.name, model: llm.model, error: e })
+    return {
+      ok: false,
+      error:
+        e instanceof Error && e.message
+          ? e.message
+          : 'AI 服务暂时不可用,请稍后重试。你已写的内容不受影响。',
+    }
+  }
+}
+
 /** LLM 调用超时:自建端点(openai_compatible 的 baseUrl 后台可配)吊死时,别把服务端连接挂死 */
 const LLM_TIMEOUT_MS = 60_000
 

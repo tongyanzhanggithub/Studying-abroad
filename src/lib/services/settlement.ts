@@ -31,26 +31,21 @@ export async function runAutoConfirm(): Promise<{
   const cutoff = new Date(Date.now() - AUTO_CONFIRM_HOURS * 3600_000)
   const errors: string[] = []
 
-  const due = await db.serviceOrder.findMany({
-    where: {
-      status: 'delivered',
-      deliveredAt: { lte: cutoff },
-    },
-    select: { id: true },
-  })
-
+  /**
+   * ⚠️ 一条 updateMany 搞定,不要「先 findMany 再逐条 update」。
+   *    原来是 1+N 次往返,而每条要写的值完全相同;那句 `status: 'delivered'` 的
+   *    竞态守卫在**单条 updateMany 的 where 里本就是原子的**,不需要拆成 N 条。
+   *    积压订单越多,原写法在 IOPS 受限的 RDS 上越慢。
+   */
   let confirmed = 0
-  for (const order of due) {
-    try {
-      // 带 status 条件更新 —— 防止与学生手动操作、运营改状态发生竞态
-      const res = await db.serviceOrder.updateMany({
-        where: { id: order.id, status: 'delivered' },
-        data: { status: 'confirmed', confirmedAt: new Date(), autoConfirmed: true },
-      })
-      confirmed += res.count
-    } catch (err) {
-      errors.push(`订单 ${order.id}:${(err as Error).message}`)
-    }
+  try {
+    const res = await db.serviceOrder.updateMany({
+      where: { status: 'delivered', deliveredAt: { lte: cutoff } },
+      data: { status: 'confirmed', confirmedAt: new Date(), autoConfirmed: true },
+    })
+    confirmed = res.count
+  } catch (err) {
+    errors.push(`自动确认批量更新失败:${(err as Error).message}`)
   }
 
   const skippedDisputed = await db.serviceOrder.count({

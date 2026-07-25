@@ -1,4 +1,5 @@
 import 'server-only'
+import { cache } from 'react'
 import { cookies } from 'next/headers'
 import { SignJWT, jwtVerify } from 'jose'
 import { env } from '@/lib/env'
@@ -68,25 +69,33 @@ export async function createSession(payload: SessionPayload) {
   ;(await cookies()).set(COOKIE_NAME, token, cookieOptions())
 }
 
-export async function getSession(): Promise<SessionPayload | null> {
+/**
+ * ⚠️ 用 React cache() 包一层:同一次请求内多处调用只算一次。
+ *
+ *    /app 下的 layout 会取一次用户,每个 page 又各自 requireUser() 再取一次,
+ *    结果每个已登录页面至少重复查两遍 user(含 profile)、重复验签两次 ——
+ *    这是所有鉴权页面的固定开销,对小规格 RDS 是纯浪费。
+ *    cache() 按参数在**单次请求**内去重,跨请求不缓存,不会串号。
+ */
+export const getSession = cache(async (): Promise<SessionPayload | null> => {
   const token = (await cookies()).get(COOKIE_NAME)?.value
   if (!token) return null
   return verify<SessionPayload>(token)
-}
+})
 
 export async function destroySession() {
   ;(await cookies()).delete(COOKIE_NAME)
 }
 
-/** 取当前登录用户;未登录返回 null */
-export async function getCurrentUser() {
+/** 取当前登录用户;未登录返回 null。单次请求内去重(见 getSession 注释) */
+export const getCurrentUser = cache(async () => {
   const session = await getSession()
   if (!session) return null
   return db.user.findUnique({
     where: { id: session.userId },
     include: { profile: true },
   })
-}
+})
 
 /** 取当前用户,未登录直接抛错 —— 用于 Server Action 入口 */
 export async function requireUser() {
@@ -99,7 +108,7 @@ export async function requireUser() {
  * 判断用户是否持有有效季票。
  * 免费功能(评估)不校验;/app 下所有付费功能必须校验。
  */
-export async function getActiveSubscription(userId: string) {
+export const getActiveSubscription = cache(async (userId: string) => {
   return db.subscription.findFirst({
     where: {
       userId,
@@ -109,7 +118,7 @@ export async function getActiveSubscription(userId: string) {
     include: { plan: true },
     orderBy: { paidAt: 'desc' },
   })
-}
+})
 
 export async function requireSubscription() {
   const user = await requireUser()
@@ -125,7 +134,7 @@ export async function createAdminSession(payload: AdminSessionPayload) {
   ;(await cookies()).set(ADMIN_COOKIE_NAME, token, cookieOptions())
 }
 
-export async function getAdminSession(): Promise<AdminSessionPayload | null> {
+export const getAdminSession = cache(async (): Promise<AdminSessionPayload | null> => {
   const token = (await cookies()).get(ADMIN_COOKIE_NAME)?.value
   if (!token) return null
   const payload = await verify<AdminSessionPayload>(token)
@@ -149,7 +158,7 @@ export async function getAdminSession(): Promise<AdminSessionPayload | null> {
     role: admin.role,
     delivererId: admin.delivererId,
   }
-}
+})
 
 export async function destroyAdminSession() {
   ;(await cookies()).delete(ADMIN_COOKIE_NAME)

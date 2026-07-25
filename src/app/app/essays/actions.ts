@@ -7,6 +7,7 @@ import { track } from '@/lib/analytics'
 import { countWords, renderTemplate } from '@/lib/utils'
 import {
   getLlmProvider,
+  completeSafe,
   loadPrompt,
   consumeQuota,
   recordTokens,
@@ -114,10 +115,13 @@ export async function askInterview(essayId: string, userMessage: string) {
   })
 
   const llm = await getLlmProvider()
-  const result = await llm.complete([
+  // 失败不要抛 —— 抛出去会整页崩掉,把编辑器里没保存的正文一起带走
+  const call = await completeSafe(llm, [
     { role: 'system', content: tpl.system },
     { role: 'user', content: `${userPrompt}\n\n学生刚才说:${userMessage}` },
   ])
+  if (!call.ok) return { ok: false as const, error: call.error }
+  const result = call.result
 
   const messages = [
     ...history,
@@ -183,7 +187,7 @@ export async function generateOutline(essayId: string) {
 
   const tpl = await loadPrompt('essay_outline')
   const llm = await getLlmProvider()
-  const result = await llm.complete([
+  const call = await completeSafe(llm, [
     { role: 'system', content: tpl.system },
     {
       role: 'user',
@@ -196,6 +200,8 @@ export async function generateOutline(essayId: string) {
       }),
     },
   ])
+  if (!call.ok) return { ok: false as const, error: call.error }
+  const result = call.result
 
   await db.essay.update({
     where: { id: essayId },
@@ -245,10 +251,12 @@ export async function polishText(essayId: string, text: string) {
 
   const tpl = await loadPrompt('essay_polish')
   const llm = await getLlmProvider()
-  const result = await llm.complete([
+  const call = await completeSafe(llm, [
     { role: 'system', content: tpl.system },
     { role: 'user', content: renderTemplate(tpl.userTpl, { languageLevel, text }) },
   ])
+  if (!call.ok) return { ok: false as const, error: call.error }
+  const result = call.result
 
   let suggestions: PolishSuggestion[] = []
   try {

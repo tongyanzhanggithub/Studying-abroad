@@ -30,6 +30,38 @@ import {
 
 type Tab = 'interview' | 'outline' | 'polish' | 'compliance'
 
+/**
+ * 保存失败时把正文暂存到本机。
+ *
+ * 服务端存不下的时候,用户已经写出来的东西不能就这么没了 ——
+ * 先落到 localStorage,页面重开时提示恢复。localStorage 在隐私模式/
+ * 配额满时会抛错,所以整体 try 住:暂存失败也不能反过来把编辑器搞崩。
+ */
+function draftKey(essayId: string) {
+  return `essay-draft-${essayId}`
+}
+function stashDraft(essayId: string, html: string) {
+  try {
+    localStorage.setItem(draftKey(essayId), html)
+  } catch {
+    /* 存不下就算了,至少页面还在,用户可以自己复制走 */
+  }
+}
+function clearDraft(essayId: string) {
+  try {
+    localStorage.removeItem(draftKey(essayId))
+  } catch {
+    /* 忽略 */
+  }
+}
+function readDraft(essayId: string): string | null {
+  try {
+    return localStorage.getItem(draftKey(essayId))
+  } catch {
+    return null
+  }
+}
+
 const AI_POLICY_BANNER = {
   zero_tolerance: {
     cls: 'border-red-200 bg-red-50 text-red-900',
@@ -69,7 +101,7 @@ export function EssayWorkbench(props: {
   const [suggestions, setSuggestions] = useState<PolishSuggestion[]>([])
   const [compliance, setCompliance] = useState(props.complianceCheck)
   const [error, setError] = useState<string | null>(null)
-  const [saved, setSaved] = useState<'idle' | 'saving' | 'saved'>('idle')
+  const [saved, setSaved] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [wordCount, setWordCount] = useState(countWords(props.initialContent))
   const [pending, startTransition] = useTransition()
 
@@ -107,7 +139,33 @@ export function EssayWorkbench(props: {
       setSaved('saving')
       if (saveTimer.current) clearTimeout(saveTimer.current)
       saveTimer.current = setTimeout(() => {
-        void saveContent(props.essayId, editor.getHTML()).then(() => setSaved('saved'))
+        const html = editor.getHTML()
+        /**
+         * ⚠️ 这里踩过一次:原来是
+         *      void saveContent(...).then(() => setSaved('saved'))
+         *    既没有 .catch(),也不看返回值。后果是全项目唯一会**永久丢失用户创作内容**
+         *    的路径:
+         *      · 请求抛错 → 状态永远停在「保存中…」,用户以为在存,继续写 20 分钟,
+         *        关掉标签页就全没了;
+         *      · 返回 {ok:false}(如文书不存在)→ 照样显示「已保存」,明确失败却报成功。
+         *    现在:失败要说出来,并把这一版正文暂存到本机,别让用户白写。
+         */
+        void saveContent(props.essayId, html)
+          .then((r) => {
+            if (!r.ok) {
+              setSaved('error')
+              setError(r.error)
+              stashDraft(props.essayId, html)
+              return
+            }
+            setSaved('saved')
+            clearDraft(props.essayId)
+          })
+          .catch(() => {
+            setSaved('error')
+            stashDraft(props.essayId, html)
+            setError('这一段没能保存上,已暂存在本机。请检查网络后继续编辑,先别关页面。')
+          })
       }, 1200)
     },
   })
@@ -115,6 +173,18 @@ export function EssayWorkbench(props: {
   useEffect(() => () => {
     if (saveTimer.current) clearTimeout(saveTimer.current)
   }, [])
+
+  /**
+   * 上次有没有存失败、内容还躺在本机?有就提示,别让它悄无声息地留在那。
+   * 只在本机版本与服务端版本确实不同时才提示,避免每次进来都弹。
+   */
+  useEffect(() => {
+    const stashed = readDraft(props.essayId)
+    if (stashed && stashed !== props.initialContent) {
+      setSaved('error')
+      setError('上次有一段内容没能保存成功,已暂存在本机。请对照检查,必要时重新粘贴后再编辑。')
+    }
+  }, [props.essayId, props.initialContent])
 
   // editable 只在初始化时读取,窗口尺寸变化后需要显式同步
   useEffect(() => {
@@ -143,6 +213,12 @@ export function EssayWorkbench(props: {
             {saved === 'saving' && ' · 保存中…'}
             {saved === 'saved' && ' · 已保存'}
           </p>
+          {/* 保存失败必须显眼 —— 灰色小字会被当成正常状态忽略,而这里意味着内容可能丢 */}
+          {saved === 'error' && (
+            <p className="mt-0.5 rounded bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700">
+              未保存
+            </p>
+          )}
           <p className="mt-0.5">今日 AI 剩余 {props.remainingQuota} 次</p>
         </div>
       </div>

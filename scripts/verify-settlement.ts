@@ -10,6 +10,7 @@
  */
 
 import { PrismaClient } from '@prisma/client'
+import { assertNotProduction } from './guard-not-production'
 import {
   runAutoConfirm,
   previewSettlement,
@@ -153,6 +154,7 @@ async function main() {
   console.log('测试数据已清理。')
 }
 
+assertNotProduction('verify-settlement.ts')
 main()
   .catch((e) => {
     console.error(e)

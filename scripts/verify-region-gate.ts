@@ -15,6 +15,7 @@
 
 import { PrismaClient } from '@prisma/client'
 import { getPublicRegions, getRegionHealth, publicProgramWhere } from '../src/lib/regions/gate'
+import { assertNotProduction } from './guard-not-production'
 
 const db = new PrismaClient()
 
@@ -143,6 +144,7 @@ async function main() {
   console.log(`\n全部 ${step} 项通过。`)
 }
 
+assertNotProduction('verify-region-gate.ts')
 main()
   .then(async () => {
     await restore()

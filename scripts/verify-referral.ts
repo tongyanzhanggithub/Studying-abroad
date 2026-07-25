@@ -11,6 +11,7 @@
 
 import { PrismaClient } from '@prisma/client'
 import { runAssessment, type AssessmentInput } from '../src/lib/assessment/engine'
+import { assertNotProduction } from './guard-not-production'
 
 const db = new PrismaClient()
 
@@ -129,6 +130,7 @@ async function main() {
   console.log('测试数据已清理。')
 }
 
+assertNotProduction('verify-referral.ts')
 main()
   .catch((e) => {
     console.error(e)

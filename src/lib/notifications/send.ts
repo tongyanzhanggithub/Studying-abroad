@@ -16,16 +16,36 @@ import type { NotificationChannel } from '@prisma/client'
  *    任一提醒任务失败 → 立即人工电话兜底(PRD 11.3)。
  */
 
-/** 实际投递。渠道未接入时写入 pending,由后台可见,不静默丢弃。 */
+/**
+ * 实际投递。渠道未接入时保持 pending,由后台可见,不静默丢弃。
+ *
+ * ⚠️ 这里**不写库**:create 时 status 默认就是 pending,原来还多发一条
+ *    「把 pending 写成 pending」的 UPDATE —— 每条通知白写一次盘,批量推送时
+ *    写 IOPS 直接翻倍。接入真实渠道后,在这里根据投递结果再更新状态。
+ */
 async function deliver(notificationId: string, channel: NotificationChannel) {
   // TODO: 接入微信小程序订阅消息 / 阿里云短信 / 邮件服务
   // 渠道全部依赖企业资质,资质到位前保持 pending 状态,
   // 运营可在后台看到「待发送」队列并人工兜底。
+  void notificationId
   void channel
-  await db.notification.update({
-    where: { id: notificationId },
-    data: { status: 'pending' },
+}
+
+type NotificationTemplateRow = Awaited<
+  ReturnType<typeof db.notificationTemplate.findUnique>
+>
+
+/**
+ * 批量推送前一次性取好模板,避免在循环里逐个用户重复查同一条模板。
+ *
+ * ⚠️ 不做跨请求的长缓存:模板是运营在后台可改的,缓存久了会发出旧文案。
+ *    这里只在**一次批量任务内**复用,拿到的就是本次任务开始时的版本。
+ */
+async function loadTemplates(codes: string[]): Promise<Map<string, NotificationTemplateRow>> {
+  const rows = await db.notificationTemplate.findMany({
+    where: { code: { in: [...new Set(codes)] } },
   })
+  return new Map(rows.map((r) => [r.code, r]))
 }
 
 async function createNotification(params: {
@@ -33,10 +53,12 @@ async function createNotification(params: {
   templateCode: string
   payload: Record<string, string | number>
   dedupeKey: string
+  /** 已预取的模板(批量场景传入,避免循环内重复查库) */
+  template?: NotificationTemplateRow
 }) {
-  const template = await db.notificationTemplate.findUnique({
-    where: { code: params.templateCode },
-  })
+  const template =
+    params.template ??
+    (await db.notificationTemplate.findUnique({ where: { code: params.templateCode } }))
   if (!template || !template.active) return null
 
   /**
@@ -94,12 +116,17 @@ export async function notifyProgramChange(changeLogId: string): Promise<number> 
     distinct: ['userId'],
   })
 
+  // 循环外取一次模板 —— 同一批推送的都是 program_changed,不必每个用户查一遍
+  const tplMap = await loadTemplates(['program_changed'])
+  const tpl = tplMap.get('program_changed')
+
   let sent = 0
   for (const { userId } of affected) {
     // 单个用户推送失败不该中断整批(与 runDeadlineReminders 一致),
     // 否则一次唯一冲突/异常就让后面的人都收不到,且 notifiedAt 也更新不了
     try {
       const n = await createNotification({
+        template: tpl,
         userId,
         templateCode: 'program_changed',
         payload: {
@@ -175,6 +202,9 @@ export async function runDeadlineReminders(): Promise<{ sent: number; errors: st
   const errors: string[] = []
   let sent = 0
 
+  // 4 个阈值模板循环外一次取完 —— 否则每命中一条选校记录就查一次模板
+  const tplMap = await loadTemplates(THRESHOLDS.map((t) => t.code))
+
   const choices = await db.userSchoolChoice.findMany({
     where: {
       program: { finalDeadline: { not: null } },
@@ -200,6 +230,7 @@ export async function runDeadlineReminders(): Promise<{ sent: number; errors: st
       })
 
       const n = await createNotification({
+        template: tplMap.get(threshold.code),
         userId: choice.userId,
         templateCode: threshold.code,
         payload: {

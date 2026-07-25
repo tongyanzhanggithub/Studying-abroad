@@ -16,6 +16,7 @@ import { fulfillPayment } from '../src/lib/payment/fulfill'
 import { runComplianceCheck } from '../src/lib/essays/compliance'
 import { notifyProgramChange } from '../src/lib/notifications/send'
 import { CURRENT_SEASON, TERMS_VERSION } from '../src/lib/constants'
+import { assertNotProduction } from './guard-not-production'
 
 const db = new PrismaClient()
 const PHONE = '13900000001'
@@ -239,6 +240,7 @@ async function main() {
   console.log('\n测试数据已清理。')
 }
 
+assertNotProduction('e2e-smoke.ts')
 main()
   .catch((e) => {
     console.error(e)
