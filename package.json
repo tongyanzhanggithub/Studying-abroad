@@ -23,6 +23,11 @@
   "prisma": {
     "seed": "tsx prisma/seed.ts"
   },
+  "overridesComment": "强制提升有漏洞的间接依赖(npm audit 的 3 个 high)。不能用 `npm audit fix --force`——它会把 next 降到 9.3.3、干掉整个 App Router。sharp: libvips CVE-2026-33327/33328/35590/35591,next 至今(含16.x)仍声明 ^0.34.x,只能强制到 0.35+(只用于 next/image,0.34→0.35 无破坏性变更)。postcss: sourceMappingURL 路径遍历。升级 next 大版本时回来复查是否还需要。",
+  "overrides": {
+    "sharp": "^0.35.0",
+    "postcss": "^8.5.6"
+  },
   "dependencies": {
     "@prisma/client": "^6.2.1",
     "@tiptap/extension-character-count": "^2.11.2",
