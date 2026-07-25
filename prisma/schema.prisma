@@ -41,6 +41,7 @@ enum Region {
   DE // 德国
   FR // 法国
   CH // 瑞士
+  US // 美国 —— 后加入(产品扩展)。⚠️ 数据境内/签证/文书合规需另行处理,见落地计划 Phase 4
 }
 
 /// 申请方向。按海外院校常见 subject area 归类,用于选校定位与项目筛选。
@@ -283,6 +284,8 @@ model User {
   aiUsage           AiUsageDaily[]
   lead              Lead?
 
+  // 注销清理批处理按 deletionRequestedAt 扫,建索引避免全表扫
+  @@index([deletionRequestedAt])
   @@map("users")
 }
 
@@ -429,6 +432,9 @@ model Subscription {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@index([userId, status])
+  // 到期批处理(各处 status='active' AND expiresAt < now 的全表扫)靠这条索引,
+  // @@index([userId,status]) 对「跨用户按到期时间筛」帮不上忙
+  @@index([status, expiresAt])
   @@map("subscriptions")
 }
 
@@ -954,6 +960,8 @@ model ServiceOrder {
   @@index([status])
   @@index([userId])
   @@index([settlementMonth])
+  // 48h 自动确认每日扫 status IN (delivered,disputed) AND deliveredAt <= cutoff
+  @@index([status, deliveredAt])
   @@map("service_orders")
 }
 

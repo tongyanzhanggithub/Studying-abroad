@@ -23,7 +23,7 @@ export async function fulfillPayment(params: {
   const payment = await db.payment.findUnique({ where: { outTradeNo } })
   if (!payment) throw new Error(`支付单不存在:${outTradeNo}`)
 
-  // 幂等:已履约过直接返回
+  // 幂等快路径:已履约过直接返回(省掉一次事务)
   if (payment.status === 'succeeded') return
 
   if (payment.amountCents !== amountCents) {
@@ -34,9 +34,18 @@ export async function fulfillPayment(params: {
 
   const now = new Date()
 
-  await db.$transaction(async (tx) => {
-    await tx.payment.update({
-      where: { id: payment.id },
+  /**
+   * ⚠️ 幂等不能只靠上面那句「先查后写」—— 真实微信会**毫秒级并发重投**回调:
+   *    两个回调同时读到 status='created',双双越过那句检查,双双进来履约,
+   *    副作用(埋点、推荐归因)被触发两次,污染转化数据。
+   *
+   * 所以在事务内用一次**条件更新**抢锁:updateMany 的 where 带 status 条件,
+   * 只有把 created→succeeded 抢到手(count===1)的那次才继续履约;抢输的那次
+   * count===0,直接跳过。这是数据库层面的原子操作,并发下只有一个赢家。
+   */
+  const claimed = await db.$transaction(async (tx) => {
+    const res = await tx.payment.updateMany({
+      where: { id: payment.id, status: { not: 'succeeded' } },
       data: {
         status: 'succeeded',
         transactionId,
@@ -44,6 +53,8 @@ export async function fulfillPayment(params: {
         rawCallback: (raw ?? {}) as object,
       },
     })
+    // 没抢到 = 已被另一个并发回调履约,本次不再重复副作用
+    if (res.count === 0) return false
 
     if (payment.orderType === 'subscription') {
       /**
@@ -77,7 +88,12 @@ export async function fulfillPayment(params: {
         data: { status: 'paid', paidAt: now },
       })
     }
+
+    return true
   })
+
+  // 抢锁失败(并发回调已履约):副作用交给赢家那次去做,这里直接返回
+  if (!claimed) return
 
   // 埋点与归因放在事务外 —— 失败不应回滚已完成的履约
   if (payment.orderType === 'subscription') {

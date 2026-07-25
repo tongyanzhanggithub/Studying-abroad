@@ -1,6 +1,8 @@
 import 'server-only'
 import { lookup } from 'node:dns/promises'
+import { lookup as dnsLookupCb } from 'node:dns'
 import { isIP } from 'node:net'
+import { Agent } from 'undici'
 
 /**
  * 抓取院校官网页面正文。
@@ -17,16 +19,66 @@ import { isIP } from 'node:net'
 
 const BLOCKED_MESSAGE = '只能抓取公网上的院校官网地址'
 
+/**
+ * 把任意书写形式的 IPv6 展开成 8 个 16 位段。无法解析返回 null。
+ *
+ * ⚠️ 原来只用正则匹配 `::1` / `fc` / `fe8` 等**压缩形式**,以下写法全部漏判成公网:
+ *      [0:0:0:0:0:0:0:1](展开的回环)、[::ffff:7f00:1](十六进制映射 127.0.0.1)。
+ *    展开成规范形式后按段判断,才不会被书写形式绕过。
+ */
+function expandIpv6(input: string): number[] | null {
+  let s = input.toLowerCase()
+  const zone = s.indexOf('%') // 去掉 fe80::1%eth0 这样的 zone id
+  if (zone >= 0) s = s.slice(0, zone)
+
+  // 结尾内嵌 IPv4(::ffff:127.0.0.1 / ::127.0.0.1)—— 折成两个 16 位段
+  const lastColon = s.lastIndexOf(':')
+  const tail = s.slice(lastColon + 1)
+  if (tail.includes('.')) {
+    const q = tail.split('.').map(Number)
+    if (q.length !== 4 || q.some((n) => Number.isNaN(n) || n < 0 || n > 255)) return null
+    s =
+      s.slice(0, lastColon + 1) +
+      ((q[0] << 8) | q[1]).toString(16) +
+      ':' +
+      ((q[2] << 8) | q[3]).toString(16)
+  }
+
+  const halves = s.split('::')
+  if (halves.length > 2) return null
+  const head = halves[0] ? halves[0].split(':') : []
+  const back = halves.length === 2 ? (halves[1] ? halves[1].split(':') : []) : null
+
+  let groups: string[]
+  if (back === null) {
+    groups = head
+  } else {
+    const fill = 8 - head.length - back.length
+    if (fill < 0) return null
+    groups = [...head, ...Array(fill).fill('0'), ...back]
+  }
+  if (groups.length !== 8) return null
+
+  const nums = groups.map((g) => parseInt(g || '0', 16))
+  if (nums.some((n) => Number.isNaN(n) || n < 0 || n > 0xffff)) return null
+  return nums
+}
+
 /** 私有 / 保留地址段 —— 命中任何一条都拒绝 */
 function isPrivateIp(ip: string): boolean {
   if (isIP(ip) === 6) {
-    const v6 = ip.toLowerCase()
-    if (v6 === '::1' || v6 === '::') return true
-    // 唯一本地地址 fc00::/7、链路本地 fe80::/10
-    if (/^f[cd]/.test(v6) || /^fe[89ab]/.test(v6)) return true
-    // IPv4 映射地址 ::ffff:127.0.0.1
-    const mapped = v6.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/)
-    if (mapped) return isPrivateIp(mapped[1])
+    const n = expandIpv6(ip)
+    if (!n) return true // 解析不了的 IPv6 一律当私有,fail-closed
+    // ::(未指定)与 ::1(回环)
+    if (n.every((x) => x === 0)) return true
+    if (n.slice(0, 7).every((x) => x === 0) && n[7] === 1) return true
+    // 内嵌 IPv4:::ffff:a.b.c.d(映射)与 ::a.b.c.d(兼容)—— 落到 IPv4 规则
+    if (n.slice(0, 5).every((x) => x === 0) && (n[5] === 0xffff || n[5] === 0)) {
+      const v4 = `${n[6] >> 8}.${n[6] & 0xff}.${n[7] >> 8}.${n[7] & 0xff}`
+      return isPrivateIp(v4)
+    }
+    if ((n[0] & 0xfe00) === 0xfc00) return true // fc00::/7 唯一本地
+    if ((n[0] & 0xffc0) === 0xfe80) return true // fe80::/10 链路本地
     return false
   }
 
@@ -42,6 +94,37 @@ function isPrivateIp(ip: string): boolean {
   if (a >= 224) return true // 组播与保留段
   return false
 }
+
+/**
+ * 在**实际建连的那个 IP** 上做 SSRF 校验的 dispatcher。
+ *
+ * ⚠️ 为什么不能只靠 assertPublicUrl:它「解析→校验→再用 hostname 交给 fetch」,
+ *    而 fetch 内部会**再解析一次 DNS**。两次解析之间攻击者可切换记录(DNS rebinding /
+ *    TOCTOU):第一次返回公网 IP 过校验,第二次返回 100.100.100.200。
+ *    把校验放进连接回调、卡在真正要连的 IP 上,rebinding 第二次拿到的私网 IP 一样被拒。
+ */
+/**
+ * 全局 fetch 的 RequestInit 类型(来自 DOM lib)不含 `dispatcher`,但 Node 运行时
+ * 的 fetch 底层就是 undici、会接受它。这里补一个类型让调用处不用逐个断言。
+ */
+type FetchInit = RequestInit & { dispatcher?: Agent }
+
+const ssrfAgent = new Agent({
+  connect: {
+    lookup(hostname, options, cb) {
+      dnsLookupCb(hostname, options, (err, address, family) => {
+        if (err) return cb(err, address as string, family as number)
+        const addrs = Array.isArray(address)
+          ? (address as unknown as Array<{ address: string }>)
+          : [{ address: address as string }]
+        if (addrs.some((a) => isPrivateIp(a.address))) {
+          return cb(new Error(BLOCKED_MESSAGE), address as string, family as number)
+        }
+        cb(null, address as string, family as number)
+      })
+    },
+  },
+})
 
 async function assertPublicUrl(raw: string): Promise<URL> {
   let url: URL
@@ -126,6 +209,8 @@ export async function fetchPageText(raw: string): Promise<FetchedPage> {
   try {
     res = await fetch(url, {
       signal: ctrl.signal,
+      // 在实际建连 IP 上做 SSRF 校验(防 DNS rebinding)
+      dispatcher: ssrfAgent,
       // 跳转目标可能是内网地址,自己跟随才能逐跳校验
       redirect: 'manual',
       headers: {
@@ -135,7 +220,7 @@ export async function fetchPageText(raw: string): Promise<FetchedPage> {
         accept: 'text/html,application/xhtml+xml',
         'accept-language': 'en,zh-CN;q=0.8',
       },
-    })
+    } as FetchInit)
 
     // 最多跟 3 跳,每跳都重新做公网校验
     let hops = 0
@@ -143,7 +228,7 @@ export async function fetchPageText(raw: string): Promise<FetchedPage> {
       if (++hops > 3) throw new Error('跳转次数过多')
       const next = await assertPublicUrl(new URL(res.headers.get('location')!, current).toString())
       current = next
-      res = await fetch(next, { signal: ctrl.signal, redirect: 'manual' })
+      res = await fetch(next, { signal: ctrl.signal, dispatcher: ssrfAgent, redirect: 'manual' } as FetchInit)
     }
   } catch (e) {
     clearTimeout(timer)
@@ -173,8 +258,37 @@ export async function fetchPageText(raw: string): Promise<FetchedPage> {
     throw new Error(`这个地址返回的不是网页(${type || '类型未知'})—— PDF 招生简章暂时抓不了`)
   }
 
-  const buf = await res.arrayBuffer()
-  if (buf.byteLength > MAX_BYTES) throw new Error('页面太大,超过 3MB')
+  /**
+   * ⚠️ 不能 `await res.arrayBuffer()` 再判大小 —— 那样会先把整个响应体读进内存才检查,
+   *    恶意服务器返回 10GB(或一个小 gzip 解压后极大)会在检查生效前撑爆内存,MAX_BYTES
+   *    形同虚设。这里先看 content-length 快速拒绝,再流式读取、累计超限立即中断。
+   */
+  const declaredLen = Number(res.headers.get('content-length'))
+  if (Number.isFinite(declaredLen) && declaredLen > MAX_BYTES) {
+    throw new Error('页面太大,超过 3MB')
+  }
+
+  const chunks: Uint8Array[] = []
+  let received = 0
+  if (res.body) {
+    const reader = res.body.getReader()
+    for (;;) {
+      const { done, value } = await reader.read()
+      if (done) break
+      received += value.byteLength
+      if (received > MAX_BYTES) {
+        await reader.cancel()
+        throw new Error('页面太大,超过 3MB')
+      }
+      chunks.push(value)
+    }
+  }
+  const buf = new Uint8Array(received)
+  let offset = 0
+  for (const c of chunks) {
+    buf.set(c, offset)
+    offset += c.byteLength
+  }
 
   const html = new TextDecoder('utf-8').decode(buf)
   const text = htmlToText(html)

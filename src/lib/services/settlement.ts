@@ -145,7 +145,18 @@ export async function executeSettlement(month: string): Promise<{
   orderCount: number
   totalPayoutCents: number
 }> {
+  /**
+   * ⚠️ 自校验 month 格式,不只依赖调用方。原来靠唯一调用方 settleMonth 的正则兜底,
+   *    一旦有别的调用方或定时任务直接调本函数,`split('-').map(Number)` 遇到脏输入会得到
+   *    NaN → new Date(NaN) → 结算区间错乱、静默算错账。这里和 previewSettlement 一样先校验。
+   */
+  if (!/^\d{4}-\d{2}$/.test(month)) {
+    throw new Error(`结算月份格式不对(应为 YYYY-MM):${month}`)
+  }
   const [year, mon] = month.split('-').map(Number)
+  if (!year || !mon || mon < 1 || mon > 12) {
+    throw new Error(`结算月份不合法:${month}`)
+  }
   const start = new Date(year, mon - 1, 1)
   const end = new Date(year, mon, 1)
 

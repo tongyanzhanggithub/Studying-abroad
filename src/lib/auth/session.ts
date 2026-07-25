@@ -128,7 +128,27 @@ export async function createAdminSession(payload: AdminSessionPayload) {
 export async function getAdminSession(): Promise<AdminSessionPayload | null> {
   const token = (await cookies()).get(ADMIN_COOKIE_NAME)?.value
   if (!token) return null
-  return verify<AdminSessionPayload>(token)
+  const payload = await verify<AdminSessionPayload>(token)
+  if (!payload) return null
+
+  /**
+   * ⚠️ 光验签不够 —— role / active 是登录那一刻烤进 JWT 的,之后从不复查。
+   *    不回查库的话:在 /admin/accounts 停用一个管理员、或把 super_admin 降级,
+   *    他手里的旧 token 在过期前(最长 30 天)仍是原权限,照样能改价、发 key、管账号。
+   *    这里按 adminId 查一次库,以**库里的** active/role/delivererId 为准;
+   *    账号被停用或已删除即视为未登录。一次带索引的主键查询,代价可接受。
+   */
+  const admin = await db.adminUser.findUnique({
+    where: { id: payload.adminId },
+    select: { active: true, role: true, delivererId: true },
+  })
+  if (!admin || !admin.active) return null
+
+  return {
+    adminId: payload.adminId,
+    role: admin.role,
+    delivererId: admin.delivererId,
+  }
 }
 
 export async function destroyAdminSession() {

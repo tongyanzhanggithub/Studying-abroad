@@ -56,6 +56,10 @@ export default async function UniversityPage({
     orderBy: [{ direction: 'asc' }, { nameEn: 'asc' }],
   })
 
+  // 该校在当前开放地区下没有任何可见项目(地区未开放/已撤下)→ 整页不可访问,
+  // 不渲染学校名与排名的空壳,与院校详情页一致
+  if (programs.length === 0) notFound()
+
   /**
    * 排名逐榜展示,并注明年份与来源 —— 排名每年变、不同榜单差异很大,
    * 只写一个「#25」而不说是哪个榜、哪一年,等于让学生拿一个不可核对的

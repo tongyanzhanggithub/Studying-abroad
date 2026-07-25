@@ -1,0 +1,46 @@
+[
+  { "name_en": "University of Leicester", "name_zh": "莱斯特大学", "region": "UK", "rankings": [{ "provider": "qs", "year": 2026, "rank": 326, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "University of East Anglia", "name_zh": "东英吉利大学", "region": "UK", "rankings": [{ "provider": "qs", "year": 2026, "rank": 381, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "University of Kent", "name_zh": "肯特大学", "region": "UK", "rankings": [{ "provider": "qs", "year": 2026, "rank": 397, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "University of Dundee", "name_zh": "邓迪大学", "region": "UK", "rankings": [{ "provider": "qs", "year": 2026, "rank": 428, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Royal Holloway, University of London", "name_zh": "伦敦大学皇家霍洛威学院", "region": "UK", "rankings": [{ "provider": "qs", "year": 2026, "rank": 461, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "SOAS University of London", "name_zh": "伦敦大学亚非学院", "region": "UK", "rankings": [{ "provider": "qs", "year": 2026, "rank": 508, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "University of Stirling", "name_zh": "斯特林大学", "region": "UK", "rankings": [{ "provider": "qs", "year": 2026, "rank": 517, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+
+  { "name_en": "University of Limerick", "name_zh": "利默里克大学", "region": "IE", "rankings": [{ "provider": "qs", "year": 2026, "rank": 401, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Dublin City University", "name_zh": "都柏林城市大学", "region": "IE", "rankings": [{ "provider": "qs", "year": 2026, "rank": 410, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Maynooth University", "name_zh": "梅努斯大学", "region": "IE", "rankings": [{ "provider": "qs", "year": 2026, "rank": null, "rank_text": "771-780", "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+
+  { "name_en": "Simon Fraser University", "name_zh": "西蒙菲莎大学", "region": "CA", "rankings": [{ "provider": "qs", "year": 2026, "rank": 308, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "University of Victoria", "name_zh": "维多利亚大学", "region": "CA", "rankings": [{ "provider": "qs", "year": 2026, "rank": 358, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "University of Saskatchewan", "name_zh": "萨斯喀彻温大学", "region": "CA", "rankings": [{ "provider": "qs", "year": 2026, "rank": 378, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Concordia University", "name_zh": "康考迪亚大学", "region": "CA", "rankings": [{ "provider": "qs", "year": 2026, "rank": 465, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "University of Guelph", "name_zh": "圭尔夫大学", "region": "CA", "rankings": [{ "provider": "qs", "year": 2026, "rank": 504, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "University of Manitoba", "name_zh": "曼尼托巴大学", "region": "CA", "rankings": [{ "provider": "qs", "year": 2026, "rank": 643, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Carleton University", "name_zh": "卡尔顿大学", "region": "CA", "rankings": [{ "provider": "qs", "year": 2026, "rank": null, "rank_text": "781-790", "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+
+  { "name_en": "Auckland University of Technology", "name_zh": "奥克兰理工大学", "region": "NZ", "rankings": [{ "provider": "qs", "year": 2026, "rank": 410, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+
+  { "name_en": "University of Stuttgart", "name_zh": "斯图加特大学", "region": "DE", "rankings": [{ "provider": "qs", "year": 2026, "rank": 310, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "University of Münster", "name_zh": "明斯特大学", "region": "DE", "rankings": [{ "provider": "qs", "year": 2026, "rank": 350, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+
+  { "name_en": "Sciences Po", "name_zh": "巴黎政治学院", "region": "FR", "rankings": [{ "provider": "qs", "year": 2026, "rank": 367, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Université Grenoble Alpes", "name_zh": "格勒诺布尔阿尔卑斯大学", "region": "FR", "rankings": [{ "provider": "qs", "year": 2026, "rank": 321, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Aix-Marseille University", "name_zh": "艾克斯-马赛大学", "region": "FR", "rankings": [{ "provider": "qs", "year": 2026, "rank": 428, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "HEC Paris", "name_zh": "巴黎高等商学院", "region": "FR", "rankings": [] },
+  { "name_en": "ESSEC Business School", "name_zh": "埃塞克商学院", "region": "FR", "rankings": [] },
+  { "name_en": "CentraleSupélec", "name_zh": "中央理工-高等电力学院", "region": "FR", "rankings": [] },
+
+  { "name_en": "University of Tsukuba", "name_zh": "筑波大学", "region": "JP", "rankings": [{ "provider": "qs", "year": 2026, "rank": 350, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Kobe University", "name_zh": "神户大学", "region": "JP", "rankings": [{ "provider": "qs", "year": 2026, "rank": 482, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Hiroshima University", "name_zh": "广岛大学", "region": "JP", "rankings": [{ "provider": "qs", "year": 2026, "rank": null, "rank_text": "651-700", "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Tokyo University of Science", "name_zh": "东京理科大学", "region": "JP", "rankings": [{ "provider": "qs", "year": 2026, "rank": null, "rank_text": "751-760", "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+
+  { "name_en": "Ulsan National Institute of Science and Technology", "name_zh": "蔚山科学技术院", "region": "KR", "rankings": [{ "provider": "qs", "year": 2026, "rank": 309, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Kyung Hee University", "name_zh": "庆熙大学", "region": "KR", "rankings": [{ "provider": "qs", "year": 2026, "rank": 379, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Gwangju Institute of Science and Technology", "name_zh": "光州科学技术院", "region": "KR", "rankings": [{ "provider": "qs", "year": 2026, "rank": 385, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Pusan National University", "name_zh": "釜山国立大学", "region": "KR", "rankings": [{ "provider": "qs", "year": 2026, "rank": 481, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+  { "name_en": "Ewha Womans University", "name_zh": "梨花女子大学", "region": "KR", "rankings": [{ "provider": "qs", "year": 2026, "rank": 504, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] },
+
+  { "name_en": "Singapore University of Technology and Design", "name_zh": "新加坡科技设计大学", "region": "SG", "rankings": [{ "provider": "qs", "year": 2026, "rank": 519, "source_url": "https://www.topuniversities.com/world-university-rankings/2026" }] }
+]

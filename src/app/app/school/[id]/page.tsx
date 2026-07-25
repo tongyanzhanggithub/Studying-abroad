@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { db } from '@/lib/db'
 import { requireUser } from '@/lib/auth/session'
+import { getPublicRegions } from '@/lib/regions/gate'
 import { Card, FreshnessBadge } from '@/components/ui'
 import { formatDate } from '@/lib/utils'
 import {
@@ -44,6 +45,14 @@ export default async function SchoolDetailPage({
     include: { school: true, materialTemplates: { include: { template: true } } },
   })
   if (!program) notFound()
+
+  /**
+   * ⚠️ 地区闸门:findUnique 只按 id 查,不过 gate。未开放地区的详情页应不可访问
+   *    (地区「撤下」后也要立即失效)。gate.ts 承诺「所有面向用户的查询都必须经过它」,
+   *    这一页原来是破口。非开放地区 / 已下架一律 404。
+   */
+  const publicRegions = await getPublicRegions()
+  if (!program.active || !publicRegions.includes(program.region)) notFound()
 
   const req = readRequirements(program)
   const dl = readDeadlines(program)

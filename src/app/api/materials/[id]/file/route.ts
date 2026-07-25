@@ -40,11 +40,33 @@ export async function GET(
   const user = await getCurrentUser()
   const isOwner = user?.id === material.userId
 
-  // 运营需要能看学生材料来做交付,但这是敏感数据,只给 operator 及以上
+  /**
+   * 谁能看非本人的材料?这是护照/身份证扫描件,收敛到最小范围。
+   *
+   * ⚠️ 这里踩过一次:原来写的是 `admin.role !== 'data_entry'` 就算 staff。
+   *    但 advisor(外部签约顾问)的 role 也满足 `!== 'data_entry'`,于是**任何顾问
+   *    凭材料 id 就能拉任意学生的证件** —— 包括根本没派给他的学生。这与顾问端
+   *    「只看派给自己的单」的设计(advisor/actions.ts 的 ownedOrder)直接矛盾。
+   *
+   *  - operator / super_admin:运营要看材料做交付,放行。
+   *  - advisor:只有当该学生有一笔派给这位顾问的服务订单时才放行。
+   *  - data_entry / 其他:一律不行。
+   */
   const admin = isOwner ? null : await getAdminSession()
-  const isStaff = admin !== null && admin.role !== 'data_entry'
+  let isAuthorized = isOwner
+  if (!isAuthorized && admin) {
+    if (admin.role === 'operator' || admin.role === 'super_admin') {
+      isAuthorized = true
+    } else if (admin.role === 'advisor' && admin.delivererId) {
+      const owned = await db.serviceOrder.findFirst({
+        where: { userId: material.userId, delivererId: admin.delivererId },
+        select: { id: true },
+      })
+      isAuthorized = owned !== null
+    }
+  }
 
-  if (!isOwner && !isStaff) {
+  if (!isAuthorized) {
     return NextResponse.json({ error: 'not found' }, { status: 404 })
   }
 

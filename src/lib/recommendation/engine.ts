@@ -20,6 +20,9 @@ import type {
  *   3. 每个页面同时最多 1 张卡
  */
 
+/** 曝光去重时间窗:同一 (user, rule) 在此窗口内的重复渲染只记一次 shown */
+const SHOWN_DEDUP_MINUTES = 30
+
 // ── 上下文组装 ──────────────────────────────────────────
 
 export async function buildContext(userId: string): Promise<RecommendationContext> {
@@ -184,10 +187,24 @@ export async function selectCard(
       days: ctx.daysToNearestDeadline ?? 0,
     })
 
-    await db.recommendationEvent.create({
-      data: { userId, ruleId: rule.id, action: 'shown' },
+    /**
+     * ⚠️ 这里在 RSC 渲染期写 shown + 埋点。Next 的预取/重渲/重试会让同一次曝光被
+     *    记多次:既会提前打满 maxShow(卡片被误隐藏),又会压低 CTR=clicks/shown
+     *    (PRD 11.3 用 CTR<2% 连续两周就重做文案,埋点污染会误触发)。
+     *    在没有客户端曝光上报之前,先做**时间窗去重**:同一 (user, rule) 在
+     *    SHOWN_DEDUP_MINUTES 内只记一次曝光,把一次浏览会话里的渲染风暴收敛成一条。
+     */
+    const dedupSince = new Date(Date.now() - SHOWN_DEDUP_MINUTES * 60_000)
+    const recentShown = await db.recommendationEvent.findFirst({
+      where: { userId, ruleId: rule.id, action: 'shown', createdAt: { gte: dedupSince } },
+      select: { id: true },
     })
-    await track('rec_card_shown', { userId, properties: { ruleId: rule.id, placement } })
+    if (!recentShown) {
+      await db.recommendationEvent.create({
+        data: { userId, ruleId: rule.id, action: 'shown' },
+      })
+      await track('rec_card_shown', { userId, properties: { ruleId: rule.id, placement } })
+    }
 
     return {
       ruleId: rule.id,

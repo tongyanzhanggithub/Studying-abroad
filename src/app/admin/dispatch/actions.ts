@@ -5,6 +5,7 @@ import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 import { canTransition, ORDER_STATUS_LABEL } from '@/lib/services/dispatch'
 import { notifyServiceOrder } from '@/lib/notifications/send'
+import { executeRefund } from '@/lib/payment'
 import type { OrderStatus } from '@prisma/client'
 
 /**
@@ -141,9 +142,49 @@ export async function resolveDispute(
     return { ok: false as const, error: '这个订单当前没有待处理的异议。' }
   }
 
-  const target: OrderStatus =
-    outcome === 'redo' ? 'delivering' : outcome === 'confirm' ? 'confirmed' : 'refunding'
+  const resolvedFields = {
+    disputeResolution: resolution.trim().slice(0, 1000),
+    disputeResolvedAt: new Date(),
+    disputeResolvedBy: admin.adminId,
+  }
 
+  /**
+   * ⚠️ 退款分支必须在这里**真的把钱退掉**,而不是只置为 refunding 就甩给订单页。
+   *    原来置 refunding 后就成了死胡同:唯一的退款入口 requestRefund 要 requireUser
+   *    (运营调不到),且 calcServiceRefund 对已交付订单直接拒 —— 订单永远卡在 refunding,
+   *    交付人拿不到钱、学生也退不到钱。异议判退 = 平台认可诉求,按全额退。
+   */
+  if (outcome === 'refund') {
+    // disputed → refunding(原子抢锁,防重复处理)
+    const claimed = await db.serviceOrder.updateMany({
+      where: { id: orderId, status: 'disputed' },
+      data: { status: 'refunding', ...resolvedFields },
+    })
+    if (claimed.count === 0) return { ok: false as const, error: '该异议已被处理' }
+
+    const payment = await db.payment.findFirst({
+      where: { orderType: 'service', orderId: order.id, status: 'succeeded' },
+    })
+    if (!payment) {
+      // 没有支付记录(理论上不该发生)→ 状态放回 disputed,人工核查
+      await db.serviceOrder.updateMany({ where: { id: orderId, status: 'refunding' }, data: { status: 'disputed' } })
+      return { ok: false as const, error: '找不到对应的支付记录,已回退到异议状态,请人工核查。' }
+    }
+
+    const refund = await executeRefund(payment.id, order.amountCents, `异议判退:${resolvedFields.disputeResolution}`)
+    if (!refund.ok) {
+      await db.serviceOrder.updateMany({ where: { id: orderId, status: 'refunding' }, data: { status: 'disputed' } })
+      return { ok: false as const, error: refund.error }
+    }
+    await db.serviceOrder.updateMany({ where: { id: orderId, status: 'refunding' }, data: { status: 'refunded' } })
+
+    revalidatePath('/admin/dispatch')
+    revalidatePath('/app/orders')
+    return { ok: true as const, note: '已全额退款,订单关闭。' }
+  }
+
+  // redo / confirm:仍是单次状态推进
+  const target: OrderStatus = outcome === 'redo' ? 'delivering' : 'confirmed'
   if (!canTransition('disputed', target)) {
     return { ok: false as const, error: '状态转移不合法' }
   }
@@ -152,9 +193,7 @@ export async function resolveDispute(
     where: { id: orderId },
     data: {
       status: target,
-      disputeResolution: resolution.trim().slice(0, 1000),
-      disputeResolvedAt: new Date(),
-      disputeResolvedBy: admin.adminId,
+      ...resolvedFields,
       // 重新交付时清掉交付时间,让 SLA 重新计
       deliveredAt: outcome === 'redo' ? null : undefined,
       confirmedAt: outcome === 'confirm' ? new Date() : undefined,
@@ -167,11 +206,9 @@ export async function resolveDispute(
   return {
     ok: true as const,
     note:
-      outcome === 'refund'
-        ? '已置为退款中。实际退款要到订单页发起,这里只改状态。'
-        : outcome === 'confirm'
-          ? '已确认完成,该单进入本月可结算范围。'
-          : '已退回交付中,交付人需要重新交付。',
+      outcome === 'confirm'
+        ? '已确认完成,该单进入本月可结算范围。'
+        : '已退回交付中,交付人需要重新交付。',
   }
 }
 

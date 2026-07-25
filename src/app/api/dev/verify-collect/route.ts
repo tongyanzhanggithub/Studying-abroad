@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { env } from '@/lib/env'
+import { isValidCronSecret } from '@/lib/cron-auth'
 import { normalize, parseJson } from '@/lib/collect/extract'
 import { htmlToText } from '@/lib/collect/fetch'
 import { discoverProgramLinks } from '@/lib/collect/discover'
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
   if (process.env.NODE_ENV === 'production') {
     return NextResponse.json({ error: 'not found' }, { status: 404 })
   }
-  if (request.headers.get('x-cron-secret') !== env.cronSecret) {
+  if (!isValidCronSecret(request.headers.get('x-cron-secret'))) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
   }
 
@@ -41,6 +41,25 @@ export async function POST(request: NextRequest) {
       `gpa=${JSON.stringify(raw.gpa_requirement.value)} tuition=${JSON.stringify(raw.tuition.value)}`,
     )
     check('有 evidence 的字段保留', raw.ielts_overall.value === 7)
+  }
+
+  // ── 1b. evidence 必须真的来自原文(防「带假出处」绕过)──────
+  {
+    const source = 'MSc Finance. IELTS 7.0 overall required. Tuition GBP 40,000.'
+    const raw = normalize(
+      {
+        // evidence 是原文里真有的一句 → 保留
+        ielts_overall: { value: 7, evidence: 'IELTS 7.0 overall required' },
+        // evidence 看着像真的,但原文里根本没有 → 连值一起丢
+        gpa_requirement: { value: '均分 85 以上', evidence: 'see admissions page' },
+      },
+      source,
+    )
+    check(
+      'evidence 不在原文中的字段被丢弃(防模型自己编个出处)',
+      raw.gpa_requirement.value === null && raw.ielts_overall.value === 7,
+      `gpa=${JSON.stringify(raw.gpa_requirement.value)} ielts=${JSON.stringify(raw.ielts_overall.value)}`,
+    )
   }
 
   // ── 2. 假空值被归一成 null ──────────────────────────────

@@ -31,6 +31,38 @@ export interface LlmProvider {
   complete(messages: LlmMessage[], opts?: { maxTokens?: number }): Promise<LlmResult>
 }
 
+/** LLM 调用超时:自建端点(openai_compatible 的 baseUrl 后台可配)吊死时,别把服务端连接挂死 */
+const LLM_TIMEOUT_MS = 60_000
+
+/**
+ * 带超时的 fetch。
+ *
+ * ⚠️ 抓取侧有 20s 超时,LLM 侧原来一个都没有 —— 后台可配的自建端点一旦吊死,
+ *    extractProgram → server action 会无限期阻塞,占满连接。这里统一加超时。
+ * ⚠️ 错误响应体**不外泄**:res.text() 可能含内部端点/模型细节,完整记服务端日志,
+ *    对外只抛状态码。
+ */
+async function llmFetch(url: string, init: RequestInit, label: string): Promise<Response> {
+  const ctrl = new AbortController()
+  const timer = setTimeout(() => ctrl.abort(), LLM_TIMEOUT_MS)
+  let res: Response
+  try {
+    res = await fetch(url, { ...init, signal: ctrl.signal })
+  } catch (e) {
+    if (e instanceof Error && e.name === 'AbortError') {
+      throw new Error(`${label} 调用超时(${LLM_TIMEOUT_MS / 1000} 秒),请稍后重试或检查端点配置`)
+    }
+    throw new Error(`${label} 调用失败(网络层)`)
+  } finally {
+    clearTimeout(timer)
+  }
+  if (!res.ok) {
+    console.error(`[llm] ${label} 返回 ${res.status}:`, await res.text().catch(() => ''))
+    throw new Error(`${label} 调用失败(${res.status})`)
+  }
+  return res
+}
+
 // ── Anthropic ───────────────────────────────────────────
 
 class AnthropicProvider implements LlmProvider {
@@ -47,24 +79,24 @@ class AnthropicProvider implements LlmProvider {
     const system = messages.filter((m) => m.role === 'system').map((m) => m.content).join('\n\n')
     const rest = messages.filter((m) => m.role !== 'system')
 
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': this.apiKey,
-        'anthropic-version': '2023-06-01',
+    const res = await llmFetch(
+      'https://api.anthropic.com/v1/messages',
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-api-key': this.apiKey,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model: this.model,
+          max_tokens: opts?.maxTokens ?? 2048,
+          system: system || undefined,
+          messages: rest.map((m) => ({ role: m.role, content: m.content })),
+        }),
       },
-      body: JSON.stringify({
-        model: this.model,
-        max_tokens: opts?.maxTokens ?? 2048,
-        system: system || undefined,
-        messages: rest.map((m) => ({ role: m.role, content: m.content })),
-      }),
-    })
-
-    if (!res.ok) {
-      throw new Error(`Anthropic API 调用失败 ${res.status}: ${await res.text()}`)
-    }
+      'Anthropic API',
+    )
 
     const data = (await res.json()) as {
       content: Array<{ type: string; text?: string }>
@@ -95,22 +127,22 @@ class OpenAiCompatibleProvider implements LlmProvider {
   }
 
   async complete(messages: LlmMessage[], opts?: { maxTokens?: number }): Promise<LlmResult> {
-    const res = await fetch(`${this.baseUrl.replace(/\/$/, '')}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${this.apiKey}`,
+    const res = await llmFetch(
+      `${this.baseUrl.replace(/\/$/, '')}/chat/completions`,
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          authorization: `Bearer ${this.apiKey}`,
+        },
+        body: JSON.stringify({
+          model: this.model,
+          messages,
+          max_tokens: opts?.maxTokens ?? 2048,
+        }),
       },
-      body: JSON.stringify({
-        model: this.model,
-        messages,
-        max_tokens: opts?.maxTokens ?? 2048,
-      }),
-    })
-
-    if (!res.ok) {
-      throw new Error(`LLM API 调用失败 ${res.status}: ${await res.text()}`)
-    }
+      'LLM API',
+    )
 
     const data = (await res.json()) as {
       choices: Array<{ message: { content: string } }>
@@ -179,16 +211,16 @@ function today(): string {
 /** 消费一次配额;超限抛 QuotaExceededError */
 export async function consumeQuota(userId: string, limit: number): Promise<void> {
   const day = today()
-  const usage = await db.aiUsageDaily.findUnique({
-    where: { userId_day: { userId, day } },
-  })
-  if (usage && usage.count >= limit) throw new QuotaExceededError(limit)
-
-  await db.aiUsageDaily.upsert({
+  // ⚠️ 原来是「先 findUnique 判上限,再 upsert 自增」两步,并发下多个请求会同时读到
+  //    count=99 一起放行,超发量 = 并发数。改成**先原子自增再判**:upsert 的 increment
+  //    是数据库层面的原子操作,返回自增后的值;每个并发请求拿到互不相同的新值,
+  //    只有落在 ≤limit 的那些继续,其余抛错。
+  const usage = await db.aiUsageDaily.upsert({
     where: { userId_day: { userId, day } },
     create: { userId, day, count: 1 },
     update: { count: { increment: 1 } },
   })
+  if (usage.count > limit) throw new QuotaExceededError(limit)
 }
 
 export async function recordTokens(userId: string, tokens: number): Promise<void> {

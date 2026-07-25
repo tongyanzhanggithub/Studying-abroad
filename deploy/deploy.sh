@@ -57,6 +57,21 @@ log "构建生产版本"
 # 2GB 内存 + 4GB swap 的机器上,限制 Node 堆大小比让它自己撑爆更稳
 NODE_OPTIONS="--max-old-space-size=1536" NODE_ENV=production npm run build
 
+# ── 3.5 交出目录属主给运行用户 ─────────────────────────────
+# root 负责构建(装依赖、prisma、next build),但服务以非特权用户 compass 运行
+# (见 deploy/compass.service)。构建完把整个应用目录交给 compass —— 它要能读
+# .next / node_modules,并能写 uploads/(学生上传的材料)。
+if id compass >/dev/null 2>&1; then
+  log "移交目录属主给 compass"
+  mkdir -p "$APP_DIR/uploads"
+  chown -R compass:compass "$APP_DIR"
+  # .env 含密钥,权限收紧到属主可读写
+  chmod 600 "$APP_DIR/.env" 2>/dev/null || true
+else
+  warn "系统用户 compass 不存在(未跑过 setup-server.sh?)——
+       服务仍会以 compass 启动失败。请先 sudo bash deploy/setup-server.sh"
+fi
+
 # ── 4. systemd ─────────────────────────────────────────────
 log "配置 systemd 服务"
 install -m 644 deploy/compass.service /etc/systemd/system/compass.service

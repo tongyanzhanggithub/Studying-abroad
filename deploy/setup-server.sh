@@ -74,6 +74,17 @@ else
   echo "已安装:$(node -v) / npm $(npm -v)"
 fi
 
+# ── 4.5 应用运行用户 ───────────────────────────────────────
+log "创建应用运行用户 compass"
+# 服务以这个非特权用户运行(见 deploy/compass.service 的 User=compass),
+# 不用 root 跑公网服务。系统用户、无登录 shell、无独立家目录。
+if id compass >/dev/null 2>&1; then
+  echo "用户 compass 已存在,跳过"
+else
+  useradd --system --no-create-home --shell /usr/sbin/nologin compass
+  echo "已创建系统用户 compass"
+fi
+
 # ── 5. Nginx ───────────────────────────────────────────────
 log "安装 Nginx"
 if command -v nginx >/dev/null 2>&1; then

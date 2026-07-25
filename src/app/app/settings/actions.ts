@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db'
+import { getStorage } from '@/lib/storage'
 import { requireUser, destroySession } from '@/lib/auth/session'
 import type { LanguageType, UndergradTier } from '@prisma/client'
 
@@ -92,6 +93,27 @@ export async function deleteAccount(confirmPhone: string) {
     return {
       ok: false as const,
       error: '你还有生效中的季票。注销将放弃剩余权益且不予退款 —— 如需退款请先到「订单」页申请。',
+    }
+  }
+
+  /**
+   * ⚠️ 先删存储里的材料文件,再删 DB。
+   *    只 db.user.delete() 靠外键级联删掉 UserMaterial 行,但护照/身份证/学位证的
+   *    加密 blob 会永久留在磁盘/OSS 桶里,而 DB 里已无任何指针能再找到它们 ——
+   *    这是 PIPL「删除权」的实打实违规(用户注销了,敏感个人信息仍在),也是存储泄漏。
+   *    删文件容错:单个失败只记日志,不阻断注销(DB 行删掉后,残留文件可由离线 GC 兜底)。
+   */
+  const materials = await db.userMaterial.findMany({
+    where: { userId: user.id, fileUrl: { not: null } },
+    select: { fileUrl: true },
+  })
+  const storage = getStorage()
+  for (const m of materials) {
+    if (!m.fileUrl) continue
+    try {
+      await storage.remove(m.fileUrl)
+    } catch (err) {
+      console.error(`[deleteAccount] 删除材料文件失败 ${m.fileUrl}`, err)
     }
   }
 

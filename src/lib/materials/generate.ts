@@ -86,18 +86,18 @@ export async function regenerateMaterials(userId: string) {
   const existingByTemplate = new Map(existing.map((m) => [m.templateId, m]))
 
   for (const [templateId, info] of needed) {
-    const prev = existingByTemplate.get(templateId)
-    if (prev) {
-      // 只更新适用院校范围,不动学生已填的状态和已上传的文件
-      await db.userMaterial.update({
-        where: { id: prev.id },
-        data: { programIds: info.programIds },
-      })
-    } else {
-      await db.userMaterial.create({
-        data: { userId, templateId, programIds: info.programIds, status: 'not_started' },
-      })
-    }
+    /**
+     * ⚠️ 用 upsert 而不是「读 existing 再决定 create/update」。
+     *    用户快速连点加两所学校时,两次 regenerateMaterials 并发跑,都读到无 existing、
+     *    都 create 同一个 (userId, templateId) → 撞 @@unique 抛 P2002 → 整个 add 请求 500。
+     *    upsert 把并发/重复交给数据库的唯一约束处理:更新只动适用院校范围,
+     *    不碰学生已填的状态和已上传的文件。
+     */
+    await db.userMaterial.upsert({
+      where: { userId_templateId: { userId, templateId } },
+      update: { programIds: info.programIds },
+      create: { userId, templateId, programIds: info.programIds, status: 'not_started' },
+    })
   }
 
   // 选校单里已删掉的学校 → 对应材料若从未动过就清理,动过就保留

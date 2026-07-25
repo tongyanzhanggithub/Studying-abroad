@@ -16,6 +16,7 @@
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
     "data:import": "tsx scripts/import-programs.ts",
+    "schools:import": "tsx scripts/import-schools.ts",
     "admin:create": "tsx scripts/create-admin.ts",
     "demo:seed": "tsx --tsconfig scripts/tsconfig.json scripts/seed-demo-user.ts"
   },
@@ -36,6 +37,7 @@
     "react-dom": "^19.0.0",
     "server-only": "^0.0.1",
     "tailwind-merge": "^2.6.0",
+    "undici": "^8.9.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {

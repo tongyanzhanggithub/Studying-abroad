@@ -18,6 +18,38 @@ import type { Direction, Region } from '@prisma/client'
 
 /** ── 采集 ─────────────────────────────────────────────── */
 
+/**
+ * 采集的服务端每日上限(全体共享)。
+ *
+ * ⚠️ SchoolCollect 的 MAX_BATCH=40 是**纯前端**限制,server action 可被任意次数直接调,
+ *    成本控制完全靠前端。结合「后台账号可能被盗」的威胁,被盗账号能无上限刷模型账单。
+ *    这里在服务端加一道每日总量闸,正常运营用量远达不到,只挡失控/被盗场景。
+ */
+const DAILY_DRAFT_CAP = 500
+
+async function assertCollectionQuota(): Promise<{ ok: false; error: string } | null> {
+  const since = new Date()
+  since.setHours(0, 0, 0, 0)
+  const todayCount = await db.programDraft.count({ where: { createdAt: { gte: since } } })
+  if (todayCount >= DAILY_DRAFT_CAP) {
+    return {
+      ok: false,
+      error: `今日采集量已达上限(${DAILY_DRAFT_CAP} 条),明天再继续。如确有大批量需求请联系管理员。`,
+    }
+  }
+  return null
+}
+
+/** 采集来源 URL 必须是 http(s),避免 javascript: 之类后续以 href 渲染给审核人时被点执行 */
+function isHttpUrl(raw: string): boolean {
+  try {
+    const u = new URL(raw)
+    return u.protocol === 'http:' || u.protocol === 'https:'
+  } catch {
+    return false
+  }
+}
+
 export async function createDraftFromUrl(url: string, region: Region) {
   await requireAdmin('operator')
 
@@ -48,10 +80,16 @@ export async function createDraftFromText(sourceUrl: string, rawText: string, re
   if (!sourceUrl.trim()) {
     return { ok: false as const, error: '还是要填官网地址 —— 审核的人要靠它对照原文。' }
   }
+  if (!isHttpUrl(sourceUrl.trim())) {
+    return { ok: false as const, error: '官网地址要以 http:// 或 https:// 开头。' }
+  }
   return runExtract(sourceUrl.trim(), text, region)
 }
 
 async function runExtract(sourceUrl: string, text: string, region: Region) {
+  const overQuota = await assertCollectionQuota()
+  if (overQuota) return overQuota
+
   let extracted: Awaited<ReturnType<typeof extractProgram>>
   try {
     extracted = await extractProgram(sourceUrl, text)

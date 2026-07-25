@@ -7,7 +7,7 @@ import {
   toSettlementMonth,
   AUTO_CONFIRM_HOURS,
 } from '@/lib/services/settlement'
-import { env } from '@/lib/env'
+import { isValidCronSecret } from '@/lib/cron-auth'
 
 /**
  * 结算逻辑自检(仅开发环境)。
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
   if (process.env.NODE_ENV === 'production') {
     return NextResponse.json({ error: 'not found' }, { status: 404 })
   }
-  if (request.headers.get('x-cron-secret') !== env.cronSecret) {
+  if (!isValidCronSecret(request.headers.get('x-cron-secret'))) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
   }
 

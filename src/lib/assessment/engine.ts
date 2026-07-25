@@ -181,6 +181,39 @@ function inferSchoolTier(schoolNameEn: string, competitiveness: string | null): 
   return t1.some((n) => schoolNameEn.includes(n)) ? 't1' : 't2'
 }
 
+/** 档位由难到易的次序 —— 找不到精确档位规则时,据此就近回退 */
+const TIER_ORDER = ['t1', 't2', 't3', 't4'] as const
+
+/**
+ * 取某地区某档位的录取规则;**精确命中优先,缺失时就近回退**到该地区已有的最接近档位。
+ *
+ * ⚠️ 为什么要回退:inferSchoolTier 会原样返回运营在 competitiveness 里标的值,
+ *    但 AdmissionRule 种子表目前只有 t1/t2。一旦运营给某校标了 t3(字段本就接受),
+ *    原来的精确匹配会找不到规则 → 该项目**从结果里静默消失**。回退到最接近的已有档位
+ *    (t3 → 回退到更难的 t2,偏保守、不会高估录取率),既不让项目消失,也不编造概率。
+ *    等运营补上 t3 的 AdmissionRule 行后,自然就用精确档位了。
+ */
+function findTierRule<T extends { region: string; schoolTier: string }>(
+  rules: T[],
+  region: string,
+  tier: string,
+): T | undefined {
+  const exact = rules.find((r) => r.region === region && r.schoolTier === tier)
+  if (exact) return exact
+
+  const regionRules = rules.filter((r) => r.region === region)
+  if (regionRules.length === 0) return undefined
+
+  const wantIdx = TIER_ORDER.indexOf(tier as (typeof TIER_ORDER)[number])
+  if (wantIdx === -1) return undefined // 未知档位标记,不猜
+
+  // 按与目标档位的距离排序,优先更难的一档(偏保守)
+  return regionRules
+    .map((r) => ({ r, idx: TIER_ORDER.indexOf(r.schoolTier as (typeof TIER_ORDER)[number]) }))
+    .filter((x) => x.idx !== -1)
+    .sort((a, b) => Math.abs(a.idx - wantIdx) - Math.abs(b.idx - wantIdx) || a.idx - b.idx)[0]?.r
+}
+
 /**
  * 判断 GMAT/GRE 要求档位。
  *
@@ -324,7 +357,7 @@ export async function runAssessment(
 
   for (const p of programs) {
     const schoolTier = inferSchoolTier(p.school.nameEn, p.competitiveness)
-    const rule = rules.find((r) => r.region === p.region && r.schoolTier === schoolTier)
+    const rule = findTierRule(rules, p.region, schoolTier)
     // 没有对应规则就跳过 —— 宁可少推荐,也不给无依据的概率
     if (!rule) continue
 

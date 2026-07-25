@@ -23,6 +23,8 @@ const AssessSchema = z.object({
   undergradMajor: z.string().min(1),
   gpa: z.number().min(0).max(100),
   gpaScale: z.enum(['100', '4.0']),
+  // 见下方 superRefine:gpa 的合法范围取决于 gpaScale
+
   languageType: z.enum(['ielts', 'toefl', 'none']),
   /**
    * 选「还没考」时客户端不会设这个字段,传过来是 undefined。
@@ -35,7 +37,7 @@ const AssessSchema = z.object({
     .array(
       z.enum([
         'UK', 'HK', 'SG', 'AU', 'CA', 'MO',
-        'JP', 'KR', 'NZ', 'IE', 'NL', 'DE', 'FR', 'CH',
+        'JP', 'KR', 'NZ', 'IE', 'NL', 'DE', 'FR', 'CH', 'US',
       ]),
     )
     .min(1),
@@ -47,6 +49,23 @@ const AssessSchema = z.object({
   agreedPrivacy: z.literal(true, {
     errorMap: () => ({ message: '需要先同意隐私政策才能提交' }),
   }),
+}).superRefine((data, ctx) => {
+  /**
+   * ⚠️ gpa 的合法范围取决于 gpaScale。原来只按 0–100 校验,不区分量制:
+   *    用户把量制留在「4.0」却填了 85,normalizeGpa 会算出 ~803,所有规则都不命中 →
+   *    静默返回 0 匹配,用户以为「没学校匹配」而不是「填错了」。这里按量制分别校验。
+   */
+  const max = data.gpaScale === '4.0' ? 4.5 : 100
+  if (data.gpa > max) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['gpa'],
+      message:
+        data.gpaScale === '4.0'
+          ? 'GPA 量制选的是 4.0,分数应在 0–4.5 之间;若你的是百分制请把量制改成 100'
+          : 'GPA 应在 0–100 之间',
+    })
+  }
 })
 
 export type AssessFormInput = z.input<typeof AssessSchema>
@@ -85,6 +104,16 @@ export async function submitAssessment(raw: unknown) {
     : null
   const validReferrer = referrer && referrer.phone !== phone ? referrer : null
 
+  /**
+   * ⚠️ 归因去重:同一 (分享者, 被分享者手机号) 只计一次。
+   *    原来每次 submitAssessment 都给分享者 +1,对被分享者手机号无去重 ——
+   *    同一位「朋友」反复提交就能把 referralCount 刷上去,污染裂变计数与
+   *    assess_share_converted 漏斗。这里查一下这个手机号是否已被该分享者归因过。
+   */
+  const alreadyCounted = validReferrer
+    ? (await db.lead.count({ where: { referredById: validReferrer.id, phone } })) > 0
+    : false
+
   const lead = await db.lead.create({
     data: {
       phone,
@@ -95,7 +124,7 @@ export async function submitAssessment(raw: unknown) {
     },
   })
 
-  if (validReferrer) {
+  if (validReferrer && !alreadyCounted) {
     // 分享者的解锁进度 +1(PRD 9:被分享者完成评估后,分享者解锁附加院校)
     await db.lead.update({
       where: { id: validReferrer.id },

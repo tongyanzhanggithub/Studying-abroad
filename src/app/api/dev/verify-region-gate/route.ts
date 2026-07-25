@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { db } from '@/lib/db'
 import { getPublicRegions, getRegionHealth, publicProgramWhere } from '@/lib/regions/gate'
-import { env } from '@/lib/env'
+import { isValidCronSecret } from '@/lib/cron-auth'
 
 /**
  * 地区分批开放闸门自检(仅开发环境)。
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   if (process.env.NODE_ENV === 'production') {
     return NextResponse.json({ error: 'not found' }, { status: 404 })
   }
-  if (request.headers.get('x-cron-secret') !== env.cronSecret) {
+  if (!isValidCronSecret(request.headers.get('x-cron-secret'))) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
   }
 

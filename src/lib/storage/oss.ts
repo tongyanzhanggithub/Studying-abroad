@@ -26,11 +26,12 @@ interface OssClient {
   signatureUrl(key: string, opts: { expires: number }): string
 }
 
+// 两套 client:主 client 按配置(可能走内网)用于读写;签名 client 强制走公网 endpoint。
 let clientPromise: Promise<OssClient> | null = null
+let signingClientPromise: Promise<OssClient> | null = null
 
-async function getClient(): Promise<OssClient> {
-  if (clientPromise) return clientPromise
-  const { region, bucket, accessKeyId, accessKeySecret, internal } = env.storage.oss
+async function buildClient(internal: boolean): Promise<OssClient> {
+  const { region, bucket, accessKeyId, accessKeySecret } = env.storage.oss
   if (!region || !bucket || !accessKeyId || !accessKeySecret) {
     throw new Error(
       'STORAGE_PROVIDER=oss 但 OSS 配置不完整 —— 需要 OSS_REGION / OSS_BUCKET / ' +
@@ -38,21 +39,39 @@ async function getClient(): Promise<OssClient> {
     )
   }
 
-  clientPromise = (async () => {
-    // 变量形式的模块名:打包器无法静态解析 → 没装 ali-oss 也不影响 build
-    const moduleName = 'ali-oss'
-    let OSS: new (o: unknown) => OssClient
-    try {
-      const mod = (await import(/* webpackIgnore: true */ moduleName)) as {
-        default: new (o: unknown) => OssClient
-      }
-      OSS = mod.default
-    } catch {
-      throw new Error('缺少 ali-oss 依赖,请先执行:npm i ali-oss')
+  // 变量形式的模块名:打包器无法静态解析 → 没装 ali-oss 也不影响 build
+  const moduleName = 'ali-oss'
+  let OSS: new (o: unknown) => OssClient
+  try {
+    const mod = (await import(/* webpackIgnore: true */ moduleName)) as {
+      default: new (o: unknown) => OssClient
     }
-    return new OSS({ region, bucket, accessKeyId, accessKeySecret, internal, secure: true })
-  })()
+    OSS = mod.default
+  } catch {
+    throw new Error('缺少 ali-oss 依赖,请先执行:npm i ali-oss')
+  }
+  return new OSS({ region, bucket, accessKeyId, accessKeySecret, internal, secure: true })
+}
+
+/** 读写用 client —— 按 OSS_INTERNAL 决定是否走内网 endpoint(同区免公网流量费) */
+async function getClient(): Promise<OssClient> {
+  if (!clientPromise) clientPromise = buildClient(env.storage.oss.internal)
   return clientPromise
+}
+
+/**
+ * 签名 URL 专用 client —— 永远走**公网** endpoint。
+ *
+ * ⚠️ 这里踩过一次:开了 OSS_INTERNAL=true(ECS 与 OSS 同区,推荐配置)后,
+ *    主 client 的 endpoint 是 xxx-internal.aliyuncs.com。若用它签 URL,签出来的是
+ *    内网域名,而 /api/materials/[id]/file 会把这个 URL 302 给**公网浏览器** ——
+ *    浏览器根本解析不了内网域名,下载必然失败。所以读写可以走内网省流量,
+ *    但签名一定要用公网 endpoint 的 client。internal=false 时两者等价。
+ */
+async function getSigningClient(): Promise<OssClient> {
+  if (!env.storage.oss.internal) return getClient()
+  if (!signingClientPromise) signingClientPromise = buildClient(false)
+  return signingClientPromise
 }
 
 export class OssStorageProvider implements StorageProvider {
@@ -87,7 +106,9 @@ export class OssStorageProvider implements StorageProvider {
   }
 
   async signedUrl(key: string, ttlSeconds: number): Promise<string | null> {
-    const client = await getClient()
+    // ⚠️ 用公网 endpoint 的 client 签名,否则 OSS_INTERNAL=true 时签出内网域名,
+    //    公网浏览器打不开(详见 getSigningClient 注释)
+    const client = await getSigningClient()
     // 桶是私有的,只有带签名的 URL 能在有效期内访问
     return client.signatureUrl(key, { expires: ttlSeconds })
   }

@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { db } from '@/lib/db'
+import { env } from '@/lib/env'
 import { Card } from '@/components/ui'
 import { formatCents } from '@/lib/utils'
 import { confirmMockPayment } from './actions'
@@ -18,6 +19,11 @@ export default async function MockPayPage({
   params: Promise<{ outTradeNo: string }>
 }) {
   const { outTradeNo } = await params
+
+  // 生产环境未显式开启 ALLOW_MOCK_PAYMENT 时,整个 mock 支付页不可达 ——
+  // 与 confirmMockPayment 的服务端守卫一致,避免渲染一个点了会被拒的死按钮
+  if (env.isProd && !env.payment.allowMockInProd) notFound()
+
   const payment = await db.payment.findUnique({ where: { outTradeNo } })
   if (!payment) notFound()
 

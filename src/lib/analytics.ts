@@ -28,7 +28,9 @@ export type AnalyticsEventName =
   | 'rec_card_dismissed'
   | 'service_pay_success'
   // 触达
-  | 'notification_sent'
+  //   ⚠️ created,不是 sent:通知只是落库(pending),渠道未接入前并未真正发出。
+  //   接入真实渠道、deliver() 确实投递成功后,再另打一个 notification_delivered。
+  | 'notification_created'
   | 'notification_clicked'
 
 export interface TrackOptions {

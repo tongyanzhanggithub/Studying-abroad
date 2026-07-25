@@ -31,7 +31,7 @@ const VALID_DIRECTIONS: Direction[] = [
   'agriculture_food_science', 'hospitality_tourism', 'public_health', 'other',
 ]
 const VALID_REGIONS: Region[] = [
-  'UK', 'HK', 'SG', 'AU', 'CA', 'MO', 'JP', 'KR', 'NZ', 'IE', 'NL', 'DE', 'FR', 'CH',
+  'UK', 'HK', 'SG', 'AU', 'CA', 'MO', 'JP', 'KR', 'NZ', 'IE', 'NL', 'DE', 'FR', 'CH', 'US',
 ]
 
 /**
@@ -53,6 +53,7 @@ const REGION_ALIASES: Record<string, Region> = {
   de: 'DE', deu: 'DE', germany: 'DE', 德国: 'DE',
   fr: 'FR', fra: 'FR', france: 'FR', 法国: 'FR',
   ch: 'CH', che: 'CH', switzerland: 'CH', 瑞士: 'CH',
+  us: 'US', usa: 'US', 'united states': 'US', america: 'US', 美国: 'US',
 }
 
 function normalizeRegion(raw: string | undefined): Region | undefined {
@@ -104,6 +105,8 @@ interface Stats {
   cycleDowngraded: number
   /** 被识别为纯线上(通常不支持学生签证)的条数 */
   onlineFlagged: number
+  /** 已人工核对、本次导入原样保留(未被采集数据覆盖)的条数 */
+  preservedVerified: number
   reasons: string[]
 }
 
@@ -441,7 +444,7 @@ function normalizeConfidence(raw: string | undefined, downgraded: boolean): Conf
 async function importFile(path: string, fileName: string, today: Date): Promise<Stats> {
   const stats: Stats = {
     file: fileName, read: 0, imported: 0, skipped: 0,
-    cycleDowngraded: 0, onlineFlagged: 0, reasons: [],
+    cycleDowngraded: 0, onlineFlagged: 0, preservedVerified: 0, reasons: [],
   }
 
   let parsed: unknown
@@ -516,45 +519,70 @@ async function importFile(path: string, fileName: string, today: Date): Promise<
     const isOnlineOnly = detectOnlineOnly(row)
     if (isOnlineOnly) stats.onlineFlagged += 1
 
-    await db.program.upsert({
+    /**
+     * ⚠️ 不能无脑 upsert。原来的 update 分支无条件写 confidence=ai_collected、
+     *    lastVerifiedAt=null,并覆盖 requirements/deadlines/notes —— 只要某个项目
+     *    已被运营人工核对过,再跑一次 data:import 就会把它**打回待核对**并清空
+     *    核对时间、用新采集数据盖掉已核对内容。这直接摧毁 PRD 4.2 的数据护城河,
+     *    也和 ProgramDraft「任何代码路径都不能跳过人工审核」的设计自相矛盾。
+     *
+     * 所以先查再决定:
+     *   - 不存在  → create(待核对)
+     *   - 已核对(verified / stale / lastVerifiedAt 有值)→ 原样保留,整条不动
+     *   - 仍待核对(ai_collected)→ 才允许用新采集数据刷新
+     */
+    const existing = await db.program.findUnique({
       where: { schoolId_nameEn: { schoolId: school.id, nameEn: programNameEn } },
-      create: {
-        schoolId: school.id,
-        nameEn: programNameEn,
-        nameZh: row.program_name_zh ?? null,
-        faculty: row.faculty ?? null,
-        direction,
-        region,
-        durationMonths: row.duration_months ?? null,
-        tuition: row.tuition ?? null,
-        campus: row.campus ?? null,
-        requirements: (row.requirements ?? {}) as object,
-        deadlines: deadlines as object,
-        finalDeadline,
-        isRolling: Boolean(row.deadlines?.rolling),
-        isOnlineOnly,
-        confidence: normalizeConfidence(row.confidence, downgraded),
-        lastVerifiedAt: null, // ← 关键:必须经人工核对才置值
-        sourceUrls,
-        notes: row.notes ?? null,
-      },
-      update: {
-        nameZh: row.program_name_zh ?? undefined,
-        faculty: row.faculty ?? undefined,
-        durationMonths: row.duration_months ?? undefined,
-        tuition: row.tuition ?? undefined,
-        campus: row.campus ?? undefined,
-        requirements: (row.requirements ?? {}) as object,
-        deadlines: deadlines as object,
-        finalDeadline,
-        isRolling: Boolean(row.deadlines?.rolling),
-        isOnlineOnly,
-        confidence: normalizeConfidence(row.confidence, downgraded),
-        lastVerifiedAt: null,
-        sourceUrls,
-        notes: row.notes ?? undefined,
-      },
+      select: { id: true, confidence: true, lastVerifiedAt: true },
     })
+
+    if (existing && (existing.confidence !== 'ai_collected' || existing.lastVerifiedAt)) {
+      // 人工成果:一个字段都不碰
+      stats.preservedVerified += 1
+      continue
+    }
+
+    const dataFields = {
+      requirements: (row.requirements ?? {}) as object,
+      deadlines: deadlines as object,
+      finalDeadline,
+      isRolling: Boolean(row.deadlines?.rolling),
+      isOnlineOnly,
+      confidence: normalizeConfidence(row.confidence, downgraded),
+      lastVerifiedAt: null,
+      sourceUrls,
+    }
+
+    if (!existing) {
+      await db.program.create({
+        data: {
+          schoolId: school.id,
+          nameEn: programNameEn,
+          nameZh: row.program_name_zh ?? null,
+          faculty: row.faculty ?? null,
+          direction,
+          region,
+          durationMonths: row.duration_months ?? null,
+          tuition: row.tuition ?? null,
+          campus: row.campus ?? null,
+          notes: row.notes ?? null,
+          ...dataFields,
+        },
+      })
+    } else {
+      await db.program.update({
+        where: { id: existing.id },
+        data: {
+          nameZh: row.program_name_zh ?? undefined,
+          faculty: row.faculty ?? undefined,
+          durationMonths: row.duration_months ?? undefined,
+          tuition: row.tuition ?? undefined,
+          campus: row.campus ?? undefined,
+          notes: row.notes ?? undefined,
+          ...dataFields,
+        },
+      })
+    }
 
     stats.imported += 1
   }
@@ -585,7 +613,8 @@ async function main() {
     all.push(s)
     console.log(
       `${f.padEnd(24)} 读取 ${String(s.read).padStart(3)} · 导入 ${String(s.imported).padStart(3)} · ` +
-      `跳过 ${String(s.skipped).padStart(2)} · 周期降级 ${String(s.cycleDowngraded).padStart(2)}`,
+      `跳过 ${String(s.skipped).padStart(2)} · 周期降级 ${String(s.cycleDowngraded).padStart(2)} · ` +
+      `保留已核对 ${String(s.preservedVerified).padStart(2)}`,
     )
     for (const r of s.reasons.slice(0, 5)) console.log(`    ↳ ${r}`)
     if (s.reasons.length > 5) console.log(`    ↳ …另有 ${s.reasons.length - 5} 条`)

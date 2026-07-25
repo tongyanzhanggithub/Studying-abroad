@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { runAutoConfirm } from '@/lib/services/settlement'
-import { env } from '@/lib/env'
+import { isValidCronSecret } from '@/lib/cron-auth'
 
 /**
  * 服务订单 48h 自动确认(PRD 5.3)。
@@ -10,8 +10,7 @@ import { env } from '@/lib/env'
  *    不能让公网随意触发。
  */
 export async function POST(request: NextRequest) {
-  const secret = request.headers.get('x-cron-secret')
-  if (secret !== env.cronSecret) {
+  if (!isValidCronSecret(request.headers.get('x-cron-secret'))) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
   }
 

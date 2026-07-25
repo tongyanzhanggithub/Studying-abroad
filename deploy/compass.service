@@ -8,6 +8,13 @@ Type=simple
 WorkingDirectory=__APP_DIR__
 EnvironmentFile=__APP_DIR__/.env
 
+# ⚠️ 以非特权用户运行,不要用 root。
+#    这是个公网服务(经 Nginx 反代),一旦 Next.js 或某个依赖被 RCE,
+#    以 root 跑等于直接交出整机;换成专用用户可把爆炸半径限制在应用目录内。
+#    compass 用户与目录属主由 deploy/setup-server.sh + deploy.sh 负责创建/授权。
+User=compass
+Group=compass
+
 # NODE_ENV=production 很关键 —— /api/dev/* 自检路由在生产环境直接 404
 Environment=NODE_ENV=production
 Environment=PORT=3000

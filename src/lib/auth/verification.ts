@@ -1,5 +1,5 @@
 import 'server-only'
-import { createHmac, timingSafeEqual } from 'node:crypto'
+import { createHmac, randomInt, timingSafeEqual } from 'node:crypto'
 import { db } from '@/lib/db'
 import { env } from '@/lib/env'
 
@@ -31,7 +31,9 @@ const MAX_ATTEMPTS = 5
 export class VerificationError extends Error {}
 
 function generateCode(): string {
-  return String(Math.floor(100000 + Math.random() * 900000))
+  // ⚠️ 用 CSPRNG,不用 Math.random()。这条码是手机号登录的唯一凭据(账号里存着
+  //    护照/身份证扫描件),Math.random() 输出可预测。randomInt 是密码学安全的。
+  return String(randomInt(100000, 1000000))
 }
 
 /**

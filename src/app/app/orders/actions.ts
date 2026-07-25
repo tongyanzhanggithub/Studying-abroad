@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db'
 import { requireUser } from '@/lib/auth/session'
 import {
-  getPaymentProvider,
+  executeRefund,
   calcServiceRefund,
   calcSubscriptionRefund,
 } from '@/lib/payment'
@@ -87,8 +87,23 @@ export async function requestRefund(kind: 'subscription' | 'service', id: string
     })
     if (!payment) return { ok: false as const, error: '找不到对应的支付记录' }
 
-    await getPaymentProvider().refund(payment.id, decision.refundableCents, decision.reason)
-    await db.subscription.update({ where: { id: sub.id }, data: { status: 'refunded' } })
+    /**
+     * ⚠️ 原子抢锁:active → refunded(SubscriptionStatus 没有 refunding 中间态,直接置终态)。
+     *    并发/重复点击只有一个能把 active 抢到手,其余 count===0 提前返回,不会各退一次。
+     *    真正的资金幂等由 executeRefund 里的 Payment 状态锁 + outRefundNo 兜底。
+     */
+    const claimed = await db.subscription.updateMany({
+      where: { id: sub.id, userId: user.id, status: 'active' },
+      data: { status: 'refunded' },
+    })
+    if (claimed.count === 0) return { ok: false as const, error: '该订阅当前不可退款(可能已在退款中)' }
+
+    const refund = await executeRefund(payment.id, decision.refundableCents, decision.reason)
+    if (!refund.ok) {
+      // 退款失败 → 状态放回 active
+      await db.subscription.updateMany({ where: { id: sub.id, status: 'refunded' }, data: { status: 'active' } })
+      return { ok: false as const, error: refund.error }
+    }
   } else {
     const order = await db.serviceOrder.findFirst({ where: { id, userId: user.id } })
     if (!order) return { ok: false as const, error: '订单不存在' }
@@ -100,13 +115,27 @@ export async function requestRefund(kind: 'subscription' | 'service', id: string
     })
     if (!decision.allowed) return { ok: false as const, error: decision.reason }
 
+    // ⚠️ 走状态机:可退状态 → refunding(原子抢锁),不再直接 update 到 refunded 绕过状态机
+    const claimed = await db.serviceOrder.updateMany({
+      where: { id: order.id, userId: user.id, status: { in: ['paid', 'assigned', 'delivering'] } },
+      data: { status: 'refunding' },
+    })
+    if (claimed.count === 0) return { ok: false as const, error: '该订单当前不可退款(可能已在处理中)' }
+
     const payment = await db.payment.findFirst({
       where: { orderType: 'service', orderId: order.id, status: 'succeeded' },
     })
-    if (!payment) return { ok: false as const, error: '找不到对应的支付记录' }
+    if (!payment) {
+      await db.serviceOrder.updateMany({ where: { id: order.id, status: 'refunding' }, data: { status: order.status } })
+      return { ok: false as const, error: '找不到对应的支付记录' }
+    }
 
-    await getPaymentProvider().refund(payment.id, decision.refundableCents, decision.reason)
-    await db.serviceOrder.update({ where: { id: order.id }, data: { status: 'refunded' } })
+    const refund = await executeRefund(payment.id, decision.refundableCents, decision.reason)
+    if (!refund.ok) {
+      await db.serviceOrder.updateMany({ where: { id: order.id, status: 'refunding' }, data: { status: order.status } })
+      return { ok: false as const, error: refund.error }
+    }
+    await db.serviceOrder.updateMany({ where: { id: order.id, status: 'refunding' }, data: { status: 'refunded' } })
   }
 
   revalidatePath('/app/orders')

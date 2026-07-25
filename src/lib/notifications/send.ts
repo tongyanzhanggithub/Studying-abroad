@@ -39,28 +39,35 @@ async function createNotification(params: {
   })
   if (!template || !template.active) return null
 
-  // 幂等:同一 dedupeKey 已存在就跳过
-  const existing = await db.notification.findUnique({
-    where: { dedupeKey: params.dedupeKey },
-  })
-  if (existing) return null
-
-  const notification = await db.notification.create({
-    data: {
-      userId: params.userId,
-      templateId: template.id,
-      channel: template.channel,
-      payload: {
-        ...params.payload,
-        title: template.title,
-        body: renderTemplate(template.bodyTpl, params.payload),
+  /**
+   * 幂等:原来是「先 findUnique 判存在,再 create」两步,并发/多实例下两条都能过
+   * 检查、一条 create 撞 dedupeKey 唯一约束抛 P2002。直接 create,靠数据库的唯一约束
+   * 兜底,撞了就当已存在跳过(返回 null)—— 一步到位,无竞态。
+   */
+  let notification
+  try {
+    notification = await db.notification.create({
+      data: {
+        userId: params.userId,
+        templateId: template.id,
+        channel: template.channel,
+        payload: {
+          ...params.payload,
+          title: template.title,
+          body: renderTemplate(template.bodyTpl, params.payload),
+        },
+        dedupeKey: params.dedupeKey,
       },
-      dedupeKey: params.dedupeKey,
-    },
-  })
+    })
+  } catch (err) {
+    if ((err as { code?: string }).code === 'P2002') return null // 已存在,跳过
+    throw err
+  }
 
   await deliver(notification.id, template.channel)
-  await track('notification_sent', {
+  // ⚠️ 埋点名是 created 不是 sent:deliver() 目前是桩(渠道未接入),通知只落库为 pending、
+  //    并没有真正发出去。打成 notification_sent 会让指标把「待发送」记成「已发送」而失真。
+  await track('notification_created', {
     userId: params.userId,
     properties: { template: params.templateCode, channel: template.channel },
   })
@@ -89,18 +96,24 @@ export async function notifyProgramChange(changeLogId: string): Promise<number> 
 
   let sent = 0
   for (const { userId } of affected) {
-    const n = await createNotification({
-      userId,
-      templateCode: 'program_changed',
-      payload: {
-        school: log.program.school.nameZh ?? log.program.school.nameEn,
-        program: log.program.nameZh ?? log.program.nameEn,
-        field: log.field,
-        summary: log.summary,
-      },
-      dedupeKey: `change:${changeLogId}:${userId}`,
-    })
-    if (n) sent += 1
+    // 单个用户推送失败不该中断整批(与 runDeadlineReminders 一致),
+    // 否则一次唯一冲突/异常就让后面的人都收不到,且 notifiedAt 也更新不了
+    try {
+      const n = await createNotification({
+        userId,
+        templateCode: 'program_changed',
+        payload: {
+          school: log.program.school.nameZh ?? log.program.school.nameEn,
+          program: log.program.nameZh ?? log.program.nameEn,
+          field: log.field,
+          summary: log.summary,
+        },
+        dedupeKey: `change:${changeLogId}:${userId}`,
+      })
+      if (n) sent += 1
+    } catch (err) {
+      console.error(`[通知] 数据变更推送失败 user=${userId} change=${changeLogId}:`, err)
+    }
   }
 
   await db.programChangeLog.update({

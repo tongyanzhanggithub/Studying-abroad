@@ -94,6 +94,7 @@ export const REGION_LABEL: Record<string, string> = {
   DE: '德国',
   FR: '法国',
   CH: '瑞士',
+  US: '美国',
 }
 
 /**
@@ -101,7 +102,7 @@ export const REGION_LABEL: Record<string, string> = {
  * 选校表单和结果页都按这个顺序渲染。
  */
 export const REGION_ORDER = [
-  'UK', 'AU', 'HK', 'SG', 'CA', 'NZ', 'IE', 'NL', 'DE', 'JP', 'KR', 'MO', 'FR', 'CH',
+  'UK', 'US', 'AU', 'HK', 'SG', 'CA', 'NZ', 'IE', 'NL', 'DE', 'JP', 'KR', 'MO', 'FR', 'CH',
 ] as const
 
 export const DIRECTION_ORDER = [

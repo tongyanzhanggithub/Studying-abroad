@@ -363,10 +363,18 @@ export default async function ResultPage({
   const subscription = user ? await getActiveSubscription(user.id) : null
   const isMember = subscription !== null && user!.phone === lead.phone
 
-  // 会员重算一次拿全量;非会员直接用存下来的快照
-  const result: AssessmentResult = isMember
-    ? await runAssessment(lead.assessPayload as unknown as AssessmentInput, { full: true })
-    : (lead.assessResult as unknown as AssessmentResult)
+  /**
+   * 会员重算拿全量;非会员也**重算**(而不是用提交时存下的快照)拿受限视图。
+   *
+   * ⚠️ 为什么非会员不能直接用快照:快照是评估当时的结果,若某地区之后被「撤下」
+   *    (通常是数据质量不达标),旧快照/旧链接仍会展示该地区的数据 —— 正是地区闸门
+   *    要防的场景。重算会经过当前的 getPublicRegions 过滤,撤下即时生效。
+   *    非会员传 full:false,得到的仍是受限档位数量,与原快照语义一致。
+   */
+  const result: AssessmentResult = await runAssessment(
+    lead.assessPayload as unknown as AssessmentInput,
+    { full: isMember },
+  )
 
   const ins = result.insights
 

@@ -40,6 +40,16 @@ export const env = {
 
   payment: {
     provider: (process.env.PAYMENT_PROVIDER ?? 'mock') as 'mock' | 'wechat',
+    /**
+     * 演示环境逃生门:允许生产环境在没接微信支付时也能「点击即支付成功」。
+     *
+     * ⚠️ 和 ALLOW_MOCK_SMS 同理,默认关闭。不打开时,mock 支付确认接口在生产
+     *    环境**直接拒绝** —— 否则任何人拿到自己订单的 outTradeNo 访问 /pay/mock
+     *    点一下,就能把订单标成已支付、白拿季票(零元购)。演示部署要走通付款流程
+     *    时才显式设 ALLOW_MOCK_PAYMENT=true。
+     * ⚠️ 接入真实微信支付后必须删掉这个变量。
+     */
+    allowMockInProd: process.env.ALLOW_MOCK_PAYMENT === 'true',
     wechat: {
       mchId: process.env.WECHAT_MCH_ID ?? '',
       appId: process.env.WECHAT_APP_ID ?? '',
@@ -101,6 +111,17 @@ export function assertProductionConfig() {
     // 会话是用它签的 —— 默认值等于任何人都能伪造任意用户的登录态
     fatal.push('AUTH_SECRET 仍是开发默认值,任何人都能伪造登录态')
   }
+  if (env.authSecret.length < 32) {
+    // 只拦 dev-only 前缀不够:短而弱的密钥(如 secret123)也能通过。
+    // HS256 短密钥可离线爆破,爆破成功即可伪造任意会话。要求 ≥32 字符
+    // (openssl rand -base64 32 正好满足)。
+    fatal.push('AUTH_SECRET 太短(需 ≥32 字符),易被离线爆破;用 openssl rand -base64 32 重新生成')
+  }
+  if (!process.env.CRON_SECRET) {
+    // cronSecret 缺省会回退到 AUTH_SECRET,注释里说明了危害(cron 密钥泄露=能伪造登录态)。
+    // 生产环境这个「独立」不能名存实亡 —— 缺失即致命,逼你单独生成一个。
+    fatal.push('CRON_SECRET 未配置(生产不允许回退到 AUTH_SECRET);用 openssl rand -base64 32 单独生成')
+  }
   if (env.siteUrl.includes('localhost')) {
     fatal.push('NEXT_PUBLIC_SITE_URL 仍是 localhost,分享链接会全部失效')
   }
@@ -128,7 +149,13 @@ export function assertProductionConfig() {
         : '短信未接入 —— 用户收不到验证码,无法注册登录',
     )
   }
-  if (env.payment.provider === 'mock') missing.push('支付未接入 —— 收不了款,也退不了款')
+  if (env.payment.provider === 'mock') {
+    missing.push(
+      env.payment.allowMockInProd
+        ? '支付未接入,但 ALLOW_MOCK_PAYMENT=true(演示模式)—— 任何人点一下就能白拿季票,只应在无真实用户的演示环境开启,接入真实支付后务必删掉这个开关'
+        : '支付未接入 —— 收不了款,也退不了款(mock 确认接口在生产环境已被拒绝)',
+    )
+  }
   if (env.llm.provider === 'mock') missing.push('LLM 未配置 —— AI 采集与文书功能不可用')
   if (env.storage.provider === 'local') {
     missing.push('对象存储未接入 —— 学生材料明文存本机磁盘,且随机器一起丢')

@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { runDeadlineReminders } from '@/lib/notifications/send'
-import { env } from '@/lib/env'
+import { isValidCronSecret } from '@/lib/cron-auth'
 
 /**
  * 每日截止日期提醒任务。
@@ -9,8 +9,7 @@ import { env } from '@/lib/env'
  * ⚠️ 用共享密钥保护,避免被公网随意触发造成重复推送。
  */
 export async function POST(request: NextRequest) {
-  const secret = request.headers.get('x-cron-secret')
-  if (secret !== env.cronSecret) {
+  if (!isValidCronSecret(request.headers.get('x-cron-secret'))) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
   }
 

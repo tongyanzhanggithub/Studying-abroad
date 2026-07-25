@@ -1,6 +1,7 @@
 'use server'
 
 import { db } from '@/lib/db'
+import { env } from '@/lib/env'
 import { fulfillPayment } from '@/lib/payment/fulfill'
 
 /**
@@ -29,6 +30,17 @@ async function landingFor(userId: string, orderType: string): Promise<string> {
  * 真实微信支付走 /api/payment/wechat/notify 回调,逻辑复用同一个 fulfillPayment。
  */
 export async function confirmMockPayment(outTradeNo: string) {
+  /**
+   * ⚠️ 生产环境默认拒绝 mock 支付确认。
+   *    这是一个能直接完成履约(开季票 / 订单转 paid)的动作,却只校验了
+   *    channel === 'mock',没有任何生产护栏。任何人拿到自己订单的 outTradeNo
+   *    访问 /pay/mock 点一下就能零元购。演示部署要走通付款流程时,才显式设
+   *    ALLOW_MOCK_PAYMENT=true 放行。与 dev 自检路由生产 404 是同一套思路。
+   */
+  if (env.isProd && !env.payment.allowMockInProd) {
+    return { ok: false as const, error: '模拟支付在当前环境不可用' }
+  }
+
   const payment = await db.payment.findUnique({ where: { outTradeNo } })
   if (!payment) return { ok: false as const, error: '订单不存在' }
   if (payment.channel !== 'mock') {
