@@ -5,6 +5,7 @@ import { Card } from '@/components/ui'
 import { formatCents, formatDate } from '@/lib/utils'
 import { ORDER_STATUS_LABEL } from '@/lib/services/dispatch'
 import { AssignPanel } from './AssignPanel'
+import { StuckRefundPanel } from './StuckRefundPanel'
 import type { OrderStatus } from '@prisma/client'
 
 /**
@@ -14,6 +15,13 @@ import type { OrderStatus } from '@prisma/client'
 // 不用 as const —— Prisma 的 `in` 要可变数组,readonly 元组过不了类型检查
 const OPEN_STATUSES: OrderStatus[] = ['paid', 'assigned', 'delivering', 'delivered', 'disputed']
 const CLOSED_STATUSES: OrderStatus[] = ['confirmed', 'refunded', 'cancelled']
+/**
+ * ⚠️ 异常单:`refunding` 与 `pending_payment` 此前**两个 tab 都不在**,
+ *    在后台完全不可见。后果是退款中途失败(渠道调用中断)的订单会永久失联 ——
+ *    钱没退、状态卡死、运营看不到,只能连数据库查。
+ *    单开一个 tab 让它们浮出来,并给出可推进的操作。
+ */
+const STUCK_STATUSES: OrderStatus[] = ['refunding', 'pending_payment']
 
 export default async function AdminDispatchPage({
   searchParams,
@@ -23,11 +31,11 @@ export default async function AdminDispatchPage({
   await requireAdmin('operator')
   const { tab = 'open' } = await searchParams
 
-  const where = {
-    status: { in: tab === 'history' ? CLOSED_STATUSES : OPEN_STATUSES },
-  }
+  const statusesForTab =
+    tab === 'history' ? CLOSED_STATUSES : tab === 'stuck' ? STUCK_STATUSES : OPEN_STATUSES
+  const where = { status: { in: statusesForTab } }
 
-  const [orders, deliverers, openCount, historyCount] = await Promise.all([
+  const [orders, deliverers, openCount, historyCount, stuckCount] = await Promise.all([
     db.serviceOrder.findMany({
       where,
       include: { sku: true, user: true, deliverer: true },
@@ -37,6 +45,7 @@ export default async function AdminDispatchPage({
     db.deliverer.findMany({ where: { active: true }, orderBy: { name: 'asc' } }),
     db.serviceOrder.count({ where: { status: { in: OPEN_STATUSES } } }),
     db.serviceOrder.count({ where: { status: { in: CLOSED_STATUSES } } }),
+    db.serviceOrder.count({ where: { status: { in: STUCK_STATUSES } } }),
   ])
 
   const now = Date.now()
@@ -45,6 +54,8 @@ export default async function AdminDispatchPage({
 
   const TABS = [
     { key: 'open', label: `待处理 ${openCount}` },
+    // 异常单为 0 时也保留入口 —— 隐藏的话运营永远不知道该来这里看
+    { key: 'stuck', label: `异常 ${stuckCount}` },
     { key: 'history', label: `已结束 ${historyCount}` },
   ]
 
@@ -56,7 +67,9 @@ export default async function AdminDispatchPage({
           <p className="mt-1 text-sm text-ink-600">
             {tab === 'history'
               ? '已完成 / 已退款 / 已取消的订单。'
-              : `${unassigned} 单待派,${disputed} 单有异议。超过 SLA 的会标红。`}
+              : tab === 'stuck'
+                ? '卡在退款中或待付款的订单。退款中的说明渠道调用没走完 —— 钱可能还没退到用户账上,需要人工核对后完成或退回。'
+                : `${unassigned} 单待派,${disputed} 单有异议。超过 SLA 的会标红。`}
           </p>
         </div>
         <Link
@@ -184,7 +197,9 @@ export default async function AdminDispatchPage({
                     )}
                   </div>
 
-                  {tab !== 'history' && (
+                  {o.status === 'refunding' ? (
+                    <StuckRefundPanel orderId={o.id} />
+                  ) : tab !== 'history' && tab !== 'stuck' ? (
                     <AssignPanel
                       orderId={o.id}
                       status={o.status}
@@ -195,7 +210,7 @@ export default async function AdminDispatchPage({
                         role: d.role,
                       }))}
                     />
-                  )}
+                  ) : null}
                 </div>
               </Card>
             )

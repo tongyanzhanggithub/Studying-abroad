@@ -212,6 +212,85 @@ export async function resolveDispute(
   }
 }
 
+/**
+ * 处理卡在 refunding 的订单。
+ *
+ * ⚠️ 这个入口此前不存在。`ALLOWED_TRANSITIONS.refunding = ['refunded']` 定义了出路,
+ *    但**没有任何 UI 能触发它** —— 退款过程中渠道调用失败/中断的订单会永久卡住:
+ *    钱没退到用户账上,状态也推不动,运营还看不见(见 dispatch/page.tsx 的异常 tab)。
+ *
+ * 两个动作都要求 super_admin 并留痕 —— 这是钱的事。
+ *   · retry  :重新向渠道发起退款(executeRefund 幂等:抢锁 + 恒定 outRefundNo,
+ *              已经退成功的不会退第二次)
+ *   · revert :确认渠道侧并未扣款,把订单退回可服务状态,不做退款
+ */
+export async function resolveStuckRefund(orderId: string, action: 'retry' | 'revert', note: string) {
+  const admin = await requireAdmin('super_admin')
+
+  if (!note.trim()) {
+    return { ok: false as const, error: '要写明核对结果 —— 这是资金操作,必须留痕' }
+  }
+
+  const order = await db.serviceOrder.findUnique({ where: { id: orderId } })
+  if (!order) return { ok: false as const, error: '订单不存在' }
+  if (order.status !== 'refunding') {
+    return { ok: false as const, error: '这个订单当前不在退款中状态' }
+  }
+
+  if (action === 'revert') {
+    // 渠道确认没扣款 → 回到已付款待派单,让服务能继续
+    await db.serviceOrder.updateMany({
+      where: { id: orderId, status: 'refunding' },
+      data: {
+        status: 'paid',
+        disputeResolution: `[退款回退] ${note.trim().slice(0, 500)}`,
+        disputeResolvedAt: new Date(),
+        disputeResolvedBy: admin.adminId,
+      },
+    })
+    console.log(
+      JSON.stringify({ event: 'admin.refund_reverted', adminId: admin.adminId, orderId, note: note.trim() }),
+    )
+    revalidatePath('/admin/dispatch')
+    revalidatePath('/app/orders')
+    return { ok: true as const, note: '已退回「待派单」,该单可以继续服务。' }
+  }
+
+  const payment = await db.payment.findFirst({
+    where: { orderType: 'service', orderId: order.id, status: 'succeeded' },
+  })
+  if (!payment) {
+    return { ok: false as const, error: '找不到成功的支付记录 —— 请人工核对渠道流水后再处理' }
+  }
+
+  const refund = await executeRefund(payment.id, order.amountCents, `人工处理退款:${note.trim()}`)
+  if (!refund.ok) return { ok: false as const, error: refund.error }
+
+  await db.serviceOrder.updateMany({
+    where: { id: orderId, status: 'refunding' },
+    data: { status: 'refunded' },
+  })
+  console.log(
+    JSON.stringify({
+      event: 'admin.refund_completed',
+      adminId: admin.adminId,
+      orderId,
+      paymentId: payment.id,
+      alreadyRefunded: refund.alreadyRefunded,
+      note: note.trim(),
+    }),
+  )
+
+  revalidatePath('/admin/dispatch')
+  revalidatePath('/app/orders')
+  return {
+    ok: true as const,
+    note: refund.alreadyRefunded
+      ? '渠道侧此前已退款成功,订单状态已同步为已退款。'
+      : '退款已完成,订单已关闭。',
+  }
+}
+
 /** ── 交付人管理 ───────────────────────────────────────── */
 
 export interface DelivererInput {
