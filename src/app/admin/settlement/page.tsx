@@ -186,8 +186,6 @@ export default async function AdminSettlementPage({
                       <PayoutCell
                         month={month}
                         delivererId={r.delivererId}
-                        payoutCents={r.payoutCents}
-                        orderCount={r.orderCount}
                         paidOutAt={payoutMap.get(r.delivererId)?.paidOutAt.toISOString() ?? null}
                         note={payoutMap.get(r.delivererId)?.note ?? null}
                       />

@@ -13,15 +13,11 @@ import { markPaidOut } from './actions'
 export function PayoutCell({
   month,
   delivererId,
-  payoutCents,
-  orderCount,
   paidOutAt,
   note,
 }: {
   month: string
   delivererId: string
-  payoutCents: number
-  orderCount: number
   paidOutAt: string | null
   note: string | null
 }) {
@@ -35,14 +31,8 @@ export function PayoutCell({
     setError(null)
     startTransition(async () => {
       try {
-        const r = await markPaidOut({
-          month,
-          delivererId,
-          payoutCents,
-          orderCount,
-          note: noteInput,
-          paid,
-        })
+        // 金额与单数由服务端自己算(财务留痕不能让前端决定数字)
+        const r = await markPaidOut({ month, delivererId, note: noteInput, paid })
         if (!r.ok) {
           setError(r.error)
           return

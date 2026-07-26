@@ -34,8 +34,6 @@ export async function settleMonth(month: string) {
 export async function markPaidOut(params: {
   month: string
   delivererId: string
-  payoutCents: number
-  orderCount: number
   note: string
   paid: boolean
 }) {
@@ -62,6 +60,22 @@ export async function markPaidOut(params: {
     return { ok: true as const }
   }
 
+  /**
+   * ⚠️ 金额与单数在**服务端重新算**,不接受前端传参。
+   *
+   *    这条记录是财务留痕,留痕的全部意义就是准确。让前端传金额意味着
+   *    「记下来的数」和「实际该付的数」可以不一致 —— 那这张表就没有对账价值了。
+   *    口径与结算表完全一致(都走 previewSettlement)。
+   */
+  const rows = await previewSettlement(params.month)
+  const row = rows.find((r) => r.delivererId === params.delivererId)
+  if (!row) {
+    return {
+      ok: false as const,
+      error: '这个月这位交付人没有待结算的订单 —— 请确认月份和人选对了',
+    }
+  }
+
   await db.settlementPayout.upsert({
     where: {
       month_delivererId: { month: params.month, delivererId: params.delivererId },
@@ -69,15 +83,15 @@ export async function markPaidOut(params: {
     create: {
       month: params.month,
       delivererId: params.delivererId,
-      payoutCents: params.payoutCents,
-      orderCount: params.orderCount,
+      payoutCents: row.payoutCents,
+      orderCount: row.orderCount,
       paidOutAt: new Date(),
       paidOutBy: admin.adminId,
       note: params.note.trim() || null,
     },
     update: {
-      payoutCents: params.payoutCents,
-      orderCount: params.orderCount,
+      payoutCents: row.payoutCents,
+      orderCount: row.orderCount,
       paidOutAt: new Date(),
       paidOutBy: admin.adminId,
       note: params.note.trim() || null,
@@ -90,7 +104,7 @@ export async function markPaidOut(params: {
       adminId: admin.adminId,
       month: params.month,
       delivererId: params.delivererId,
-      payoutCents: params.payoutCents,
+      payoutCents: row.payoutCents,
     }),
   )
 
