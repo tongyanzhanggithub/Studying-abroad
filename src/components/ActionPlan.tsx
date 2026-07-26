@@ -12,7 +12,29 @@ import type { ActionPlan } from '@/lib/planner/engine'
  *     把所有东西都标红等于什么都没标
  */
 export function ActionPlanPanel({ plan }: { plan: ActionPlan }) {
-  if (plan.actions.length === 0 && plan.risks.length === 0) return null
+  /**
+   * ⚠️ 「都做完了」不能返回 null。
+   *    材料全部完成 + 文书全部定稿 + 近期没有截止日 + 语言达标时,整块面板会
+   *    凭空消失 —— 而这一块是总览页的主角。用户看到的是「本来有东西的地方空了」,
+   *    第一反应是坏了,不是「我做完了」。收尾态必须显式说出来。
+   */
+  if (plan.actions.length === 0 && plan.risks.length === 0) {
+    return (
+      <Card className="border-safe/30 bg-green-50/60">
+        <h2 className="font-medium text-ink-900">目前没有待办</h2>
+        <p className="mt-1.5 text-sm leading-relaxed text-ink-600">
+          材料、文书和语言这几项都齐了,近期也没有临近的截止日期。
+          {plan.nearestDays !== null && ` 最近一个截止日还有 ${plan.nearestDays} 天。`}
+          <br />
+          接下来按各校的申请轮次提交就行;截止日临近时我们会在
+          <Link href="/app/notifications" className="mx-1 text-brand-600 hover:underline">
+            消息
+          </Link>
+          里提醒你。
+        </p>
+      </Card>
+    )
+  }
 
   return (
     <div className="space-y-3">

@@ -1,7 +1,25 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
+
+/**
+ * 标记线索已跟进 / 取消标记。
+ *
+ * ⚠️ `Lead.followedUpAt` 此前**只有读、没有任何写入方** —— 页面拿它算
+ *    「超 48 小时未跟进」,却没有任何地方能把它置上。结果「待跟进」这个数字
+ *    单调递增、永远清不掉,跟进流程根本跑不起来,运营看两天就不看了。
+ */
+export async function markFollowedUp(leadId: string, followed: boolean) {
+  await requireAdmin('operator')
+  await db.lead.update({
+    where: { id: leadId },
+    data: { followedUpAt: followed ? new Date() : null },
+  })
+  revalidatePath('/admin/leads')
+  return { ok: true as const }
+}
 
 function csvEscape(v: unknown): string {
   const s = v == null ? '' : String(v)

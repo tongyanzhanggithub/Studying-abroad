@@ -118,10 +118,18 @@ export default async function AdminMetricsPage() {
 
       {/* PRD 11.3 健康度红线 */}
       <div className="space-y-2">
-        {staleRate > 10 && (
+        {/*
+          ⚠️ 加量级保护(≥25 条才判),与下面 recShown > 100 的口径一致。
+             原来只看比例:库里总共 3 条、1 条未核对就是 33%,冷启动/单地区试跑时
+             必然弹红线。而**红线弹多了就没人看了** —— 一个总是红的看板等于没有看板。
+             25 与地区开放门槛(regions gate 的 minPrograms)对齐:
+             低于这个量的库本来也开放不了任何地区,不存在「该暂停投放」的问题。
+             注意这不会削弱真警报:310 条全未核对时仍然是 100%,照样弹。
+        */}
+        {totalPrograms >= 25 && staleRate > 10 && (
           <Card className="border-red-200 bg-red-50">
             <p className="text-sm text-red-900">
-              <strong>红线:</strong>未核对/超期数据占 {staleRate}%(阈值 10%)。
+              <strong>红线:</strong>未核对/超期数据占 {staleRate}%(阈值 10%,共 {totalPrograms} 条)。
               按 PRD 应<strong>暂停投放</strong>,先补数据。
             </p>
           </Card>

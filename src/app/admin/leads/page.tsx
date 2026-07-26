@@ -4,6 +4,7 @@ import { Card } from '@/components/ui'
 import { formatDate } from '@/lib/utils'
 import { UNDERGRAD_TIER_LABEL, DIRECTION_LABEL } from '@/lib/programs/types'
 import { ExportButton } from './ExportButton'
+import { FollowUpToggle } from './FollowUpToggle'
 
 /**
  * 线索表(PRD 4.1 留资逻辑 / 4.10)。
@@ -15,6 +16,21 @@ export default async function AdminLeadsPage() {
   const leads = await db.lead.findMany({
     orderBy: { createdAt: 'desc' },
     take: 300,
+    /**
+     * ⚠️ 明确 select,不要整行拉。
+     *    Lead 上有 assessPayload 与 assessResult 两个大 JSON,而这一页
+     *    **只用到 assessPayload 里的几个字段,assessResult 一次都没读** ——
+     *    整行拉等于把 300 条完整评估结果塞进 2GB 机器的内存。
+     */
+    select: {
+      id: true,
+      phone: true,
+      assessPayload: true,
+      sourceChannel: true,
+      createdAt: true,
+      convertedUserId: true,
+      followedUpAt: true,
+    },
   })
 
   const now = Date.now()
@@ -77,13 +93,19 @@ export default async function AdminLeadsPage() {
                   <td className="px-4 py-2 text-xs text-ink-400">{l.sourceChannel ?? '直接访问'}</td>
                   <td className="px-4 py-2 text-xs text-ink-400">{formatDate(l.createdAt)}</td>
                   <td className="px-4 py-2 text-xs">
-                    {l.convertedUserId ? (
-                      <span className="text-safe">已转化</span>
-                    ) : stale ? (
-                      <span className="text-urgent-warning">待跟进</span>
-                    ) : (
-                      <span className="text-ink-400">新线索</span>
-                    )}
+                    <div className="flex items-center gap-2">
+                      {l.convertedUserId ? (
+                        <span className="text-safe">已转化</span>
+                      ) : stale ? (
+                        <span className="text-urgent-warning">待跟进</span>
+                      ) : (
+                        <span className="text-ink-400">新线索</span>
+                      )}
+                      {/* 未转化的才需要跟进标记 —— 已转化的不用再跟 */}
+                      {!l.convertedUserId && (
+                        <FollowUpToggle leadId={l.id} followedUp={l.followedUpAt !== null} />
+                      )}
+                    </div>
                   </td>
                 </tr>
               )
