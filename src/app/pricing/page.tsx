@@ -476,6 +476,40 @@ export default async function PricingPage() {
           </Link>
         </div>
       </section>
+
+      {/*
+        ⚠️ 定价页此前**没有 footer**,也就是说整个付款决策页面上
+           找不到用户协议和隐私政策的入口 —— 用户在这里掏钱,却看不到自己
+           要同意的是什么。这是合规问题,不是排版问题。
+           内容与首页 footer 保持一致。
+      */}
+      <footer className="border-t border-white/70 bg-white">
+        <div className="mx-auto max-w-6xl px-5 py-10">
+          <div className="flex flex-wrap items-start justify-between gap-6">
+            <p className="max-w-md text-xs leading-relaxed text-ink-400">
+              Compass 提供留学信息服务与申请管理工具,不做学科培训,不代理申请,
+              不承诺录取结果。购买前请阅读用户协议与隐私政策。
+            </p>
+            <nav className="flex flex-wrap items-center gap-x-1 text-xs text-ink-400">
+              <Link href="/" className="inline-flex min-h-11 items-center px-2 hover:text-ink-700">
+                首页
+              </Link>
+              <Link
+                href="/legal/terms"
+                className="inline-flex min-h-11 items-center px-2 hover:text-ink-700"
+              >
+                用户协议
+              </Link>
+              <Link
+                href="/legal/privacy"
+                className="inline-flex min-h-11 items-center px-2 hover:text-ink-700"
+              >
+                隐私政策
+              </Link>
+            </nav>
+          </div>
+        </div>
+      </footer>
     </main>
   )
 }

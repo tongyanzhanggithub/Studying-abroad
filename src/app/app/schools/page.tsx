@@ -4,7 +4,7 @@ import { requireUser } from '@/lib/auth/session'
 import { Card, FreshnessBadge } from '@/components/ui'
 import { RecommendationCard } from '@/components/RecommendationCard'
 import { selectCard } from '@/lib/recommendation/engine'
-import { publicProgramWhere } from '@/lib/regions/gate'
+import { publicProgramWhere, getPublicRegions } from '@/lib/regions/gate'
 import { daysUntil, formatDate } from '@/lib/utils'
 import {
   DIRECTION_LABEL,
@@ -210,6 +210,9 @@ export default async function SchoolsPage({
     selectCard(user.id, 'schools_top'),
   ])
 
+  // 用于标记选校单里那些「地区已撤下 / 项目已下架」的条目(详情页会 404)
+  const publicRegionSet = new Set(await getPublicRegions())
+
   /**
    * ⚠️ 按排名排序必须**先排序再截断**,不能反过来。
    *
@@ -312,6 +315,10 @@ export default async function SchoolsPage({
                               : '待公布'
                           }
                           daysLeft={daysUntil(c.program.finalDeadline)}
+                          // 地区被撤下 / 项目下架时,详情页会 404 —— 先在这里标出来
+                          unavailable={
+                            !c.program.active || !publicRegionSet.has(c.program.region)
+                          }
                         />
                       </div>
                     ))}

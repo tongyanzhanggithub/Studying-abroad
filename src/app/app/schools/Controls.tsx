@@ -21,6 +21,7 @@ export function ShortlistControls({
   programId,
   deadline,
   daysLeft,
+  unavailable = false,
 }: {
   choiceId: string
   tierTag: TierTag
@@ -30,6 +31,15 @@ export function ShortlistControls({
   programId: string
   deadline: string
   daysLeft: number | null
+  /**
+   * 该项目已下架、或所属地区被撤下(通常是数据有问题、正在重新核对)。
+   *
+   * ⚠️ 不能只是让详情页 404 了事:UserSchoolChoice 不受地区过滤,这些项目
+   *    仍然正常列在选校单里,用户点进去撞一个「找不到页面」,没有任何解释,
+   *    会以为是系统坏了 —— 而他是付费用户,这一条是他自己选进来的。
+   *    这里标出来并去掉链接。
+   */
+  unavailable?: boolean
 }) {
   const [busy, setBusy] = useState<'tier' | 'status' | 'remove' | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -86,13 +96,22 @@ export function ShortlistControls({
     <div className="space-y-2" data-choice-id={choiceId}>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <Link
-            href={`/app/school/${programId}`}
-            className="font-medium text-ink-900 hover:underline"
-          >
-            {schoolName}
-          </Link>
+          {unavailable ? (
+            <span className="font-medium text-ink-500">{schoolName}</span>
+          ) : (
+            <Link
+              href={`/app/school/${programId}`}
+              className="font-medium text-ink-900 hover:underline"
+            >
+              {schoolName}
+            </Link>
+          )}
           <p className="text-sm leading-snug text-ink-700">{programName}</p>
+          {unavailable && (
+            <p className="mt-1 inline-block rounded bg-ink-100 px-1.5 py-0.5 text-xs text-ink-600">
+              暂不可查看 —— 该项目已下架,或所在地区正在重新核对数据。它仍留在你的选校单里。
+            </p>
+          )}
         </div>
         <span
           className={cn(
