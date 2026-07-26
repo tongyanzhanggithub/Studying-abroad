@@ -4,6 +4,8 @@ import { Card } from '@/components/ui'
 import { formatCents, formatDate } from '@/lib/utils'
 import { previewSettlement, toSettlementMonth } from '@/lib/services/settlement'
 import { SettleButton } from './SettleButton'
+import { PayoutCell } from './PayoutCell'
+import { ExportButton } from './ExportButton'
 
 /**
  * 交付人月结分成(PRD 4.6)。
@@ -27,7 +29,7 @@ export default async function AdminSettlementPage({
   const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1)
   const month = sp.month ?? toSettlementMonth(lastMonth)
 
-  const [rows, disputed, settled] = await Promise.all([
+  const [rows, disputed, settled, payouts] = await Promise.all([
     previewSettlement(month),
     db.serviceOrder.findMany({
       where: { status: 'disputed' },
@@ -38,7 +40,10 @@ export default async function AdminSettlementPage({
       where: { settlementMonth: month },
       select: { payoutCents: true },
     }),
+    // 打款留痕(财务在系统外转账后回来标记)
+    db.settlementPayout.findMany({ where: { month } }),
   ])
+  const payoutMap = new Map(payouts.map((p) => [p.delivererId, p]))
 
   const totalPayout = rows.reduce((s, r) => s + r.payoutCents, 0)
   const totalGross = rows.reduce((s, r) => s + r.grossCents, 0)
@@ -158,6 +163,7 @@ export default async function AdminSettlementPage({
                   <th className="px-4 py-2 text-right">流水</th>
                   <th className="px-4 py-2 text-right">分成比例</th>
                   <th className="px-4 py-2 text-right">应付</th>
+                  <th className="px-4 py-2 text-right">打款</th>
                 </tr>
               </thead>
               <tbody>
@@ -176,13 +182,26 @@ export default async function AdminSettlementPage({
                     <td className="px-4 py-2 text-right font-semibold text-ink-900">
                       {formatCents(r.payoutCents)}
                     </td>
+                    <td className="px-4 py-2">
+                      <PayoutCell
+                        month={month}
+                        delivererId={r.delivererId}
+                        payoutCents={r.payoutCents}
+                        orderCount={r.orderCount}
+                        paidOutAt={payoutMap.get(r.delivererId)?.paidOutAt.toISOString() ?? null}
+                        note={payoutMap.get(r.delivererId)?.note ?? null}
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <SettleButton month={month} orderCount={rows.reduce((s, r) => s + r.orderCount, 0)} />
+          <div className="flex flex-wrap items-center gap-3">
+            <SettleButton month={month} orderCount={rows.reduce((s, r) => s + r.orderCount, 0)} />
+            <ExportButton month={month} />
+          </div>
         </>
       )}
 

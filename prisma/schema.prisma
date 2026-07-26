@@ -896,8 +896,45 @@ model Deliverer {
   orders ServiceOrder[]
   /// 顾问的登录账号(可选)—— 没有账号的交付人仍能被派单,只是自己看不到
   account AdminUser?
+  payouts SettlementPayout[]
 
   @@map("deliverers")
+}
+
+/**
+ * 月结打款留痕。
+ *
+ * ⚠️ 为什么单独一张表:executeSettlement 只把账**算清楚并锁定**
+ *    (给 ServiceOrder 写 settlementMonth / payoutCents),它明确**不发起真实付款** ——
+ *    实际转账是财务在系统外做的。于是「这个月这个人到底打没打钱」在系统里
+ *    完全没有记录,对不上账时只能翻聊天记录。
+ *
+ *    打款是按「月份 × 交付人」聚合的,不是按订单,所以不能记在 ServiceOrder 上。
+ *
+ * 这张表只记事实(谁、什么时候、打了多少),不参与金额计算 ——
+ * 金额口径仍以 ServiceOrder.payoutCents 为准,避免两处数字打架。
+ */
+model SettlementPayout {
+  id        String @id @default(cuid())
+  /// 结算月份 YYYY-MM
+  month     String
+  delivererId String    @map("deliverer_id")
+  deliverer   Deliverer @relation(fields: [delivererId], references: [id], onDelete: Cascade)
+
+  /// 打款时的金额与单数快照 —— 事后交付人档案改了比例也不影响这条记录
+  payoutCents Int @map("payout_cents")
+  orderCount  Int @map("order_count")
+
+  paidOutAt DateTime @map("paid_out_at")
+  /// 操作人 AdminUser.id —— 资金操作必须能追溯到人
+  paidOutBy String   @map("paid_out_by")
+  note      String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([month, delivererId])
+  @@index([month])
+  @@map("settlement_payouts")
 }
 
 model ServiceOrder {
