@@ -150,8 +150,14 @@ export default async function OrdersPage() {
                       )}
                     </div>
 
-                    {/* 已交付 → 验收 / 提异议(PRD 5.3) */}
-                    {o.status === 'delivered' ? (
+                    {/*
+                      交付中 → 只给「有问题」入口。
+                      「顾问接了单迟迟不交付」是最常见的投诉场景,原本学生点不到任何反馈入口。
+                    */}
+                    {o.status === 'delivering' ? (
+                      <DeliveryActions orderId={o.id} hoursLeft={null} disputeOnly />
+                    ) : /* 已交付 → 验收 / 提异议(PRD 5.3) */
+                    o.status === 'delivered' ? (
                       <DeliveryActions
                         orderId={o.id}
                         hoursLeft={

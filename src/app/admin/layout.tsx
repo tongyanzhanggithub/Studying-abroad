@@ -12,36 +12,36 @@ const NAV_GROUPS = [
   {
     title: '数据',
     items: [
-      { href: '/admin/regions', label: '地区开放' },
-      { href: '/admin/programs', label: '院校库' },
-      { href: '/admin/collect', label: 'AI 采集' },
+      { href: '/admin/regions', label: '地区开放', minRole: 'super_admin' },
+      { href: '/admin/programs', label: '院校库', minRole: 'data_entry' },
+      { href: '/admin/collect', label: 'AI 采集', minRole: 'operator' },
     ],
   },
   {
     title: '服务',
     items: [
-      { href: '/admin/services', label: '老师服务' },
-      { href: '/admin/dispatch', label: '服务派单' },
-      { href: '/admin/deliverers', label: '老师库' },
-      { href: '/admin/settlement', label: '月结分成' },
+      { href: '/admin/services', label: '老师服务', minRole: 'super_admin' },
+      { href: '/admin/dispatch', label: '服务派单', minRole: 'operator' },
+      { href: '/admin/deliverers', label: '老师库', minRole: 'operator' },
+      { href: '/admin/settlement', label: '月结分成', minRole: 'super_admin' },
     ],
   },
   {
     title: '运营',
     items: [
-      { href: '/admin/pricing', label: '套餐定价' },
-      { href: '/admin/users', label: '用户' },
-      { href: '/admin/leads', label: '线索' },
-      { href: '/admin/notifications', label: '通知队列' },
-      { href: '/admin/metrics', label: '数据看板' },
-      { href: '/admin/health', label: '系统健康' },
+      { href: '/admin/pricing', label: '套餐定价', minRole: 'super_admin' },
+      { href: '/admin/users', label: '用户', minRole: 'operator' },
+      { href: '/admin/leads', label: '线索', minRole: 'operator' },
+      { href: '/admin/notifications', label: '通知队列', minRole: 'operator' },
+      { href: '/admin/metrics', label: '数据看板', minRole: 'operator' },
+      { href: '/admin/health', label: '系统健康', minRole: 'operator' },
     ],
   },
   {
     title: '系统',
     items: [
-      { href: '/admin/settings', label: 'AI 设置' },
-      { href: '/admin/accounts', label: '账号' },
+      { href: '/admin/settings', label: 'AI 设置', minRole: 'super_admin' },
+      { href: '/admin/accounts', label: '账号', minRole: 'super_admin' },
     ],
   },
 ]
@@ -70,6 +70,25 @@ export default async function AdminLayout({ children }: { children: React.ReactN
    */
   if (session.role === 'advisor') redirect('/advisor')
 
+  /**
+   * ⚠️ 导航必须按角色过滤。
+   *    此前导航是静态的,所有角色看到同样 15 条,权限只靠各页 requireAdmin 拦 ——
+   *    结果 data_entry(数据核对员)15 条里只有「院校库」能打开,点其它任何一条
+   *    都会抛 FORBIDDEN 变成错误页。他会以为系统坏了,然后来找你报障。
+   *    这里只是**显示层**的收敛,真正的拦截仍在每个页面的 requireAdmin —— 两层都要。
+   */
+  const ROLE_RANK: Record<string, number> = {
+    advisor: 0,
+    data_entry: 1,
+    operator: 2,
+    super_admin: 3,
+  }
+  const myRank = ROLE_RANK[session.role] ?? 0
+  const visibleGroups = NAV_GROUPS.map((g) => ({
+    ...g,
+    items: g.items.filter((i) => myRank >= (ROLE_RANK[i.minRole] ?? 99)),
+  })).filter((g) => g.items.length > 0)
+
   const activeItem = NAV_GROUPS.flatMap((g) => g.items).find(
     (n) => pathname === n.href || pathname.startsWith(n.href + '/'),
   )
@@ -85,7 +104,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             </Link>
 
             <nav className="mt-7 space-y-6">
-              {NAV_GROUPS.map((g) => (
+              {visibleGroups.map((g) => (
                 <div key={g.title}>
                   <p className="px-2 text-[11px] font-semibold uppercase tracking-wide text-ink-400">
                     {g.title}
@@ -138,7 +157,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               </div>
             </div>
             <nav className="flex gap-2 overflow-x-auto px-4 pb-3 text-sm lg:hidden">
-              {NAV_GROUPS.flatMap((g) => g.items).map((n) => {
+              {visibleGroups.flatMap((g) => g.items).map((n) => {
                 const active = pathname === n.href || pathname.startsWith(n.href + '/')
                 return (
                   <Link

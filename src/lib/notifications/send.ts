@@ -181,7 +181,20 @@ export async function notifyServiceOrder(
       sla: order.sku.slaHours,
       note: order.deliveryNote ?? '',
     },
-    dedupeKey: `service:${orderId}:${templateCode}:${order.delivererId ?? 'none'}`,
+    /**
+     * ⚠️ 必须带上 deliveredAt。
+     *
+     *    原来 key 是 `service:{orderId}:{templateCode}:{delivererId}`。走
+     *    「异议 → 退回重做 → 顾问重新提交交付」时,这三段**一个都没变** ——
+     *    第二次的 service_delivered 通知撞唯一约束被静默跳过(createNotification 返回 null)。
+     *    结果:学生对第二次交付一无所知,而 48 小时自动确认的时钟已经重新开始走。
+     *    沉默 + 自动确认 = 投诉。
+     *
+     *    加上这一次的交付时间戳,重新交付就是一条新通知;同一次交付重复调用仍然去重。
+     */
+    dedupeKey: `service:${orderId}:${templateCode}:${order.delivererId ?? 'none'}:${
+      order.deliveredAt?.getTime() ?? 0
+    }`,
   })
   return n !== null
 }

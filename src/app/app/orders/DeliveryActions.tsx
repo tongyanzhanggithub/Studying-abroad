@@ -14,10 +14,20 @@ import { confirmDelivery, disputeDelivery } from './actions'
 export function DeliveryActions({
   orderId,
   hoursLeft,
+  disputeOnly = false,
 }: {
   orderId: string
   /** 距自动确认还剩多少小时;null 表示已过期 */
   hoursLeft: number | null
+  /**
+   * 只给「有问题」入口,不给「确认完成」。
+   *
+   * ⚠️ 用于 delivering(交付中)状态:后端 disputeDelivery 本来就接受
+   *    delivered / delivering 两种状态,但前端只在 delivered 时渲染按钮 ——
+   *    于是「顾问接了单迟迟不交付」这个最常见的投诉场景,学生根本点不到反馈入口。
+   *    这种状态下东西还没交付,自然也不该有「确认完成」。
+   */
+  disputeOnly?: boolean
 }) {
   const router = useRouter()
   const [mode, setMode] = useState<'idle' | 'disputing'>('idle')
@@ -68,19 +78,25 @@ export function DeliveryActions({
   return (
     <div className="text-right">
       <div className="flex flex-wrap justify-end gap-2">
-        <Button
-          size="sm"
-          disabled={pending}
-          onClick={() =>
-            startTransition(async () => {
-              const res = await confirmDelivery(orderId)
-              if (!res.ok) setError(res.error)
-              else router.refresh()
-            })
-          }
-        >
-          确认完成
-        </Button>
+        {!disputeOnly && (
+          <Button
+            size="sm"
+            disabled={pending}
+            onClick={() =>
+              startTransition(async () => {
+                try {
+                  const res = await confirmDelivery(orderId)
+                  if (!res.ok) setError(res.error)
+                  else router.refresh()
+                } catch {
+                  setError('网络不太稳定,请再试一次')
+                }
+              })
+            }
+          >
+            确认完成
+          </Button>
+        )}
         <Button size="sm" variant="secondary" onClick={() => setMode('disputing')}>
           有问题
         </Button>

@@ -13,7 +13,13 @@ import { OrderActions } from './OrderActions'
  *    这既是隐私要求(PRD 10.3:学生数据只有本人和被授权顾问可见),
  *    也是业务要求:顾问拿到手机号就能绕过平台私单。
  */
-const ACTIVE = ['assigned', 'delivering', 'disputed'] as const
+/**
+ * ⚠️ 必须含 `delivered`。
+ *    原来只有 assigned/delivering/disputed,而「已交付待验收」通常要挂 48 小时 ——
+ *    顾问提交交付之后,卡片立刻从「进行中」消失,又不在「已完成」里(那只查
+ *    confirmed),他看到的是「待交付 0 单、累计完成 0 单」,无法确认自己交付成功了。
+ */
+const ACTIVE = ['assigned', 'delivering', 'delivered', 'disputed'] as const
 
 export default async function AdvisorPage() {
   const session = await requireAdvisor()
@@ -42,17 +48,27 @@ export default async function AdvisorPage() {
       where: { delivererId: session.delivererId, status: 'confirmed' },
       include: { sku: true },
       orderBy: { confirmedAt: 'desc' },
-      take: 20,
+      // ⚠️ 不能 take:20 —— 这份数据要用来算「待结算金额」,截断了钱就是错的。
+      //    做满 20 单之后顾问看到的收入会凭空少一截。列表展示另行截断。
     }),
     db.deliverer.findUnique({ where: { id: session.delivererId } }),
   ])
 
   const now = Date.now()
 
-  // 顾问最关心的是「这个月我能拿多少」,但已结算的部分是锁定的
+  /**
+   * 顾问最关心的是「这个月我能拿多少」,但已结算的部分是锁定的。
+   *
+   * ⚠️ splitRatio 为 null 时要回退到交付人档案上的当前比例 —— 与
+   *    lib/services/settlement.ts 的口径保持一致。原来直接 `?? 0`,
+   *    导致派单时没快照比例的单在顾问端显示 0 元,而结算时又按档案比例发钱,
+   *    同一笔单两个数字,顾问一定会来问。
+   */
+  const ratioOf = (o: { splitRatio: number | null }) =>
+    o.splitRatio ?? deliverer?.splitRatio ?? 0
   const pendingPayout = done
     .filter((o) => !o.settlementMonth)
-    .reduce((sum, o) => sum + Math.round(o.amountCents * (o.splitRatio ?? 0)), 0)
+    .reduce((sum, o) => sum + Math.round(o.amountCents * ratioOf(o)), 0)
 
   return (
     <div className="space-y-5">
@@ -96,8 +112,8 @@ export default async function AdvisorPage() {
                     <p className="mt-1 text-xs text-ink-400">
                       派单于 {o.assignedAt ? formatDate(o.assignedAt) : '—'}
                       {deadline && ` · 承诺 ${formatDate(new Date(deadline))} 前交付`}
-                      {o.splitRatio != null &&
-                        ` · 你的分成 ${formatCents(Math.round(o.amountCents * o.splitRatio))}`}
+                      {ratioOf(o) > 0 &&
+                        ` · 你的分成 ${formatCents(Math.round(o.amountCents * ratioOf(o)))}`}
                     </p>
 
                     {/* 交付必需的学生背景 */}
@@ -131,6 +147,23 @@ export default async function AdvisorPage() {
                         运营会先跟你和学生沟通,在这之前不用重复交付。
                       </p>
                     )}
+
+                    {/*
+                      异议被判「退回重做」后,订单会变回 delivering ——
+                      顾问原本只看到状态突然变了,不知道要改什么。
+                      把运营的处理结论显示出来。
+                    */}
+                    {o.status !== 'disputed' && o.disputeResolution && (
+                      <p className="mt-2 rounded bg-ink-50 px-2 py-1.5 text-xs leading-relaxed text-ink-700">
+                        运营处理结论:{o.disputeResolution}
+                      </p>
+                    )}
+
+                    {o.status === 'delivered' && (
+                      <p className="mt-2 rounded bg-green-50 px-2 py-1.5 text-xs leading-relaxed text-green-800">
+                        已提交交付,等学生验收。48 小时内学生没有异议会自动确认,之后进入月结。
+                      </p>
+                    )}
                   </div>
 
                   <div className="w-full shrink-0 sm:w-64">
@@ -162,7 +195,7 @@ export default async function AdvisorPage() {
         <section>
           <h2 className="mb-2 text-lg font-medium text-ink-900">最近完成</h2>
           <div className="overflow-hidden rounded-xl border border-ink-200 bg-white">
-            {done.map((o, i) => (
+            {done.slice(0, 20).map((o, i) => (
               <div
                 key={o.id}
                 className={`flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-2.5 text-sm ${
@@ -174,7 +207,7 @@ export default async function AdvisorPage() {
                   {o.confirmedAt && formatDate(o.confirmedAt)}
                 </span>
                 <span className="shrink-0 text-xs text-ink-600">
-                  {formatCents(Math.round(o.amountCents * (o.splitRatio ?? 0)))}
+                  {formatCents(Math.round(o.amountCents * ratioOf(o)))}
                 </span>
                 <span
                   className={`shrink-0 rounded px-1.5 py-0.5 text-xs ${
