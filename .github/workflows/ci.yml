@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # env.ts 在模块顶层 required() 这几个变量,缺了 next build 直接抛。
+      # 给假值即可 —— 构建阶段不实际连库。
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+      AUTH_SECRET: ci-only-not-a-real-secret-0000000000
+      CRON_SECRET: ci-only-cron-secret-000000000000000
+      NEXT_TELEMETRY_DISABLED: '1'
+      # 结算月份、到期日、倒计时都对时区敏感;固定住避免「本机绿 CI 红」
+      TZ: Asia/Shanghai
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      # typecheck 与 build 都依赖生成的 @prisma/client
+      - run: npx prisma generate
+
+      - name: 单元测试(纯函数,不连数据库)
+        run: npm test
+
+      - name: 类型检查
+        run: npm run typecheck
+
+      - name: 脚本类型检查
+        run: npx tsc --noEmit -p scripts/tsconfig.json
+
+      - name: 生产构建
+        # ⚠️ 只跑 typecheck 不够:'use server' 导出非 async、客户端组件引用
+        #    server-only 模块、useSearchParams 没包 Suspense —— 这些只有 build 能发现,
+        #    而部署脚本跑的正是 next build,漏掉就是部署当场失败。
+        run: npx next build
+
+      - name: 依赖漏洞扫描
+        run: npm audit --audit-level=high
+
+      - name: 承诺录取类禁用词扫描(PRD 10.1 红线)
+        run: |
+          # ⚠️ 要排除两类合法出现,否则第一天就误报:
+          #   1. 注释里的开发约定(「禁止使用保录/保offer」本身就含这些词)
+          #   2. 法律条文里的反向表述(「任何声称能保录取的说法都不可信」)
+          # 只抓真正**承诺**录取的文案。
+          HITS=$(grep -rnE '保录|保offer|包过|100%\s*(录取|通过)' src/ prisma/seed.ts \
+            | grep -vE '^\s*[^:]+:[0-9]+:\s*(\*|//|/\*)' \
+            | grep -vE '禁止|不可信|禁用|不得|严禁|杜绝' || true)
+          if [ -n "$HITS" ]; then
+            echo "$HITS"
+            echo "::error::命中承诺录取类禁用词 —— 这是合规红线,不能上线"
+            exit 1
+          fi
+          echo "未命中禁用词"

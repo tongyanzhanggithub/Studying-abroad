@@ -26,7 +26,7 @@ const BLOCKED_MESSAGE = '只能抓取公网上的院校官网地址'
  *      [0:0:0:0:0:0:0:1](展开的回环)、[::ffff:7f00:1](十六进制映射 127.0.0.1)。
  *    展开成规范形式后按段判断,才不会被书写形式绕过。
  */
-function expandIpv6(input: string): number[] | null {
+export function expandIpv6(input: string): number[] | null {
   let s = input.toLowerCase()
   const zone = s.indexOf('%') // 去掉 fe80::1%eth0 这样的 zone id
   if (zone >= 0) s = s.slice(0, zone)
@@ -65,7 +65,7 @@ function expandIpv6(input: string): number[] | null {
 }
 
 /** 私有 / 保留地址段 —— 命中任何一条都拒绝 */
-function isPrivateIp(ip: string): boolean {
+export function isPrivateIp(ip: string): boolean {
   if (isIP(ip) === 6) {
     const n = expandIpv6(ip)
     if (!n) return true // 解析不了的 IPv6 一律当私有,fail-closed

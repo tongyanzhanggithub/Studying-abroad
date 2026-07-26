@@ -12,6 +12,44 @@ import { recordPurchase } from '@/lib/recommendation/engine'
  * ⚠️ 幂等:支付渠道会重复投递回调,必须保证多次调用只履约一次。
  * ⚠️ 金额校验:必须比对回调金额与本地订单金额,防篡改。
  */
+/**
+ * 算订阅到期日:从**基准日**往后推 N 个自然月。
+ *
+ * 基准日 = 原到期日(若仍在有效期内)否则今天 —— 提前续费不损失剩余天数。
+ *
+ * ⚠️ 不能直接 `d.setMonth(d.getMonth() + n)`:JS 的 setMonth 遇到「目标月没有这一天」
+ *    会**往后溢出**到下个月。实测:
+ *      2026-01-31 + 1 月 → 2026-03-03(应为 02-28)
+ *      2026-08-31 + 1 月 → 2026-10-01(应为 09-30)
+ *      2026-03-31 + 1 月 → 2026-05-01(应为 04-30)
+ *    每次白送 1~3 天。所以溢出时要夹回目标月的最后一天。
+ *
+ * 抽成纯函数是为了能直接对这些跨月边界写测试(见 fulfill.test.ts)。
+ */
+export function computeExpiresAt(
+  now: Date,
+  currentExpiresAt: Date | null,
+  durationMonths: number,
+): Date {
+  const base = currentExpiresAt && currentExpiresAt > now ? new Date(currentExpiresAt) : new Date(now)
+  const day = base.getDate()
+  const result = new Date(base)
+
+  // 先把「日」设成 1 再加月份,避免 setMonth 在目标月天数不足时溢出
+  result.setDate(1)
+  result.setMonth(result.getMonth() + durationMonths)
+
+  // 再把「日」夹回原值与目标月最后一天中的较小者
+  const lastDayOfTargetMonth = new Date(
+    result.getFullYear(),
+    result.getMonth() + 1,
+    0,
+  ).getDate()
+  result.setDate(Math.min(day, lastDayOfTargetMonth))
+
+  return result
+}
+
 export async function fulfillPayment(params: {
   outTradeNo: string
   transactionId: string
@@ -73,10 +111,7 @@ export async function fulfillPayment(params: {
       })
       if (!sub) throw new Error(`订阅不存在:${payment.orderId}`)
 
-      const base =
-        sub.expiresAt && sub.expiresAt > now ? new Date(sub.expiresAt) : new Date(now)
-      const expiresAt = new Date(base)
-      expiresAt.setMonth(expiresAt.getMonth() + sub.plan.durationMonths)
+      const expiresAt = computeExpiresAt(now, sub.expiresAt, sub.plan.durationMonths)
 
       await tx.subscription.update({
         where: { id: payment.orderId },

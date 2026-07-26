@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "check": "npm run typecheck && next build",
+    "check": "npm run typecheck && npm run test && next build",
     "db:start": "tsx scripts/db-local.ts",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
@@ -18,7 +18,9 @@
     "data:import": "tsx scripts/import-programs.ts",
     "schools:import": "tsx scripts/import-schools.ts",
     "admin:create": "tsx scripts/create-admin.ts",
-    "demo:seed": "tsx --tsconfig scripts/tsconfig.json scripts/seed-demo-user.ts"
+    "demo:seed": "tsx --tsconfig scripts/tsconfig.json scripts/seed-demo-user.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -55,6 +57,7 @@
     "prisma": "^6.2.1",
     "tailwindcss": "^4.0.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "vitest": "^4.1.10"
   }
 }
