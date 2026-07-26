@@ -21,13 +21,14 @@ const TABS = [
 ]
 
 const MORE = [
+  { href: '/app/notifications', label: '消息' },
   { href: '/app/assessments', label: '评估方案' },
   { href: '/app/services', label: '老师服务' },
   { href: '/app/orders', label: '我的订单' },
   { href: '/app/settings', label: '账号设置' },
 ]
 
-export function MobileTabBar() {
+export function MobileTabBar({ unreadCount = 0 }: { unreadCount?: number }) {
   const pathname = usePathname()
   const [moreOpen, setMoreOpen] = useState(false)
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/')
@@ -58,12 +59,18 @@ export function MobileTabBar() {
           })}
           <button
             onClick={() => setMoreOpen(true)}
-            className={`flex flex-1 flex-col items-center gap-0.5 py-2 text-[11px] ${
+            className={`relative flex flex-1 flex-col items-center gap-0.5 py-2 text-[11px] ${
               moreActive ? 'text-brand-600' : 'text-ink-400'
             }`}
           >
             <MoreIcon active={moreActive} />
             更多
+            {/* 消息在「更多」里,未读时这里要有信号,否则用户永远发现不了 */}
+            {unreadCount > 0 && (
+              <span className="absolute right-[22%] top-1.5 h-2 w-2 rounded-full bg-brand-500">
+                <span className="sr-only">有未读消息</span>
+              </span>
+            )}
           </button>
         </div>
       </nav>
@@ -88,7 +95,15 @@ export function MobileTabBar() {
                       : 'border-ink-100 text-ink-700'
                   }`}
                 >
-                  {m.label}
+                  <span className="flex items-center gap-2">
+                    {m.label}
+                    {m.href === '/app/notifications' && unreadCount > 0 && (
+                      <span className="inline-flex min-w-[18px] items-center justify-center rounded-full bg-brand-500 px-1.5 text-[11px] font-semibold leading-[18px] text-white">
+                        {unreadCount > 99 ? '99+' : unreadCount}
+                        <span className="sr-only">条未读</span>
+                      </span>
+                    )}
+                  </span>
                 </Link>
               ))}
             </div>

@@ -17,6 +17,7 @@ const NAV_GROUPS = [
   {
     title: '账户与服务',
     items: [
+      { href: '/app/notifications', label: '消息', desc: '提醒与变更', icon: BellIcon },
       { href: '/app/services', label: '服务', desc: '人工服务加购', icon: ServiceIcon },
       { href: '/app/orders', label: '订单', desc: '支付与交付', icon: OrderIcon },
       { href: '/app/settings', label: '设置', desc: '资料与安全', icon: SettingsIcon },
@@ -24,7 +25,7 @@ const NAV_GROUPS = [
   },
 ]
 
-export function DesktopAppNav() {
+export function DesktopAppNav({ unreadCount = 0 }: { unreadCount?: number }) {
   const pathname = usePathname()
 
   return (
@@ -63,8 +64,17 @@ export function DesktopAppNav() {
                       >
                         <Icon active={active} />
                       </span>
-                      <span className="min-w-0">
-                        <span className="block text-sm font-medium">{item.label}</span>
+                      <span className="min-w-0 flex-1">
+                        <span className="flex items-center gap-2 text-sm font-medium">
+                          {item.label}
+                          {/* 未读角标只在消息项上出现 */}
+                          {item.href === '/app/notifications' && unreadCount > 0 && (
+                            <span className="inline-flex min-w-[18px] items-center justify-center rounded-full bg-brand-500 px-1.5 text-[11px] font-semibold leading-[18px] text-white">
+                              {unreadCount > 99 ? '99+' : unreadCount}
+                              <span className="sr-only">条未读消息</span>
+                            </span>
+                          )}
+                        </span>
                         <span className={`block truncate text-xs ${active ? 'text-brand-500' : 'text-ink-400'}`}>
                           {item.desc}
                         </span>
@@ -151,6 +161,15 @@ function PenIcon({ active }: { active: boolean }) {
     <svg {...iconProps(active)}>
       <path d="M12 20h9" />
       <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z" />
+    </svg>
+  )
+}
+
+function BellIcon({ active }: { active: boolean }) {
+  return (
+    <svg {...iconProps(active)}>
+      <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+      <path d="M13.7 21a2 2 0 0 1-3.4 0" />
     </svg>
   )
 }

@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getCurrentUser, getActiveSubscription } from '@/lib/auth/session'
+import { countUnread } from '@/lib/notifications/inbox'
 import { logout } from '@/app/login/actions'
 import { BrandLogo } from '@/components/BrandLogo'
 import { MobileTabBar } from './MobileTabBar'
@@ -16,6 +17,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   const subscription = await getActiveSubscription(user.id)
   if (!subscription) redirect('/pricing')
+
+  // 未读消息数 —— 导航角标用。一次 count,带 (userId, createdAt) 索引
+  const unreadCount = await countUnread(user.id)
 
   return (
     <div className="min-h-screen bg-[#f7f8fb]">
@@ -43,12 +47,12 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       </header>
 
       <div className="mx-auto grid max-w-7xl gap-5 px-4 py-4 sm:grid-cols-[224px_minmax(0,1fr)] sm:gap-6 sm:px-5 sm:py-8">
-        <DesktopAppNav />
+        <DesktopAppNav unreadCount={unreadCount} />
         <main className="min-w-0">{children}</main>
       </div>
 
       {/* 移动端底部标签栏(桌面隐藏)*/}
-      <MobileTabBar />
+      <MobileTabBar unreadCount={unreadCount} />
     </div>
   )
 }
