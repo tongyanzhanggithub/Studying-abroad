@@ -2,6 +2,7 @@ import 'server-only'
 import { db } from '@/lib/db'
 import { env } from '@/lib/env'
 import { getLlmConfig } from '@/lib/settings'
+import { checkLlmRegion } from '@/lib/llm/region-guard'
 
 /**
  * LLM 网关。
@@ -230,6 +231,32 @@ class MockLlmProvider implements LlmProvider {
  */
 export async function getLlmProvider(): Promise<LlmProvider> {
   const cfg = await getLlmConfig()
+
+  /**
+   * ⚠️ 运行时再校验一次数据出境 —— 不能只靠启动自检。
+   *
+   *    后台「AI 设置」页可以把 provider 与 key 存进数据库**覆盖 .env**
+   *    (见 settings.ts 的 getLlmConfig),那条路径绕过了 assertProductionConfig。
+   *    也就是说运营在后台填一个 Anthropic 的 key,学生的文书就出境了,
+   *    而启动自检那一关早就过去了。
+   *
+   *    生产环境命中即拒绝调用;开发环境只告警,方便本地用任意模型调试。
+   */
+  const region = checkLlmRegion(cfg.provider, cfg.baseUrl)
+  if (!region.ok) {
+    if (env.isProd) {
+      console.error(
+        JSON.stringify({ event: 'llm.region_violation_blocked', provider: cfg.provider, reason: region.reason }),
+      )
+      throw new Error(
+        'AI 服务配置不合规,已停用:当前模型端点在境外,学生数据不能出境。请在后台「AI 设置」改用境内合规模型。',
+      )
+    }
+    console.warn(`[llm] ⚠️ ${region.reason}(开发环境仅告警)`)
+  } else if (region.note) {
+    console.warn(`[llm] ${region.note}`)
+  }
+
   switch (cfg.provider) {
     case 'anthropic':
       return cfg.apiKey ? new AnthropicProvider(cfg) : new MockLlmProvider()

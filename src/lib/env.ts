@@ -1,4 +1,5 @@
 import 'server-only'
+import { checkLlmRegion } from '@/lib/llm/region-guard'
 
 /**
  * 集中读取环境变量。缺失的可选配置一律降级到 mock,保证开发环境
@@ -125,6 +126,15 @@ export function assertProductionConfig() {
   if (env.siteUrl.includes('localhost')) {
     fatal.push('NEXT_PUBLIC_SITE_URL 仍是 localhost,分享链接会全部失效')
   }
+
+  /**
+   * 数据出境是合规红线,不能靠「记得选国内模型」。
+   *
+   * ⚠️ 这里只覆盖 .env。后台设置页可以把 key 存进数据库覆盖 .env,
+   *    所以 getLlmProvider() 里还有一道运行时校验 —— 两道都要。
+   */
+  const region = checkLlmRegion(env.llm.provider, env.llm.openaiBaseUrl)
+  if (!region.ok) fatal.push(region.reason)
   if (fatal.length) {
     throw new Error(`❌ 生产环境配置有致命问题,拒绝启动:\n- ${fatal.join('\n- ')}`)
   }
