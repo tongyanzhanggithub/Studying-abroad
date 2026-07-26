@@ -36,6 +36,7 @@ export function OnboardingFlow({
     new Set(suggestions.map((s) => s.programId)),
   )
   const [pending, startTransition] = useTransition()
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   return (
     <>
@@ -167,19 +168,42 @@ export function OnboardingFlow({
               disabled={pending}
               onClick={() =>
                 startTransition(async () => {
-                  await completeOnboarding({
-                    profile,
-                    selected: suggestions
-                      .filter((s) => selected.has(s.programId))
-                      .map((s) => ({ programId: s.programId, tier: s.tier })),
-                  })
-                  router.push('/app/dashboard')
+                  /**
+                   * ⚠️ 这里原本是「丢弃返回值 + 无 try/catch」。
+                   *    completeOnboarding 里有 profile upsert、N 次选校 upsert、
+                   *    材料生成、埋点 —— 任何一步抛错都会让整页崩到 error boundary,
+                   *    用户刚填完的档案和选校**全部消失**,而钱已经付过了。
+                   *    这是转化价值最高的一步,不能一崩到底。
+                   */
+                  setSubmitError(null)
+                  try {
+                    const r = await completeOnboarding({
+                      profile,
+                      selected: suggestions
+                        .filter((s) => selected.has(s.programId))
+                        .map((s) => ({ programId: s.programId, tier: s.tier })),
+                    })
+                    if (!r?.ok) {
+                      setSubmitError('没能保存,请重试')
+                      return
+                    }
+                    router.push('/app/dashboard')
+                  } catch {
+                    setSubmitError(
+                      '保存失败了 —— 你填的内容还在这一页,没有丢。请检查网络后再点一次「完成设置」。',
+                    )
+                  }
                 })
               }
             >
               {pending ? '生成中…' : '完成设置'}
             </Button>
           </div>
+          {submitError && (
+            <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm leading-relaxed text-red-700">
+              {submitError}
+            </p>
+          )}
         </Card>
       )}
     </>

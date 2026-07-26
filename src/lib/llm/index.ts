@@ -1,5 +1,6 @@
 import 'server-only'
 import { db } from '@/lib/db'
+import { env } from '@/lib/env'
 import { getLlmConfig } from '@/lib/settings'
 
 /**
@@ -193,6 +194,21 @@ class MockLlmProvider implements LlmProvider {
   readonly model = 'mock'
 
   async complete(messages: LlmMessage[]): Promise<LlmResult> {
+    /**
+     * ⚠️ 生产环境**绝不返回 mock 文本**。
+     *
+     *    这段调试串以前会原样渲染进文书工作台的访谈 / 大纲 / 润色结果区 ——
+     *    也就是说付了一两千块的学生,点「继续访谈」看到的是
+     *    「请在 .env 中配置 LLM_PROVIDER」,而且照常扣掉当日 AI 配额。
+     *
+     *    AI 采集那条路径早就是「没 key 就直接不可用,不退回 mock」(README 有写),
+     *    文书这边却在静默降级 —— 两处标准不一致。这里对齐:生产抛错,
+     *    由 completeSafe 转成给用户看的话。
+     */
+    if (env.isProd) {
+      throw new Error('AI 助手正在接入中,暂时不可用。你已写的内容不受影响,其余功能照常使用。')
+    }
+
     const last = messages[messages.length - 1]?.content ?? ''
     return {
       text:
@@ -228,7 +244,27 @@ export async function getLlmProvider(): Promise<LlmProvider> {
 
 export class QuotaExceededError extends Error {
   constructor(limit: number) {
-    super(`今日 AI 使用次数已达上限(${limit} 次),明天再来,或升级到 Pro 版`)
+    // 文案不提「Pro 版」—— 套餐是月票/季票/年票,没有叫 Pro 的东西
+    super(`今日 AI 使用次数已达上限(${limit} 次),明天再来,或升级更长时长的套餐`)
+  }
+}
+
+/**
+ * 退回一次配额。
+ *
+ * ⚠️ 配额是在调模型**之前**扣的(必须如此,否则并发能刷爆),
+ *    但模型调用失败时那一次不该算在用户头上 —— 他什么都没得到。
+ *    不会退到负数。
+ */
+export async function refundQuota(userId: string): Promise<void> {
+  try {
+    await db.aiUsageDaily.updateMany({
+      where: { userId, day: today(), count: { gt: 0 } },
+      data: { count: { decrement: 1 } },
+    })
+  } catch (err) {
+    // 退配额失败不能反过来影响主流程
+    console.error(JSON.stringify({ event: 'llm.quota_refund_failed', userId, err: String(err) }))
   }
 }
 

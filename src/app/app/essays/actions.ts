@@ -10,6 +10,7 @@ import {
   completeSafe,
   loadPrompt,
   consumeQuota,
+  refundQuota,
   recordTokens,
   QuotaExceededError,
 } from '@/lib/llm'
@@ -120,7 +121,11 @@ export async function askInterview(essayId: string, userMessage: string) {
     { role: 'system', content: tpl.system },
     { role: 'user', content: `${userPrompt}\n\n学生刚才说:${userMessage}` },
   ])
-  if (!call.ok) return { ok: false as const, error: call.error }
+  if (!call.ok) {
+    // 模型没给出结果,这次不该算用户的配额
+    await refundQuota(user.id)
+    return { ok: false as const, error: call.error }
+  }
   const result = call.result
 
   const messages = [
@@ -200,7 +205,11 @@ export async function generateOutline(essayId: string) {
       }),
     },
   ])
-  if (!call.ok) return { ok: false as const, error: call.error }
+  if (!call.ok) {
+    // 模型没给出结果,这次不该算用户的配额
+    await refundQuota(user.id)
+    return { ok: false as const, error: call.error }
+  }
   const result = call.result
 
   await db.essay.update({
@@ -255,7 +264,11 @@ export async function polishText(essayId: string, text: string) {
     { role: 'system', content: tpl.system },
     { role: 'user', content: renderTemplate(tpl.userTpl, { languageLevel, text }) },
   ])
-  if (!call.ok) return { ok: false as const, error: call.error }
+  if (!call.ok) {
+    // 模型没给出结果,这次不该算用户的配额
+    await refundQuota(user.id)
+    return { ok: false as const, error: call.error }
+  }
   const result = call.result
 
   let suggestions: PolishSuggestion[] = []
