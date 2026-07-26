@@ -30,6 +30,7 @@ const NAV_GROUPS = [
     title: '运营',
     items: [
       { href: '/admin/pricing', label: '套餐定价' },
+      { href: '/admin/users', label: '用户' },
       { href: '/admin/leads', label: '线索' },
       { href: '/admin/notifications', label: '通知队列' },
       { href: '/admin/metrics', label: '数据看板' },
