@@ -144,9 +144,31 @@ export function normalizeGpa(gpa: number, scale: '100' | '4.0'): number {
  * 院校竞争档位。MVP 用 Program.competitiveness 字段(运营标注),
  * 未标注时按地区+是否 G5/港三/新二给一个保守默认。
  */
+/** 合法的档位码 —— 只有这些值能被当作 schoolTier 使用 */
+const VALID_TIERS = new Set(['t1', 't2', 't3', 't4'])
+
 function inferSchoolTier(schoolNameEn: string, competitiveness: string | null): string {
-  // 运营在后台标注过就以标注为准 —— 这是唯一权威来源
-  if (competitiveness) return competitiveness
+  /**
+   * 运营在后台标注过就以标注为准 —— 但**必须是合法档位码**。
+   *
+   * ⚠️ 这里差点出过一个很隐蔽的事故:后台「名额紧张度」输入框的 placeholder 写的是
+   *    「如:第一轮基本招满」,也就是说 UI 在引导运营填**自由文本**;而这个函数
+   *    原来是 `if (competitiveness) return competitiveness` —— 把它原样当档位码返回。
+   *    结果:运营按提示填一句中文 → findTierRule 找不到对应规则 → 该项目被 `continue`
+   *    跳过 → **从所有学生的评估结果里静默消失**,没有任何日志、没有任何报错。
+   *
+   *    而「人工核对院校数据」正是上线前第一优先的运营动作,几乎必然踩到。
+   *
+   * 所以:非法值一律忽略、退回下面的兜底判断,并打一条日志便于发现标注问题。
+   */
+  if (competitiveness) {
+    const v = competitiveness.trim().toLowerCase()
+    if (VALID_TIERS.has(v)) return v
+    console.warn(
+      `[assessment] Program.competitiveness 不是合法档位码(应为 t1/t2/t3/t4),已忽略:` +
+        `${JSON.stringify(competitiveness)} @ ${schoolNameEn}`,
+    )
+  }
 
   /**
    * 兜底判断:各地区公认最难申的那一档。

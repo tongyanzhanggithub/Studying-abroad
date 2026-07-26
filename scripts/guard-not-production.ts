@@ -1,43 +1,39 @@
 /**
- * 自检脚本的生产环境护栏。
+ * 自检脚本的破坏性操作护栏。
  *
- * ⚠️ 为什么必须有这个:verify-settlement.ts 里有
+ * ⚠️ 为什么必须有:verify-settlement.ts 里有
  *      db.user.deleteMany({ where: { phone: { startsWith: '1390009' } } })
- *    而 139-0009-xxxx 是**真实存在的号段**。dev 自检路由有
- *    `NODE_ENV === 'production' → 404` 挡着,但脚本一条保护都没有 ——
- *    只要 .env 里的 DATABASE_URL 指向阿里云 RDS,跑一次自检就会删掉真实用户
- *    及其全部服务订单,且无法恢复。
+ *    而 139-0009-xxxx 是**真实存在的号段**。跑错库就是删真实用户及其全部服务订单,
+ *    级联删除,不可恢复。
  *
- * 每个会写库的自检脚本都必须在 main() 之前调用它。
+ * ⚠️ 这里踩过一次:最初的实现是**黑名单**(NODE_ENV=production,或 DATABASE_URL
+ *    命中 rds.aliyuncs.com / prod 之类)。但本项目的生产部署恰恰两条都不命中 ——
+ *    deploy/setup-db.sh 把 Postgres 装在同一台 ECS 上,写进 .env 的是
+ *      postgresql://compass:***@localhost:5432/compass
+ *    而 `npx tsx scripts/...` 这种跑法 NODE_ENV 是 undefined。
+ *    于是护栏对**真正需要防的那个场景**完全失效 —— 一个防不住实际部署形态的护栏,
+ *    比没有护栏更糟,因为它给人安全感。
+ *
+ * 所以改成**默认拒绝**:必须显式声明「我知道这会删数据,这个库是可以被删的」。
+ * 代价是本地开发每次多一个环境变量,收益是不可能误删生产库。这个交换是划算的。
  */
 
-const PROD_DB_PATTERNS = [
-  /rds\.aliyuncs\.com/i, // 阿里云 RDS
-  /\.tencentcdb\.com/i, // 腾讯云
-  /prod/i, // 库名/主机名里带 prod
-  /neon\.tech|supabase\.co/i, // 常见云端库(可能是共享环境)
-]
+const OPT_IN = 'ALLOW_DESTRUCTIVE_SELFTEST'
 
 export function assertNotProduction(scriptName: string): void {
-  const url = process.env.DATABASE_URL ?? ''
+  if (process.env[OPT_IN] === 'true') return
 
-  const reasons: string[] = []
-  if (process.env.NODE_ENV === 'production') reasons.push('NODE_ENV=production')
-  const hit = PROD_DB_PATTERNS.find((p) => p.test(url))
-  if (hit) reasons.push(`DATABASE_URL 命中生产库特征 ${hit}`)
-  if (process.env.ALLOW_DESTRUCTIVE_SELFTEST === 'true') {
-    // 明确的逃生门:确实要在某个非本地但安全的环境上跑时用
-    console.warn(`⚠️ ALLOW_DESTRUCTIVE_SELFTEST=true,已跳过生产护栏(${scriptName})`)
-    return
-  }
+  const url = process.env.DATABASE_URL ?? '(未设置)'
+  // 只显示主机与库名,不打印密码
+  const safeUrl = url.replace(/\/\/[^@]*@/, '//***@')
 
-  if (reasons.length) {
-    console.error(
-      `\n❌ 拒绝运行 ${scriptName} —— 它会删除数据,而当前环境疑似生产:\n` +
-        reasons.map((r) => `   · ${r}`).join('\n') +
-        `\n\n   自检脚本只应在本地/测试库上跑。确认无误要强制运行:\n` +
-        `   ALLOW_DESTRUCTIVE_SELFTEST=true npx tsx ...\n`,
-    )
-    process.exit(1)
-  }
+  console.error(
+    `\n❌ 拒绝运行 ${scriptName}\n\n` +
+      `   这个脚本会 **删除数据**(测试用户、服务订单、地区配置等)。\n` +
+      `   当前数据库:${safeUrl}\n\n` +
+      `   确认这是本地/测试库、可以被删之后,显式声明再跑:\n\n` +
+      `     ${OPT_IN}=true npx tsx --tsconfig scripts/tsconfig.json ${scriptName}\n\n` +
+      `   ⚠️ 绝不要在生产库上设这个变量。生产库里 139-0009 开头的手机号是真实用户。\n`,
+  )
+  process.exit(1)
 }

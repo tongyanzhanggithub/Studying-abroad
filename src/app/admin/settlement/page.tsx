@@ -2,7 +2,7 @@ import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 import { Card } from '@/components/ui'
 import { formatCents, formatDate } from '@/lib/utils'
-import { previewSettlement, toSettlementMonth } from '@/lib/services/settlement'
+import { previewSettlement, getSettledRows, toSettlementMonth } from '@/lib/services/settlement'
 import { SettleButton } from './SettleButton'
 import { PayoutCell } from './PayoutCell'
 import { ExportButton } from './ExportButton'
@@ -29,8 +29,9 @@ export default async function AdminSettlementPage({
   const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1)
   const month = sp.month ?? toSettlementMonth(lastMonth)
 
-  const [rows, disputed, settled, payouts] = await Promise.all([
+  const [pendingRows, settledRows, disputed, settled, payouts] = await Promise.all([
     previewSettlement(month),
+    getSettledRows(month),
     db.serviceOrder.findMany({
       where: { status: 'disputed' },
       include: { sku: true, user: true, deliverer: true },
@@ -44,6 +45,18 @@ export default async function AdminSettlementPage({
     db.settlementPayout.findMany({ where: { month } }),
   ])
   const payoutMap = new Map(payouts.map((p) => [p.delivererId, p]))
+
+  /**
+   * ⚠️ 表格要同时显示**待结算**与**已结算**两部分。
+   *    previewSettlement 只返回未结算的行,点完「确认结算」后它就是空数组 ——
+   *    如果只用它,结算之后表格、打款标记、CSV 导出会一起从页面消失,
+   *    而这三样恰恰是结算之后才用得上的(线下转账 → 回来标记 → 导出对账)。
+   */
+  const settledIds = new Set(settledRows.map((r) => r.delivererId))
+  const rows = [
+    ...settledRows.map((r) => ({ ...r, locked: true })),
+    ...pendingRows.filter((r) => !settledIds.has(r.delivererId)).map((r) => ({ ...r, locked: false })),
+  ]
 
   const totalPayout = rows.reduce((s, r) => s + r.payoutCents, 0)
   const totalGross = rows.reduce((s, r) => s + r.grossCents, 0)
@@ -169,7 +182,14 @@ export default async function AdminSettlementPage({
               <tbody>
                 {rows.map((r) => (
                   <tr key={r.delivererId} className="border-b border-ink-100 last:border-0">
-                    <td className="px-4 py-2 font-medium text-ink-900">{r.delivererName}</td>
+                    <td className="px-4 py-2 font-medium text-ink-900">
+                      {r.delivererName}
+                      {r.locked && (
+                        <span className="ml-2 rounded bg-ink-100 px-1.5 py-0.5 text-xs font-normal text-ink-600">
+                          已锁定
+                        </span>
+                      )}
+                    </td>
                     <td className="px-4 py-2 text-xs text-ink-600">{r.role}</td>
                     <td className="px-4 py-2 font-mono text-xs text-ink-600">
                       {r.wxContact ?? '—'}

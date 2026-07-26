@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
-import { executeSettlement, previewSettlement } from '@/lib/services/settlement'
+import { executeSettlement, previewSettlement, getSettledRows } from '@/lib/services/settlement'
 
 /**
  * 执行月结。
@@ -67,8 +67,11 @@ export async function markPaidOut(params: {
    *    「记下来的数」和「实际该付的数」可以不一致 —— 那这张表就没有对账价值了。
    *    口径与结算表完全一致(都走 previewSettlement)。
    */
-  const rows = await previewSettlement(params.month)
-  const row = rows.find((r) => r.delivererId === params.delivererId)
+  // 打款通常发生在**结算之后**,所以先查已锁定的行;还没结算的也允许标记
+  const settledRows = await getSettledRows(params.month)
+  const row =
+    settledRows.find((r) => r.delivererId === params.delivererId) ??
+    (await previewSettlement(params.month)).find((r) => r.delivererId === params.delivererId)
   if (!row) {
     return {
       ok: false as const,
@@ -129,10 +132,14 @@ export async function exportSettlement(month: string) {
     return { ok: false as const, error: '结算月份格式不正确' }
   }
 
-  const [rows, payouts] = await Promise.all([
+  // 导出要含**已结算**的行,否则结算后导出只剩表头(见 getSettledRows 注释)
+  const [pendingRows, settledRows, payouts] = await Promise.all([
     previewSettlement(month),
+    getSettledRows(month),
     db.settlementPayout.findMany({ where: { month } }),
   ])
+  const settledIds = new Set(settledRows.map((r) => r.delivererId))
+  const rows = [...settledRows, ...pendingRows.filter((r) => !settledIds.has(r.delivererId))]
   const paidBy = new Map(payouts.map((p) => [p.delivererId, p]))
 
   const header = [
@@ -156,7 +163,7 @@ export async function exportSettlement(month: string) {
         (r.payoutCents / 100).toFixed(2),
         (r.platformCents / 100).toFixed(2),
         p ? '已打款' : '未打款',
-        p ? p.paidOutAt.toISOString().slice(0, 19).replace('T', ' ') : '',
+        p ? p.paidOutAt.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false }) : '',
         p?.note ?? '',
       ]
         .map(csvEscape)

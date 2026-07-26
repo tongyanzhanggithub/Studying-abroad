@@ -256,12 +256,29 @@ export function EditForm({
       </Section>
 
       <Section title="运营标注">
-        <Text
-          label="名额紧张度"
-          value={f.competitiveness}
-          onChange={(v) => set('competitiveness', v)}
-          placeholder="如:第一轮基本招满"
-        />
+        {/*
+          ⚠️ 这里必须是下拉,不能是自由文本输入框。
+             这个字段会被定位引擎当**档位码**用(见 assessment/engine.ts 的 inferSchoolTier),
+             填中文的话该项目会从所有学生的评估结果里静默消失。
+             原来的 placeholder 写着「如:第一轮基本招满」,正是在引导运营填错。
+        */}
+        <Field label="竞争档位(影响录取概率计算)">
+          <select
+            value={f.competitiveness}
+            onChange={(e) => set('competitiveness', e.target.value)}
+            className={input}
+          >
+            <option value="">未标注(按学校名自动推断)</option>
+            <option value="t1">t1 · 最难申(各地区顶尖)</option>
+            <option value="t2">t2 · 较难申</option>
+            <option value="t3">t3 · 中等</option>
+            <option value="t4">t4 · 相对稳妥</option>
+          </select>
+          <p className="mt-1 text-xs text-ink-400">
+            留空时系统按学校名做保守推断。标注后会直接影响学生看到的录取概率,
+            请对照该校在本地区的实际竞争程度填写。
+          </p>
+        </Field>
         <Field label="录取门槛变化">
           <select
             value={f.barChangeFlag}

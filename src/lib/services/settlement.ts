@@ -136,6 +136,54 @@ export async function previewSettlement(month: string): Promise<SettlementRow[]>
  * ⚠️ 本函数**不发起真实付款** —— 只是把账算清楚并留痕,
  *    实际打款由财务在结算表外执行(MVP 阶段人工转账)。
  */
+/**
+ * 已锁定(已结算)的行 —— 用已写死的 payoutCents 聚合。
+ *
+ * ⚠️ 为什么必须有这个函数:previewSettlement 的 where 带 `settlementMonth: null`,
+ *    只返回**未结算**的订单。于是点完「确认结算」之后它返回空数组,
+ *    结算表、打款标记、CSV 导出三样一起从页面上消失 ——
+ *    而这三样恰恰是结算**之后**才用得上的。
+ *    业务上唯一合理的顺序(算账 → 锁定 → 线下转账 → 回来标记 → 导出对账)
+ *    在代码里反而走不通。
+ *
+ * 这里用订单上**已锁定的 payoutCents**,不重新按比例算 ——
+ * 锁定之后比例再变也不影响已结算的账,这正是锁定的意义。
+ */
+export async function getSettledRows(month: string): Promise<SettlementRow[]> {
+  if (!/^\d{4}-\d{2}$/.test(month)) {
+    throw new Error(`结算月份格式不对(应为 YYYY-MM):${month}`)
+  }
+
+  const orders = await db.serviceOrder.findMany({
+    where: { settlementMonth: month, delivererId: { not: null } },
+    include: { deliverer: true },
+  })
+
+  const byDeliverer = new Map<string, SettlementRow>()
+  for (const o of orders) {
+    if (!o.deliverer) continue
+    const payout = o.payoutCents ?? Math.round(o.amountCents * (o.splitRatio ?? o.deliverer.splitRatio))
+    const row = byDeliverer.get(o.deliverer.id) ?? {
+      delivererId: o.deliverer.id,
+      delivererName: o.deliverer.name,
+      role: o.deliverer.role,
+      wxContact: o.deliverer.wxContact,
+      splitRatio: o.splitRatio ?? o.deliverer.splitRatio,
+      orderCount: 0,
+      grossCents: 0,
+      payoutCents: 0,
+      platformCents: 0,
+    }
+    row.orderCount += 1
+    row.grossCents += o.amountCents
+    row.payoutCents += payout
+    row.platformCents += o.amountCents - payout
+    byDeliverer.set(o.deliverer.id, row)
+  }
+
+  return [...byDeliverer.values()].sort((a, b) => b.payoutCents - a.payoutCents)
+}
+
 export async function executeSettlement(month: string): Promise<{
   orderCount: number
   totalPayoutCents: number
