@@ -498,7 +498,31 @@ export default async function ResultPage({
               <br />
               <br />
               比起给你一个看着专业、其实没依据的数字,我们更愿意如实说「还不够」。
-              你可以换个相近的方向或地区再看看,也可以找我们的老师人工帮你判断一下。
+            </p>
+
+            {/*
+              ⚠️ 这个分支原本一个出口都没有 —— 没有链接、没有按钮、没有联系方式,
+                 用户读完只能关页面。而「数据还没开放」时零匹配恰恰是**默认结果**,
+                 也就是说漏斗最前端最常见的一种结局是死胡同。这里必须给下一步。
+            */}
+            <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+              <Link
+                href="/assess"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg bg-brand-600 px-5 text-sm font-medium text-white hover:bg-brand-700"
+              >
+                换个方向或地区再测一次
+              </Link>
+              <Link
+                href="/pricing"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg border border-ink-200 px-5 text-sm text-ink-700 hover:bg-ink-50"
+              >
+                看看老师人工定位服务
+              </Link>
+            </div>
+
+            <p className="mt-4 border-t border-ink-100 pt-4 text-xs leading-relaxed text-ink-500">
+              你的手机号我们已经记下了。这个方向的数据核对完成后,我们会第一时间通知你 ——
+              不需要你反复回来看。
             </p>
           </Card>
         </section>
@@ -598,11 +622,21 @@ export default async function ResultPage({
       )}
 
       <section className="mx-auto max-w-7xl px-5 pb-10">
-        {!isMember && locked > 0 && (
+        {/*
+          ⚠️ 条件是 shown > 0 而不是 locked > 0。
+             原来挂在 locked > 0 上,导致「匹配数少、全部已展示」的非会员
+             整页看不到任何购买入口 —— 而这些人恰恰已经看完了全部结果、
+             正处在最可能付费的时刻。文案按有没有未展示项目分两种说法。
+        */}
+        {!isMember && shown > 0 && (
           <Card className="border-dashed bg-white/92">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <p className="font-medium text-ink-900">还有 {locked} 个匹配项目可以继续展开</p>
+                <p className="font-medium text-ink-900">
+                  {locked > 0
+                    ? `还有 ${locked} 个匹配项目可以继续展开`
+                    : '把这份名单变成可执行的申请计划'}
+                </p>
                 <p className="mt-1 text-sm leading-relaxed text-ink-600">
                   完整院校对比表、各校截止日期、申请轮次和按选校单生成的材料清单都会接进工作台。
                 </p>

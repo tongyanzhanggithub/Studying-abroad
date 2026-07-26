@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { runAutoConfirm } from '@/lib/services/settlement'
 import { isValidCronSecret } from '@/lib/cron-auth'
+import { recordCronSuccess } from '@/lib/cron-heartbeat'
 
 /**
  * 服务订单 48h 自动确认(PRD 5.3)。
@@ -15,6 +16,9 @@ export async function POST(request: NextRequest) {
   }
 
   const result = await runAutoConfirm()
+
+  // 只有全部成功才记心跳(见 cron-heartbeat.ts)
+  if (result.errors.length === 0) await recordCronSuccess('auto-confirm')
 
   // 有失败项时返回 500,让上游监控抓到告警
   return NextResponse.json(result, { status: result.errors.length ? 500 : 200 })

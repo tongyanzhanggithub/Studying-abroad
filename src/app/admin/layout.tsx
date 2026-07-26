@@ -34,6 +34,7 @@ const NAV_GROUPS = [
       { href: '/admin/leads', label: '线索' },
       { href: '/admin/notifications', label: '通知队列' },
       { href: '/admin/metrics', label: '数据看板' },
+      { href: '/admin/health', label: '系统健康' },
     ],
   },
   {
