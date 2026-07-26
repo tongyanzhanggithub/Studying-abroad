@@ -454,7 +454,7 @@ export default async function PricingPage() {
           <div className="mt-8">
             <Disclaimer>
               Compass 提供信息服务与软件工具,不代理申请、不承诺任何录取结果。
-              人工服务提供的是专业意见,最终决策与递交由你本人完成。发票可在订单页申请开具。
+              人工服务提供的是专业意见,最终决策与递交由你本人完成。发票可在订单页申请开具,我们会在 5 个工作日内开具并发到你填写的邮箱。
             </Disclaimer>
           </div>
         </div>

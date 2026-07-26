@@ -5,6 +5,7 @@ import { formatCents, formatDate } from '@/lib/utils'
 import { calcServiceRefund, calcSubscriptionRefund } from '@/lib/payment'
 import { RefundButton } from './RefundButton'
 import { DeliveryActions } from './DeliveryActions'
+import { InvoiceRequestForm } from './InvoiceRequest'
 import { AUTO_CONFIRM_HOURS } from '@/lib/services/settlement'
 
 const ORDER_STATUS_LABEL: Record<string, string> = {
@@ -35,6 +36,16 @@ export default async function OrdersPage() {
       orderBy: { createdAt: 'desc' },
     }),
   ])
+
+  /**
+   * 已支付成功的单 → 可申请发票。
+   * 开票金额一律以 Payment 为准,不让用户自己填(那是财税风险)。
+   */
+  const payments = await db.payment.findMany({
+    where: { userId: user.id, status: 'succeeded' },
+    include: { invoiceRequest: true },
+  })
+  const paymentByOrder = new Map(payments.map((p) => [`${p.orderType}:${p.orderId}`, p]))
 
   return (
     <div className="space-y-6">
@@ -69,6 +80,18 @@ export default async function OrdersPage() {
                         {s.paidAt ? `购买于 ${formatDate(s.paidAt)}` : '未支付'}
                         {s.expiresAt ? ` · 有效期至 ${formatDate(s.expiresAt)}` : ''}
                       </p>
+                      {/* 兑现定价页「发票可在订单页申请开具」的承诺 */}
+                      {(() => {
+                        const p = paymentByOrder.get(`subscription:${s.id}`)
+                        if (!p) return null
+                        return (
+                          <InvoiceRequestForm
+                            paymentId={p.id}
+                            status={p.invoiceRequest?.status ?? null}
+                            resultNote={p.invoiceRequest?.resultNote ?? null}
+                          />
+                        )
+                      })()}
                     </div>
                     {refund && (
                       <div className="text-right">
@@ -148,6 +171,17 @@ export default async function OrdersPage() {
                           我们的处理:{o.disputeResolution}
                         </p>
                       )}
+                      {(() => {
+                        const p = paymentByOrder.get(`service:${o.id}`)
+                        if (!p) return null
+                        return (
+                          <InvoiceRequestForm
+                            paymentId={p.id}
+                            status={p.invoiceRequest?.status ?? null}
+                            resultNote={p.invoiceRequest?.resultNote ?? null}
+                          />
+                        )
+                      })()}
                     </div>
 
                     {/*

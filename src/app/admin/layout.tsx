@@ -33,6 +33,7 @@ const NAV_GROUPS = [
       { href: '/admin/users', label: '用户', minRole: 'operator' },
       { href: '/admin/leads', label: '线索', minRole: 'operator' },
       { href: '/admin/notifications', label: '通知队列', minRole: 'operator' },
+      { href: '/admin/invoices', label: '开票申请', minRole: 'operator' },
       { href: '/admin/metrics', label: '数据看板', minRole: 'operator' },
       { href: '/admin/health', label: '系统健康', minRole: 'operator' },
     ],

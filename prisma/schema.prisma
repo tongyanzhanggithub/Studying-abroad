@@ -283,6 +283,7 @@ model User {
   analyticsEvents   AnalyticsEvent[]
   aiUsage           AiUsageDaily[]
   lead              Lead?
+  invoiceRequests   InvoiceRequest[]
 
   // 注销清理批处理按 deletionRequestedAt 扫,建索引避免全表扫
   @@index([deletionRequestedAt])
@@ -914,6 +915,62 @@ model Deliverer {
  * 这张表只记事实(谁、什么时候、打了多少),不参与金额计算 ——
  * 金额口径仍以 ServiceOrder.payoutCents 为准,避免两处数字打架。
  */
+/// 发票抬头类型
+enum InvoiceTitleType {
+  personal // 个人
+  company // 企业(需税号)
+}
+
+enum InvoiceStatus {
+  pending // 待开具
+  issued // 已开具
+  rejected // 无法开具(信息有误 / 不符合开票条件)
+}
+
+/**
+ * 开票申请。
+ *
+ * ⚠️ 为什么需要:定价页写着「发票可在订单页申请开具」,但全站**没有这个功能** ——
+ *    一个对付费用户的书面承诺没有任何兑现机制。中国用户买 ¥1,999 的产品
+ *    一定会要发票,而运营也没有任何入口能看到谁要过。
+ *
+ * 这里刻意**不接税务系统**:只做「用户提交 → 后台队列 → 财务线下开具后回填」。
+ * 开票主体、税盘、电子发票平台都要等公司主体和税务登记就绪,
+ * 那是业务流程问题,不该由这张表提前决定。
+ */
+model InvoiceRequest {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// 关联的支付单 —— 金额与开票内容以它为准,不让用户自己填金额
+  paymentId String  @map("payment_id")
+  payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  titleType InvoiceTitleType @map("title_type")
+  /// 抬头名称(个人填姓名,企业填公司全称)
+  title     String
+  /// 纳税人识别号 —— 企业抬头必填
+  taxNumber String? @map("tax_number")
+  /// 电子发票接收邮箱
+  email     String
+  note      String?
+
+  status InvoiceStatus @default(pending)
+  /// 财务开完票回填:发票号码 / 或无法开具的原因
+  resultNote String?   @map("result_note")
+  handledAt  DateTime? @map("handled_at")
+  handledBy  String?   @map("handled_by")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  /// 一笔支付只开一次票
+  @@unique([paymentId])
+  @@index([status, createdAt])
+  @@map("invoice_requests")
+}
+
 model SettlementPayout {
   id        String @id @default(cuid())
   /// 结算月份 YYYY-MM
@@ -1029,6 +1086,8 @@ model Payment {
   paidAt    DateTime? @map("paid_at")
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
+
+  invoiceRequest InvoiceRequest?
 
   @@index([orderType, orderId])
   @@index([status])
