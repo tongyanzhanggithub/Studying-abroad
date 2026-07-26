@@ -312,23 +312,50 @@ export async function checkCompliance(essayId: string) {
  * 标记终稿。
  * ⚠️ 合规检查未通过(存在 blocker)时**不允许**标记终稿。
  */
-export async function finalizeEssay(essayId: string) {
+export async function finalizeEssay(essayId: string, attestOriginal = false) {
   const user = await requireUser()
   const essay = await db.essay.findFirst({ where: { id: essayId, userId: user.id } })
   if (!essay) return { ok: false as const, error: '文书不存在' }
 
   const check = await runComplianceCheck(essayId)
+
+  /**
+   * ⚠️ 区分两类 blocker,否则零容忍院校的文书永远定不了稿(死锁,见 compliance.ts)。
+   *   · 客观事实类(空文书、超字数)—— 系统能判定,一律拦死;
+   *   · 院校 AI 政策类 —— 系统无法验证「是不是本人写的」,性质是告知 + 学生担责,
+   *     所以改为要求学生显式声明原创,声明留痕。
+   */
   if (!check.passed) {
-    return {
-      ok: false as const,
-      error: '合规检查未通过,请先处理标红的问题再标记终稿。',
-      result: check,
+    if (!check.attestableOnly) {
+      return {
+        ok: false as const,
+        error: '合规检查未通过,请先处理标红的问题再标记终稿。',
+        result: check,
+      }
+    }
+    if (!attestOriginal) {
+      return {
+        ok: false as const,
+        needsAttestation: true as const,
+        error: '这所学校对 AI 辅助写作持零容忍态度。请先确认这篇文书完全由你本人撰写。',
+        result: check,
+      }
     }
   }
 
   await db.essay.update({
     where: { id: essayId },
-    data: { status: 'final', finalizedAt: new Date() },
+    data: {
+      status: 'final',
+      finalizedAt: new Date(),
+      // 留痕:谁在什么时候声明了原创。出现争议时这是唯一依据。
+      complianceCheck: {
+        ...(check as unknown as object),
+        ...(attestOriginal
+          ? { originalityAttestedAt: new Date().toISOString(), attestedBy: user.id }
+          : {}),
+      } as unknown as object,
+    },
   })
   await syncApplicationStatuses(user.id)
   await track('essay_final', { userId: user.id, properties: { essayId } })

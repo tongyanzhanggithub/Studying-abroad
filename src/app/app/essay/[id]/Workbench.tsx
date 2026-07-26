@@ -102,6 +102,9 @@ export function EssayWorkbench(props: {
   const [compliance, setCompliance] = useState(props.complianceCheck)
   const [error, setError] = useState<string | null>(null)
   const [saved, setSaved] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
+  // 零容忍院校定稿前的原创声明(见「标记为终稿」附近注释)
+  const [needsAttestation, setNeedsAttestation] = useState(false)
+  const [attested, setAttested] = useState(false)
   const [wordCount, setWordCount] = useState(countWords(props.initialContent))
   const [pending, startTransition] = useTransition()
 
@@ -494,25 +497,50 @@ export function EssayWorkbench(props: {
                   </Button>
 
                   {props.status !== 'final' && (
-                    <Button
-                      size="sm"
-                      disabled={pending}
-                      className="w-full"
-                      onClick={() =>
-                        run(async () => {
-                          const res = await finalizeEssay(props.essayId)
-                          if (!res.ok) {
-                            setError(res.error)
-                            if (res.result) setCompliance(res.result)
-                            return
-                          }
-                          setCompliance(res.result)
-                          router.refresh()
-                        })
-                      }
-                    >
-                      标记为终稿
-                    </Button>
+                    <>
+                      {/*
+                        零容忍院校:平台无法验证文书是不是本人写的,所以由学生
+                        显式声明并留痕,而不是把定稿这条路彻底堵死(那会连锁卡住
+                        申请状态机与行动引擎,学生还没有任何入口能解除)。
+                      */}
+                      {needsAttestation && (
+                        <label className="flex cursor-pointer items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-900">
+                          <input
+                            type="checkbox"
+                            checked={attested}
+                            onChange={(e) => setAttested(e.target.checked)}
+                            className="mt-0.5 shrink-0"
+                          />
+                          <span>
+                            我确认这篇文书完全由我本人撰写,没有使用 AI 生成内容。
+                            这条确认会被记录;如实声明,隐瞒的后果远大于说明。
+                          </span>
+                        </label>
+                      )}
+                      <Button
+                        size="sm"
+                        disabled={pending || (needsAttestation && !attested)}
+                        className="w-full"
+                        onClick={() =>
+                          run(async () => {
+                            const res = await finalizeEssay(props.essayId, attested)
+                            if (!res.ok) {
+                              setError(res.error)
+                              if (res.result) setCompliance(res.result)
+                              // 服务端说需要原创声明 —— 把勾选框显示出来
+                              if ('needsAttestation' in res && res.needsAttestation) {
+                                setNeedsAttestation(true)
+                              }
+                              return
+                            }
+                            setCompliance(res.result)
+                            router.refresh()
+                          })
+                        }
+                      >
+                        标记为终稿
+                      </Button>
+                    </>
                   )}
                 </div>
               )}

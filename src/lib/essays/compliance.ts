@@ -22,12 +22,28 @@ export interface ComplianceIssue {
   severity: Severity
   title: string
   detail: string
+  /** 问题类型。ai_policy 类的 blocker 可由学生声明原创后放行,见 ComplianceResult */
+  kind?: 'ai_policy' | 'word_limit' | 'empty' | 'other'
 }
 
 export interface ComplianceResult {
   passed: boolean
   issues: ComplianceIssue[]
   checkedAt: string
+  /**
+   * 唯一挡住定稿的是「院校 AI 政策」这一条。
+   *
+   * ⚠️ 这是为了解开一个死锁:zero_tolerance 的院校会**无条件**产生一个 blocker,
+   *    于是 passed 恒为 false → finalizeEssay 永远拒绝 → 文书永远到不了 final →
+   *    申请状态机永不推进 → 行动引擎永久显示「还有 N 篇文书没定稿」,
+   *    而学生**没有任何入口能解除**。
+   *
+   *    但平台本来也无法验证一篇文书是不是学生本人写的 —— 这条政策的性质是
+   *    「告知 + 由学生担责」,不是系统能判定的事实。所以改成:必须由学生
+   *    显式声明原创才能定稿,声明会留痕。真正客观的 blocker(空文书、超字数)
+   *    仍然一律拦死,不受此影响。
+   */
+  attestableOnly: boolean
 }
 
 const POLICY_COPY: Record<AiPolicyLevel, { severity: Severity; title: string; detail: string }> = {
@@ -76,6 +92,7 @@ export async function runComplianceCheck(essayId: string): Promise<ComplianceRes
     const copy = POLICY_COPY[level]
     issues.push({
       severity: copy.severity,
+      kind: 'ai_policy',
       title: `${essay.program.school.nameZh ?? essay.program.school.nameEn}:${copy.title}`,
       detail:
         copy.detail +
@@ -112,6 +129,7 @@ export async function runComplianceCheck(essayId: string): Promise<ComplianceRes
     if (words > essay.wordLimit) {
       issues.push({
         severity: 'blocker',
+        kind: 'word_limit',
         title: `超出字数限制(${words} / ${essay.wordLimit})`,
         detail: '超出字数的部分可能被系统截断或直接扣分,请精简。',
       })
@@ -127,15 +145,19 @@ export async function runComplianceCheck(essayId: string): Promise<ComplianceRes
   if (!content.trim()) {
     issues.push({
       severity: 'blocker',
+      kind: 'empty',
       title: '文书内容为空',
       detail: '还没有写任何内容。',
     })
   }
 
+  const blockers = issues.filter((i) => i.severity === 'blocker')
   const result: ComplianceResult = {
-    passed: !issues.some((i) => i.severity === 'blocker'),
+    passed: blockers.length === 0,
     issues,
     checkedAt: new Date().toISOString(),
+    // 剩下的 blocker 全是「院校 AI 政策」这一条 —— 学生声明原创后可放行(见类型注释)
+    attestableOnly: blockers.length > 0 && blockers.every((b) => b.kind === 'ai_policy'),
   }
 
   await db.essay.update({
