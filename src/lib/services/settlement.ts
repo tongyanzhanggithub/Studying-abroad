@@ -1,5 +1,16 @@
 import 'server-only'
 import { db } from '@/lib/db'
+import {
+  aggregateSettlement,
+  payoutOf,
+  ratioOf,
+  settlementRange,
+  type SettlementRow,
+} from '@/lib/services/settlement-math'
+
+// 月份换算与分成聚合已抽到 settlement-math.ts(纯函数,可直接测)。
+// 这里继续导出,免得调用方要区分从哪个文件 import。
+export { toSettlementMonth, type SettlementRow } from '@/lib/services/settlement-math'
 
 /**
  * 增值服务交付闭环(PRD 4.6 / 5.3)。
@@ -59,23 +70,6 @@ export async function runAutoConfirm(): Promise<{
   return { confirmed, skippedDisputed, errors }
 }
 
-export interface SettlementRow {
-  delivererId: string
-  delivererName: string
-  role: string
-  wxContact: string | null
-  splitRatio: number
-  orderCount: number
-  grossCents: number
-  payoutCents: number
-  platformCents: number
-}
-
-/** 结算月份格式 YYYY-MM */
-export function toSettlementMonth(d: Date): string {
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
-}
-
 /**
  * 预览某月的结算明细(不写库)。
  *
@@ -83,11 +77,7 @@ export function toSettlementMonth(d: Date): string {
  * 用已确认时间而非下单时间划分月份 —— 钱在服务真正交付完成后才算数。
  */
 export async function previewSettlement(month: string): Promise<SettlementRow[]> {
-  const [year, mon] = month.split('-').map(Number)
-  if (!year || !mon) throw new Error(`结算月份格式不对:${month}`)
-
-  const start = new Date(year, mon - 1, 1)
-  const end = new Date(year, mon, 1)
+  const { start, end } = settlementRange(month)
 
   const orders = await db.serviceOrder.findMany({
     where: {
@@ -99,34 +89,7 @@ export async function previewSettlement(month: string): Promise<SettlementRow[]>
     include: { deliverer: true },
   })
 
-  const byDeliverer = new Map<string, SettlementRow>()
-
-  for (const o of orders) {
-    if (!o.deliverer) continue
-    // 优先用下单时锁定的分成比例;缺失才回退到交付人当前比例
-    const ratio = o.splitRatio ?? o.deliverer.splitRatio
-    const payout = Math.round(o.amountCents * ratio)
-
-    const row = byDeliverer.get(o.deliverer.id) ?? {
-      delivererId: o.deliverer.id,
-      delivererName: o.deliverer.name,
-      role: o.deliverer.role,
-      wxContact: o.deliverer.wxContact,
-      splitRatio: ratio,
-      orderCount: 0,
-      grossCents: 0,
-      payoutCents: 0,
-      platformCents: 0,
-    }
-
-    row.orderCount += 1
-    row.grossCents += o.amountCents
-    row.payoutCents += payout
-    row.platformCents += o.amountCents - payout
-    byDeliverer.set(o.deliverer.id, row)
-  }
-
-  return [...byDeliverer.values()].sort((a, b) => b.payoutCents - a.payoutCents)
+  return aggregateSettlement(orders)
 }
 
 /**
@@ -150,6 +113,7 @@ export async function previewSettlement(month: string): Promise<SettlementRow[]>
  * 锁定之后比例再变也不影响已结算的账,这正是锁定的意义。
  */
 export async function getSettledRows(month: string): Promise<SettlementRow[]> {
+  // 只校验格式:这里是按 settlementMonth 精确匹配,不换算区间
   if (!/^\d{4}-\d{2}$/.test(month)) {
     throw new Error(`结算月份格式不对(应为 YYYY-MM):${month}`)
   }
@@ -159,29 +123,7 @@ export async function getSettledRows(month: string): Promise<SettlementRow[]> {
     include: { deliverer: true },
   })
 
-  const byDeliverer = new Map<string, SettlementRow>()
-  for (const o of orders) {
-    if (!o.deliverer) continue
-    const payout = o.payoutCents ?? Math.round(o.amountCents * (o.splitRatio ?? o.deliverer.splitRatio))
-    const row = byDeliverer.get(o.deliverer.id) ?? {
-      delivererId: o.deliverer.id,
-      delivererName: o.deliverer.name,
-      role: o.deliverer.role,
-      wxContact: o.deliverer.wxContact,
-      splitRatio: o.splitRatio ?? o.deliverer.splitRatio,
-      orderCount: 0,
-      grossCents: 0,
-      payoutCents: 0,
-      platformCents: 0,
-    }
-    row.orderCount += 1
-    row.grossCents += o.amountCents
-    row.payoutCents += payout
-    row.platformCents += o.amountCents - payout
-    byDeliverer.set(o.deliverer.id, row)
-  }
-
-  return [...byDeliverer.values()].sort((a, b) => b.payoutCents - a.payoutCents)
+  return aggregateSettlement(orders, { useLockedPayout: true })
 }
 
 export async function executeSettlement(month: string): Promise<{
@@ -189,19 +131,11 @@ export async function executeSettlement(month: string): Promise<{
   totalPayoutCents: number
 }> {
   /**
-   * ⚠️ 自校验 month 格式,不只依赖调用方。原来靠唯一调用方 settleMonth 的正则兜底,
-   *    一旦有别的调用方或定时任务直接调本函数,`split('-').map(Number)` 遇到脏输入会得到
-   *    NaN → new Date(NaN) → 结算区间错乱、静默算错账。这里和 previewSettlement 一样先校验。
+   * ⚠️ 校验和区间换算都在 settlementRange 里,预览与锁定共用同一份 ——
+   *    两边口径必须一模一样,否则「预览时看到 8 单」和「锁定了 9 单」会对不上。
+   *    脏输入必须直接抛错:NaN 会让 new Date 溢出成别的月份,静默算错账。
    */
-  if (!/^\d{4}-\d{2}$/.test(month)) {
-    throw new Error(`结算月份格式不对(应为 YYYY-MM):${month}`)
-  }
-  const [year, mon] = month.split('-').map(Number)
-  if (!year || !mon || mon < 1 || mon > 12) {
-    throw new Error(`结算月份不合法:${month}`)
-  }
-  const start = new Date(year, mon - 1, 1)
-  const end = new Date(year, mon, 1)
+  const { start, end } = settlementRange(month)
 
   const orders = await db.serviceOrder.findMany({
     where: {
@@ -219,8 +153,13 @@ export async function executeSettlement(month: string): Promise<{
 
   for (const o of orders) {
     if (!o.deliverer) continue
-    const ratio = o.splitRatio ?? o.deliverer.splitRatio
-    const payout = Math.round(o.amountCents * ratio)
+    /**
+     * ⚠️ 用和预览完全同一套算法(ratioOf / payoutOf),不要在这里另写一遍。
+     *    这里锁进库的数字,就是运营在预览页上看到并点了「确认结算」的那个数字。
+     *    两处各写一份的话,任何一次改动都可能让「看到的」和「锁定的」对不上,
+     *    而这笔钱最后是要转给真人的。
+     */
+    const payout = payoutOf(o, ratioOf(o))
 
     const res = await db.serviceOrder.updateMany({
       // settlementMonth 仍为 null 才更新 —— 并发执行时不会重复结算
