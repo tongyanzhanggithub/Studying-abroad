@@ -1,4 +1,5 @@
 import 'server-only'
+import type { Prisma } from '@prisma/client'
 import { db } from '@/lib/db'
 import { daysUntil } from '@/lib/utils'
 import { readRequirements } from '@/lib/programs/types'
@@ -56,8 +57,8 @@ export interface ActionPlan {
   nearestDays: number | null
 }
 
-/** 语言成绩换算不了的情况下,用于判断「差多少」 */
-function languageGap(
+/** 语言成绩换算不了的情况下,用于判断「差多少」。导出仅为可测 */
+export function languageGap(
   userType: string | null,
   userScore: number | null,
   req: ReturnType<typeof readRequirements>,
@@ -66,6 +67,37 @@ function languageGap(
   if (userType === 'ielts' && req.ielts?.overall) return req.ielts.overall - userScore
   if (userType === 'toefl' && req.toefl?.overall) return req.toefl.overall - userScore
   return null
+}
+
+/**
+ * planActions 需要的最小输入形状。
+ *
+ * 刻意不直接用 Prisma 生成的类型:一是测试要能手搓数据,二是这层本来就
+ * 只依赖这几个字段,写清楚比 `include` 出来的一大坨更能说明它到底看什么。
+ */
+export interface PlannerChoice {
+  programId: string
+  status: string
+  tierTag: string
+  program: {
+    finalDeadline: Date | string | null
+    isRolling: boolean
+    requirements: Prisma.JsonValue
+    school: { nameZh: string | null; nameEn: string }
+  }
+}
+export interface PlannerMaterial {
+  status: string
+  programIds: string[]
+  template: { name: string; leadTimeDays: number }
+}
+export interface PlannerEssay {
+  status: string
+  programId: string | null
+}
+export interface PlannerProfile {
+  languageType: string | null
+  languageScore: number | null
 }
 
 export async function buildActionPlan(userId: string): Promise<ActionPlan> {
@@ -82,6 +114,28 @@ export async function buildActionPlan(userId: string): Promise<ActionPlan> {
     db.profile.findUnique({ where: { userId } }),
   ])
 
+  return planActions({ choices, materials, essays, profile })
+}
+
+/**
+ * 排序与文案的全部逻辑 —— 纯函数,不碰数据库。
+ *
+ * ⚠️ 从 buildActionPlan 里原样抽出来的,一行逻辑都没改。
+ *    抽出来的理由:决定「今天该做哪三件事」的是这里的 score 公式,
+ *    它是这个产品对用户的核心承诺,却因为埋在一个要连库的 async 函数里
+ *    一直测不了。现在可以直接对着「差 0.5 分卡 3 所」这种具体情形写断言。
+ */
+export function planActions({
+  choices,
+  materials,
+  essays,
+  profile,
+}: {
+  choices: PlannerChoice[]
+  materials: PlannerMaterial[]
+  essays: PlannerEssay[]
+  profile: PlannerProfile | null
+}): ActionPlan {
   const actions: Action[] = []
   const risks: Risk[] = []
 

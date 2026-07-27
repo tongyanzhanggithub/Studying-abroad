@@ -67,7 +67,8 @@ export async function buildContext(userId: string): Promise<RecommendationContex
 
 // ── 条件求值 ────────────────────────────────────────────
 
-function evalCondition(cond: TriggerCondition, ctx: RecommendationContext): boolean {
+/** 导出仅为可测 —— 求值器是运营后台配置的执行者,判错一条就是整类卡片不出现或乱出现 */
+export function evalCondition(cond: TriggerCondition, ctx: RecommendationContext): boolean {
   switch (cond.type) {
     case 'school_tier_count':
       return ctx.tierCounts[cond.tier] >= cond.gte
@@ -90,7 +91,8 @@ function evalCondition(cond: TriggerCondition, ctx: RecommendationContext): bool
   }
 }
 
-function evalTrigger(spec: TriggerSpec, ctx: RecommendationContext): boolean {
+/** 导出仅为可测 */
+export function evalTrigger(spec: TriggerSpec, ctx: RecommendationContext): boolean {
   if (!spec.conditions?.length) return false
   return spec.op === 'all'
     ? spec.conditions.every((c) => evalCondition(c, ctx))
@@ -104,7 +106,7 @@ function evalTrigger(spec: TriggerSpec, ctx: RecommendationContext): boolean {
  * `{n} 所高风险冲刺` 时,{n} 必须是冲刺数;写 `已购 {n} 项服务` 时
  * 必须是已购数。用统一兜底链会串味。
  */
-function resolveN(spec: TriggerSpec, ctx: RecommendationContext): number {
+export function resolveN(spec: TriggerSpec, ctx: RecommendationContext): number {
   for (const cond of spec.conditions ?? []) {
     switch (cond.type) {
       case 'school_tier_count':

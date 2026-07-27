@@ -147,7 +147,8 @@ export function normalizeGpa(gpa: number, scale: '100' | '4.0'): number {
 /** 合法的档位码 —— 只有这些值能被当作 schoolTier 使用 */
 const VALID_TIERS = new Set(['t1', 't2', 't3', 't4'])
 
-function inferSchoolTier(schoolNameEn: string, competitiveness: string | null): string {
+/** 导出仅为可测 —— 这段逻辑出过一次「项目从结果里静默消失」的事故,见下方注释 */
+export function inferSchoolTier(schoolNameEn: string, competitiveness: string | null): string {
   /**
    * 运营在后台标注过就以标注为准 —— 但**必须是合法档位码**。
    *
@@ -215,7 +216,8 @@ const TIER_ORDER = ['t1', 't2', 't3', 't4'] as const
  *    (t3 → 回退到更难的 t2,偏保守、不会高估录取率),既不让项目消失,也不编造概率。
  *    等运营补上 t3 的 AdmissionRule 行后,自然就用精确档位了。
  */
-function findTierRule<T extends { region: string; schoolTier: string }>(
+/** 导出仅为可测 */
+export function findTierRule<T extends { region: string; schoolTier: string }>(
   rules: T[],
   region: string,
   tier: string,
@@ -287,8 +289,8 @@ export function parseMinBandRequirement(subscores: string | null | undefined): n
   return null
 }
 
-/** 用户语言成绩 vs 项目要求 */
-function compareLanguage(
+/** 用户语言成绩 vs 项目要求。导出仅为可测 —— 「总分够但单项不够」是最需要守住的一条 */
+export function compareLanguage(
   input: AssessmentInput,
   ielts: number | null,
   toefl: number | null,
@@ -464,8 +466,10 @@ export async function runAssessment(
  * 从全部命中项目里统计洞察。
  * 注意分母:语言比对的分母是「官网写明了要求的项目数」,不是命中总数 ——
  * 用总数当分母会把「官网没写」算成「不达标」,那是在误导用户。
+ *
+ * 导出仅为可测(runAssessment 要连库,测不了;这一层是纯函数)。
  */
-function buildInsights(
+export function buildInsights(
   input: AssessmentInput,
   matches: ProgramMatch[],
 ): AssessmentInsights {
