@@ -2,6 +2,7 @@
 
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
+import { qsRankingSyncOps } from '@/lib/programs/qs-ranking-sync'
 import { REGION_LABEL, DIRECTION_LABEL } from '@/lib/programs/types'
 import {
   PROGRAM_COLUMNS,
@@ -209,6 +210,7 @@ export async function importPrograms(csvText: string) {
 
       const qsRank = parseIntOrNull(cell(row, 'schoolQsRank'))
       const qsRankYear = parseIntOrNull(cell(row, 'schoolQsRankYear'))
+      const qsRankSourceUrl = cell(row, 'schoolQsRankSourceUrl')
       const school = await db.school.upsert({
         where: { nameEn_region: { nameEn: schoolNameEn, region } },
         create: {
@@ -217,16 +219,29 @@ export async function importPrograms(csvText: string) {
           region,
           qsRank,
           qsRankYear,
-          qsRankSourceUrl: cell(row, 'schoolQsRankSourceUrl') || null,
+          qsRankSourceUrl: qsRankSourceUrl || null,
         },
         update: {
           nameZh: cell(row, 'schoolNameZh') || undefined,
           // 走到这里 qsRank 必定已解析成功(或单元格为空 → undefined = 不改动)
           qsRank: qsRank ?? undefined,
           qsRankYear: qsRankYear ?? undefined,
-          qsRankSourceUrl: cell(row, 'schoolQsRankSourceUrl') || undefined,
+          qsRankSourceUrl: qsRankSourceUrl || undefined,
         },
       })
+
+      /**
+       * ⚠️ 同步权威表。用户侧优先读 SchoolRanking,只写 School.qsRank 的话
+       *    CSV 里改的排名对用户不可见(详见 qsRankingSyncOps 的注释)。
+       *    单元格留空 → undefined → 本次不动排名,和上面 upsert 的语义一致。
+       */
+      const qsOps = qsRankingSyncOps(db, {
+        schoolId: school.id,
+        qsRank: qsRank ?? undefined,
+        qsRankYear: qsRankYear ?? undefined,
+        qsRankSourceUrl: qsRankSourceUrl || undefined,
+      })
+      if (qsOps.length) await db.$transaction(qsOps)
 
       // 过期截止日兜底
       let finalDeadline = parseDateOrNull(cell(row, 'finalDeadline'))

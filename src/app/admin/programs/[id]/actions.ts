@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 import { notifyProgramChange } from '@/lib/notifications/send'
+import { qsRankingSyncOps } from '@/lib/programs/qs-ranking-sync'
 import { readDeadlines, readRequirements } from '@/lib/programs/types'
 import type { ProgramDeadlines, ProgramRequirements } from '@/lib/programs/types'
 import type { BarChangeFlag } from '@prisma/client'
@@ -212,6 +213,18 @@ export async function saveProgram(
         qsRankYear: int(input.qsRankYear),
         qsRankSourceUrl: nn(input.qsRankSourceUrl),
       },
+    }),
+    /**
+     * ⚠️ 排名必须同时写进 SchoolRanking(权威表),不能只写 School 上的冗余字段。
+     *    用户侧优先读 SchoolRanking —— 只写这边的话,运营在后台把排名改对了、
+     *    后台列表也显示改后的值,但用户看到的还是旧数字,而且没有任何地方会报错。
+     *    详见 qsRankingSyncOps 的注释。
+     */
+    ...qsRankingSyncOps(db, {
+      schoolId: before.schoolId,
+      qsRank: int(input.qsRank),
+      qsRankYear: int(input.qsRankYear),
+      qsRankSourceUrl: nn(input.qsRankSourceUrl),
     }),
     db.program.update({
       where: { id: programId },
