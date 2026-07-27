@@ -240,17 +240,51 @@ export default async function SchoolsPage({
   }
 
   if (isRankingSort) {
+    // isRankingSort 成立时上面的 ?? 兜底保证了 rankingProvider 必有值,这里只是收窄类型
+    const provider = rankingProvider ?? 'qs'
+    /** 排序只看名次,把关联收窄到比较真正用得上的三个字段 */
+    const rankSelect = {
+      where: { provider },
+      select: { provider: true, year: true, rank: true },
+    } as const
+
+    /**
+     * ⚠️ 学校排名**单独查一次**,不要跟着 program 一起 include。
+     *
+     *    早先写的是 `select: { rankings: true, school: { select: { …, rankings: true } } }`,
+     *    看着只是一次查询,实际上同一所学校的排名行会**按项目数重复取回**——
+     *    一所学校挂 20 个项目,它那几条排名就被搬 20 遍。而这一步是全量扫描
+     *    (为了「先排序再截断」的正确性,见上面的注释),没有 take 兜着,
+     *    项目数一涨就是成千上万行冗余。
+     *
+     *    拆成两段:项目只取 id + schoolId(+ 专业排名),学校按去重后的 id 取一次,
+     *    在内存里 join。学校那段的行数从「项目数」降到「学校数」。
+     *    两段查的都是同一批候选,排序结果和之前完全一致。
+     */
     const lite = await db.program.findMany({
       where: programWhere,
+      select: { id: true, schoolId: true, rankings: rankSelect },
+    })
+
+    const schoolRows = await db.school.findMany({
+      where: { id: { in: [...new Set(lite.map((p) => p.schoolId))] } },
       select: {
         id: true,
-        rankings: true,
-        school: {
-          select: { qsRank: true, qsRankYear: true, qsRankSourceUrl: true, rankings: true },
-        },
+        qsRank: true,
+        qsRankYear: true,
+        qsRankSourceUrl: true,
+        rankings: rankSelect,
       },
     })
-    const topIds = [...lite].sort(byRanking).slice(0, PAGE_SIZE).map((p) => p.id)
+    const bySchool = new Map(schoolRows.map((s) => [s.id, s]))
+    /** 理论上不会走到(program.schoolId 是外键),留个安全兜底而不是 ! 断言 */
+    const NO_SCHOOL = { qsRank: null, qsRankYear: null, qsRankSourceUrl: null, rankings: [] }
+
+    const topIds = lite
+      .map((p) => ({ id: p.id, rankings: p.rankings, school: bySchool.get(p.schoolId) ?? NO_SCHOOL }))
+      .sort(byRanking)
+      .slice(0, PAGE_SIZE)
+      .map((p) => p.id)
     const rows = await fetchFull(topIds)
     // in 查询不保证顺序,按排好的 id 次序还原
     const order = new Map(topIds.map((id, i) => [id, i]))

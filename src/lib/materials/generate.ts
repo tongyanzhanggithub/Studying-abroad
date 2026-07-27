@@ -1,4 +1,5 @@
 import 'server-only'
+import { Prisma, type ApplicationStatus } from '@prisma/client'
 import { db } from '@/lib/db'
 import { classifyTestRequirement } from '@/lib/assessment/engine'
 
@@ -83,30 +84,40 @@ export async function regenerateMaterials(userId: string) {
   }
 
   const existing = await db.userMaterial.findMany({ where: { userId } })
-  const existingByTemplate = new Map(existing.map((m) => [m.templateId, m]))
 
-  for (const [templateId, info] of needed) {
-    /**
-     * ⚠️ 用 upsert 而不是「读 existing 再决定 create/update」。
-     *    用户快速连点加两所学校时,两次 regenerateMaterials 并发跑,都读到无 existing、
-     *    都 create 同一个 (userId, templateId) → 撞 @@unique 抛 P2002 → 整个 add 请求 500。
-     *    upsert 把并发/重复交给数据库的唯一约束处理:更新只动适用院校范围,
-     *    不碰学生已填的状态和已上传的文件。
-     */
-    await db.userMaterial.upsert({
+  /**
+   * ⚠️ 用 upsert 而不是「读 existing 再决定 create/update」。
+   *    用户快速连点加两所学校时,两次 regenerateMaterials 并发跑,都读到无 existing、
+   *    都 create 同一个 (userId, templateId) → 撞 @@unique 抛 P2002 → 整个 add 请求 500。
+   *    upsert 把并发/重复交给数据库的唯一约束处理:更新只动适用院校范围,
+   *    不碰学生已填的状态和已上传的文件。
+   */
+  // 选校单里已删掉的学校 → 对应材料若从未动过就清理,动过就保留
+  const staleIds = existing
+    .filter((m) => !needed.has(m.templateId) && m.status === 'not_started' && !m.fileUrl)
+    .map((m) => m.id)
+
+  const ops: Prisma.PrismaPromise<unknown>[] = [...needed].map(([templateId, info]) =>
+    db.userMaterial.upsert({
       where: { userId_templateId: { userId, templateId } },
       update: { programIds: info.programIds },
       create: { userId, templateId, programIds: info.programIds, status: 'not_started' },
-    })
+    }),
+  )
+  if (staleIds.length) {
+    ops.push(db.userMaterial.deleteMany({ where: { id: { in: staleIds } } }))
   }
 
-  // 选校单里已删掉的学校 → 对应材料若从未动过就清理,动过就保留
-  for (const m of existing) {
-    if (needed.has(m.templateId)) continue
-    if (m.status === 'not_started' && !m.fileUrl) {
-      await db.userMaterial.delete({ where: { id: m.id } })
-    }
-  }
+  /**
+   * ⚠️ 整批放进一个事务,而不是逐条 await。
+   *
+   *    这个函数在学生每次加/删一所学校时都会跑。之前是 9 条 upsert + N 条 delete
+   *    **串行往返**,一次点击十几个来回;更要命的是它们不在同一个事务里 ——
+   *    中途任何一条失败(网络抖动、连接被回收),学生就留下一份**残缺的材料清单**:
+   *    有的学校算进去了、有的没有,而且没有任何地方会发现这件事。
+   *    数组形式的 $transaction 一次发过去、要么全成要么全不成。
+   */
+  await db.$transaction(ops)
 }
 
 /** 材料完成度 */
@@ -131,6 +142,15 @@ export async function syncApplicationStatuses(userId: string) {
   ])
 
   const essays = await db.essay.findMany({ where: { userId } })
+
+  /**
+   * 目标状态 → 需要改成该状态的选校记录 id。
+   *
+   * ⚠️ 之前是循环里逐条 `db.userSchoolChoice.update`。选了 20 所学校、
+   *    材料一勾就可能触发 20 次串行往返;而目标状态其实只有 4 种,
+   *    按状态归并后最多 4 条 updateMany 就够了。
+   */
+  const toUpdate = new Map<string, string[]>()
 
   for (const choice of choices) {
     // 已递交及之后的状态不回退
@@ -159,7 +179,19 @@ export async function syncApplicationStatuses(userId: string) {
     else next = 'not_started'
 
     if (next !== choice.status) {
-      await db.userSchoolChoice.update({ where: { id: choice.id }, data: { status: next } })
+      const bucket = toUpdate.get(next)
+      if (bucket) bucket.push(choice.id)
+      else toUpdate.set(next, [choice.id])
     }
   }
+
+  if (toUpdate.size === 0) return
+  await db.$transaction(
+    [...toUpdate].map(([status, ids]) =>
+      db.userSchoolChoice.updateMany({
+        where: { id: { in: ids } },
+        data: { status: status as ApplicationStatus },
+      }),
+    ),
+  )
 }
