@@ -2,11 +2,8 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Card, Field } from '@/components/ui'
+import { Button, Card, Field, Input, Textarea } from '@/components/ui'
 import { createServiceSku, type SkuInput } from '../pricing/actions'
-
-const inputCls =
-  'w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500'
 
 const EMPTY: SkuInput & { code: string } = {
   code: '',
@@ -44,53 +41,50 @@ export function AddService() {
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <Field label="服务名" hint="会显示在定价页和服务市场,写清楚交付物,如「文书人工深度终审(单篇)」">
-            <input value={f.name} onChange={(e) => set('name', e.target.value)} className={inputCls} />
+            <Input value={f.name} onChange={(e) => set('name', e.target.value)} />
           </Field>
         </div>
 
         <Field label="价格(元)" hint="填元不填分">
-          <input
+          <Input
             value={f.priceYuan}
             onChange={(e) => set('priceYuan', e.target.value)}
             inputMode="decimal"
             placeholder="1200"
-            className={`${inputCls} font-mono`}
+
+            className="font-mono"
           />
         </Field>
 
         <Field label="交付时限(小时)" hint="超时会在派单页标红">
-          <input
+          <Input
             value={f.slaHours}
             onChange={(e) => set('slaHours', e.target.value)}
             inputMode="numeric"
-            className={inputCls}
           />
         </Field>
 
         <div className="sm:col-span-2">
           <Field label="卖点描述" hint="用户买不买主要看这一句。说清楚给什么、不给什么。">
-            <textarea
+            <Textarea
               value={f.description}
               rows={2}
               onChange={(e) => set('description', e.target.value)}
-              className={inputCls}
             />
           </Field>
         </div>
 
         <Field label="交付人角色" hint="如:签约顾问 / 文书编辑 / 在读学长学姐">
-          <input
+          <Input
             value={f.delivererRole}
             onChange={(e) => set('delivererRole', e.target.value)}
-            className={inputCls}
           />
         </Field>
 
         <Field label="交付形式" hint="如:视频会议(腾讯会议)">
-          <input
+          <Input
             value={f.deliveryForm}
             onChange={(e) => set('deliveryForm', e.target.value)}
-            className={inputCls}
           />
         </Field>
 
@@ -99,11 +93,12 @@ export function AddService() {
             label="标识 code(选填)"
             hint="给程序用的:推荐规则靠它关联服务、埋点靠它归因。留空会自动生成。只能用小写字母、数字和下划线。"
           >
-            <input
+            <Input
               value={f.code}
               onChange={(e) => set('code', e.target.value)}
               placeholder="essay_review"
-              className={`${inputCls} font-mono`}
+
+              className="font-mono"
             />
           </Field>
         </div>

@@ -2,11 +2,8 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui'
+import { Button, Input, Textarea } from '@/components/ui'
 import { advisorDeliver, advisorStartWork } from './actions'
-
-const inputCls =
-  'w-full rounded-lg border border-ink-200 px-2.5 py-1.5 text-xs outline-none focus:border-brand-500'
 
 export function OrderActions({ orderId, status }: { orderId: string; status: string }) {
   const router = useRouter()
@@ -47,18 +44,16 @@ export function OrderActions({ orderId, status }: { orderId: string; status: str
         </Button>
       ) : (
         <div className="space-y-2 rounded-lg border border-ink-200 p-2.5">
-          <textarea
+          <Textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
             rows={3}
             placeholder="交付了什么?如:已完成 60min 视频咨询,选校方案文档已发企业微信群"
-            className={inputCls}
           />
-          <input
+          <Input
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="交付物链接(选填)"
-            className={inputCls}
           />
           <p className="text-[11px] leading-relaxed text-ink-400">
             交付说明必填。学生会收到通知并在订单页看到这段话 ——

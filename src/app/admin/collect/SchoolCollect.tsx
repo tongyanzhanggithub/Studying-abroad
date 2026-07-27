@@ -2,12 +2,9 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Card, Field } from '@/components/ui'
+import { Button, Card, Field, Input } from '@/components/ui'
 import { collectOne, discoverSchoolPrograms } from './actions'
 import type { Region } from '@prisma/client'
-
-const inputCls =
-  'w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500'
 
 /** 单批上限 —— 既控花费,也避免把对方官网抓到限流 */
 const MAX_BATCH = 40
@@ -126,11 +123,12 @@ export function SchoolCollect({ region }: { region: Region }) {
         hint="填学院或研究生院列出所有授课型硕士的那一页,不是某一个项目的页面。例:https://www.ed.ac.uk/studying/postgraduate/degrees"
       >
         <div className="flex flex-wrap gap-2">
-          <input
+          <Input
             value={listingUrl}
             onChange={(e) => setListingUrl(e.target.value)}
             placeholder="https://www.bath.ac.uk/…/taught-postgraduate-courses/"
-            className={`${inputCls} flex-1 font-mono text-xs`}
+
+            className="flex-1 font-mono text-xs"
           />
           <Button disabled={pending || !listingUrl.trim()} onClick={discover}>
             {pending && !candidates ? '查找中…' : '查找项目'}

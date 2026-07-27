@@ -2,11 +2,8 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Card, Field } from '@/components/ui'
+import { Button, Card, Field, Input, Textarea } from '@/components/ui'
 import { saveDeliverer, setDelivererActive, type DelivererInput } from '../dispatch/actions'
-
-const inputCls =
-  'w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500'
 
 const EMPTY: DelivererInput = {
   name: '',
@@ -53,14 +50,13 @@ function Form({
     <div className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="姓名">
-          <input value={f.name} onChange={(e) => set('name', e.target.value)} className={inputCls} />
+          <Input value={f.name} onChange={(e) => set('name', e.target.value)} />
         </Field>
         <Field label="角色" hint="会显示在定价页的服务卡片上">
-          <input
+          <Input
             value={f.role}
             onChange={(e) => set('role', e.target.value)}
             list="role-presets"
-            className={inputCls}
           />
           <datalist id="role-presets">
             {ROLE_PRESETS.map((r) => (
@@ -69,14 +65,13 @@ function Form({
           </datalist>
         </Field>
         <Field label="企业微信 / 微信号" hint="派单后你要靠它把人拉进群">
-          <input
+          <Input
             value={f.wxContact}
             onChange={(e) => set('wxContact', e.target.value)}
-            className={inputCls}
           />
         </Field>
         <Field label="手机号">
-          <input value={f.phone} onChange={(e) => set('phone', e.target.value)} className={inputCls} />
+          <Input value={f.phone} onChange={(e) => set('phone', e.target.value)} />
         </Field>
         <Field
           label="分成比例(%)"
@@ -86,11 +81,12 @@ function Form({
               : `交付人拿 ${pct}%,平台留 ${platformPct}%`
           }
         >
-          <input
+          <Input
             value={f.splitPercent}
             onChange={(e) => set('splitPercent', e.target.value)}
             inputMode="numeric"
-            className={`${inputCls} font-mono`}
+
+            className="font-mono"
           />
         </Field>
         <label className="flex items-start gap-2 pt-7">
@@ -104,11 +100,10 @@ function Form({
         </label>
         <div className="sm:col-span-2">
           <Field label="备注" hint="擅长地区 / 专业方向 / 不接什么单,派单时的参考">
-            <textarea
+            <Textarea
               value={f.note}
               rows={2}
               onChange={(e) => set('note', e.target.value)}
-              className={inputCls}
             />
           </Field>
         </div>
@@ -135,44 +130,39 @@ function Form({
         {f.showOnSite && (
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Field label="对外头衔" hint="如「选校规划老师」;留空则用上面的角色">
-              <input
+              <Input
                 value={f.publicTitle}
                 onChange={(e) => set('publicTitle', e.target.value)}
-                className={inputCls}
               />
             </Field>
             <Field label="从业年限" hint="填数字,留空则不展示">
-              <input
+              <Input
                 value={f.yearsExp}
                 onChange={(e) => set('yearsExp', e.target.value)}
                 placeholder="如 5"
-                className={inputCls}
               />
             </Field>
             <div className="sm:col-span-2">
               <Field label="教育背景" hint="如「爱丁堡大学 教育学硕士」">
-                <input
+                <Input
                   value={f.education}
                   onChange={(e) => set('education', e.target.value)}
-                  className={inputCls}
                 />
               </Field>
             </div>
             <div className="sm:col-span-2">
               <Field label="擅长方向" hint="逗号分隔,最多显示 3 个,如「英国,商科,数据科学」">
-                <input
+                <Input
                   value={f.specialties}
                   onChange={(e) => set('specialties', e.target.value)}
-                  className={inputCls}
                 />
               </Field>
             </div>
             <div className="sm:col-span-2">
               <Field label="一句话亮点" hint="如「主要负责英港新商科方向」。不要写录取承诺">
-                <input
+                <Input
                   value={f.highlight}
                   onChange={(e) => set('highlight', e.target.value)}
-                  className={inputCls}
                 />
               </Field>
             </div>

@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Card, Field } from '@/components/ui'
+import { Button, Card, Field, Input, Textarea } from '@/components/ui'
 import {
   saveServiceSku,
   savePlan,
@@ -11,9 +11,6 @@ import {
   type SkuInput,
   type PlanInput,
 } from './actions'
-
-const inputCls =
-  'w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500'
 
 function yuan(cents: number): string {
   return (cents / 100).toLocaleString('zh-CN', { minimumFractionDigits: 0 })
@@ -111,61 +108,57 @@ export function SkuEditor({
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <Field label="服务名">
-            <input value={f.name} onChange={(e) => set('name', e.target.value)} className={inputCls} />
+            <Input value={f.name} onChange={(e) => set('name', e.target.value)} />
           </Field>
         </div>
 
         <Field label="价格(元)" hint={`当前 ¥${yuan(sku.priceCents)}。填元不填分,如 1200`}>
-          <input
+          <Input
             value={f.priceYuan}
             onChange={(e) => set('priceYuan', e.target.value)}
             inputMode="decimal"
-            className={`${inputCls} font-mono`}
+
+            className="font-mono"
           />
         </Field>
 
         <Field label="交付时限(小时)">
-          <input
+          <Input
             value={f.slaHours}
             onChange={(e) => set('slaHours', e.target.value)}
             inputMode="numeric"
-            className={inputCls}
           />
         </Field>
 
         <div className="sm:col-span-2">
           <Field label="卖点描述" hint="展示在定价页和服务市场,直接影响转化。">
-            <textarea
+            <Textarea
               value={f.description}
               rows={2}
               onChange={(e) => set('description', e.target.value)}
-              className={inputCls}
             />
           </Field>
         </div>
 
         <Field label="交付人角色" hint="如:签约顾问 / 文书编辑 / 在读学长学姐">
-          <input
+          <Input
             value={f.delivererRole}
             onChange={(e) => set('delivererRole', e.target.value)}
-            className={inputCls}
           />
         </Field>
 
         <Field label="交付形式" hint="如:视频会议(腾讯会议)">
-          <input
+          <Input
             value={f.deliveryForm}
             onChange={(e) => set('deliveryForm', e.target.value)}
-            className={inputCls}
           />
         </Field>
 
         <Field label="排序" hint="数字小的排前面">
-          <input
+          <Input
             value={f.sort}
             onChange={(e) => set('sort', e.target.value)}
             inputMode="numeric"
-            className={inputCls}
           />
         </Field>
 
@@ -363,23 +356,23 @@ export function PlanEditor({
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <Field label="套餐名">
-            <input value={f.name} onChange={(e) => set('name', e.target.value)} className={inputCls} />
+            <Input value={f.name} onChange={(e) => set('name', e.target.value)} />
           </Field>
         </div>
         <Field label="价格(元)" hint={`当前 ¥${yuan(plan.priceCents)}`}>
-          <input
+          <Input
             value={f.priceYuan}
             onChange={(e) => set('priceYuan', e.target.value)}
             inputMode="decimal"
-            className={`${inputCls} font-mono`}
+
+            className="font-mono"
           />
         </Field>
         <Field label="每日 AI 次数" hint="订阅用户每天可用的 AI 文书辅助次数上限">
-          <input
+          <Input
             value={f.aiDailyQuota}
             onChange={(e) => set('aiDailyQuota', e.target.value)}
             inputMode="numeric"
-            className={inputCls}
           />
         </Field>
         <label className="flex items-center gap-2 sm:col-span-2">

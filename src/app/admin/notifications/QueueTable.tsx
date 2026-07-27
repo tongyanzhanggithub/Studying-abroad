@@ -2,11 +2,8 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Card } from '@/components/ui'
+import { Button, Card, Input } from '@/components/ui'
 import { discardNotifications, markNotifiedManually } from './actions'
-
-const inputCls =
-  'w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500'
 
 export interface QueueRow {
   id: string
@@ -51,11 +48,10 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
           <span className="text-sm text-ink-500">已选 {sel.size}</span>
         </div>
 
-        <input
+        <Input
           value={note}
           onChange={(e) => setNote(e.target.value)}
           placeholder="兜底方式,如:已逐个电话通知 / 已在微信群 @ 到本人"
-          className={inputCls}
         />
 
         <div className="flex flex-wrap items-center gap-3">

@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Card, Field } from '@/components/ui'
+import { Button, Card, Field, Input, Select } from '@/components/ui'
 import {
   createAccount,
   updateAccount,
@@ -11,9 +11,6 @@ import {
   type AccountInput,
 } from './actions'
 import type { AdminRole } from '@prisma/client'
-
-const inputCls =
-  'w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500'
 
 export const ROLE_LABEL: Record<AdminRole, string> = {
   super_admin: '超级管理员',
@@ -89,24 +86,23 @@ function Form({
     <div className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="邮箱" hint="登录用">
-          <input value={f.email} onChange={(e) => set('email', e.target.value)} className={inputCls} />
+          <Input value={f.email} onChange={(e) => set('email', e.target.value)} />
         </Field>
         <Field label="姓名">
-          <input value={f.name} onChange={(e) => set('name', e.target.value)} className={inputCls} />
+          <Input value={f.name} onChange={(e) => set('name', e.target.value)} />
         </Field>
         <div className="sm:col-span-2">
           <Field label="角色" hint={ROLE_DESC[f.role]}>
-            <select
+            <Select
               value={f.role}
               onChange={(e) => set('role', e.target.value as AdminRole)}
-              className={inputCls}
             >
               {(Object.keys(ROLE_LABEL) as AdminRole[]).map((r) => (
                 <option key={r} value={r}>
                   {ROLE_LABEL[r]}
                 </option>
               ))}
-            </select>
+            </Select>
           </Field>
         </div>
 
@@ -116,10 +112,9 @@ function Form({
               label="关联交付人"
               hint="顾问登录后看到的是这个交付人名下的订单。没有关联就一单也看不到。"
             >
-              <select
+              <Select
                 value={f.delivererId}
                 onChange={(e) => set('delivererId', e.target.value)}
-                className={inputCls}
               >
                 <option value="">选择交付人</option>
                 {deliverers.map((d) => (
@@ -127,7 +122,7 @@ function Form({
                     {d.name}({d.role}){d.taken && d.id !== initial.delivererId ? ' · 已有账号' : ''}
                   </option>
                 ))}
-              </select>
+              </Select>
             </Field>
           </div>
         )}

@@ -2,13 +2,10 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui'
+import { Button, Input, Select, Textarea } from '@/components/ui'
 import { NEXT_ACTIONS } from '@/lib/services/dispatch'
 import { assignOrder, resolveDispute, updateOrderStatus } from './actions'
 import type { OrderStatus } from '@prisma/client'
-
-const inputCls =
-  'w-full rounded-lg border border-ink-200 px-2.5 py-1.5 text-xs outline-none focus:border-brand-500'
 
 export function AssignPanel({
   orderId,
@@ -55,10 +52,10 @@ export function AssignPanel({
       {canAssign && (
         <div className="space-y-2">
           <div className="flex gap-2">
-            <select
+            <Select
               value={selected}
               onChange={(e) => setSelected(e.target.value)}
-              className="flex-1 rounded-lg border border-ink-200 px-2 py-1.5 text-xs"
+              className="flex-1 px-2 py-1.5 text-xs"
             >
               <option value="">选择交付人</option>
               {deliverers.map((d) => (
@@ -66,7 +63,7 @@ export function AssignPanel({
                   {d.name}({d.role})
                 </option>
               ))}
-            </select>
+            </Select>
             <Button
               size="sm"
               disabled={pending || !selected}
@@ -90,11 +87,10 @@ export function AssignPanel({
             </Button>
           </div>
           {!currentDelivererId && (
-            <input
+            <Input
               value={assignNote}
               onChange={(e) => setAssignNote(e.target.value)}
               placeholder="给交付人的说明(选填)"
-              className={inputCls}
             />
           )}
         </div>
@@ -114,18 +110,16 @@ export function AssignPanel({
               </Button>
             ) : (
               <div className="space-y-2 rounded-lg border border-ink-200 p-2">
-                <textarea
+                <Textarea
                   value={deliveryNote}
                   onChange={(e) => setDeliveryNote(e.target.value)}
                   rows={2}
                   placeholder="交付了什么?如:已完成 60min 视频咨询,方案文档已发群里"
-                  className={inputCls}
                 />
-                <input
+                <Input
                   value={deliveryUrl}
                   onChange={(e) => setDeliveryUrl(e.target.value)}
                   placeholder="交付物链接(选填)"
-                  className={inputCls}
                 />
                 <p className="text-[11px] leading-relaxed text-ink-400">
                   交付说明必填 —— 服务是线下交付的,出纠纷时这是唯一的依据。
@@ -177,12 +171,11 @@ export function AssignPanel({
             异议单不会被 48h 自动确认,必须在这里处理掉,否则会一直卡着 ——
             交付人拿不到钱,学生也等不到答复。
           </p>
-          <textarea
+          <Textarea
             value={resolution}
             onChange={(e) => setResolution(e.target.value)}
             rows={2}
             placeholder="处理结论(必填):和学生沟通了什么、怎么定的"
-            className={inputCls}
           />
           <div className="flex flex-wrap gap-2">
             <Button

@@ -2,14 +2,11 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Card, Field } from '@/components/ui'
+import { Button, Card, Field, Input, Select, Textarea } from '@/components/ui'
 import { DIRECTION_LABEL, DIRECTION_ORDER } from '@/lib/programs/types'
 import type { ExtractedProgram, FieldKey } from '@/lib/collect/extract'
 import { approveDraft, rejectDraft, type ReviewedValues } from '../actions'
 import type { Direction } from '@prisma/client'
-
-const inputCls =
-  'w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500'
 
 /**
  * 逐字段审核。
@@ -52,17 +49,15 @@ function Row({
         <div>
           {children ??
             (rows ? (
-              <textarea
+              <Textarea
                 value={value}
                 rows={rows}
                 onChange={(e) => onChange?.(e.target.value)}
-                className={inputCls}
               />
             ) : (
-              <input
+              <Input
                 value={value}
                 onChange={(e) => onChange?.(e.target.value)}
-                className={inputCls}
               />
             ))}
 
@@ -159,17 +154,16 @@ export function ReviewForm({
         <Row label="项目中文名" value={v.programNameZh} onChange={(x) => set('programNameZh', x)} evidence={ev('program_name_zh')} />
         <Row label="学院" value={v.faculty} onChange={(x) => set('faculty', x)} evidence={ev('faculty')} />
         <Row label="专业方向" evidence={ev('direction')}>
-          <select
+          <Select
             value={v.direction}
             onChange={(e) => set('direction', e.target.value as Direction)}
-            className={inputCls}
           >
             {DIRECTION_ORDER.map((d) => (
               <option key={d} value={d}>
                 {DIRECTION_LABEL[d]}
               </option>
             ))}
-          </select>
+          </Select>
         </Row>
         <Row label="学制(月)" value={v.durationMonths} onChange={(x) => set('durationMonths', x)} evidence={ev('duration_months')} />
         <Row label="学费" value={v.tuition} onChange={(x) => set('tuition', x)} evidence={ev('tuition')} rows={2} />
@@ -281,11 +275,12 @@ export function ReviewForm({
 
         {rejecting && (
           <div className="mt-3 flex flex-wrap gap-2">
-            <input
+            <Input
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="丢弃原因,如:抓的是列表页 / 是上一届的信息"
-              className={`${inputCls} flex-1`}
+
+              className="flex-1"
             />
             <Button
               size="sm"

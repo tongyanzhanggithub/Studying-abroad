@@ -96,6 +96,34 @@ export function Field({
   )
 }
 
+/**
+ * 表单控件的统一外观。
+ *
+ * ⚠️ 这串 class 以前在 9 个后台文件里各自写了一份 `const inputCls = '...'`,
+ *    一共出现 37 处。改一次圆角或聚焦色要动 9 个文件,漏一个就出现两种输入框。
+ *    收在这里之后只有一处定义。
+ *
+ * 三个组件透传全部原生属性,className 走 cn 合并 —— 需要额外样式
+ * (`font-mono`、`flex-1` 之类)直接传 className 即可,不会覆盖掉基础外观。
+ */
+const controlCls =
+  'w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500'
+
+export function Input({ className, ...props }: React.InputHTMLAttributes<HTMLInputElement>) {
+  return <input className={cn(controlCls, className)} {...props} />
+}
+
+export function Select({ className, ...props }: React.SelectHTMLAttributes<HTMLSelectElement>) {
+  return <select className={cn(controlCls, className)} {...props} />
+}
+
+export function Textarea({
+  className,
+  ...props
+}: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  return <textarea className={cn(controlCls, className)} {...props} />
+}
+
 export function RadioGroup<T extends string>({
   options,
   value,
