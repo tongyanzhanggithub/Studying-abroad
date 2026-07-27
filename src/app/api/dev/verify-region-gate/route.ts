@@ -1,6 +1,16 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { db } from '@/lib/db'
-import { getPublicRegions, getRegionHealth, publicProgramWhere } from '@/lib/regions/gate'
+/**
+ * ⚠️ 这里必须用 *Fresh 版本,不能用 getPublicRegions / publicProgramWhere。
+ *    那两个包了 React cache(),同一次请求内只查一次库;而本自检要在**一次请求内**
+ *    反复「改配置 → 重新读闸门 → 断言变了」,走缓存会四次读到同一个结果,
+ *    自检把「缓存生效」误报成「闸门失灵」。
+ */
+import {
+  getRegionHealth,
+  publicProgramWhereFresh,
+  readPublicRegionsFresh,
+} from '@/lib/regions/gate'
 import { isValidCronSecret } from '@/lib/cron-auth'
 
 /**
@@ -77,10 +87,10 @@ export async function POST(request: NextRequest) {
       update: { isPublic: false },
     })
 
-    const closedRegions = await getPublicRegions()
+    const closedRegions = await readPublicRegionsFresh()
     check('关闭的地区不出现在开放列表', !closedRegions.includes(testRegion as never))
 
-    const whereClosed = await publicProgramWhere()
+    const whereClosed = await publicProgramWhereFresh()
 
     // 不带额外条件时
     const closedTotal = await db.program.count({ where: whereClosed })
@@ -141,10 +151,10 @@ export async function POST(request: NextRequest) {
       data: { isPublic: true, publishedAt: new Date() },
     })
 
-    const openRegions = await getPublicRegions()
+    const openRegions = await readPublicRegionsFresh()
     check('开放后进入开放列表', openRegions.includes(testRegion as never))
 
-    const whereOpen = await publicProgramWhere()
+    const whereOpen = await publicProgramWhereFresh()
     const openCount = await db.program.count({
       where: { ...whereOpen, region: testRegion as never },
     })
@@ -159,7 +169,7 @@ export async function POST(request: NextRequest) {
       where: { region: testRegion as never },
       data: { isPublic: false, publishedAt: null },
     })
-    const wherePulled = await publicProgramWhere()
+    const wherePulled = await publicProgramWhereFresh()
     const pulledCount = await db.program.count({
       where: { ...wherePulled, region: testRegion as never },
     })

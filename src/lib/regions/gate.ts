@@ -1,4 +1,5 @@
 import 'server-only'
+import { cache } from 'react'
 import { db } from '@/lib/db'
 import { REGION_LABEL, REGION_ORDER, VERIFY_STALE_DAYS } from '@/lib/programs/types'
 import type { Region } from '@prisma/client'
@@ -46,13 +47,34 @@ export interface RegionHealth {
  * 所有面向用户的查询都必须经过它 —— 首页、评估表单、院校库、选校。
  * 后台不受限制(运营要能看到还没开放的数据才能核对)。
  */
-export async function getPublicRegions(): Promise<Region[]> {
+async function queryPublicRegions(): Promise<Region[]> {
   const settings = await db.regionSetting.findMany({
     where: { isPublic: true },
     select: { region: true },
   })
   return settings.map((s) => s.region)
 }
+
+/**
+ * ⚠️ 用 React cache() 包一层:同一次请求内多处调用只算一次(同 getSession)。
+ *
+ *    这是全站最热的一次查询 —— 15 个调用点,而且经常在同一次渲染里重复:
+ *    选校页就查两遍(一次经 publicProgramWhere 拼查询条件,一次单独取
+ *    publicRegionSet 用来标记已撤下的选校),首页、评估引擎、shortlist API 同理。
+ *    这张表只有十几行、只在运营点「开放地区」时才变,每次渲染重复查纯属浪费。
+ *    cache() 只在**单次请求**内去重,跨请求不缓存 —— 运营撤下一个地区,
+ *    下一个请求立刻生效,不存在「撤下了但还看得到」的窗口。
+ */
+export const getPublicRegions = cache(queryPublicRegions)
+
+/**
+ * 绕过请求内缓存的直读版本。
+ *
+ * ⚠️ 只有 /api/dev/verify-region-gate 该用它。那个自检路由会在**同一次请求内**
+ *    反复「改配置 → 重新读闸门 → 断言变了」,走缓存的话四次读到的都是第一次的
+ *    结果,自检会误报失败。业务代码一律用 getPublicRegions。
+ */
+export const readPublicRegionsFresh = queryPublicRegions
 
 /**
  * 面向用户的 program 查询条件。
@@ -70,6 +92,15 @@ export async function getPublicRegions(): Promise<Region[]> {
  */
 export async function publicProgramWhere() {
   const regions = await getPublicRegions()
+  return {
+    active: true,
+    AND: [{ region: { in: regions } }],
+  }
+}
+
+/** publicProgramWhere 的直读版本。理由同 readPublicRegionsFresh —— 只给自检路由用 */
+export async function publicProgramWhereFresh() {
+  const regions = await readPublicRegionsFresh()
   return {
     active: true,
     AND: [{ region: { in: regions } }],

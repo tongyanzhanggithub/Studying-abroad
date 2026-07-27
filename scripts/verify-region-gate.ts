@@ -14,7 +14,14 @@
  */
 
 import { PrismaClient } from '@prisma/client'
-import { getPublicRegions, getRegionHealth, publicProgramWhere } from '../src/lib/regions/gate'
+// ⚠️ 用 *Fresh 版本:getPublicRegions / publicProgramWhere 包了 React cache(),
+// 本自检要在同一段流程里反复「改配置 → 重读闸门 → 断言变了」,走缓存会读到陈旧值。
+// (脚本跑在 React 请求上下文之外,cache() 实际不会生效 —— 但不该依赖这个细节。)
+import {
+  getRegionHealth,
+  publicProgramWhereFresh,
+  readPublicRegionsFresh,
+} from '../src/lib/regions/gate'
 import { assertNotProduction } from './guard-not-production'
 
 const db = new PrismaClient()
@@ -61,11 +68,11 @@ async function main() {
   // ── 1. 默认全关 ────────────────────────────────
   await db.regionSetting.deleteMany({ where: { region: testRegion as never } })
 
-  const before = await getPublicRegions()
+  const before = await readPublicRegionsFresh()
   if (before.includes(testRegion as never)) fail('没有配置记录时该地区竟然是开放的')
   ok(`默认关闭(当前开放地区:${before.length ? before.join('、') : '无'})`)
 
-  const whereClosed = await publicProgramWhere()
+  const whereClosed = await publicProgramWhereFresh()
   const countClosed = await db.program.count({ where: whereClosed })
   const closedRegionCount = await db.program.count({
     where: { ...whereClosed, region: testRegion as never },
@@ -115,11 +122,11 @@ async function main() {
     update: { isPublic: true, publishedAt: new Date() },
   })
 
-  const opened = await getPublicRegions()
-  if (!opened.includes(testRegion as never)) fail('开放后 getPublicRegions 仍不包含该地区')
+  const opened = await readPublicRegionsFresh()
+  if (!opened.includes(testRegion as never)) fail('开放后 readPublicRegionsFresh 仍不包含该地区')
   ok('开放成功')
 
-  const whereOpen = await publicProgramWhere()
+  const whereOpen = await publicProgramWhereFresh()
   const visibleNow = await db.program.count({
     where: { ...whereOpen, region: testRegion as never },
   })
@@ -133,7 +140,7 @@ async function main() {
     where: { region: testRegion as never },
     data: { isPublic: false, publishedAt: null },
   })
-  const whereAfterPull = await publicProgramWhere()
+  const whereAfterPull = await publicProgramWhereFresh()
   const afterPull = await db.program.count({
     where: { ...whereAfterPull, region: testRegion as never },
   })
