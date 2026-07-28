@@ -1,6 +1,7 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
+import { CACHE_TAGS } from '@/lib/cache-tags'
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 import { getRegionHealth } from '@/lib/regions/gate'
@@ -51,6 +52,9 @@ export async function setRegionPublic(region: Region, isPublic: boolean) {
   })
 
   // 用户侧全部受影响
+  // ⚠️ 首页的院校列表 / 项目数走跨请求缓存,光 revalidatePath 清不掉它 ——
+  //    必须连标签一起失效,否则运营撤下一个地区,首页最长 5 分钟还在宣传它。
+  revalidateTag(CACHE_TAGS.publicCatalog)
   revalidatePath('/')
   revalidatePath('/assess')
   revalidatePath('/app/schools')

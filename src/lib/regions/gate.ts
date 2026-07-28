@@ -70,9 +70,13 @@ export const getPublicRegions = cache(queryPublicRegions)
 /**
  * 绕过请求内缓存的直读版本。
  *
- * ⚠️ 只有 /api/dev/verify-region-gate 该用它。那个自检路由会在**同一次请求内**
- *    反复「改配置 → 重新读闸门 → 断言变了」,走缓存的话四次读到的都是第一次的
- *    结果,自检会误报失败。业务代码一律用 getPublicRegions。
+ * 只有两个地方该用它,其余业务代码一律用 getPublicRegions:
+ *
+ *   1. /api/dev/verify-region-gate —— 那个自检路由会在**同一次请求内**反复
+ *      「改配置 → 重新读闸门 → 断言变了」,走缓存的话四次读到的都是第一次的
+ *      结果,自检会误报失败。
+ *   2. 首页的 unstable_cache callback(src/app/page.tsx)—— 它跑在**跨请求**
+ *      缓存边界里,那儿根本没有「当前请求」,请求内记忆化既无意义也不该依赖。
  */
 export const readPublicRegionsFresh = queryPublicRegions
 

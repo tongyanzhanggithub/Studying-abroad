@@ -4,9 +4,9 @@ import { Disclaimer } from '@/components/ui'
 import { BrandLogo } from '@/components/BrandLogo'
 import { formatCents } from '@/lib/utils'
 import { serviceDisplay } from '@/lib/service-display'
-import { track } from '@/lib/analytics'
 import { getCurrentUser, getActiveSubscription } from '@/lib/auth/session'
 import { BuyButton } from './BuyButton'
+import { TrackPricingView } from './TrackView'
 import { TeacherMarquee } from '@/components/TeacherMarquee'
 
 /**
@@ -153,13 +153,10 @@ export default async function PricingPage() {
    */
   const subscription = user ? await getActiveSubscription(user.id) : null
 
-  await track('pricing_view', {
-    userId: user?.id ?? null,
-    properties: { usingFallback },
-  })
-
   return (
     <main className="marketing-page min-h-screen bg-insta-surface text-ink-800">
+      {/* 浏览埋点 —— 不渲染任何东西,见 TrackView.tsx */}
+      <TrackPricingView usingFallback={usingFallback} />
       <header className="sticky top-0 z-30 border-b border-white/60 bg-white/75 shadow-[0_1px_28px_rgba(193,53,132,0.08)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
           <BrandLogo className="text-lg" />

@@ -1,6 +1,7 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
+import { CACHE_TAGS } from '@/lib/cache-tags'
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 
@@ -90,6 +91,7 @@ export async function saveServiceSku(id: string, input: SkuInput) {
 }
 
 function revalidateServicePages() {
+  // 首页的「起价」取自 Plan,不受服务改动影响;这里只清页面
   revalidatePath('/admin/services')
   revalidatePath('/admin/pricing')
   revalidatePath('/pricing')
@@ -225,6 +227,9 @@ export async function savePlan(id: string, input: PlanInput) {
     },
   })
 
+  // ⚠️ 首页的「起价」缓存在 marketing-data 里,不清标签的话
+  //    后台改完价格,首页最长 5 分钟还在显示旧价 —— 这是钱,不能靠 TTL 兜。
+  revalidateTag(CACHE_TAGS.plans)
   revalidatePath('/admin/pricing')
   revalidatePath('/pricing')
 
@@ -264,6 +269,7 @@ export async function deletePlan(id: string) {
     }
   }
 
+  revalidateTag(CACHE_TAGS.plans)
   revalidatePath('/admin/pricing')
   revalidatePath('/pricing')
   return { ok: true as const }

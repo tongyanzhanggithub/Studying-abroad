@@ -1,6 +1,8 @@
 'use server'
 
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { db } from '@/lib/db'
+import { CACHE_TAGS } from '@/lib/cache-tags'
 import { requireAdmin } from '@/lib/auth/session'
 import { qsRankingSyncOps } from '@/lib/programs/qs-ranking-sync'
 import { REGION_LABEL, DIRECTION_LABEL } from '@/lib/programs/types'
@@ -304,6 +306,18 @@ export async function importPrograms(csvText: string) {
   console.info(
     `[programs:import] 管理员 ${admin.adminId} 导入:新增 ${created}、更新 ${updated}、失败 ${errors.length}`,
   )
+
+  /**
+   * ⚠️ 这个函数原来**一处失效都没做** —— CSV 导入几百条项目之后,
+   *    后台列表和首页的项目数都还是旧的,只能靠人自己刷新才看得到。
+   *    既然现在首页那份数据还进了跨请求缓存,不清标签就会一直停在旧值,
+   *    所以这里补齐。
+   */
+  if (created > 0 || updated > 0) {
+    revalidateTag(CACHE_TAGS.publicCatalog)
+    revalidatePath('/admin/programs')
+    revalidatePath('/')
+  }
 
   return {
     ok: true as const,

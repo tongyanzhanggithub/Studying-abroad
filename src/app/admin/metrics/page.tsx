@@ -44,10 +44,11 @@ export default async function AdminMetricsPage() {
     onboardingComplete, servicePaySuccess,
     shareClicked, referralOpened, referralConverted,
     recShown, recClicked,
-    activeSubs, serviceOrders, totalPrograms, unverifiedPrograms,
+    activeSubs, serviceBuyers, totalPrograms, unverifiedPrograms,
     failedNotifications,
     pendingNotifications,
     pendingDeadlineNotifications,
+    subRevenue,
   ] = await Promise.all([
     countEvents('assess_start', since),
     countEvents('assess_complete', since),
@@ -61,9 +62,17 @@ export default async function AdminMetricsPage() {
     countEvents('rec_card_shown', since),
     countEvents('rec_card_clicked', since),
     db.subscription.count({ where: { status: 'active' } }),
-    db.serviceOrder.findMany({
+    /**
+     * 加购率的分子:**买过增值服务的人数**(去重),不是订单数。
+     *
+     * ⚠️ 原来是 findMany 把所有成交订单整表捞进 Node 再 `new Set(...).size`。
+     *    没有 take,订单越多这一页越慢,而且顺手 select 了 amountCents ——
+     *    一次都没用到(收入是下面 payment.aggregate 算的)。
+     *    groupBy 让数据库做 DISTINCT,回来的只有去重后的行。
+     */
+    db.serviceOrder.groupBy({
+      by: ['userId'],
       where: { status: { in: ['paid', 'assigned', 'delivering', 'delivered', 'confirmed'] } },
-      select: { amountCents: true, userId: true },
     }),
     db.program.count(),
     db.program.count({
@@ -93,19 +102,17 @@ export default async function AdminMetricsPage() {
         template: { code: { startsWith: 'deadline_' } },
       },
     }),
+    // ⚠️ 原来这条是在 Promise.all **之后**单独 await 的 —— 白多一个串行往返。
+    //    它和上面任何一条都没有依赖关系,直接并进来。
+    db.payment.aggregate({ where: { status: 'succeeded' }, _sum: { amountCents: true } }),
   ])
 
   const assessRate = assessStart ? Math.round((assessComplete / assessStart) * 100) : 0
   const payRate = assessComplete ? Math.round((paySuccess / assessComplete) * 100) : 0
-  const buyerIds = new Set(serviceOrders.map((o) => o.userId))
-  const attachRate = activeSubs ? Math.round((buyerIds.size / activeSubs) * 100) : 0
+  const attachRate = activeSubs ? Math.round((serviceBuyers.length / activeSubs) * 100) : 0
   const recCtr = recShown ? Math.round((recClicked / recShown) * 1000) / 10 : 0
   const staleRate = totalPrograms ? Math.round((unverifiedPrograms / totalPrograms) * 100) : 0
 
-  const subRevenue = await db.payment.aggregate({
-    where: { status: 'succeeded' },
-    _sum: { amountCents: true },
-  })
   const totalRevenue = subRevenue._sum.amountCents ?? 0
   const arpu = activeSubs ? Math.round(totalRevenue / activeSubs) : 0
 

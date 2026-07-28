@@ -1,6 +1,7 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
+import { CACHE_TAGS } from '@/lib/cache-tags'
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 import { notifyProgramChange } from '@/lib/notifications/send'
@@ -26,6 +27,8 @@ export async function markVerifiedBatch(programIds: string[]) {
       verifiedBy: admin.adminId,
     },
   })
+  // 项目数变了 —— 首页那个「收录 N 个项目」走跨请求缓存,要连标签一起失效
+  revalidateTag(CACHE_TAGS.publicCatalog)
   revalidatePath('/admin/programs')
   return { ok: true as const, count: res.count }
 }
@@ -43,6 +46,8 @@ export async function unverifyProgram(programId: string) {
     where: { id: programId },
     data: { confidence: 'ai_collected', lastVerifiedAt: null, verifiedBy: null },
   })
+  // 项目数变了 —— 首页那个「收录 N 个项目」走跨请求缓存,要连标签一起失效
+  revalidateTag(CACHE_TAGS.publicCatalog)
   revalidatePath('/admin/programs')
   revalidatePath(`/admin/programs/${programId}`)
   return { ok: true as const }
@@ -315,6 +320,8 @@ export async function saveProgram(
     }
   }
 
+  // 项目数变了 —— 首页那个「收录 N 个项目」走跨请求缓存,要连标签一起失效
+  revalidateTag(CACHE_TAGS.publicCatalog)
   revalidatePath('/admin/programs')
   revalidatePath(`/admin/programs/${programId}`)
   return {

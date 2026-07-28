@@ -59,17 +59,32 @@ export async function importAssessmentToShortlist(leadId: string) {
   })
   const has = new Set(existing.map((c) => c.programId))
 
-  let added = 0
-  let sort = existing.length
-  for (const p of picks) {
-    if (!allowedIds.has(p.programId)) continue
-    // 已在选校单里的跳过,不覆盖用户自己改过的档位
-    if (has.has(p.programId)) continue
-    await db.userSchoolChoice.create({
-      data: { userId: user.id, programId: p.programId, tierTag: p.tier, sort: sort++ },
-    })
-    added++
-  }
+  /**
+   * ⚠️ 一次 createMany 写完,不要在循环里逐条 await create。
+   *
+   *    一份评估能出二三十个项目,原写法就是二三十个串行往返;
+   *    更要命的是它们**不在一个事务里** —— 中途任何一条失败(连接被回收、
+   *    网络抖动),用户就留下一份导了一半的选校单:有的学校进去了、有的没有,
+   *    而且返回的 added 还是个半截数字,没有任何地方会发现这件事。
+   *    对一个「点一下把评估结果搬进来」的动作,要么全进要么全不进才说得通。
+   *
+   *    skipDuplicates 是第二道保险:上面按 has 过滤过一遍,但两次快速点击
+   *    会并发跑到这里,两边都读到「不存在」→ 撞 (userId, programId) 唯一约束
+   *    → 整个请求 500。交给数据库忽略重复行即可。
+   */
+  const toCreate = picks.filter((p) => allowedIds.has(p.programId) && !has.has(p.programId))
+
+  const res = await db.userSchoolChoice.createMany({
+    data: toCreate.map((p, i) => ({
+      userId: user.id,
+      programId: p.programId,
+      tierTag: p.tier,
+      sort: existing.length + i,
+    })),
+    skipDuplicates: true,
+  })
+  // 用数据库实际写入的行数,不是 toCreate.length —— skipDuplicates 可能少写几行
+  const added = res.count
 
   await regenerateMaterials(user.id)
 

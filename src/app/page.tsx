@@ -2,7 +2,9 @@ import Link from 'next/link'
 import { db } from '@/lib/db'
 import { formatCents } from '@/lib/utils'
 import { REGION_ORDER } from '@/lib/programs/types'
-import { getPublicRegions } from '@/lib/regions/gate'
+import { unstable_cache } from 'next/cache'
+import { readPublicRegionsFresh } from '@/lib/regions/gate'
+import { CACHE_TAGS, MARKETING_CACHE_SECONDS } from '@/lib/cache-tags'
 import { BrandLogo } from '@/components/BrandLogo'
 import { getSession } from '@/lib/auth/session'
 
@@ -213,19 +215,42 @@ const FALLBACK_PLANS: MarketingPlan[] = [
   },
 ]
 
-async function getMarketingData(): Promise<{
-  programCount: number
-  schools: MarketingSchool[]
-  plans: MarketingPlan[]
-}> {
-  try {
+/**
+ * ⚠️ 这一段套了跨请求缓存(unstable_cache),整个文件里只有它。
+ *
+ *    首页是漏斗最顶端、匿名流量最大的一页,而它读的东西 —— 已开放地区、
+ *    院校列表(美国扩完之后好几百行)、项目总数、起价 —— 是**月级别**才变一次的。
+ *    原来每个划过首页的人都实打实打一次 RDS,在小规格实例上是最不值的一笔开销。
+ *
+ *    页面本身依然是动态的(下面要读 session 换按钮文案),缓存的只是这几条查询。
+ *
+ * ⚠️ 失效有两条路,缺一不可:
+ *      · 后台改套餐 / 开关地区 → revalidateTag,立即生效
+ *      · 命令行导入(data:import / schools:import)跑在 Next 进程外,
+ *        调不到 revalidateTag → 靠 MARKETING_CACHE_SECONDS 兜底
+ *
+ * ⚠️ try/catch 必须留在**缓存外层**。数据库连不上时不能把兜底数据
+ *    当成正常结果缓存 5 分钟 —— 那样数据库恢复了首页还在显示假数字。
+ */
+const readMarketingData = unstable_cache(
+  async (): Promise<{
+    programCount: number
+    schools: MarketingSchool[]
+    plans: MarketingPlan[]
+  }> => {
     /**
      * ⚠️ 首页只统计**已开放地区**。
      *
      * 否则会出现:首页宣称覆盖 310 个项目、31 所学校,用户点进评估
      * 却只能选英国 —— 这是拿还没核对的数据给自己撑门面。
      */
-    const publicRegions = await getPublicRegions()
+    /**
+     * ⚠️ 这里用直读版本,不用 getPublicRegions。
+     *    后者是 React cache() 包的,作用域是**单次请求**;而这个 callback 跑在
+     *    跨请求缓存边界里,那儿没有「当前请求」可言 —— 请求内记忆化在这里
+     *    既没有意义,语义上也不该依赖。直读一次,结果由外层缓存持有。
+     */
+    const publicRegions = await readPublicRegionsFresh()
 
     const [programCount, schools, plans] = await Promise.all([
       db.program.count({ where: { active: true, region: { in: publicRegions } } }),
@@ -238,6 +263,18 @@ async function getMarketingData(): Promise<{
     ])
 
     return { programCount, schools, plans }
+  },
+  ['marketing-data'],
+  { tags: [CACHE_TAGS.publicCatalog, CACHE_TAGS.plans], revalidate: MARKETING_CACHE_SECONDS },
+)
+
+async function getMarketingData(): Promise<{
+  programCount: number
+  schools: MarketingSchool[]
+  plans: MarketingPlan[]
+}> {
+  try {
+    return await readMarketingData()
   } catch (error) {
     console.warn('Marketing homepage is using fallback data because the database is unavailable.', error)
     return {

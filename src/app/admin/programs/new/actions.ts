@@ -1,6 +1,7 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
+import { CACHE_TAGS } from '@/lib/cache-tags'
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 import { normalizeRegion, normalizeDirection } from '@/lib/programs/csv'
@@ -85,6 +86,8 @@ export async function createProgram(input: {
     },
   })
 
+  // 项目数变了 —— 首页那个「收录 N 个项目」走跨请求缓存,要连标签一起失效
+  revalidateTag(CACHE_TAGS.publicCatalog)
   revalidatePath('/admin/programs')
   return { ok: true as const, programId: program.id }
 }
