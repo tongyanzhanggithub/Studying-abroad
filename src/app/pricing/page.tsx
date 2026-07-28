@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import Link from 'next/link'
 import { db } from '@/lib/db'
 import { Disclaimer } from '@/components/ui'
@@ -8,6 +10,12 @@ import { getCurrentUser, getActiveSubscription } from '@/lib/auth/session'
 import { BuyButton } from './BuyButton'
 import { TrackPricingView } from './TrackView'
 import { TeacherMarquee } from '@/components/TeacherMarquee'
+
+export const metadata: Metadata = pageMetadata({
+  title: '价格',
+  description:
+    '申请季通行证按季度计费,人工服务单独加购、按次付费。七天内且核心功能用得少于三次可全额退,规则写在付款页上。',
+})
 
 /**
  * 定价页(PRD 3.1 `/pricing`)。

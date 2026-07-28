@@ -204,13 +204,43 @@ export async function notifyServiceOrder(
  *
  * 由定时任务每日调用一次。
  */
+export const DEADLINE_THRESHOLDS = [
+  { days: 14, code: 'deadline_14d' },
+  { days: 7, code: 'deadline_7d' },
+  { days: 3, code: 'deadline_3d' },
+  { days: 1, code: 'deadline_1d' },
+] as const
+
+/**
+ * 把「还剩 N 天」翻译成可以直接丢进 SQL 的时间区间。
+ *
+ * 每个阈值对应**本地时区**的一整天:[今天零点 + N 天, 再往后一天)。
+ * 半开区间,不会漏也不会重。
+ *
+ * ⚠️ 必须和 utils 里的 daysUntil 用同一套口径(都按本地零点截断),
+ *    否则会出现「SQL 捞出来了,JS 里又算成不是这一档」而一条都发不出去。
+ *    本地时区由部署侧的 TZ=Asia/Shanghai 钉死(见 deploy/compass.service)。
+ *
+ * 导出仅为可测 —— 这是整个提醒链路的取数条件,算错等于集体收不到提醒。
+ */
+export function deadlineWindows(
+  now: Date,
+  thresholds: readonly number[],
+): Array<{ gte: Date; lt: Date }> {
+  const startOfToday = new Date(now)
+  startOfToday.setHours(0, 0, 0, 0)
+
+  return thresholds.map((d) => {
+    const gte = new Date(startOfToday)
+    gte.setDate(gte.getDate() + d)
+    const lt = new Date(gte)
+    lt.setDate(lt.getDate() + 1)
+    return { gte, lt }
+  })
+}
+
 export async function runDeadlineReminders(): Promise<{ sent: number; errors: string[] }> {
-  const THRESHOLDS = [
-    { days: 14, code: 'deadline_14d' },
-    { days: 7, code: 'deadline_7d' },
-    { days: 3, code: 'deadline_3d' },
-    { days: 1, code: 'deadline_1d' },
-  ]
+  const THRESHOLDS = DEADLINE_THRESHOLDS
 
   const errors: string[] = []
   let sent = 0
@@ -218,18 +248,52 @@ export async function runDeadlineReminders(): Promise<{ sent: number; errors: st
   // 4 个阈值模板循环外一次取完 —— 否则每命中一条选校记录就查一次模板
   const tplMap = await loadTemplates(THRESHOLDS.map((t) => t.code))
 
+  /**
+   * ⚠️ 日期筛选必须下推到数据库。
+   *
+   *    原来的 where 只有 `finalDeadline: { not: null }` —— 也就是把**全库所有人的
+   *    所有选校记录**拉出来,再在 JS 里 `THRESHOLDS.find(t => t.days === left)`
+   *    筛掉 99% 以上(命中率只有 4/365)。而且 include 是全字段的 Program,
+   *    带着 requirements / deadlines 两个 Json blob 和 sourceUrls 数组 ——
+   *    恰好是这张表最重的三个字段,一个都用不上。
+   *
+   *    这是**失败后果最严重**的那个定时任务(没跑 = 学生错过申请),
+   *    却跑在 --max-old-space-size=1024 的堆上,用户越多越危险。
+   *
+   *    改成按 4 个日期区间查,顺带让 @@index([finalDeadline]) 真正派上用场;
+   *    include 换成 select,只取渲染文案要用的那几个字段。
+   */
+  const windows = deadlineWindows(new Date(), THRESHOLDS.map((t) => t.days))
+
   const choices = await db.userSchoolChoice.findMany({
     where: {
-      program: { finalDeadline: { not: null } },
       status: { notIn: ['submitted', 'admitted', 'rejected', 'waitlisted'] },
+      program: { OR: windows.map((w) => ({ finalDeadline: w })) },
     },
-    include: { program: { include: { school: true } } },
+    select: {
+      id: true,
+      userId: true,
+      programId: true,
+      program: {
+        select: {
+          nameZh: true,
+          nameEn: true,
+          finalDeadline: true,
+          school: { select: { nameZh: true, nameEn: true } },
+        },
+      },
+    },
   })
 
   for (const choice of choices) {
     const left = daysUntil(choice.program.finalDeadline)
     if (left === null) continue
 
+    /**
+     * SQL 已经把范围收到这 4 天了,这一步只是**把行映射到对应的模板**。
+     * 保留 continue 作为兜底:时区/边界万一有偏差,宁可少发一条,
+     * 也不能发一条「还有 5 天」却套用 3 天模板的提醒。
+     */
     const threshold = THRESHOLDS.find((t) => t.days === left)
     if (!threshold) continue
 

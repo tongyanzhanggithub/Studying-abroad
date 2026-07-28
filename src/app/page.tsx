@@ -336,11 +336,33 @@ export default async function HomePage() {
 
       {/* ── 首屏 ───────────────────────────────────── */}
       <section className="hero-stage relative overflow-hidden border-b border-white/70">
-        <img
-          src="/images/instagram-study-hero.png"
-          alt=""
-          className="hero-bg absolute inset-0 h-full w-full object-cover"
-        />
+        {/*
+          首屏背景 —— 这是整个漏斗最顶端那一页的 LCP 元素,它多大就等于
+          新访客盯着空白 hero 多久。
+
+          ⚠️ 原来直接引 1.9 MB 的 PNG。转成 WebP(q82)之后是 125 KB,**省 94%**,
+             肉眼看不出区别。国内移动网络下这是好几秒的差别。
+             重新生成命令(项目里已有 sharp):
+               npx -y --package=sharp node -e "require('sharp')('public/images/instagram-study-hero.png').webp({quality:82}).toFile('public/images/instagram-study-hero.webp')"
+
+          ⚠️ PNG 作为 <picture> 的兜底留着 —— WebP 在 iOS 14 以下不支持,
+             那部分用户虽然少,但让他们看到一个**没有背景图的首屏**不值当。
+             现代浏览器一律只下 WebP,兜底文件不会被请求到。
+
+          用 <img> 而不是 next/image:这是张满幅背景图,尺寸固定、不需要响应式
+          多档,而服务器只有 2 vCPU —— 让它在运行时反复转码不划算,
+          不如构建前一次性压好。
+        */}
+        <picture>
+          <source srcSet="/images/instagram-study-hero.webp" type="image/webp" />
+          <img
+            src="/images/instagram-study-hero.png"
+            alt=""
+            fetchPriority="high"
+            decoding="async"
+            className="hero-bg absolute inset-0 h-full w-full object-cover"
+          />
+        </picture>
         <div className="hero-overlay absolute inset-0" />
 
         <div className="relative z-10 mx-auto max-w-6xl px-5 py-14 sm:py-20">

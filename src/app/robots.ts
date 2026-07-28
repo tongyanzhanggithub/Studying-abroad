@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { env } from '@/lib/env'
 
 /**
  * 爬虫规则。
@@ -12,6 +13,9 @@ import type { MetadataRoute } from 'next'
  */
 export default function robots(): MetadataRoute.Robots {
   return {
+    // ⚠️ 这份 disallow 必须和 sitemap.ts 里的清单严格对应 ——
+    //    提交了一个又在这里禁掉的地址,是在给搜索引擎发矛盾信号。
+    sitemap: `${env.siteUrl.replace(/\/$/, '')}/sitemap.xml`,
     rules: {
       userAgent: '*',
       // 首页、定价、法律页可以被收录;其余一律不收
