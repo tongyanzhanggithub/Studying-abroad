@@ -3,6 +3,7 @@ import { db } from '@/lib/db'
 import { env } from '@/lib/env'
 import { getLlmConfig } from '@/lib/settings'
 import { checkLlmRegion } from '@/lib/llm/region-guard'
+import { localDay } from '@/lib/utils'
 
 /**
  * LLM 网关。
@@ -295,8 +296,15 @@ export async function refundQuota(userId: string): Promise<void> {
   }
 }
 
+/**
+ * 配额的「天」按**本地时区**算 —— 见 localDay 的注释。
+ * 用 toISOString 的话北京时间要等到早上 8 点才重置,而提示写的是「明天再来」。
+ *
+ * ⚠️ 改这里的同时,后台的重置/查询(admin/users)必须用同一个函数,
+ *    否则运营看到的今日用量和实际扣的对不上一天。
+ */
 function today(): string {
-  return new Date().toISOString().slice(0, 10)
+  return localDay()
 }
 
 /** 消费一次配额;超限抛 QuotaExceededError */

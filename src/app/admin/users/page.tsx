@@ -1,7 +1,7 @@
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 import { Card } from '@/components/ui'
-import { formatDate, formatCents } from '@/lib/utils'
+import { formatDate, formatCents, localDay } from '@/lib/utils'
 import { ORDER_STATUS_LABEL } from '@/lib/services/dispatch'
 import { UserActions } from './UserActions'
 
@@ -48,7 +48,7 @@ export default async function AdminUsersPage({
 
   const todayUsage = user
     ? await db.aiUsageDaily.findUnique({
-        where: { userId_day: { userId: user.id, day: now.toISOString().slice(0, 10) } },
+        where: { userId_day: { userId: user.id, day: localDay(now) } },
       })
     : null
 

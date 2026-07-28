@@ -2,6 +2,7 @@ import 'server-only'
 import { db } from '@/lib/db'
 import { readDeadlines, readRequirements } from '@/lib/programs/types'
 import { getPublicRegions } from '@/lib/regions/gate'
+import { localDay } from '@/lib/utils'
 import type { Direction, Region, UndergradTier } from '@prisma/client'
 
 /**
@@ -486,7 +487,7 @@ export function buildInsights(
 
   // 只统计未来的截止日期。导入脚本已做过一遍清洗,这里是第二道防线 ——
   // 给用户看「还有 -20 天」比不给日期糟糕得多。
-  const todayIso = new Date().toISOString().slice(0, 10)
+  const todayIso = localDay()
   const dated = matches
     .filter((m): m is ProgramMatch & { finalDeadline: string } => !!m.finalDeadline)
     .filter((m) => m.finalDeadline >= todayIso)

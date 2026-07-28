@@ -20,6 +20,14 @@ Environment=NODE_ENV=production
 Environment=PORT=3000
 # 只监听回环,公网流量一律经 Nginx 进来
 Environment=HOSTNAME=127.0.0.1
+# ⚠️ 时区必须显式钉死,不能靠镜像默认值(阿里云 Ubuntu 镜像通常是 UTC)。
+#    Node 里所有 getFullYear/getMonth/getDate 都跟着它走,而这些正是
+#    「今天」和「本月」的定义:AI 每日配额什么时候重置、某笔订单算进哪个月的
+#    交付人结算批次。系统是 UTC 的话,北京时间 8 月 1 日 00:00-08:00 确认的单
+#    会被算进 **7 月**的结算 —— 交付人 7 月的账里混进 8 月的单,而这是要转给真人的钱。
+#    写在这里(而不是只靠 timedatectl)是为了让它跟着单元文件一起进版本库:
+#    换一台机器重装,时区不会又变回默认值。
+Environment=TZ=Asia/Shanghai
 # 2GB 内存的机器上给 Node 设个上限,避免它吃到系统 OOM
 Environment=NODE_OPTIONS=--max-old-space-size=1024
 

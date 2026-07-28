@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 import { computeExpiresAt } from '@/lib/payment/fulfill'
+import { localDay } from '@/lib/utils'
 
 /**
  * 用户 / 会员管理。
@@ -66,7 +67,8 @@ export async function extendSubscription(
 export async function resetAiQuota(userId: string) {
   const admin = await requireAdmin('operator')
 
-  const day = new Date().toISOString().slice(0, 10)
+  // ⚠️ 必须和 lib/llm 里扣配额用的是同一个「天」,否则重置的是别的日期那一行
+  const day = localDay()
   await db.aiUsageDaily.updateMany({
     where: { userId, day },
     data: { count: 0 },

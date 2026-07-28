@@ -45,6 +45,16 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
 apt-get install -y -qq curl ca-certificates gnupg git ufw
 
+# ── 2.5 时区 ───────────────────────────────────────────────
+# ⚠️ 阿里云的 Ubuntu 镜像默认是 UTC。整台机器的「今天」因此比北京时间晚 8 小时,
+#    受影响的不只是日志时间戳:
+#      · PostgreSQL 里 now() / 日志切割 / 定时任务全部按系统时区
+#      · Node 的 getMonth()/getDate() 决定结算月份和 AI 配额的「天」
+#    应用侧另外用 Environment=TZ 又钉了一遍(见 compass.service),
+#    两层都设是刻意的 —— 一层管数据库和 cron,一层管 Node 进程。
+log "设置时区为 Asia/Shanghai"
+timedatectl set-timezone Asia/Shanghai
+
 # ── 3. PostgreSQL ──────────────────────────────────────────
 log "安装 PostgreSQL"
 if command -v psql >/dev/null 2>&1; then
