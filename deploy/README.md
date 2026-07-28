@@ -94,7 +94,7 @@ sudo -u postgres psql compass
 npx prisma studio                 # 可视化查数据(需在 /opt/compass 下)
 ```
 
-定时任务已写入 `/etc/cron.d/compass`(每天 9:00 发截止提醒、9:10 自动确认订单),
+定时任务已写入 `/etc/cron.d/compass`(每天 9:00 发截止提醒、9:10 自动确认订单、4:30 清理过期数据),
 执行日志在 `/var/log/compass-cron.log`。
 
 > **`SKIP_DATA=1` 跳过的是种子和院校数据导入,不跳过 `prisma db push`** ——

@@ -42,9 +42,24 @@ export async function exportMyData() {
       include: { program: { include: { school: true } } },
     }),
     db.userMaterial.findMany({ where: { userId: user.id }, include: { template: true } }),
+    /**
+     * ⚠️ 版本必须封顶。
+     *
+     *    这个 action 的返回值会被整个序列化传回浏览器。以前自动保存是每次停顿
+     *    存一份全文,一篇改得多的文书能攒出几百行 —— `versions: true` 无上限拉,
+     *    等于把几百份全文一次性读进内存再序列化,而生产的 Node 堆上限是 1 GB
+     *    (compass.service 里的 --max-old-space-size=1024)。
+     *
+     *    自动保存已经改成原地更新(见 essays/actions.ts),新数据不会再这么涨;
+     *    但**存量数据里那几百行还在**,而且这里本来也不该无上限。
+     *    取最近 50 版:导出的意义是拿走自己的东西,不是拿走每一次击键的快照。
+     */
     db.essay.findMany({
       where: { userId: user.id },
-      include: { versions: true, aiSessions: true },
+      include: {
+        versions: { orderBy: { createdAt: 'desc' }, take: 50 },
+        aiSessions: true,
+      },
     }),
     db.serviceOrder.findMany({ where: { userId: user.id }, include: { sku: true } }),
     db.subscription.findMany({ where: { userId: user.id }, include: { plan: true } }),

@@ -59,26 +59,93 @@ export async function createEssay(params: {
   return { ok: true as const, essayId: essay.id }
 }
 
-/** 保存正文(自动保存调用) */
+/**
+ * 当前版本写满多久之后另起一版。
+ *
+ * 这个值是在两种坏结果之间取的折中:
+ *   · 太短 → 退化回「每次停顿存一份全文」,也就是原来的问题
+ *   · 太长 → 学生手滑全选删除、自动保存跟着覆盖,能回退的最早状态太旧
+ * 30 分钟意味着最坏情况丢失半小时的修改,而一小时的写作只留下两行左右。
+ */
+const VERSION_ROLL_MINUTES = 30
+
+/**
+ * 把当前版本「封存」:把它的内容原样复制成新的一版并指向新版。
+ *
+ * 之后的自动保存改写的是**新版**,旧那一行就此定格 —— 于是「润色之前的原文」
+ * 「标记终稿那一刻的文字」都能留下一份不会再被覆盖的记录。
+ *
+ * 没有当前版本(理论上不该发生)时什么都不做,让调用方继续走正常流程。
+ */
+async function sealCurrentVersion(essayId: string, label: string): Promise<void> {
+  const essay = await db.essay.findUnique({
+    where: { id: essayId },
+    select: { currentVersionId: true },
+  })
+  if (!essay?.currentVersionId) return
+
+  const current = await db.essayVersion.findUnique({ where: { id: essay.currentVersionId } })
+  if (!current) return
+
+  await db.$transaction(async (tx) => {
+    await tx.essayVersion.update({ where: { id: current.id }, data: { label } })
+    const next = await tx.essayVersion.create({
+      data: {
+        essayId,
+        content: current.content,
+        wordCount: current.wordCount,
+        createdBy: current.createdBy,
+      },
+    })
+    await tx.essay.update({ where: { id: essayId }, data: { currentVersionId: next.id } })
+  })
+}
+
+/**
+ * 保存正文(自动保存调用)。
+ *
+ * ⚠️ 这里**原地更新当前版本**,不是每次都新建一版。
+ *
+ *    原来是每调用一次就 `essayVersion.create` 一行完整正文。而工作台的自动保存
+ *    防抖是 1200ms —— 也就是说打字时每一次停顿都往库里插一份全文副本,
+ *    写半小时能攒出几百行。
+ *
+ *    真正让这件事变得没有意义的是:**没有任何地方读得到这些版本**。
+ *    文书页和合规检查都只取 `take: 1`(最新一版),工作台里没有版本列表、
+ *    没有对比、没有回滚。除最新一行外全是写进去再没人看的死数据,
+ *    却实打实占着磁盘,还会把「导出我的数据」撑到几百 MB。
+ *
+ *    改成:平时原地更新;只有在**说得出理由**的时刻才另起一版 ——
+ *    距上一版超过 VERSION_ROLL_MINUTES、AI 润色之前、标记终稿。
+ */
 export async function saveContent(essayId: string, content: string) {
   const user = await requireUser()
   const essay = await db.essay.findFirst({ where: { id: essayId, userId: user.id } })
   if (!essay) return { ok: false as const, error: '文书不存在' }
 
-  const version = await db.essayVersion.create({
-    data: {
-      essayId,
-      content,
-      wordCount: countWords(content),
-      createdBy: 'user',
-    },
-  })
-  await db.essay.update({
-    where: { id: essayId },
-    data: { currentVersionId: version.id },
-  })
+  const wordCount = countWords(content)
 
-  return { ok: true as const, wordCount: countWords(content) }
+  const current = essay.currentVersionId
+    ? await db.essayVersion.findUnique({ where: { id: essay.currentVersionId } })
+    : null
+
+  // 没有当前版本(老数据 / 建档异常),或当前版本已经写了够久 → 另起一版
+  const roll =
+    !current || Date.now() - current.createdAt.getTime() > VERSION_ROLL_MINUTES * 60_000
+
+  if (roll) {
+    const version = await db.essayVersion.create({
+      data: { essayId, content, wordCount, createdBy: 'user' },
+    })
+    await db.essay.update({ where: { id: essayId }, data: { currentVersionId: version.id } })
+  } else {
+    await db.essayVersion.update({
+      where: { id: current.id },
+      data: { content, wordCount },
+    })
+  }
+
+  return { ok: true as const, wordCount }
 }
 
 /**
@@ -286,6 +353,16 @@ export async function polishText(essayId: string, text: string) {
     }
   }
 
+  /**
+   * ⚠️ 封存润色前的原文。
+   *
+   *    润色只返回建议,改写是学生自己在编辑器里做的 —— 而自动保存现在是
+   *    **原地更新**当前版本,他一边采纳建议一边就把原文覆盖掉了,没有退路。
+   *    这一刻是整个流程里最需要「回得去」的:学生完全可能改完发现不如原来的。
+   *    顺带这份留痕对原创性声明也有用 —— 能看出 AI 介入之前他自己写成什么样。
+   */
+  await sealCurrentVersion(essayId, `第 ${essay.polishRound + 1} 轮润色前`)
+
   await db.essay.update({
     where: { id: essayId },
     data: { polishRound: { increment: 1 }, status: 'polishing' },
@@ -342,6 +419,14 @@ export async function finalizeEssay(essayId: string, attestOriginal = false) {
       }
     }
   }
+
+  /**
+   * ⚠️ 把定稿这一刻的文字封存成不可再改的一版。
+   *    标记终稿之后学生还能回来编辑,而自动保存是原地更新的 ——
+   *    不封存的话,「他当初交上去的到底是哪个版本」就永远查不到了。
+   *    出现学术诚信争议时,这是唯一能自证的东西。
+   */
+  await sealCurrentVersion(essayId, '终稿')
 
   await db.essay.update({
     where: { id: essayId },

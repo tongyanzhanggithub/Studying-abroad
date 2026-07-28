@@ -98,7 +98,7 @@ fi
 CRON_FILE=/etc/cron.d/compass
 cat > "$CRON_FILE" <<EOF
 # Compass 定时任务(由 deploy.sh 生成)
-# 漏配的后果:用户收不到截止日提醒;已交付订单永远停在待验收
+# 漏配的后果:用户收不到截止日提醒;已交付订单永远停在待验收;个人信息无限期堆积
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
@@ -106,6 +106,9 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 0 9 * * * root curl -fsS -X POST -H "x-cron-secret: ${CRON_SECRET}" http://127.0.0.1:3000/api/cron/deadline-reminders >> /var/log/compass-cron.log 2>&1
 # 每天 9:10 自动确认超 48h 未验收的服务订单
 10 9 * * * root curl -fsS -X POST -H "x-cron-secret: ${CRON_SECRET}" http://127.0.0.1:3000/api/cron/auto-confirm >> /var/log/compass-cron.log 2>&1
+# 每天 4:30 数据保留期清理(PIPL 第 19 条,保留期定义见 src/lib/retention.ts)
+# 放在凌晨、且排在 3:00 备份之后 —— 万一某天删多了,当天的备份里还留着
+30 4 * * * root curl -fsS -X POST -H "x-cron-secret: ${CRON_SECRET}" http://127.0.0.1:3000/api/cron/retention >> /var/log/compass-cron.log 2>&1
 EOF
 chmod 600 "$CRON_FILE"
 echo "已写入 $CRON_FILE"
