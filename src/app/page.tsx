@@ -399,8 +399,14 @@ export default async function HomePage() {
               { value: programCount, label: '硕士项目' },
               { value: schools.length, label: '收录院校' },
               // 用**已开放**的地区数,不是枚举支持的地区数 ——
-              // 否则会出现「14 个申请地区 / 0 个项目」这种自相矛盾的展示
-              { value: openRegionCount, label: '申请地区' },
+              // 否则会出现「14 个国家/地区 / 0 个项目」这种自相矛盾的展示
+              //
+              // ⚠️ 措辞必须是「国家/地区」,不能简写成「国家」。
+              //    这个计数里包含 HK 和 MO,而 REGION_LABEL 里它们写的就是
+              //    「中国香港」「中国澳门」—— 把它们数进「N 个国家」是硬伤,
+              //    对一个面向国内学生的产品尤其不能出这种错。
+              //    「国家/地区」是中文产品处理这件事的通行写法。
+              { value: openRegionCount, label: '国家/地区' },
             ].map((item) => (
               <div key={item.label} className="glass-chip rounded-lg px-4 py-3">
                 <p className="text-2xl font-semibold text-ink-900">{item.value}</p>
