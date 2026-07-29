@@ -22,6 +22,7 @@ const TABS = [
 
 const MORE = [
   { href: '/app/story', label: '素材库' },
+  { href: '/app/referees', label: '推荐人' },
   { href: '/app/notifications', label: '消息' },
   { href: '/app/assessments', label: '评估方案' },
   { href: '/app/services', label: '老师服务' },

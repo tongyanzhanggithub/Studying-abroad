@@ -95,6 +95,27 @@ enum EnrollmentStatus {
   graduated // 已毕业
 }
 
+/// 推荐人类型 —— 决定要准备哪一套素材
+enum RefereeType {
+  academic // 学术推荐人(授课老师、导师)
+  professional // 职业推荐人(实习/工作上级)
+}
+
+/**
+ * 推荐信进度。
+ * ⚠️ 单独建状态而不是一个 bool,是因为推荐信是**最容易错过截止日**的一项:
+ * 它不在学生自己手上。「已经问了但对方没回」和「对方答应了但还没交」
+ * 是完全不同的两种处境,前者要换人、后者要催 —— 混成一个「未完成」
+ * 就没法给出有用的提醒。
+ */
+enum RefereeStatus {
+  draft // 还没联系
+  invited // 已发出邀请,等对方答复
+  agreed // 已答应
+  submitted // 已提交给学校
+  declined // 婉拒了 —— 必须能记录,否则学生会一直等一个不会来的回复
+}
+
 enum LanguageType {
   ielts
   toefl
@@ -261,6 +282,7 @@ model User {
   /**
    * /**
    * /**
+   * /**
    * 密码登录(可选)。
    * 学生端主路径仍是手机号 + 验证码 —— 不强制设密码,也不要求注册时设。
    * 但两种场景必须有密码兜底:
@@ -298,6 +320,7 @@ model User {
   lead                 Lead?
   invoiceRequests      InvoiceRequest[]
   storyAnswers         StoryAnswer[]
+  referees             Referee[]
 
   // 注销清理批处理按 deletionRequestedAt 扫,建索引避免全表扫
   @@index([deletionRequestedAt])
@@ -855,6 +878,72 @@ model StoryAnswer {
   @@unique([userId, questionId])
   @@index([userId, updatedAt])
   @@map("story_answers")
+}
+
+/**
+ * 推荐人。
+ * ⚠️ **跟人走,不跟项目走。** 一个学生通常固定 2 位推荐人,给所有学校用同一批;
+ * 按项目存的话,申 8 所学校就要维护 16 份同样的联系方式。
+ * (和素材库、材料清单是同一个道理。)
+ * ⚠️ 这里存的是**真实第三方的个人信息**(姓名、职称、单位、邮箱、手机)——
+ * 是整个库里除了学生自己之外唯一的一处。注销账号时随 User 级联删除,
+ * 不做任何留存;也绝不进入发给模型的任何 prompt。
+ */
+model Referee {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name        String
+  /// 职称,如「副教授」。多数院校要求副教授及以上
+  title       String?
+  department  String?
+  institution String?
+  email       String?
+  phone       String?
+
+  type   RefereeType
+  status RefereeStatus @default(draft)
+
+  /// 关键时间点 —— 用于「问了两周没回音」这类提醒
+  invitedAt   DateTime? @map("invited_at")
+  agreedAt    DateTime? @map("agreed_at")
+  submittedAt DateTime? @map("submitted_at")
+
+  note String?
+  sort Int     @default(0)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  answers RefereeAnswer[]
+
+  @@index([userId, sort])
+  @@map("referees")
+}
+
+/**
+ * 给推荐人准备的素材。
+ * ⚠️ 这些答案的用途是**整理成一份材料交给推荐人**,不是替他写信。
+ * 老师一学期教几百人,记不住某个学生哪次作业做得好很正常 ——
+ * 把具体事实递到他手上,他才写得出有细节的推荐信。
+ * 这是院校普遍鼓励的做法(官方指引都建议向推荐人提供 CV 和成绩说明),
+ * 与代写代签有本质区别。
+ */
+model RefereeAnswer {
+  id        String  @id @default(cuid())
+  refereeId String  @map("referee_id")
+  referee   Referee @relation(fields: [refereeId], references: [id], onDelete: Cascade)
+
+  /// 对应 src/lib/essays/referee-questions.ts 里的 id,发布后不要改
+  questionId String @map("question_id")
+  answer     String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([refereeId, questionId])
+  @@map("referee_answers")
 }
 
 model EssayAiSession {
