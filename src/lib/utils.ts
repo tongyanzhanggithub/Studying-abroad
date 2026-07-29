@@ -78,8 +78,38 @@ export function countWords(text: string): number {
   return cjk + latin
 }
 
+/**
+ * 商户订单号。
+ *
+ * ⚠️ 随机段必须用 CSPRNG,**不能用 Math.random()**。
+ *
+ *    V8 的 Math.random() 是 xorshift128+,观察到几个输出就能反推内部状态、
+ *    预测后续值。也就是说攻击者只要下两单、看到自己的订单号,
+ *    就能算出同一进程里别人的订单号 —— 而订单号是模拟支付页和支付回调的查找键。
+ *
+ *    lib/auth/verification.ts 里对验证码早就写明了这条规则
+ *    (「用 CSPRNG,不用 Math.random(),输出可预测」),这里当时没跟上。
+ *
+ * ⚠️ 用 Web Crypto(globalThis.crypto)而不是 node:crypto ——
+ *    这个文件被客户端组件引用(cn / formatCents),引入 node 内置模块会打不进浏览器包。
+ *    getRandomValues 在 Node 18+ 和浏览器里都有。
+ */
 export function generateOutTradeNo(prefix: string): string {
   const ts = new Date().toISOString().replace(/\D/g, '').slice(0, 14)
-  const rand = Math.random().toString(36).slice(2, 8).toUpperCase()
+
+  /**
+   * 8 位 Crockford Base32,约 1.1e12 种组合,且不可预测。
+   *
+   * ⚠️ 用 Crockford 而不是标准 base32(A-Z + 2-7):标准表里 **O 和 I 还在**,
+   *    和数字 0、1 在人眼和电话沟通里极易混淆 —— 而订单号是客服要跟用户口头
+   *    核对的东西。Crockford 排除了 I / L / O / U,正好 32 个字符,
+   *    对字节取模没有偏差(256 / 32 = 8,整除)。
+   */
+  const ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ'
+  const bytes = new Uint8Array(8)
+  globalThis.crypto.getRandomValues(bytes)
+  let rand = ''
+  for (const b of bytes) rand += ALPHABET[b % ALPHABET.length]
+
   return `${prefix}${ts}${rand}`
 }

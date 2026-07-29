@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { db } from '@/lib/db'
 import { env } from '@/lib/env'
+import { getCurrentUser } from '@/lib/auth/session'
 import { Card } from '@/components/ui'
 import { formatCents } from '@/lib/utils'
 import { confirmMockPayment } from './actions'
@@ -24,8 +25,19 @@ export default async function MockPayPage({
   // 与 confirmMockPayment 的服务端守卫一致,避免渲染一个点了会被拒的死按钮
   if (env.isProd && !env.payment.allowMockInProd) notFound()
 
+  /**
+   * ⚠️ 页面也必须验归属,不能只在 action 上验。
+   *
+   *    这一页会把**订单号和金额**渲染出来。只按 outTradeNo 取单的话,
+   *    拿到别人的单号就能看到他买了什么、花了多少 —— 而 confirmMockPayment
+   *    那边已经补了归属校验,页面这半边漏掉等于修了一半。
+   *
+   *    用 getCurrentUser 而不是 requireUser:未登录时走 notFound 静默 404,
+   *    与「单号不存在」表现一致,不泄露这个单号是否真实。
+   */
+  const user = await getCurrentUser()
   const payment = await db.payment.findUnique({ where: { outTradeNo } })
-  if (!payment) notFound()
+  if (!payment || !user || payment.userId !== user.id) notFound()
 
   if (payment.status === 'succeeded') {
     return (

@@ -11,6 +11,7 @@ import { getSession } from '@/lib/auth/session'
 import { saveAssessmentToProfile } from '@/lib/profile/from-assessment'
 import { headers } from 'next/headers'
 import { decideAssessThrottle } from '@/lib/assess-throttle'
+import { rateLimit } from '@/lib/rate-limit'
 
 /**
  * 免费评估提交(PRD 4.1)。
@@ -188,7 +189,18 @@ export async function submitAssessment(raw: unknown) {
   return { ok: true as const, leadId: lead.id, result }
 }
 
+/**
+ * 评估开始埋点。
+ *
+ * ⚠️ 同 trackShare:不需要登录的写接口,必须限频。
+ *    sourceChannel 的长度上限在写入口 lib/analytics.ts 里统一做。
+ */
+const ASSESS_START_PER_IP_PER_MINUTE = 30
+
 export async function trackAssessStart(sourceChannel?: string | null) {
+  const ip = (await headers()).get('x-real-ip') || 'unknown'
+  if (!rateLimit(`assess_start:${ip}`, ASSESS_START_PER_IP_PER_MINUTE, 60_000).allowed) return
+
   await track('assess_start', { sourceChannel: sourceChannel ?? null })
 }
 
