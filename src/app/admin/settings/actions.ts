@@ -1,6 +1,7 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
+import { CACHE_TAGS } from '@/lib/cache-tags'
 import { requireAdmin } from '@/lib/auth/session'
 import { clearSetting, getLlmConfig, setSetting } from '@/lib/settings'
 import { getLlmProvider } from '@/lib/llm'
@@ -22,6 +23,13 @@ export async function saveLlmSettings(input: {
   if (input.provider === 'mock') {
     await clearSetting('llm.apiKey')
     await setSetting('llm.provider', 'mock', admin.adminId)
+  /**
+   * ⚠️ AI 可用性有跨请求缓存,首页据此决定讲不讲 AI 文书 ——
+   *    不清标签的话,接上模型之后首页最长 5 分钟还在说「接入中」,
+   *    切回 mock 之后又会继续宣传一个已经关掉的功能。
+   */
+  revalidateTag(CACHE_TAGS.aiAvailability)
+  revalidatePath('/')
     revalidatePath('/admin/settings')
     return { ok: true as const, message: '已切回 mock,AI 功能不会真的调用外部服务。' }
   }
@@ -48,6 +56,13 @@ export async function saveLlmSettings(input: {
     return { ok: false as const, error: '还没有 API key,先粘一个进来。' }
   }
 
+  /**
+   * ⚠️ AI 可用性有跨请求缓存,首页据此决定讲不讲 AI 文书 ——
+   *    不清标签的话,接上模型之后首页最长 5 分钟还在说「接入中」,
+   *    切回 mock 之后又会继续宣传一个已经关掉的功能。
+   */
+  revalidateTag(CACHE_TAGS.aiAvailability)
+  revalidatePath('/')
   revalidatePath('/admin/settings')
   return { ok: true as const, message: '已保存。建议点一下「测试连接」确认这把 key 能用。' }
 }

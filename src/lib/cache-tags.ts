@@ -19,6 +19,11 @@ export const CACHE_TAGS = {
   plans: 'plans',
   /** 已开放地区 + 院校列表 + 项目总数 —— 首页的三个数字同源 */
   publicCatalog: 'public-catalog',
+  /**
+   * AI 功能是否可用 —— 决定首页讲不讲 AI 文书(见 lib/llm/availability.ts)。
+   * 后台「AI 设置」保存时失效。
+   */
+  aiAvailability: 'ai-availability',
 } as const
 
 /**

@@ -7,6 +7,7 @@ import { readPublicRegionsFresh } from '@/lib/regions/gate'
 import { CACHE_TAGS, MARKETING_CACHE_SECONDS } from '@/lib/cache-tags'
 import { BrandLogo } from '@/components/BrandLogo'
 import { getSession } from '@/lib/auth/session'
+import { isAiAvailable } from '@/lib/llm/availability'
 
 /**
  * 营销首页(PRD 3.1 `/`)。
@@ -81,7 +82,19 @@ const REASONS = [
   },
 ]
 
-const FAQS = [
+/**
+ * ⚠️ FAQ 与工作台预览做成**按 AI 可用性变化**的函数,不是写死的常量。
+ *
+ *    这个文件里已经有两处专门撤过 AI 文案,还留了注释
+ *    「讲一个还不能用的功能,等于卖不存在的东西」—— 但剩下两处漏了,
+ *    也就是首页一直在宣传一个 LLM_PROVIDER=mock 时点下去会报
+ *    「正在接入中」的功能。
+ *
+ *    靠人记得改是不可靠的:接上模型那天没人会想起来把话加回去,
+ *    换回 mock 排查问题时更不会想起来撤下去。所以让文案跟着配置走。
+ */
+function faqs(aiReady: boolean) {
+  return [
   {
     q: '和找中介有什么不一样?',
     a: '中介替你做,我们让你自己做得成。最实在的差别是账号 —— 中介通常拿着你的申请邮箱和学校账号,我们不碰,密码始终在你手里。价格上,中介一般三到八万。',
@@ -90,10 +103,16 @@ const FAQS = [
     q: '你们的学校信息准吗?',
     a: '每条信息都写明最后确认的时间,并附上官网原始页面的链接,你可以自己点开核。还没经人工确认的会标出来,太久没更新的会标灰。我们宁可写「待确认」,也不给你一个看着很确定、其实可能过期的数字。最终请以学校官网为准。',
   },
-  {
-    q: 'AI 能帮我把文书写出来吗?',
-    a: '可以帮你把文书推进到更好的状态:追问细节帮你想起具体经历、给段落顺序提建议、逐句优化语法和表达。真正的故事和取舍仍然来自你,这样文书更有辨识度,也更经得起学校审核。',
-  },
+  aiReady
+    ? {
+        q: 'AI 能帮我把文书写出来吗?',
+        a: '可以帮你把文书推进到更好的状态:追问细节帮你想起具体经历、给段落顺序提建议、逐句优化语法和表达。真正的故事和取舍仍然来自你,这样文书更有辨识度,也更经得起学校审核。',
+      }
+    : {
+        // AI 还没接通时,如实说这一块在做什么、以及现在能用的是什么
+        q: '文书这块能帮我做什么?',
+        a: '现在能做的是把写作这件事拆开管好:素材库按学术背景、实践经历、申请动机几条线帮你把经历问清楚并存下来,答一次所有学校通用;文书按学校分开写,题目和字数各自记着;定稿前有合规检查。AI 辅助(素材追问、结构建议、逐句润色)还在接入中,接通前不会向你收取与它相关的费用。文字始终是你自己的。',
+      },
   {
     q: '能保证录取吗?',
     a: '申请没有真正的保票,但定位可以更聪明。我们会根据公开要求和历史数据给出参考区间,把冲刺、匹配、保底拆清楚,帮你把预算、时间和精力放到更值得申请的项目上。',
@@ -106,7 +125,8 @@ const FAQS = [
     q: '覆盖哪些国家和专业?为什么没有美国?',
     a: '目的地覆盖美国之外的主流英语授课地区;专业方向按海外常见 subject area 归类,从商科、计算机、工程到教育、传媒、法律、艺术设计等都会逐步收录。评估结果优先使用已经录入并有规则的数据,没有把握的方向不会硬编结论。美国暂时没做:它的申请规则差别很大(标化、文书数量、EA/ED 轮次、面试),需要一套单独的产品逻辑。',
   },
-]
+  ]
+}
 
 const STORY_ITEMS = [
   { label: '测评', meta: '规则定位' },
@@ -116,7 +136,8 @@ const STORY_ITEMS = [
   { label: '提醒', meta: '14/7/3/1天' },
 ]
 
-const WORKSPACE_PREVIEWS = [
+function workspacePreviews(aiReady: boolean) {
+  return [
   {
     label: '选校定位',
     title: '先分清冲刺、匹配、稳妥',
@@ -129,19 +150,28 @@ const WORKSPACE_PREVIEWS = [
     body: '选校单变了,材料清单会重新合并。成绩单、CV 这类共用材料只出现一次,不会让你重复对清单。',
     rows: ['成绩单 · 8 校共用', 'CV · 6 校共用', '护照 · 14 校共用'],
   },
-  {
-    label: '文书工作台',
-    title: 'AI 问问题,你保留真实表达',
-    body: '文书模块做素材追问、结构建议、逐句润色和合规检查,不把代写风险转嫁给学生。',
-    rows: ['素材访谈', '结构建议', '合规检查'],
-  },
+  aiReady
+    ? {
+        label: '文书工作台',
+        title: 'AI 问问题,你保留真实表达',
+        body: '文书模块做素材追问、结构建议、逐句润色和合规检查,不把代写风险转嫁给学生。',
+        rows: ['素材访谈', '结构建议', '合规检查'],
+      }
+    : {
+        // AI 没接通时讲**现在真的能用**的:素材库和按校分开的文书管理
+        label: '素材库与文书',
+        title: '经历答一次,所有学校通用',
+        body: '按学术背景、实践经历、申请动机几条线把你的经历问清楚存下来,不用每所学校重答一遍。文书按学校分开写,题目和字数各自记着,定稿前有合规检查。',
+        rows: ['素材库 · 各校通用', '文书 · 按校分开', '定稿前合规检查'],
+      },
   {
     label: '截止提醒',
     title: '把 14/7/3/1 天节点盯住',
     body: '选校单里的项目有截止日后,系统会按关键节点创建提醒,材料没完成时优先提示风险。',
     rows: ['14 天预备', '7 天补漏', '3/1 天强提醒'],
   },
-]
+  ]
+}
 
 const ADVISOR_GROUPS = [
   {
@@ -289,6 +319,12 @@ export default async function HomePage() {
   const { programCount, schools, plans } = await getMarketingData()
   // 已登录就把「登录/注册」换成「进入工作台」—— 否则登录用户点进来还得再找一次入口
   const session = await getSession()
+  /**
+   * ⚠️ 首页讲不讲 AI 文书,由**实际配置**决定,不写死。
+   *    见 lib/llm/availability.ts —— 判定和 getLlmProvider() 的行为一致,
+   *    避免出现「首页说有、点进去说没有」。
+   */
+  const aiReady = await isAiAvailable()
 
   const entryPrice = plans[0]?.priceCents
   /** 已开放的地区数 —— 由 schools 反推,和上面的项目数、院校数同源 */
@@ -448,7 +484,7 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {WORKSPACE_PREVIEWS.map((item) => (
+            {workspacePreviews(aiReady).map((item) => (
               <article key={item.label} className="feed-card overflow-hidden p-0 shadow-[0_12px_30px_rgba(35,42,53,0.05)]">
                 <div className="px-4 py-4">
                   <p className="text-xs font-semibold text-insta-pink">{item.label}</p>
@@ -677,7 +713,7 @@ export default async function HomePage() {
           </h2>
 
           <div className="mt-10 divide-y divide-ink-100 border-y border-ink-100">
-            {FAQS.map((f) => (
+            {faqs(aiReady).map((f) => (
               <details key={f.q} className="group py-5">
                 <summary className="flex min-h-11 items-center justify-between gap-4 text-left">
                   <span className="font-medium text-ink-900">{f.q}</span>

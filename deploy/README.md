@@ -187,6 +187,34 @@ NEXT_PUBLIC_SITE_URL="https://你的域名"
 
 ## 六点五、其余上线前事项
 
+### AI 文书还没接模型
+
+`LLM_PROVIDER=mock`。文书工作台的四条链路(素材追问、结构建议、逐句润色、
+合规检查)代码都在,但没接任何模型 —— 生产环境点下去会明确告诉用户
+「AI 助手正在接入中」,并把扣掉的配额退回。
+
+**首页文案会跟着配置自动变**,不用手改:没接通就讲素材库和按校分开的文书管理
+(这些现在真的能用),接通了自动把 AI 那几句加回来。见 `src/lib/llm/availability.ts`。
+
+接一个国内模型只要三行配置 + 一把 key。以通义千问为例,在 `.env` 里:
+
+```
+LLM_PROVIDER="openai_compatible"
+OPENAI_COMPAT_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
+OPENAI_COMPAT_API_KEY="你的 key"
+OPENAI_COMPAT_MODEL="qwen-plus"
+```
+
+DeepSeek 用 `https://api.deepseek.com/v1`,Kimi 用 `https://api.moonshot.cn/v1`,
+其余见 `.env.example`。改完 `systemctl restart compass`。
+
+也可以不动 `.env`,由 super_admin 在 `/admin/settings` 里填 —— 那边存数据库、
+改完立即生效,还有「测试连接」按钮真的发一次请求验证 key 能不能用。
+
+⚠️ **端点必须在境内。** `src/lib/llm/region-guard.ts` 有一份国内服务商白名单
+(通义、DeepSeek、Kimi、豆包、智谱、千帆),配了境外端点生产环境会**直接拒绝调用** ——
+学生的文书内容不能出境。这不是建议,是代码里拦死的。
+
 ### 地区默认全部关闭
 
 `/admin/regions` 里所有地区都是关闭的,用户在评估页会看到「暂时没有可选地区」。
