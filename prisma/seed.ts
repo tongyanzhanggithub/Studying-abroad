@@ -8,7 +8,13 @@
  * 这些全部是**运营可在后台修改的配置**,种子只提供一份合理初值。
  */
 
-import { PrismaClient, type Direction, type Region, type UndergradTier } from '@prisma/client'
+import {
+  PrismaClient,
+  type Direction,
+  type EnrollmentStatus,
+  type Region,
+  type UndergradTier,
+} from '@prisma/client'
 import { hashPassword } from '../src/lib/auth/password'
 
 const db = new PrismaClient()
@@ -101,71 +107,301 @@ async function seedPlans() {
 }
 
 async function seedMaterialTemplates() {
+  /**
+   * 材料模板。
+   *
+   * ── 每个字段的意义 ──────────────────────────────────────
+   *   leadTimeDays   从开始办到拿到手要多久,是「提前预警」的唯一依据
+   *   copiesRequired 要几份纸质原件 —— 只开一份、到寄材料时才发现不够,
+   *                  就得再跑一趟教务处,而教务处不是随时能办的
+   *   issuedBy       谁开、盖什么章 —— 学生去办事时唯一要记住的那句话
+   *   optional       有则加分、没有不影响申请。不计入完成度
+   *   forEnrollment  只在「在读」或「已毕业」时出现(两者互斥)
+   *
+   * ⚠️ guideMd 里凡是涉及**费用、时限、办事地点**的,一律写通行规则并注明
+   *    「以当地公布为准」。写死一个城市一个价格,过一年就是错的,
+   *    而学生会照着它真的跑一趟。
+   */
   const templates = [
-    // leadTimeDays = 从开始办到拿到手要多久,是「提前预警」的依据
     {
       code: 'transcript', name: '成绩单', sort: 1, sharedAcrossPrograms: true, leadTimeDays: 7,
+      copiesRequired: 2,
+      issuedBy: '本科教务处开具,加盖教务处公章(红章)',
       description: '本科阶段全部课程成绩,需中英文对照并加盖教务处公章',
-      guideMd: '找本科教务处开具中英文成绩单,通常需 3-5 个工作日。\n\n注意:\n- 需加盖学校公章(红章)\n- 部分学校要求密封信封\n- 建议一次多开 3-5 份备用',
+      guideMd: [
+        '找本科教务处开具中英文对照成绩单,通常 3-5 个工作日。',
+        '',
+        '**为什么要两份以上**:多数学校要求纸质原件密封邮寄,寄出去就不退。',
+        '一次多开 3-5 份备用,比事后再跑一趟省事得多 —— 尤其你已经离校的话。',
+        '',
+        '**学校出不了英文版怎么办**:',
+        '1. 找有资质的翻译机构翻译(要有翻译专用章)',
+        '2. 把译件带回教务处,请他们在**译件上**也盖章',
+        '3. 中英文两份一起装进密封信封,骑缝处盖章',
+        '',
+        '⚠️ 只有翻译章、没有学校章的成绩单,不少学校不认。',
+      ].join('\n'),
     },
     {
-      code: 'degree_certificate', name: '学位证 / 毕业证', sort: 2, sharedAcrossPrograms: true, leadTimeDays: 7,
-      description: '已毕业提供学位证+毕业证扫描件;在读提供在读证明',
-      guideMd: '**已毕业**:学位证 + 毕业证中英文扫描件。\n\n**在读**:向教务处申请「预毕业证明」/「在读证明」,需说明预计毕业时间。',
+      code: 'enrollment_certificate', name: '在读证明', sort: 2, sharedAcrossPrograms: true,
+      leadTimeDays: 7, copiesRequired: 2, forEnrollment: 'enrolled',
+      issuedBy: '学院或教务处开具,加盖公章',
+      description: '在读学生用。需写明入学时间、年级、专业、学制与预计毕业时间',
+      guideMd: [
+        '在读证明要**中英文各一份**,内容必须包含:',
+        '',
+        '- 姓名、性别、出生日期(与护照一致)',
+        '- 入学时间、现读年级、学制',
+        '- 院系与专业全称',
+        '- 预计毕业时间',
+        '',
+        '**打印在哪儿**:有学校全称抬头的信笺纸(暗格或空白均可)。',
+        '普通 A4 白纸打出来盖个章,不少学校会退回重开。',
+        '',
+        '**学校没有英文模板时**:可以自己按上面的要素拟一份中英对照的,',
+        '拿去请教务处审核盖章 —— 大多数学校接受这种做法。',
+        '',
+        '⚠️ 姓名拼音必须和护照上完全一致,不要用自己习惯的拼法。',
+      ].join('\n'),
     },
     {
-      code: 'cv', name: '简历(CV)', sort: 3, sharedAcrossPrograms: true, leadTimeDays: 5,
+      code: 'degree_certificate', name: '学位证 / 毕业证', sort: 3, sharedAcrossPrograms: true,
+      leadTimeDays: 7, forEnrollment: 'graduated',
+      issuedBy: '原件扫描;翻译件由翻译机构出具并加盖翻译专用章',
+      description: '已毕业学生用。学位证 + 毕业证两证都要,中英文对照',
+      guideMd: [
+        '**两证都要**:毕业证(学历)和学位证(学位)在国内是两份不同的证书,',
+        '只交一份经常会被要求补件。',
+        '',
+        '原件扫描成彩色 PDF,连同翻译件一起提交。翻译件需有翻译机构的翻译专用章。',
+        '',
+        '**建议同时准备**:学信网《教育部学历证书电子注册备案表》中英文版,',
+        '可在学信网自助打印。越来越多学校用它来核验学历真伪,',
+        '而且免费、当场就能出。',
+      ].join('\n'),
+    },
+    {
+      code: 'cv', name: '简历(CV)', sort: 4, sharedAcrossPrograms: true, leadTimeDays: 5,
       description: '1 页 A4,学术与实习经历为主',
-      guideMd: '学术申请的 CV 与求职简历不同:\n- 教育背景放最前,写明 GPA 与核心课程\n- 实习/科研经历用量化成果描述\n- 控制在 1 页',
+      guideMd: [
+        '学术申请的 CV 和求职简历不是一回事:',
+        '',
+        '- **教育背景放最前**,写明 GPA 与核心课程(求职简历通常放后面)',
+        '- 实习/科研经历用**量化成果**描述,不要写岗位职责',
+        '- 相关的课程论文、项目报告可以单列一节',
+        '- 控制在 1 页;有科研发表的可以到 2 页',
+        '',
+        '⚠️ CV 上的每一段经历都要能对应上材料 —— 写了实习就要有实习证明,',
+        '写了获奖就要有证书。写了却拿不出证明的经历,反而是风险。',
+      ].join('\n'),
     },
     {
       // PS 要写好几稿,而且每校不同,不是一两天的事
-      code: 'personal_statement', name: '个人陈述(PS)', sort: 4, sharedAcrossPrograms: false, leadTimeDays: 21,
+      code: 'personal_statement', name: '个人陈述(PS)', sort: 5, sharedAcrossPrograms: false,
+      leadTimeDays: 21, fileRequired: false,
       description: '各校题目与字数要求不同,需针对性撰写',
-      guideMd: '在「文书工作台」中撰写。每所学校的题目和字数限制不同,不要直接复用。',
-      fileRequired: false,
+      guideMd: [
+        '在「文书工作台」中撰写。每所学校的题目和字数限制不同,不要直接复用。',
+        '',
+        '**动手前先把素材问清楚**:工作台的素材访谈会按高中、大学、申请动机、',
+        '实践经历、职业规划几条线追问,你答得越具体,后面越好写。',
+        '大多数人卡住不是不会写,是没想清楚要写什么。',
+        '',
+        '⚠️ 文字必须是你自己的。部分院校对 AI 辅助写作零容忍,',
+        '工作台会在这些学校的文书上显著标注。',
+      ].join('\n'),
     },
     {
       // 推荐人不是你能催的,官方建议就是提前 4-6 周
-      code: 'reference', name: '推荐信', sort: 5, sharedAcrossPrograms: false, leadTimeDays: 42,
+      code: 'reference', name: '推荐信', sort: 6, sharedAcrossPrograms: false, leadTimeDays: 42,
+      copiesRequired: 2,
+      issuedBy: '推荐人本人出具并签字;学术推荐信打印在学校抬头信笺纸上',
       description: '通常 2 封,学术推荐人优先',
-      guideMd: '主流英语授课硕士项目通常要求 2 封推荐信,其中至少 1 封更适合来自学术推荐人。\n\n提前 4-6 周联系推荐人,并提供你的 CV 和申请方向说明。',
+      guideMd: [
+        '主流英语授课硕士项目通常要求 2 封,其中至少 1 封更适合来自学术推荐人。',
+        '',
+        '**提前 4-6 周联系推荐人**,并同时提供:',
+        '- 你的 CV',
+        '- 目标专业与院校清单',
+        '- 你在他课上的具体表现(哪门课、哪个学期、分数、做过什么作业或项目)',
+        '',
+        '最后一项最容易被忽略。老师一学期教几百人,记不住细节很正常;',
+        '你把细节递到他手上,写出来的推荐信才有具体事例,而不是一堆形容词。',
+        '',
+        '**推荐人怎么选**:教过你的课任老师即可,不必是专业课;',
+        '通常要求副教授及以上。给你打过高分、带过你做项目的优先。',
+        '',
+        '⚠️ **推荐信必须由推荐人本人出具、本人签字。**',
+        '找人代写代签是学术诚信问题 —— 院校一旦核实,后果是撤销录取并可能通报,',
+        '影响远超这一次申请。我们不提供也不协助任何形式的代签。',
+      ].join('\n'),
     },
     {
       // 报名 → 考试 → 出分 → 送分,两个月是保守估计
-      code: 'english_test', name: '语言成绩(雅思/托福)', sort: 6, sharedAcrossPrograms: true, leadTimeDays: 60,
+      code: 'english_test', name: '语言成绩(雅思/托福)', sort: 7, sharedAcrossPrograms: true,
+      leadTimeDays: 60,
       description: '需在成绩有效期内(通常 2 年)',
-      guideMd: '雅思/托福成绩单需在官网送分给目标院校。\n\n注意各校对小分的要求 —— 总分够但小分不够同样会被拒。',
+      guideMd: [
+        '雅思/托福成绩单需在官网送分给目标院校。',
+        '',
+        '**注意小分**:总分够但单项不够同样会被拒,这是最常见的踩坑点。',
+        '',
+        '**可以后补**:多数学校允许先递交申请、后补语言成绩,拿到的是',
+        '有条件录取(Conditional Offer)。但要留意两个时间点 ——',
+        '',
+        '- 想配语言班的,通常要在入学当年**春季**就有达标分数,否则名额没了',
+        '- 换无条件录取(Unconditional)的截止时间一般在入学当年**年中**',
+        '',
+        '具体日期各校不同,以录取信上写的为准。',
+      ].join('\n'),
     },
     {
-      code: 'gmat_gre', name: 'GMAT / GRE 成绩', sort: 7, sharedAcrossPrograms: true, leadTimeDays: 60,
+      code: 'gmat_gre', name: 'GMAT / GRE 成绩', sort: 8, sharedAcrossPrograms: true,
+      leadTimeDays: 60, fileRequired: false,
       description: '部分商科项目要求或强烈建议提交',
-      guideMd: '新加坡、法国高商等部分商科项目会要求或强烈建议提交 GMAT/GRE;其他地区多为可选加分项。\n\n成绩有效期通常 5 年。',
-      fileRequired: false,
+      guideMd: [
+        '新加坡、法国高商等部分商科项目会要求或强烈建议提交 GMAT/GRE;',
+        '其他地区多为可选加分项。成绩有效期通常 5 年。',
+        '',
+        '系统会按项目官网写明的要求,只在**确实需要**的项目上列出这一项 ——',
+        '不要求的学校不会让你白准备。',
+      ].join('\n'),
     },
     {
-      code: 'passport', name: '护照', sort: 8, sharedAcrossPrograms: true, leadTimeDays: 14,
-      description: '信息页扫描件,有效期需覆盖入学后至少 6 个月',
-      guideMd: '如护照即将过期或尚未办理,尽早去出入境管理局办理,通常 7-10 个工作日。',
+      code: 'passport', name: '护照', sort: 9, sharedAcrossPrograms: true, leadTimeDays: 14,
+      issuedBy: '户籍地或居住地公安机关出入境管理部门,须本人到场',
+      description: '信息页扫描件。有效期需覆盖入学后至少 6 个月',
+      guideMd: [
+        '**为什么要早办**:不少学校在**递交申请时**就要填护照号码,',
+        '而不是拿到录取之后才要。没有护照会卡住网申。',
+        '',
+        '**怎么办**:',
+        '1. 本人到出入境管理部门(**不能代办**),带身份证原件及复印件',
+        '2. 现场领表填写,或提前网上预约',
+        '3. 交照片(不合要求的可在现场照相点重拍)',
+        '4. 缴费,拿回执',
+        '5. 按回执上的时间去领,或选择邮寄到家',
+        '',
+        '**普通护照工本费 120 元**,法定办理时限 10 个工作日,多数地方更快。',
+        '2019 年起全国范围内**异地可办**,不必回户籍地 ——',
+        '老攻略里「外地户口要回原籍、时间更长」的说法已经过时。',
+        '',
+        '⚠️ 具体费用、时限与预约方式以**当地出入境管理部门公布**为准。',
+        '',
+        '**已有护照的**:检查有效期,必须覆盖到入学后至少 6 个月,',
+        '不够的话现在就去换发。',
+      ].join('\n'),
     },
     {
-      code: 'id_document', name: '身份证', sort: 9, sharedAcrossPrograms: true, leadTimeDays: 1,
+      code: 'id_document', name: '身份证', sort: 10, sharedAcrossPrograms: true, leadTimeDays: 1,
       description: '正反面扫描件',
-      guideMd: '港校申请通常需要身份证扫描件。',
+      guideMd: '港澳院校申请通常需要身份证扫描件。正反面扫在同一页,彩色。',
+    },
+    {
+      code: 'internship_certificate', name: '实习 / 工作证明', sort: 11, sharedAcrossPrograms: true,
+      leadTimeDays: 14,
+      issuedBy: '实习或工作单位人事部门开具,加盖单位公章',
+      description: 'CV 上写了的实习或工作经历,都应当有对应证明',
+      guideMd: [
+        '**在读学生**开实习证明,**已毕业**的开在职或离职证明。',
+        '',
+        '内容要包含:姓名、部门、职位、起止时间、主要工作内容,',
+        '最后由单位签字盖章。打印在有单位抬头的纸上最好。',
+        '',
+        '**为什么重要**:CV 和 PS 里提到的每段经历,都可能被要求提供佐证。',
+        '写了却拿不出证明,比不写更糟。',
+        '',
+        '**建议实习结束时就开**:等到申请季再回去找前公司,',
+        '经手人可能已经离职,盖章会变得很麻烦。这是最常见的后悔项之一。',
+      ].join('\n'),
+    },
+    {
+      code: 'award_certificate', name: '获奖 / 奖学金证书', sort: 12, sharedAcrossPrograms: true,
+      leadTimeDays: 3, optional: true, fileRequired: false,
+      description: '加分项。奖学金、竞赛获奖、荣誉称号、职业资格证书等',
+      guideMd: [
+        '有就交,没有不影响申请 —— 这一项**不计入材料完成度**。',
+        '',
+        '值得交的:专业相关竞赛获奖、国家/校级奖学金、职业资格证书',
+        '(CFA、ACCA、法律职业资格等)、语言类以外的技能证书。',
+        '',
+        '**不必凑数**:交一堆「优秀班干部」不会加分,反而稀释真正有含金量的那几项。',
+        '中文证书需附翻译件。',
+      ].join('\n'),
+    },
+    {
+      code: 'research_output', name: '论文 / 项目报告', sort: 13, sharedAcrossPrograms: true,
+      leadTimeDays: 3, optional: true, fileRequired: false,
+      description: '加分项。已发表论文、课程论文、研究项目报告、毕业设计等',
+      guideMd: [
+        '有就交,没有不影响申请 —— 这一项**不计入材料完成度**。',
+        '',
+        '研究型项目(MRes / MPhil / PhD)或对学术背景要求高的专业,这一项权重明显更高。',
+        '',
+        '没有正式发表也可以交课程论文或项目报告,选**和申请方向最相关**的一篇,',
+        '附一段中英文摘要,说明研究问题和你自己的贡献。',
+      ].join('\n'),
+    },
+    {
+      code: 'letterhead_paper', name: '学校抬头信笺纸', sort: 14, sharedAcrossPrograms: true,
+      leadTimeDays: 7, fileRequired: false,
+      issuedBy: '院系办公室或教务处领取',
+      description: '准备事项。在读证明与学术推荐信都需打印在带学校全称的信笺纸上',
+      guideMd: [
+        '这不是要上传的文件,是**要提前去领的东西**。',
+        '',
+        '在读证明和学术推荐信都需要打印在有学校全称抬头的信笺纸上',
+        '(暗格或空白均可)。普通 A4 白纸经常被退回重开。',
+        '',
+        '**一次多领几张**:推荐信两封、在读证明两份,再算上写错重打的,',
+        '建议至少领 10 张。你还在校时领很容易,离校之后就麻烦了。',
+      ].join('\n'),
+    },
+    {
+      code: 'intl_credit_card', name: '国际信用卡(Visa / Mastercard)', sort: 15,
+      sharedAcrossPrograms: true, leadTimeDays: 21, fileRequired: false,
+      description: '准备事项。用于支付申请费、留位费、住宿定金等外币支出',
+      guideMd: [
+        '这不是要上传的文件,是**要提前办好的东西**。',
+        '',
+        '申请季会有几笔必须刷外币卡的支出:',
+        '- 申请费(部分学校收,每所几十到一百多英镑)',
+        '- **留位费**(收到录取后交,通常上千英镑)',
+        '- 宿舍定金',
+        '',
+        '⚠️ 留位费是有**截止日期**的,过期录取会被取消。',
+        '而办卡从申请到拿到手通常要两三周 —— 等收到录取再去办,时间往往不够。',
+        '',
+        '本人办不下来的,可以用父母的附属卡,或提前确认学校是否支持电汇。',
+      ].join('\n'),
     },
   ]
 
   for (const t of templates) {
+    const data = {
+      code: t.code,
+      name: t.name,
+      description: t.description,
+      guideMd: t.guideMd,
+      sort: t.sort,
+      leadTimeDays: t.leadTimeDays,
+      sharedAcrossPrograms: t.sharedAcrossPrograms ?? true,
+      copiesRequired: t.copiesRequired ?? 1,
+      issuedBy: t.issuedBy ?? null,
+      optional: t.optional ?? false,
+      fileRequired: t.fileRequired ?? true,
+      forEnrollment: (t.forEnrollment ?? null) as EnrollmentStatus | null,
+    }
     await db.materialTemplate.upsert({
       where: { code: t.code },
-      create: t,
-      update: {
-        name: t.name,
-        description: t.description,
-        guideMd: t.guideMd,
-        sort: t.sort,
-        leadTimeDays: t.leadTimeDays,
-      },
+      create: data,
+      /**
+       * ⚠️ update 必须把**每一个**字段都列上。
+       *    漏掉的字段在已有数据的库上永远不会被刷新 —— 表现是
+       *    「代码里改了、线上还是旧的」,而且不报错、不报警,
+       *    只有有人恰好去看那条材料才会发现。
+       */
+      update: data,
     })
   }
   console.log(`✓ 材料模板 ${templates.length} 个`)

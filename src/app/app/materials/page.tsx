@@ -149,6 +149,9 @@ export default async function MaterialsPage() {
                 status={m.status}
                 fileName={m.fileName}
                 fileRequired={m.template.fileRequired}
+                copiesRequired={m.template.copiesRequired}
+                issuedBy={m.template.issuedBy}
+                optional={m.template.optional}
                 warning={w}
                 appliesTo={m.programIds
                   .map((pid) => programNames.get(pid))

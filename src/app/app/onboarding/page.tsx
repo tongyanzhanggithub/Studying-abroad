@@ -60,6 +60,10 @@ export default async function OnboardingPage() {
             gpaScale: (payload?.gpaScale as string) ?? '100',
             languageType: (payload?.languageType as string) ?? null,
             languageScore: (payload?.languageScore as number) ?? null,
+            // 评估表单不问学历状态,所以这里没有草稿值 —— 让用户在 onboarding 里选一次。
+            // 不预选任何一项:猜一个默认值再显示成「已选」,他很可能直接跳过,
+            // 而这一项选错的后果是跑错一趟学校。
+            enrollmentStatus: null,
           }}
           suggestions={suggestions.map((s) => ({
             programId: s.programId,

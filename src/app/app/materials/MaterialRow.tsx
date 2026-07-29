@@ -54,6 +54,9 @@ export function MaterialRow({
   status,
   fileName,
   fileRequired,
+  copiesRequired,
+  issuedBy,
+  optional,
   appliesTo,
   warning,
 }: {
@@ -64,6 +67,12 @@ export function MaterialRow({
   status: MaterialStatus
   fileName: string | null
   fileRequired: boolean
+  /** 要几份纸质原件 */
+  copiesRequired: number
+  /** 谁开、盖什么章 */
+  issuedBy: string | null
+  /** 加分项,不计入完成度 */
+  optional: boolean
   appliesTo: string[]
   warning: MaterialWarning
 }) {
@@ -111,11 +120,42 @@ export function MaterialRow({
               {name}
             </span>
             <span className="text-xs text-ink-400">{STATUS_LABEL[status]}</span>
+            {/*
+              「加分项」必须标出来。这类材料不计入完成度(见 getMaterialProgress),
+              但如果不在界面上说清楚,学生看到清单里有一项永远没勾,
+              只会以为自己漏了东西 —— 那正是这个设计想避免的焦虑。
+            */}
+            {optional && (
+              <span className="shrink-0 rounded-full bg-ink-100 px-2 py-0.5 text-[11px] font-medium text-ink-500">
+                加分项 · 可不交
+              </span>
+            )}
+            {/*
+              份数只在 >1 时显示。这是学生跑一趟教务处时唯一会记错的数字 ——
+              开一份回来,寄出去才发现不够,而教务处不是随时能办的。
+            */}
+            {copiesRequired > 1 && (
+              <span className="shrink-0 rounded-full bg-brand-50 px-2 py-0.5 text-[11px] font-medium text-brand-700">
+                需 {copiesRequired} 份原件
+              </span>
+            )}
             <WarningBadge w={warning} />
           </div>
 
           {description && (
             <p className="mt-1 pl-7 text-sm leading-relaxed text-ink-600">{description}</p>
+          )}
+
+          {/*
+            ⚠️ 「谁开、盖什么章」单独一行,不塞进「怎么办理」的折叠区里。
+               这是学生真的走到教务处窗口前唯一要记住的一句话 ——
+               藏在需要点开的说明里,等于没写。
+          */}
+          {issuedBy && (
+            <p className="mt-1 pl-7 text-xs leading-relaxed text-ink-500">
+              <span className="font-medium text-ink-600">找谁办:</span>
+              {issuedBy}
+            </p>
           )}
 
           {uniqueSchools.length > 0 && (

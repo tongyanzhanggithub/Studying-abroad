@@ -4,7 +4,7 @@ import { db } from '@/lib/db'
 import { requireUser } from '@/lib/auth/session'
 import { track } from '@/lib/analytics'
 import { regenerateMaterials } from '@/lib/materials/generate'
-import type { LanguageType, TierTag, UndergradTier } from '@prisma/client'
+import type { EnrollmentStatus, LanguageType, TierTag, UndergradTier } from '@prisma/client'
 
 export async function completeOnboarding(input: {
   profile: {
@@ -13,6 +13,7 @@ export async function completeOnboarding(input: {
     gpaScale: string
     languageType: string | null
     languageScore: number | null
+    enrollmentStatus: string | null
   }
   selected: Array<{ programId: string; tier: string }>
 }) {
@@ -27,6 +28,7 @@ export async function completeOnboarding(input: {
       gpaScale: input.profile.gpaScale,
       languageType: (input.profile.languageType as LanguageType) ?? null,
       languageScore: input.profile.languageScore,
+      enrollmentStatus: (input.profile.enrollmentStatus as EnrollmentStatus) ?? null,
     },
     update: {
       undergradTier: (input.profile.undergradTier as UndergradTier) ?? null,
@@ -34,6 +36,7 @@ export async function completeOnboarding(input: {
       gpaScale: input.profile.gpaScale,
       languageType: (input.profile.languageType as LanguageType) ?? null,
       languageScore: input.profile.languageScore,
+      enrollmentStatus: (input.profile.enrollmentStatus as EnrollmentStatus) ?? null,
     },
   })
 

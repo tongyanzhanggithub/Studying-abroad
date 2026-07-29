@@ -26,6 +26,7 @@ export function OnboardingFlow({
     gpaScale: string
     languageType: string | null
     languageScore: number | null
+    enrollmentStatus: string | null
   }
   suggestions: Suggestion[]
 }) {
@@ -74,6 +75,35 @@ export function OnboardingFlow({
                 }
                 className="w-full rounded-lg border border-ink-200 px-3 py-2 outline-none focus:border-brand-500"
               />
+            </Field>
+            {/*
+              ⚠️ 这一问决定材料清单给的是「在读证明」还是「毕业证+学位证」——
+                 两者互斥,开错了要重跑一趟学校。所以宁可在这里多问一句,
+                 也不要让学生自己在清单上判断哪一项与自己无关。
+                 放在 GPA 后面:填成绩的时候他正好在想自己现在读到哪儿。
+            */}
+            <Field label="你现在的学历状态">
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { v: 'enrolled', label: '在读', hint: '含应届毕业生' },
+                  { v: 'graduated', label: '已毕业', hint: '已拿到毕业证' },
+                ].map((o) => (
+                  <button
+                    key={o.v}
+                    type="button"
+                    onClick={() => setProfile({ ...profile, enrollmentStatus: o.v })}
+                    className={cn(
+                      'rounded-lg border px-3 py-2 text-left transition-colors',
+                      profile.enrollmentStatus === o.v
+                        ? 'border-brand-500 bg-brand-50 text-ink-900'
+                        : 'border-ink-200 text-ink-700 hover:border-brand-300',
+                    )}
+                  >
+                    <span className="block font-medium">{o.label}</span>
+                    <span className="block text-xs text-ink-400">{o.hint}</span>
+                  </button>
+                ))}
+              </div>
             </Field>
             <Field label="语言成绩">
               <input

@@ -1,5 +1,5 @@
 import 'server-only'
-import { Prisma, type ApplicationStatus } from '@prisma/client'
+import { Prisma, type ApplicationStatus, type EnrollmentStatus } from '@prisma/client'
 import { db } from '@/lib/db'
 import { classifyTestRequirement } from '@/lib/assessment/engine'
 
@@ -22,32 +22,77 @@ import { classifyTestRequirement } from '@/lib/assessment/engine'
  */
 const BASELINE_CODES = [
   'transcript',
-  'degree_certificate',
   'cv',
   'personal_statement',
   'reference',
   'english_test',
   'passport',
+  // 实习/工作证明:CV 上写了的经历都要有佐证,而且实习一结束就该开 ——
+  // 等到申请季再回前公司找人盖章,经手人往往已经离职
+  'internship_certificate',
+  // 下面两项不是「文件」,是**要提前去办的事**,但漏了同样会卡住申请:
+  //   信笺纸  —— 在读证明和学术推荐信都得打在上面,离校后再回去领很麻烦
+  //   国际信用卡 —— 留位费有截止日,而办卡要两三周,等录取下来再办常常来不及
+  'letterhead_paper',
+  'intl_credit_card',
+  /**
+   * 加分材料。**放进清单是刻意的**,尽管它们可以不交。
+   *
+   * 不列出来的话,学生根本想不起来自己有可交的东西 —— 得过的奖、写过的
+   * 课程论文,不提示就真的会漏。而它们不计入完成度(见 getMaterialProgress),
+   * 所以列出来不会让进度条永远满不了,界面上也明确标着「加分项 · 可不交」。
+   */
+  'award_certificate',
+  'research_output',
 ] as const
+
+/**
+ * 学历证明:在读和已毕业**互斥**,只出现其中一项。
+ *
+ * ⚠️ 这是这次把 forEnrollment 引进模型的原因。原来 baseline 里固定放
+ *    degree_certificate,靠它的说明文字写一句「在读的去开在读证明」——
+ *    等于把判断推回给学生。而「材料清单自动生成」这条卖点的全部意义,
+ *    就是不让他做这种判断。
+ */
+const ENROLLMENT_CODES: Record<EnrollmentStatus, string> = {
+  enrolled: 'enrollment_certificate',
+  graduated: 'degree_certificate',
+}
+
+/**
+ * 没填学历状态时按**在读**处理。
+ *
+ * 硕士申请的主体是应届生;而且万一猜错,在读证明比毕业证更容易补开,
+ * 代价更小。onboarding 会问这一项,老用户没填过的走这个默认值。
+ */
+const DEFAULT_ENROLLMENT: EnrollmentStatus = 'enrolled'
 
 /** 港澳院校普遍要身份证 */
 const ID_DOC_REGIONS = ['HK', 'MO']
 
 export async function regenerateMaterials(userId: string) {
-  const choices = await db.userSchoolChoice.findMany({
-    where: { userId },
-    include: {
-      program: {
-        include: { materialTemplates: { include: { template: true } } },
+  const [choices, profile] = await Promise.all([
+    db.userSchoolChoice.findMany({
+      where: { userId },
+      include: {
+        program: {
+          include: { materialTemplates: { include: { template: true } } },
+        },
       },
-    },
-  })
+    }),
+    db.profile.findUnique({ where: { userId }, select: { enrollmentStatus: true } }),
+  ])
+
+  const enrollment = profile?.enrollmentStatus ?? DEFAULT_ENROLLMENT
+  const enrollmentCode = ENROLLMENT_CODES[enrollment]
 
   // templateId → 适用的 programId 列表
   const needed = new Map<string, { shared: boolean; programIds: string[] }>()
 
   const baseline = await db.materialTemplate.findMany({
-    where: { code: { in: [...BASELINE_CODES, 'gmat_gre', 'id_document'] } },
+    where: {
+      code: { in: [...BASELINE_CODES, enrollmentCode, 'gmat_gre', 'id_document'] },
+    },
   })
   const byCode = new Map(baseline.map((t) => [t.code, t]))
 
@@ -66,8 +111,8 @@ export async function regenerateMaterials(userId: string) {
       continue
     }
 
-    // 没精调过 → 保底清单 + 按该项目的真实字段补两项
-    const codes: string[] = [...BASELINE_CODES]
+    // 没精调过 → 保底清单 + 学历证明 + 按该项目的真实字段补两项
+    const codes: string[] = [...BASELINE_CODES, enrollmentCode]
 
     // GMAT/GRE 只在官网确实提到时才列 —— 不要求的项目列出来会让人白准备
     const gmat = classifyTestRequirement(
@@ -120,14 +165,33 @@ export async function regenerateMaterials(userId: string) {
   await db.$transaction(ops)
 }
 
-/** 材料完成度 */
+/**
+ * 材料完成度。
+ *
+ * ⚠️ **可选材料不计入分母。**
+ *
+ *    获奖证书、论文这类是「有则加分,没有不影响申请」。把它们算进完成度,
+ *    等于没得过奖的学生**永远到不了 100%** —— 一个你再努力也满不了的进度条,
+ *    传达的是「你还差着点什么」,而这恰恰是产品最该避免的焦虑来源(PRD 14)。
+ *
+ *    它们仍然出现在清单上、仍然可以勾,只是不参与百分比。
+ */
 export async function getMaterialProgress(userId: string) {
-  const materials = await db.userMaterial.findMany({ where: { userId } })
-  const done = materials.filter((m) => m.status === 'completed').length
+  const materials = await db.userMaterial.findMany({
+    where: { userId },
+    select: { status: true, template: { select: { optional: true } } },
+  })
+
+  const required = materials.filter((m) => !m.template.optional)
+  const done = required.filter((m) => m.status === 'completed').length
+
   return {
-    total: materials.length,
+    total: required.length,
     done,
-    percent: materials.length ? Math.round((done / materials.length) * 100) : 0,
+    percent: required.length ? Math.round((done / required.length) * 100) : 0,
+    /** 可选材料单独报,UI 可以展示成「另有 N 项加分材料」 */
+    optionalTotal: materials.length - required.length,
+    optionalDone: materials.filter((m) => m.template.optional && m.status === 'completed').length,
   }
 }
 
