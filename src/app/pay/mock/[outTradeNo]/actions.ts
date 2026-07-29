@@ -2,6 +2,7 @@
 
 import { db } from '@/lib/db'
 import { env } from '@/lib/env'
+import { requireUser } from '@/lib/auth/session'
 import { fulfillPayment } from '@/lib/payment/fulfill'
 
 /**
@@ -41,8 +42,23 @@ export async function confirmMockPayment(outTradeNo: string) {
     return { ok: false as const, error: '模拟支付在当前环境不可用' }
   }
 
+  /**
+   * ⚠️ 必须校验归属,而且必须要求登录。
+   *
+   *    这个 action 原来只按 outTradeNo 取单,不问调用者是谁 —— 连登录都不用。
+   *    生产环境有 ALLOW_MOCK_PAYMENT 拦着,但**演示部署恰恰会把它打开**,
+   *    而那正是外部人员能访问到的环境。届时任何人拿到或猜到一个 outTradeNo
+   *    就能触发履约。outTradeNo 带随机段、不易枚举,但「不易枚举」是运气,
+   *    不是访问控制 —— 归属校验才是。
+   */
+  const user = await requireUser()
+
   const payment = await db.payment.findUnique({ where: { outTradeNo } })
   if (!payment) return { ok: false as const, error: '订单不存在' }
+  if (payment.userId !== user.id) {
+    // 措辞和「不存在」保持一致,不告诉对方这个单号真实存在
+    return { ok: false as const, error: '订单不存在' }
+  }
   if (payment.channel !== 'mock') {
     return { ok: false as const, error: '该订单不是模拟支付订单' }
   }

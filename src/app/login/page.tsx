@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useRef, useState, useTransition } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { safeRedirectPath } from '@/lib/safe-redirect'
 import Link from 'next/link'
 import { Button, Card, Field } from '@/components/ui'
 import { BrandLogo } from '@/components/BrandLogo'
@@ -24,7 +25,13 @@ export default function LoginPage() {
 function LoginForm() {
   const router = useRouter()
   const params = useSearchParams()
-  const next = params.get('next') ?? '/app/dashboard'
+  /**
+   * ⚠️ 必须过一遍白名单再用。
+   *    直接 router.push(params.get('next')) 是开放重定向:
+   *    /login?next=//evil.com 会让用户**在真实域名上登录完之后**落到攻击者站点,
+   *    再被一句「会话已过期」骗走手机号和验证码。见 lib/safe-redirect.ts。
+   */
+  const next = safeRedirectPath(params.get('next'))
 
   /**
    * 两种登录方式并存。验证码是主路径(不用记密码、且天然验证手机号);

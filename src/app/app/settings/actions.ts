@@ -35,7 +35,17 @@ export async function updateProfile(input: {
 export async function exportMyData() {
   const user = await requireUser()
 
-  const [profile, choices, materials, essays, orders, subscriptions] = await Promise.all([
+  const [
+    profile,
+    choices,
+    materials,
+    essays,
+    orders,
+    subscriptions,
+    storyAnswers,
+    referees,
+    timeline,
+  ] = await Promise.all([
     db.profile.findUnique({ where: { userId: user.id } }),
     db.userSchoolChoice.findMany({
       where: { userId: user.id },
@@ -63,6 +73,24 @@ export async function exportMyData() {
     }),
     db.serviceOrder.findMany({ where: { userId: user.id }, include: { sku: true } }),
     db.subscription.findMany({ where: { userId: user.id }, include: { plan: true } }),
+    /**
+     * ⚠️ 每新增一个存用户数据的模型,这里都必须跟着加一条。
+     *
+     *    素材库、推荐人、经历时间轴是分三次加进来的,而这三次**一次都没有
+     *    更新导出** —— 也就是说用户点「导出我的数据」拿到的是一份残缺的副本,
+     *    而这条路径正是 PIPL 查阅复制权的落地。
+     *    (注销那边不会漏,因为走的是数据库级联;导出没有这种自动机制,
+     *     只能靠写代码的人记得 —— 所以 settings.test.ts 里加了一条断言盯着。)
+     */
+    db.storyAnswer.findMany({
+      where: { userId: user.id },
+      select: { questionId: true, answer: true, updatedAt: true },
+    }),
+    db.referee.findMany({
+      where: { userId: user.id },
+      include: { answers: { select: { questionId: true, answer: true } } },
+    }),
+    db.timelineEntry.findMany({ where: { userId: user.id }, orderBy: { startYm: 'asc' } }),
   ])
 
   return {
@@ -81,6 +109,9 @@ export async function exportMyData() {
       essays,
       serviceOrders: orders,
       subscriptions,
+      storyAnswers,
+      referees,
+      timeline,
     },
   }
 }

@@ -299,6 +299,7 @@ model User {
    * /**
    * /**
    * /**
+   * /**
    * 密码登录(可选)。
    * 学生端主路径仍是手机号 + 验证码 —— 不强制设密码,也不要求注册时设。
    * 但两种场景必须有密码兜底:
@@ -416,9 +417,19 @@ model Lead {
 
   createdAt DateTime @default(now()) @map("created_at")
 
+  /**
+   * 提交来源 IP —— 用于免费评估的限流(见 app/assess/actions.ts)。
+   * ⚠️ 免费评估是全站唯一**不需要登录**、又会写库并跑一遍匹配计算的入口。
+   * 不限流的话,一个脚本就能往 Lead 表里灌任意多行(每行带 assessPayload +
+   * assessResult 两个 JSON),同时把 2 核的机器算满 —— 而 Postgres 就在同一台上。
+   * 只认 nginx 盖的 X-Real-IP,不认客户端可伪造的 X-Forwarded-For。
+   */
+  ip String?
+
   @@index([phone])
   @@index([createdAt])
   @@index([referredById])
+  @@index([ip, createdAt])
   @@map("leads")
 }
 

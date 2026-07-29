@@ -9,6 +9,8 @@ import { DIRECTION_ORDER, REGION_ORDER } from '@/lib/programs/types'
 import { getPublicRegions } from '@/lib/regions/gate'
 import { getSession } from '@/lib/auth/session'
 import { saveAssessmentToProfile } from '@/lib/profile/from-assessment'
+import { headers } from 'next/headers'
+import { decideAssessThrottle } from '@/lib/assess-throttle'
 
 /**
  * 免费评估提交(PRD 4.1)。
@@ -96,6 +98,31 @@ export async function submitAssessment(raw: unknown) {
   } = parsed.data
   const input: AssessmentInput = rest
 
+  /**
+   * ⚠️ 限流必须在 runAssessment **之前**。
+   *
+   *    这是全站唯一不需要登录、又会写库并跑一遍匹配计算的入口,而且就挂在
+   *    首页最显眼的按钮上。放在后面等于闸门形同虚设 —— 昂贵的那部分已经跑完了。
+   *
+   *    只认 nginx 盖的 X-Real-IP,不认客户端可伪造的 X-Forwarded-For
+   *    (理由同 login/actions.ts)。拿不到 IP 就只走手机号那道,不因此拒绝服务。
+   */
+  const ip = (await headers()).get('x-real-ip') || null
+  const hourAgo = new Date(Date.now() - 3600_000)
+
+  const [phoneLastHour, ipLastHour] = await Promise.all([
+    db.lead.count({ where: { phone, createdAt: { gte: hourAgo } } }),
+    ip ? db.lead.count({ where: { ip, createdAt: { gte: hourAgo } } }) : Promise.resolve(null),
+  ])
+
+  const gate = decideAssessThrottle({ phoneLastHour, ipLastHour })
+  if (!gate.allowed) {
+    console.warn(
+      JSON.stringify({ event: 'assess.throttled', phoneLastHour, ipLastHour, hasIp: !!ip }),
+    )
+    return { ok: false as const, error: gate.message! }
+  }
+
   const result = await runAssessment(input)
 
   // 分享归因:找到分享者。自己分享给自己不算(同手机号)。
@@ -121,6 +148,7 @@ export async function submitAssessment(raw: unknown) {
       assessResult: result as unknown as object,
       sourceChannel: sourceChannel ?? null,
       referredById: validReferrer?.id ?? null,
+      ip,
     },
   })
 
