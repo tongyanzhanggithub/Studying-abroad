@@ -260,6 +260,7 @@ model User {
   /// 隐私政策/用户协议同意留痕(PRD 10.3 要求首次注册强制确认)
   /**
    * /**
+   * /**
    * 密码登录(可选)。
    * 学生端主路径仍是手机号 + 验证码 —— 不强制设密码,也不要求注册时设。
    * 但两种场景必须有密码兜底:
@@ -296,6 +297,7 @@ model User {
   aiUsage              AiUsageDaily[]
   lead                 Lead?
   invoiceRequests      InvoiceRequest[]
+  storyAnswers         StoryAnswer[]
 
   // 注销清理批处理按 deletionRequestedAt 扫,建索引避免全表扫
   @@index([deletionRequestedAt])
@@ -822,6 +824,37 @@ model EssayVersion {
 
   @@index([essayId, createdAt])
   @@map("essay_versions")
+}
+
+/**
+ * 个人素材库 —— 学生对素材问题的回答。
+ * ⚠️ 关键设计:**挂在 User 上,不是 Essay 上。**
+ * Essay.materialCards 那个字段是按文书存的,而且全项目只有一处读、零处写,
+ * 也就是说 prompt 里的「已收集到的素材」永远是空的。
+ * 更根本的问题是粒度不对:高中经历、大学经历、家庭影响、性格、工作履历
+ * 都是**跟人走**的,一个人申 8 所学校不该把自己的高中答 8 遍 ——
+ * 这和材料中心「一份材料不用交八遍」是同一件事。
+ * 只有「为什么申这个专业/这所学校」是跟项目走的,那部分留在 Essay 里。
+ * ⚠️ 不存空答案:没答的问题就没有行,不要写一行空字符串。
+ * 否则「答了多少题」这个进度算不准,而进度是这个功能唯一的推进反馈。
+ */
+model StoryAnswer {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// 对应 src/lib/essays/question-bank.ts 里的问题 id。
+  /// 题库改版时用它做迁移,所以 id 一经发布不要改。
+  questionId String @map("question_id")
+
+  answer String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, questionId])
+  @@index([userId, updatedAt])
+  @@map("story_answers")
 }
 
 model EssayAiSession {

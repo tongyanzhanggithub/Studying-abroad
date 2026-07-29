@@ -11,7 +11,8 @@ const NAV_GROUPS = [
       { href: '/app/assessments', label: '评估', desc: '申请地图与推荐', icon: MapIcon },
       { href: '/app/schools', label: '选校', desc: '院校库与名单', icon: SchoolIcon },
       { href: '/app/materials', label: '材料', desc: '共用材料清单', icon: DocIcon },
-      { href: '/app/essays', label: '文书', desc: '素材与润色', icon: PenIcon },
+      { href: '/app/story', label: '素材库', desc: '经历答一次,各校通用', icon: DocIcon },
+      { href: '/app/essays', label: '文书', desc: '按学校分别写', icon: PenIcon },
     ],
   },
   {

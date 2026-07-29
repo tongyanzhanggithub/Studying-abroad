@@ -15,6 +15,7 @@ import {
   QuotaExceededError,
 } from '@/lib/llm'
 import { runComplianceCheck } from '@/lib/essays/compliance'
+import { formatAnswersForPrompt } from '@/lib/essays/question-bank'
 import { syncApplicationStatuses } from '@/lib/materials/generate'
 
 /**
@@ -173,12 +174,31 @@ export async function askInterview(essayId: string, userMessage: string) {
   })
   const history = (session?.messages ?? []) as Array<{ role: string; content: string }>
 
+  /**
+   * ⚠️ 素材从**用户级的素材库**取,不再是 essay.materialCards。
+   *
+   *    materialCards 是个死字段:全项目只有这一处读、零处写,所以 prompt 里
+   *    「已收集到的素材卡片」永远是 `[]` —— 模型每次都从零开始问,
+   *    学生在素材库里认真写下的东西一个字都没被用上。
+   *
+   *    改成读 StoryAnswer,并且**只带答过的题**(见 formatAnswersForPrompt):
+   *    把没答的也列过去,模型会挨个补问一遍,而访谈的价值在于
+   *    顺着他已经写下的往下深挖,不是把表格再念一次。
+   */
+  const storyRows = await db.storyAnswer.findMany({
+    where: { userId: user.id },
+    select: { questionId: true, answer: true },
+  })
+  const story = formatAnswersForPrompt(
+    Object.fromEntries(storyRows.map((r) => [r.questionId, r.answer])),
+  )
+
   const tpl = await loadPrompt('essay_interview')
   const userPrompt = renderTemplate(tpl.userTpl, {
     school: essay.program?.school.nameZh ?? essay.program?.school.nameEn ?? '(未指定院校)',
     program: essay.program?.nameZh ?? essay.program?.nameEn ?? '',
     prompt: essay.promptText ?? '(未填写文书题目)',
-    cards: JSON.stringify(essay.materialCards),
+    cards: story,
     history: history.map((m) => `${m.role}: ${m.content}`).join('\n'),
   })
 
