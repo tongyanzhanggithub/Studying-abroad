@@ -116,6 +116,21 @@ enum RefereeStatus {
   declined // 婉拒了 —— 必须能记录,否则学生会一直等一个不会来的回复
 }
 
+/**
+ * 经历类型。
+ * ⚠️ 教育和工作**刻意合并成一条时间轴**,而不是像纸质表格那样分成两张表。
+ * 海外网申普遍要求「从某年起的完整经历,不得有无法解释的空档」——
+ * 分成两张表时,空档只能靠人自己对着日期看;合成一条时间轴之后,
+ * 系统可以直接把空档算出来并提示(见 lib/profile/timeline.ts)。
+ * 那份纸质表格专门有一节「空闲时段说明」要学生自己解释,
+ * 正是因为它做不到这件事。
+ */
+enum TimelineKind {
+  education // 就读
+  work // 工作 / 实习
+  other // 其他(备考、待业、疾病、创业等)—— 空档要靠它来解释
+}
+
 enum LanguageType {
   ielts
   toefl
@@ -283,6 +298,7 @@ model User {
    * /**
    * /**
    * /**
+   * /**
    * 密码登录(可选)。
    * 学生端主路径仍是手机号 + 验证码 —— 不强制设密码,也不要求注册时设。
    * 但两种场景必须有密码兜底:
@@ -321,6 +337,7 @@ model User {
   invoiceRequests      InvoiceRequest[]
   storyAnswers         StoryAnswer[]
   referees             Referee[]
+  timeline             TimelineEntry[]
 
   // 注销清理批处理按 deletionRequestedAt 扫,建索引避免全表扫
   @@index([deletionRequestedAt])
@@ -333,6 +350,16 @@ model Profile {
 
   undergradTier  UndergradTier? @map("undergrad_tier")
   undergradMajor String?        @map("undergrad_major")
+
+  /**
+   * 护照上的姓名拼音,分姓与名。
+   * ⚠️ 这是整张网申表里**最容易出错、后果又最实在**的一项:
+   * 成绩单、在读证明、推荐信、网申账号如果拼法不一致,
+   * 学校会认为是不同的人,轻则要求补件、重则影响签证。
+   * 单独存一份,让所有地方照着它填。
+   */
+  passportSurname   String? @map("passport_surname")
+  passportGivenName String? @map("passport_given_name")
 
   /**
    * 在读 / 已毕业。决定材料清单给的是「在读证明」还是「毕业证+学位证」,
@@ -944,6 +971,43 @@ model RefereeAnswer {
 
   @@unique([refereeId, questionId])
   @@map("referee_answers")
+}
+
+/**
+ * 个人经历时间轴 —— 网申表格里的教育经历与工作经历。
+ * ⚠️ 只存**学校/单位/时间/角色**这类申请必需的信息。
+ * 刻意**不收**身份证号、护照号、家庭住址、监护人证件信息、婚姻状况:
+ * · 身份证号在国内按敏感个人信息处理,需要单独同意与必要性论证;
+ * 而学生填网申时照着自己的证件念即可,存进库里只是多一个泄露面
+ * · 监护人的证件信息是**第三方**的敏感信息,学生无权代为同意
+ * · 婚姻状况、配偶信息对硕士申请基本用不上
+ * 行业表格收这些是因为它同时用于签证代办,那是另一条业务线的需求,
+ * 不该顺手带进一个学生自助工具里。
+ */
+model TimelineEntry {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  kind TimelineKind
+
+  /// 起止年月,格式 YYYY-MM。用字符串而不是 Date:
+  /// 网申表格问的就是年月,存成 Date 会凭空造出一个「几号」并带来时区问题。
+  startYm String  @map("start_ym")
+  /// 为空 = 至今
+  endYm   String? @map("end_ym")
+
+  /// 学校或单位全称(网申要求填全称,不能写简称)
+  organization String
+  /// 就读的专业/学位,或担任的职位
+  role         String?
+  description  String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId, startYm])
+  @@map("timeline_entries")
 }
 
 model EssayAiSession {

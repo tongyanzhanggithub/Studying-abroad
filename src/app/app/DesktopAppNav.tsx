@@ -13,6 +13,7 @@ const NAV_GROUPS = [
       { href: '/app/materials', label: '材料', desc: '共用材料清单', icon: DocIcon },
       { href: '/app/story', label: '素材库', desc: '经历答一次,各校通用', icon: DocIcon },
       { href: '/app/referees', label: '推荐人', desc: '找谁、催进度、给素材', icon: DocIcon },
+      { href: '/app/profile', label: '网申信息', desc: '经历时间轴与拼音', icon: DocIcon },
       { href: '/app/essays', label: '文书', desc: '按学校分别写', icon: PenIcon },
     ],
   },
