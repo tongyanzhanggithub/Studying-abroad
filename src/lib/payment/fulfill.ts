@@ -149,7 +149,13 @@ export async function fulfillPayment(params: {
       userId: payment.userId,
       properties: { sku: order?.sku.code, amountCents },
     })
-    if (order?.fromRuleId) {
+    /**
+     * ⚠️ userId 可能为 null —— 账号注销时支付记录会解绑而不删除
+     *    (见 schema 里 Payment 的注释)。正常履约路径上人一定还在,
+     *    但这里是回调驱动的,渠道重推一条历史通知就会走到这儿。
+     *    没有人可归因时跳过,不要往 null 上写推荐事件。
+     */
+    if (order?.fromRuleId && payment.userId) {
       await recordPurchase(payment.userId, order.fromRuleId)
     }
   }

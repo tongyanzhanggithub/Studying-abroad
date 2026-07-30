@@ -72,7 +72,18 @@ export default async function AdminMetricsPage() {
      */
     db.serviceOrder.groupBy({
       by: ['userId'],
-      where: { status: { in: ['paid', 'assigned', 'delivering', 'delivered', 'confirmed'] } },
+      where: {
+        status: { in: ['paid', 'assigned', 'delivering', 'delivered', 'confirmed'] },
+        /**
+         * ⚠️ 必须排除已注销的。
+         *
+         *    账号注销后订单的 userId 被解绑为 null(订单本身要留着给交付人对账,
+         *    见 schema 里 ServiceOrder 的注释)。不排除的话,**所有**注销用户的
+         *    订单会被 groupBy 归成同一个 null 组,加购率的分子被压成 1 ——
+         *    人越多失真越大。而分母 activeSubs 只算在册用户,两边口径也必须一致。
+         */
+        userId: { not: null },
+      },
     }),
     db.program.count(),
     db.program.count({

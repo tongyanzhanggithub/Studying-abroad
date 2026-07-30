@@ -301,6 +301,8 @@ model User {
    * /**
    * /**
    * /**
+   * /**
+   * /**
    * 密码登录(可选)。
    * 学生端主路径仍是手机号 + 验证码 —— 不强制设密码,也不要求注册时设。
    * 但两种场景必须有密码兜底:
@@ -508,11 +510,29 @@ model Plan {
 }
 
 model Subscription {
-  id     String @id @default(cuid())
-  userId String @map("user_id")
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  planId String @map("plan_id")
-  plan   Plan   @relation(fields: [planId], references: [id])
+  id     String  @id @default(cuid())
+  /**
+   * ⚠️ 可空 + SetNull:注销账号时**解绑而不删除**。
+   * 这是隐私政策上写明的承诺(「支付记录因财税法规要求需保留,
+   * 但会与你的身份解绑」)。在这之前三张表全是 Cascade —— 也就是说
+   * deleteAccount 里那句「解绑」的 updateMany 刚写完,
+   * 下一行 user.delete() 一级联就把它们删了,承诺给用户的
+   * 「保留但解绑」实际执行的是「直接删掉」。
+   * 《会计档案管理办法》要求会计凭证保管 30 年;PIPL 第 47 条也允许
+   * 「法律、行政法规规定的保存期限未届满」时不删除,但要停止除存储
+   * 之外的处理。解绑正是这个做法:金额、时间、卖了什么留着对账,
+   * 和人的关联切断。userId 为 null 的语义就是「该账号已注销」。
+   * ⚠️ 三张表必须一起解绑,少一张就残:
+   * Payment       金额、时间、交易号 —— 但**没有 subject 字段**
+   * Subscription  卖的是哪个套餐(Payment.orderId 指向它)
+   * ServiceOrder  卖的是哪个服务,以及交付人的分成凭据
+   * 只留 Payment 的话,一笔季票支付就只剩「多少钱、什么时候」,
+   * 说不出卖了什么 —— 那不是一份合格的会计凭证。
+   */
+  userId String? @map("user_id")
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  planId String  @map("plan_id")
+  plan   Plan    @relation(fields: [planId], references: [id])
 
   season    String // "2027fall"
   status    SubscriptionStatus @default(active)
@@ -1240,8 +1260,17 @@ model SettlementPayout {
 
 model ServiceOrder {
   id     String     @id @default(cuid())
-  userId String     @map("user_id")
-  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /**
+   * ⚠️ 可空 + SetNull,理由和 Payment 一样,但还多一条**更硬的**:
+   * 交付人的分成历史就挂在这些订单上(settlementMonth / payoutCents,
+   * 见 lib/services/settlement.ts)。学生一注销,原来的 Cascade 会把订单删掉,
+   * 于是那个月已经锁定、甚至已经转过账的分成记录**凭据消失** ——
+   * 交付人的账再也对不上。这是一笔要转给真人的钱。
+   * 结算逻辑完全不读 userId(settlement-math 里没有这个字段),
+   * 所以解绑不影响任何对账。
+   */
+  userId String?    @map("user_id")
+  user   User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
   skuId  String     @map("sku_id")
   sku    ServiceSku @relation(fields: [skuId], references: [id])
 
@@ -1306,9 +1335,27 @@ model ServiceOrder {
 // ════════════════════════════════════════════════════════════
 
 model Payment {
-  id     String @id @default(cuid())
-  userId String @map("user_id")
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id     String  @id @default(cuid())
+  /**
+   * ⚠️ 可空 + SetNull:注销账号时**解绑而不删除**。
+   * 这是隐私政策上写明的承诺(「支付记录因财税法规要求需保留,
+   * 但会与你的身份解绑」)。在这之前三张表全是 Cascade —— 也就是说
+   * deleteAccount 里那句「解绑」的 updateMany 刚写完,
+   * 下一行 user.delete() 一级联就把它们删了,承诺给用户的
+   * 「保留但解绑」实际执行的是「直接删掉」。
+   * 《会计档案管理办法》要求会计凭证保管 30 年;PIPL 第 47 条也允许
+   * 「法律、行政法规规定的保存期限未届满」时不删除,但要停止除存储
+   * 之外的处理。解绑正是这个做法:金额、时间、卖了什么留着对账,
+   * 和人的关联切断。userId 为 null 的语义就是「该账号已注销」。
+   * ⚠️ 三张表必须一起解绑,少一张就残:
+   * Payment       金额、时间、交易号 —— 但**没有 subject 字段**
+   * Subscription  卖的是哪个套餐(Payment.orderId 指向它)
+   * ServiceOrder  卖的是哪个服务,以及交付人的分成凭据
+   * 只留 Payment 的话,一笔季票支付就只剩「多少钱、什么时候」,
+   * 说不出卖了什么 —— 那不是一份合格的会计凭证。
+   */
+  userId String? @map("user_id")
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   orderType OrderType @map("order_type")
   orderId   String    @map("order_id") // Subscription.id 或 ServiceOrder.id

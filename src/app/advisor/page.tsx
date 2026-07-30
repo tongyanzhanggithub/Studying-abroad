@@ -91,7 +91,8 @@ export default async function AdvisorPage() {
           {active.map((o) => {
             const deadline = o.paidAt ? o.paidAt.getTime() + o.sku.slaHours * 3600_000 : null
             const overdue = deadline !== null && now > deadline && !o.deliveredAt
-            const p = o.user.profile
+            // 学生注销后 user 解绑为 null;背景信息随之消失,但订单要留着结算
+            const p = o.user?.profile ?? null
 
             return (
               <Card key={o.id} className={overdue ? 'border-red-200' : undefined}>

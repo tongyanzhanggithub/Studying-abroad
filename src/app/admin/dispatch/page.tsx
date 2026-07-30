@@ -149,7 +149,10 @@ export default async function AdminDispatchPage({
                     </div>
 
                     <p className="mt-0.5 text-sm text-ink-600">
-                      用户 {o.user.phone} · 付款 {o.paidAt ? formatDate(o.paidAt) : '—'}
+                      {/* 账号注销后 user 解绑为 null(见 schema 的 Payment/ServiceOrder 注释)——
+                          明确写出来,免得运营看到空白以为是数据坏了 */}
+                      用户 {o.user?.phone ?? '账号已注销'} · 付款{' '}
+                      {o.paidAt ? formatDate(o.paidAt) : '—'}
                     </p>
                     <p className="text-xs text-ink-400">
                       {o.deliverer

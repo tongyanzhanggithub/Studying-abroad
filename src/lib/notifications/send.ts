@@ -171,6 +171,16 @@ export async function notifyServiceOrder(
   })
   if (!order) return false
 
+  /**
+   * ⚠️ 学生注销后 userId 被解绑为 null(订单本身要留着给交付人对账,
+   *    见 schema 里 ServiceOrder 的注释)。这时**没有人可通知** ——
+   *    直接返回,不要试着往 null 上发。
+   *
+   *    这不是异常路径:注销之后运营仍然可能在后台推进这张订单的状态
+   *    (为了把交付人的分成结掉),每次状态变更都会走到这里。
+   */
+  if (!order.userId) return false
+
   const n = await createNotification({
     userId: order.userId,
     templateCode,

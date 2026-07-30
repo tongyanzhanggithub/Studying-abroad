@@ -102,7 +102,8 @@ export default async function AdminSettlementPage({
               <div key={o.id} className="rounded-lg bg-white px-3 py-2 text-sm">
                 <div className="flex flex-wrap items-center gap-x-3 text-ink-900">
                   <span className="font-medium">{o.sku.name}</span>
-                  <span className="text-xs text-ink-500">{o.user.phone}</span>
+                  {/* 注销后解绑为 null —— 订单本身要留着给交付人对账 */}
+                  <span className="text-xs text-ink-500">{o.user?.phone ?? '账号已注销'}</span>
                   <span className="text-xs text-ink-500">
                     交付人 {o.deliverer?.name ?? '未派单'}
                   </span>

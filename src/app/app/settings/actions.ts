@@ -163,12 +163,38 @@ export async function deleteAccount(confirmPhone: string) {
     }
   }
 
-  // 财税留存:支付记录解绑而非删除
-  await db.payment.updateMany({
-    where: { userId: user.id },
-    data: { refundReason: '用户已注销账号' },
-  })
+  /**
+   * ⚠️ 免费评估留资(Lead)必须**显式删除**。
+   *
+   *    Lead.convertedUserId 是 SetNull,所以级联**不会**删它 ——
+   *    而它存着手机号、GPA、语言成绩、目标地区、完整评估结果和提交 IP。
+   *    在这之前注销账号后这一整行都留在库里,连同手机号 ——
+   *    这是 PIPL 删除权的实打实违规,而且和支付记录不同,
+   *    它**没有任何财税留存理由**。
+   *
+   *    按手机号删而不是按 convertedUserId:同一个手机号可能在注册前
+   *    做过好几次免费评估,那些 Lead 的 convertedUserId 是空的,
+   *    但它们同样是这个人的个人信息。
+   */
+  await db.lead.deleteMany({ where: { phone: user.phone } })
 
+  /**
+   * ⚠️ 这里**不再**写 refundReason。
+   *
+   *    原来是 `payment.updateMany({ data: { refundReason: '用户已注销账号' } })`,
+   *    两个问题:
+   *      1. 纯无用功 —— 当时 Payment 是 onDelete: Cascade,下一行 user.delete()
+   *         一级联就把刚更新的那些行删了。也就是说隐私政策承诺的
+   *         「支付记录保留但解绑」,实际执行的是「直接删掉」。
+   *      2. 字段用错了 —— refundReason 是退款原因,拿它记注销会污染退款报表。
+   *
+   *    现在 Payment 与 ServiceOrder 都是可空 + SetNull(见 schema 注释),
+   *    user.delete() 之后它们的 userId 自动变成 null —— **解绑本身就是标记**,
+   *    不需要往别的字段里塞话。
+   *
+   *    其余数据(材料、文书、素材库、推荐人、时间轴、订阅、通知、埋点)
+   *    仍然靠级联真删,这是对的。
+   */
   await db.user.delete({ where: { id: user.id } })
   await destroySession()
 
