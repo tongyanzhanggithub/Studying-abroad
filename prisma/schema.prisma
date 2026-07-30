@@ -539,8 +539,6 @@ model Subscription {
   paidAt    DateTime?          @map("paid_at")
   expiresAt DateTime?          @map("expires_at")
 
-  /// 退款判定依据:7 天内且核心模块使用 <3 次可全退(PRD 4.8)
-  coreModuleUseCount Int @default(0) @map("core_module_use_count")
 
   createdAt DateTime @default(now()) @map("created_at")
 

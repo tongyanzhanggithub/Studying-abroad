@@ -72,8 +72,8 @@ export default function TermsPage() {
         <section>
           <h2 className="mb-2 font-semibold">五、付费与退款</h2>
           <p><strong>系统季票</strong>(预付费):</p>
-          <p>· 购买后 7 天内且核心功能使用少于 3 次 —— 全额退款</p>
-          <p>· 超过上述条件 —— 按剩余月份阶梯退款,剩余不足 1 个月不予退款</p>
+          <p>· 购买后 7 天内 —— 无条件全额退款</p>
+          <p>· 超过 7 天 —— 按剩余月份阶梯退款,剩余不足 1 个月不予退款</p>
           <p className="mt-2"><strong>单点人工服务</strong>:</p>
           <p>· 交付人接单前 —— 全额退款</p>
           <p>· 已接单未交付 —— 退 50%</p>

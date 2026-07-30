@@ -14,7 +14,7 @@ import { TeacherMarquee } from '@/components/TeacherMarquee'
 export const metadata: Metadata = pageMetadata({
   title: '价格',
   description:
-    '申请季通行证按季度计费,人工服务单独加购、按次付费。七天内且核心功能用得少于三次可全额退,规则写在付款页上。',
+    '申请季通行证按季度计费,人工服务单独加购、按次付费。七天内无条件全额退,规则写在付款页上。',
 })
 
 /**
@@ -76,7 +76,7 @@ const VALUE_POINTS = [
 const REFUND_ROWS = [
   {
     title: '系统季票',
-    body: '购买后 7 天内,且核心功能使用少于 3 次,可全额退款。超过 7 天或已多次使用,按剩余月份阶梯退款;剩余不足 1 个月不予退款。',
+    body: '购买后 7 天内无条件全额退款,不问理由、不看你用了多少。超过 7 天按剩余月份阶梯退款;剩余不足 1 个月不予退款。',
   },
   {
     title: '单点人工服务',

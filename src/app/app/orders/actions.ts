@@ -78,7 +78,6 @@ export async function requestRefund(kind: 'subscription' | 'service', id: string
       amountCents: sub.plan.priceCents,
       paidAt: sub.paidAt,
       expiresAt: sub.expiresAt,
-      coreModuleUseCount: sub.coreModuleUseCount,
     })
     if (!decision.allowed) return { ok: false as const, error: decision.reason }
 

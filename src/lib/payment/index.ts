@@ -198,85 +198,11 @@ export async function executeRefund(
 
 // ── 退款规则(PRD 4.8:写进产品逻辑,不只写在协议里)──────
 
-export interface RefundDecision {
-  allowed: boolean
-  /** 可退金额(分) */
-  refundableCents: number
-  reason: string
-}
-
-/**
- * 系统季票退款计算。
- *   · 购买 7 天内且核心模块使用 <3 次 → 全退
- *   · 之后按剩余月份阶梯退
- */
-export function calcSubscriptionRefund(params: {
-  amountCents: number
-  paidAt: Date
-  expiresAt: Date | null
-  coreModuleUseCount: number
-}): RefundDecision {
-  const { amountCents, paidAt, expiresAt, coreModuleUseCount } = params
-  const daysSincePaid = (Date.now() - paidAt.getTime()) / 86_400_000
-
-  if (daysSincePaid <= 7 && coreModuleUseCount < 3) {
-    return {
-      allowed: true,
-      refundableCents: amountCents,
-      reason: '购买 7 天内且核心功能使用少于 3 次,可全额退款',
-    }
-  }
-
-  if (!expiresAt) {
-    return { allowed: false, refundableCents: 0, reason: '该订阅无到期日,不支持按月退款' }
-  }
-
-  const totalMs = expiresAt.getTime() - paidAt.getTime()
-  const remainingMs = expiresAt.getTime() - Date.now()
-  if (remainingMs <= 0) {
-    return { allowed: false, refundableCents: 0, reason: '订阅已到期,不可退款' }
-  }
-
-  const remainingMonths = Math.floor(remainingMs / (30 * 86_400_000))
-  const totalMonths = Math.max(1, Math.round(totalMs / (30 * 86_400_000)))
-  if (remainingMonths < 1) {
-    return { allowed: false, refundableCents: 0, reason: '剩余不足 1 个月,不可退款' }
-  }
-
-  const refundable = Math.floor((amountCents * remainingMonths) / totalMonths)
-  return {
-    allowed: true,
-    refundableCents: refundable,
-    reason: `按剩余 ${remainingMonths} 个月/共 ${totalMonths} 个月阶梯退款`,
-  }
-}
-
-/**
- * 单点服务退款计算。
- *   · 交付人接单前 → 全退
- *   · 接单后交付前 → 退 50%
- *   · 交付后 → 不退
- */
-export function calcServiceRefund(params: {
-  amountCents: number
-  assignedAt: Date | null
-  deliveredAt: Date | null
-}): RefundDecision {
-  const { amountCents, assignedAt, deliveredAt } = params
-
-  if (deliveredAt) {
-    return { allowed: false, refundableCents: 0, reason: '服务已交付,不支持退款' }
-  }
-  if (assignedAt) {
-    return {
-      allowed: true,
-      refundableCents: Math.floor(amountCents / 2),
-      reason: '交付人已接单但尚未交付,可退 50%',
-    }
-  }
-  return {
-    allowed: true,
-    refundableCents: amountCents,
-    reason: '交付人尚未接单,可全额退款',
-  }
-}
+// 退款的纯计算部分抽到 refund-math.ts(不依赖 env / db,可直接单测)。
+// 这里继续导出,免得调用方要区分从哪个文件 import。
+export {
+  FULL_REFUND_DAYS,
+  calcSubscriptionRefund,
+  calcServiceRefund,
+  type RefundDecision,
+} from './refund-math'

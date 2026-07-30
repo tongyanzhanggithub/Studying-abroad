@@ -64,7 +64,6 @@ export default async function OrdersPage() {
                       amountCents: s.plan.priceCents,
                       paidAt: s.paidAt,
                       expiresAt: s.expiresAt,
-                      coreModuleUseCount: s.coreModuleUseCount,
                     })
                   : null
               return (
