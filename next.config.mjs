@@ -26,8 +26,16 @@ const nextConfig = {
       {
         source: '/:path*',
         headers: [
-          // 现代浏览器认这条
-          { key: 'Content-Security-Policy', value: "frame-ancestors 'none'" },
+          /**
+           * ⚠️ 完整的 CSP 已经移到 src/middleware.ts —— 那里每个请求生成 nonce,
+           *    Next 会把同一个 nonce 加到它注入的 script 标签上。
+           *
+           *    这里**不能**再下一个 Content-Security-Policy 头:同名头有两个时
+           *    浏览器会**同时**执行两条策略、取交集,而这里那条老的
+           *    (只有 frame-ancestors)会把 middleware 那条里的 script-src
+           *    等等一起收成「什么都不许」—— 结果就是白屏。
+           *    frame-ancestors 现在由 middleware 那条统一管。
+           */
           // 老浏览器只认这条
           { key: 'X-Frame-Options', value: 'DENY' },
           // 禁止浏览器把 .txt 猜成 .html 执行 —— 学生上传的文件是从本站域名发出的

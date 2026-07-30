@@ -126,7 +126,7 @@ export async function loginWithCode(params: {
   const { backfillProfileFromLatestLead } = await import('@/lib/profile/from-assessment')
   await backfillProfileFromLatestLead(user.id, phone)
 
-  await createSession({ userId: user.id, phone: user.phone })
+  await createSession({ userId: user.id, phone: user.phone, sv: user.sessionVersion })
 
   return { ok: true as const, isNewUser: !existing }
 }
@@ -209,7 +209,7 @@ export async function loginWithPassword(params: {
     },
   })
 
-  await createSession({ userId: user.id, phone: user.phone })
+  await createSession({ userId: user.id, phone: user.phone, sv: user.sessionVersion })
   return { ok: true as const }
 }
 
@@ -224,15 +224,32 @@ export async function setMyPassword(newPassword: string) {
   const weak = checkPasswordStrength(newPassword)
   if (weak) return { ok: false as const, error: weak }
 
-  await db.user.update({
+  /**
+   * ⚠️ sessionVersion +1 —— 这是「改密码」这个动作的实际意义所在。
+   *
+   *    会话是 30 天有效的 JWT、服务端不存 session,所以只改 passwordHash
+   *    对已经签发出去的 token 毫无影响:用户怀疑号被盗、改了密码,
+   *    攻击者手里那个 token 照样能再用 30 天。
+   *    版本号一加,所有旧 token(包括他自己其他设备上的)立刻失效。
+   */
+  const updated = await db.user.update({
     where: { id: user.id },
     data: {
       passwordHash: await hashPassword(newPassword),
       failedAttempts: 0,
       lockedUntil: null,
+      sessionVersion: { increment: 1 },
     },
   })
-  return { ok: true as const }
+
+  // 当前这台设备要继续用 —— 用新版本号重新签一次,否则他自己也被踢出去
+  await createSession({
+    userId: updated.id,
+    phone: updated.phone,
+    sv: updated.sessionVersion,
+  })
+
+  return { ok: true as const, message: '密码已更新,其他设备上的登录已失效。' }
 }
 
 export async function logout() {

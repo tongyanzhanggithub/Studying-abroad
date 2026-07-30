@@ -14,6 +14,14 @@ const secret = new TextEncoder().encode(env.authSecret)
 export interface SessionPayload {
   userId: string
   phone: string
+  /**
+   * 签发时的会话版本号。
+   *
+   * ⚠️ 老 token 里没有这个字段,按 0 处理 —— 上线时不会把所有人踢下线。
+   *    但只要有人改过一次密码(版本变成 1),他那些老 token 就 0 !== 1 立即失效,
+   *    这正是我们要的。
+   */
+  sv?: number
 }
 
 export interface AdminSessionPayload {
@@ -91,10 +99,27 @@ export async function destroySession() {
 export const getCurrentUser = cache(async () => {
   const session = await getSession()
   if (!session) return null
-  return db.user.findUnique({
+
+  const user = await db.user.findUnique({
     where: { id: session.userId },
     include: { profile: true },
   })
+  if (!user) return null
+
+  /**
+   * ⚠️ 会话版本比对 —— 「改密码要能踢掉其他设备」靠的就是这一行。
+   *
+   *    会话是 30 天有效的 JWT、服务端不存 session,所以光改 passwordHash
+   *    对已经签发出去的 token 没有任何影响。用户怀疑号被盗去改密码,
+   *    攻击者手里那个 token 还能再用 30 天 —— 这和他改密码的预期正好相反。
+   *
+   *    改密码时 sessionVersion +1(见 login/actions.ts 的 setMyPassword),
+   *    所有旧 token 在这里被判为失效。
+   *    这一步不额外查库:上面那次 findUnique 本来就要做。
+   */
+  if ((session.sv ?? 0) !== user.sessionVersion) return null
+
+  return user
 })
 
 /** 取当前用户,未登录直接抛错 —— 用于 Server Action 入口 */

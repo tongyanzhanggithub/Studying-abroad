@@ -300,6 +300,7 @@ model User {
    * /**
    * /**
    * /**
+   * /**
    * 密码登录(可选)。
    * 学生端主路径仍是手机号 + 验证码 —— 不强制设密码,也不要求注册时设。
    * 但两种场景必须有密码兜底:
@@ -313,6 +314,18 @@ model User {
    */
   failedAttempts Int       @default(0) @map("failed_attempts")
   lockedUntil    DateTime? @map("locked_until")
+
+  /**
+   * 会话版本号 —— 「让其他设备上的登录立即失效」的开关。
+   * ⚠️ 为什么必须有:会话是 30 天有效的 JWT,服务端不存 session。
+   * 在这之前改密码**不会**踢掉任何已有登录 —— 用户怀疑号被盗、去改了密码,
+   * 而攻击者手里那个 token 还能再用 30 天。这和用户改密码时的预期正好相反,
+   * 也是「改密码」这个动作唯一的实际意义。
+   * 签发时把它写进 JWT,校验时和库里的值比对;改密码就 +1,
+   * 所有旧 token 立刻作废。后台账号那边是每次请求回查 active/role
+   * (见 getAdminSession),学生端用版本号,一次查询顺带完成。
+   */
+  sessionVersion Int @default(0) @map("session_version")
 
   agreedTermsAt      DateTime? @map("agreed_terms_at")
   agreedTermsVersion String?   @map("agreed_terms_version")
