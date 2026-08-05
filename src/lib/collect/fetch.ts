@@ -3,6 +3,7 @@ import { lookup } from 'node:dns/promises'
 import { lookup as dnsLookupCb } from 'node:dns'
 import { isIP } from 'node:net'
 import { Agent } from 'undici'
+import { awaitPoliteSlot } from './politeness'
 
 /**
  * 抓取院校官网页面正文。
@@ -199,6 +200,18 @@ const MAX_BYTES = 3_000_000
 
 export async function fetchPageText(raw: string): Promise<FetchedPage> {
   const url = await assertPublicUrl(raw.trim())
+
+  /**
+   * ⚠️ 抓之前先过礼貌层:遵守 robots.txt,并等到该站点的下一个可用时隙。
+   *
+   *    手工一条一条采的时候无所谓;一旦要覆盖上百所大学、十几万个课程页,
+   *    不限速的后果是确定的 —— 大学官网普遍有 WAF,连续高频请求会封掉
+   *    **服务器出口 IP**,封了之后连正常的人工采集也做不了。
+   *
+   *    这一步会**阻塞**到轮到自己,所以调用方不需要自己 sleep。
+   */
+  const polite = await awaitPoliteSlot(url)
+  if (!polite.allowed) throw new Error(polite.reason ?? '该站点不允许抓取')
   // 跟跳转时逐跳更新,相对 Location 要基于当前这一跳解析
   let current = url
 
