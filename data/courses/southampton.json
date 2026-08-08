@@ -1,0 +1,35 @@
+{
+  "university": {
+    "name": "University of Southampton",
+    "nameZh": "南安普顿大学",
+    "origin": "https://www.southampton.ac.uk"
+  },
+  "discoveredAt": "2026-08-08T23:43:59.290Z",
+  "总数": 3,
+  "courses": [
+    {
+      "url": "https://www.southampton.ac.uk/study/postgraduate-research/phd-supervisor-list",
+      "level": "phd",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Supervisor List"
+    },
+    {
+      "url": "https://www.southampton.ac.uk/study/postgraduate-research/projects/phd-in-chemistry-or-chemical-engineering-supported-by-the",
+      "level": "phd",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "In Chemistry Or Chemical Engineering Supported By the"
+    },
+    {
+      "url": "https://www.southampton.ac.uk/study/undergraduate/foundation-years",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "Foundation",
+      "name": "Years"
+    }
+  ]
+}

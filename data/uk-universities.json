@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "manchester",
+    "name": "The University of Manchester",
+    "nameZh": "曼彻斯特大学",
+    "origin": "https://www.manchester.ac.uk"
+  },
+  {
+    "slug": "ucl",
+    "name": "University College London",
+    "nameZh": "伦敦大学学院",
+    "origin": "https://www.ucl.ac.uk"
+  },
+  {
+    "slug": "edinburgh",
+    "name": "The University of Edinburgh",
+    "nameZh": "爱丁堡大学",
+    "origin": "https://www.ed.ac.uk"
+  },
+  {
+    "slug": "leeds",
+    "name": "University of Leeds",
+    "nameZh": "利兹大学",
+    "origin": "https://www.leeds.ac.uk"
+  },
+  {
+    "slug": "bristol",
+    "name": "University of Bristol",
+    "nameZh": "布里斯托大学",
+    "origin": "https://www.bristol.ac.uk"
+  },
+  {
+    "slug": "glasgow",
+    "name": "University of Glasgow",
+    "nameZh": "格拉斯哥大学",
+    "origin": "https://www.gla.ac.uk"
+  },
+  {
+    "slug": "warwick",
+    "name": "The University of Warwick",
+    "nameZh": "华威大学",
+    "origin": "https://warwick.ac.uk"
+  },
+  {
+    "slug": "sheffield",
+    "name": "The University of Sheffield",
+    "nameZh": "谢菲尔德大学",
+    "origin": "https://www.sheffield.ac.uk"
+  },
+  {
+    "slug": "nottingham",
+    "name": "University of Nottingham",
+    "nameZh": "诺丁汉大学",
+    "origin": "https://www.nottingham.ac.uk"
+  },
+  {
+    "slug": "birmingham",
+    "name": "University of Birmingham",
+    "nameZh": "伯明翰大学",
+    "origin": "https://www.birmingham.ac.uk"
+  },
+  {
+    "slug": "southampton",
+    "name": "University of Southampton",
+    "nameZh": "南安普顿大学",
+    "origin": "https://www.southampton.ac.uk"
+  },
+  {
+    "slug": "kcl",
+    "name": "King's College London",
+    "nameZh": "伦敦国王学院",
+    "origin": "https://www.kcl.ac.uk"
+  }
+]

@@ -1,0 +1,323 @@
+{
+  "university": {
+    "name": "University of Birmingham",
+    "nameZh": "伯明翰大学",
+    "origin": "https://www.birmingham.ac.uk"
+  },
+  "discoveredAt": "2026-08-08T23:43:46.806Z",
+  "总数": 39,
+  "courses": [
+    {
+      "url": "https://www.birmingham.ac.uk/study/campaigns/social-sciences/ma-ed-leadership-dubai",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Ed Leadership Dubai"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/campaigns/social-sciences/ma-education-pathways",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Education Pathways"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/campaigns/social-sciences/ma-inclusion",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Inclusion"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/campaigns/social-sciences/msc-ai-and-gov-dubai",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Ai and Gov Dubai"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/campaigns/social-sciences/msc-int-bus-dubai",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Int Bus Dubai"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/campaigns/social-sciences/pgce-prim",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Prim"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/campaigns/social-sciences/pgce-second",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Second"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/campaigns/social-sciences/pgcert-sen-dubai",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Sen Dubai"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/international/bia/foundation-pathways-bia",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "Foundation",
+      "name": "Pathways Bia"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/international/bia/foundation-pathways-bia/foundation-wellbeing-and-support",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "Foundation",
+      "name": "Wellbeing and Support"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/apply/offer-holder-hub/coss/mba-offer-holder-hub",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MBA",
+      "name": "Offer Holder Hub"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/research/funding/black-british-researchers-scholarship/phd-project-proposals",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Project Proposals"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/accounting-and-finance-courses/msc-sustainable-finance",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Sustainable Finance"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/scholarships-funding/llb-and-llb-for-graduates-scholarships",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLB",
+      "name": "And Llb for Graduates Scholarships"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/scholarships-funding/mba-scholarship",
+      "level": "unknown",
+      "year": null,
+      "courseCode": null,
+      "degree": "MBA",
+      "name": "Scholarship"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-primary",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Primary"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-primary-maths",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Primary Maths"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-primary-send",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Primary Send"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-secondary-education-biology",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Education Biology"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-secondary-education-chemistry",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Education Chemistry"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-secondary-education-engineers-teach-physics",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Education Engineers Teach Physics"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-secondary-education-english",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Education English"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-secondary-education-geography",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Education Geography"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-secondary-education-history",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Education History"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-secondary-education-mathematics",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Education Mathematics"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/undergraduate/subjects/business-and-management-courses/bsc-business-management-with-operations-and-supply-chain-management-and-year-in-industry-bsc",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Business Management with Operations and Supply Chain Management and Year in Industry Bsc"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/business-and-management-courses/mba",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MBA",
+      "name": null
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/business-and-management-courses/mba-executive",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MBA",
+      "name": "Executive"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/business-and-management-courses/mba-online",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MBA",
+      "name": "Online"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/business-and-management-courses/mba-singapore",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MBA",
+      "name": "Singapore"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/business-and-management-courses/msc-ai-in-management",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Ai in Management"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-secondary-education-modern-languages",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Education Modern Languages"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-secondary-education-physical-education",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Education Physical Education"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/teacher-training-courses/pgce-secondary-education-physics",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Education Physics"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/urban-and-regional-planning-courses/msc-sustainable-urban-planning-and-design",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Sustainable Urban Planning and Design"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/undergraduate/subjects/law-courses/llb-for-graduates",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLB",
+      "name": "For Graduates"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/undergraduate/subjects/medicine-courses/bsc-midwifery",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Midwifery"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/undergraduate/subjects/medicine-courses/mpharm-pharmacy-4-year",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPharm",
+      "name": "Pharmacy 4 Year"
+    },
+    {
+      "url": "https://www.birmingham.ac.uk/study/undergraduate/subjects/social-policy-sociology-and-criminology-courses/ba-social-sciences",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Social Sciences"
+    }
+  ]
+}

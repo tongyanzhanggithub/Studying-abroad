@@ -1,0 +1,3339 @@
+{
+  "university": {
+    "name": "The University of Warwick",
+    "nameZh": "华威大学",
+    "origin": "https://warwick.ac.uk"
+  },
+  "discoveredAt": "2026-08-08T23:43:31.018Z",
+  "总数": 416,
+  "courses": [
+    {
+      "url": "https://warwick.ac.uk/study/cll/courses/careerstudies/finance/coaching/1516/",
+      "level": "unknown",
+      "year": null,
+      "courseCode": "1516",
+      "degree": null,
+      "name": "Coaching"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/cll/courses/postgraduate/msc-psychotherapy-counselling/2024/",
+      "level": "masters",
+      "year": 2024,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Psychotherapy Counselling"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/cll/courses/undergraduate/ba-classics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Classics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/cll/courses/undergraduate/ba-counselling-psychotherapeutic-relationship/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Counselling Psychotherapeutic Relationship"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/cll/courses/undergraduate/ba-english-cultural-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English Cultural Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/cll/courses/undergraduate/ba-french-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "French Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/cll/courses/undergraduate/parttime/ba-health-social-policy/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Health Social Policy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/edd-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "EdD",
+      "name": "Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/llm-advanced-legal-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLM",
+      "name": "Advanced Legal Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/llm-international-commercial-law/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLM",
+      "name": "International Commercial Law"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/llm-international-corporate-governance-financial-regulation/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLM",
+      "name": "International Corporate Governance Financial Regulation"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/llm-international-development-law-human-rights/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLM",
+      "name": "International Development Law Human Rights"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/llm-international-economic-law/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLM",
+      "name": "International Economic Law"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/llm-law-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLM",
+      "name": "Law By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-ancient-literature-thought/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Ancient Literature Thought"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-ancient-visual-material-culture/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Ancient Visual Material Culture"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-arts-enterprise-development/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Arts Enterprise Development"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-career-development/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Career Development"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-career-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Career Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-caribbean-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Caribbean Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-childhood-in-society/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Childhood in Society"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-classics-ancient-history-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Classics Ancient History By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-coaching/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Coaching"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-continental-philosophy/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Continental Philosophy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-creative-media-enterprises/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Creative Media Enterprises"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-critical-cultural-theory/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Critical Cultural Theory"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-digital-media-culture/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Digital Media Culture"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-drama-education-english-language-teaching/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Drama Education English Language Teaching"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-drama-theatre-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Drama Theatre Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-educational-innovation/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Educational Innovation"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-educational-leadership/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Educational Leadership"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-english-comparative-literary-studies-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "English Comparative Literary Studies By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-english-drama/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "English Drama"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-english-literature/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "English Literature"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-environmental-humanities/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Environmental Humanities"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-european-renaissance/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "European Renaissance"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-film-tv/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Film Tv"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-film-tv-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Film Tv By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-french-studies-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "French Studies By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-gender-development/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Gender Development"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-gender-sexuality/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Gender Sexuality"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-german-studies-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "German Studies By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-global-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Global Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-global-media-communication/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Global Media Communication"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-hispanic-studies-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Hispanic Studies By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-history/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "History"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-history-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "History By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-history-of-art-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "History of Art By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-international-development/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "International Development"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-international-political-economy/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "International Political Economy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-international-politics-europe/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "International Politics Europe"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-international-relations/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "International Relations"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-international-security/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "International Security"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-islamic-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Islamic Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-italian-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Italian By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-philosophy/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Philosophy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-philosophy-arts/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Philosophy Arts"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-political-legal-theory/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Political Legal Theory"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-politics-climate-change/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Politics Climate Change"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-professional-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Professional Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-psychology-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Psychology Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-public-policy/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Public Policy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-renaissance-studies-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Renaissance Studies By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-social-political-thought/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Social Political Thought"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-sociology/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Sociology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-tesol/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Tesol"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-theatre-performance-studies-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Theatre Performance Studies By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-translation-cultures/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Translation Cultures"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-world-literature/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "World Literature"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/ma-writing/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MA",
+      "name": "Writing"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mba-accelerator-mba-part-time/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MBA",
+      "name": "Accelerator Mba Part Time"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mba-executive-mba/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MBA",
+      "name": "Executive Mba"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mba-full-time-mba/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MBA",
+      "name": "Full Time Mba"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mba-global-online-mba/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MBA",
+      "name": "Global Online Mba"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mbchb-medicine/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MBChB",
+      "name": "Medicine"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/md-medicine/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MD",
+      "name": "Medicine"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-applied-linguistics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Applied Linguistics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-caribbean-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Caribbean Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-classics-ancient-history/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Classics Ancient History"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-cultural-policy/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Cultural Policy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-discourse-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Discourse Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-education-psychology/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Education Psychology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-engineering/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-engineering-wmg/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Engineering Wmg"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-english-comparative-literary-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd English Comparative Literary Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-english-language-teaching/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd English Language Teaching"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-english-language-teaching-applied-linguistics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd English Language Teaching Applied Linguistics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-film-tv/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Film Tv"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-french-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd French Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-german-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd German Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-global-sustainable-development/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Global Sustainable Development"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-hispanic-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Hispanic Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-history/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd History"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-history-of-art/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd History of Art"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-intercultural-communication/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Intercultural Communication"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-interdisciplinary-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Interdisciplinary Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-italian/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Italian"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-law/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Law"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-linguistics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Linguistics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-mathematics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Mathematics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-psychology/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Psychology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-renaissance-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Renaissance Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-statistics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Statistics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-phd-theatre-performance-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Phd Theatre Performance Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mphil-philosophy/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhil",
+      "name": "Philosophy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mph-public-health-iheed/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPH",
+      "name": "Public Health Iheed"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mres-phd-business-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MRes",
+      "name": "Phd Business Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mres-phd-economics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MRes",
+      "name": "Phd Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mres-phd-finance-economics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MRes",
+      "name": "Phd Finance Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/mres-translational-biomedical-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MRes",
+      "name": "Translational Biomedical Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-accounting-financial-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Accounting Financial Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-accounting-sustainability/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Accounting Sustainability"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-advanced-mechanical-engineering/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Advanced Mechanical Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-analytical-polymer-science/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Analytical Polymer Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-analytical-sciences-instrumentation/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Analytical Sciences Instrumentation"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-applied-artificial-intelligence/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Applied Artificial Intelligence"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-behavioural-data-science/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Behavioural Data Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-behavioural-economics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Behavioural Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-behavioural-economics-science/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Behavioural Economics Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-biotechnology-bioprocessing-business-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Biotechnology Bioprocessing Business Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-business-analytics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Business Analytics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-business-consulting/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Business Consulting"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-business-digital-strategy-artificial-intelligence/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Business Digital Strategy Artificial Intelligence"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-business-finance/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Business Finance"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-business-marketing/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Business Marketing"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-business-operations-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Business Operations Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-by-research-warwick-manufacturing-group/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "By Research Warwick Manufacturing Group"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-by-research-warwick-medical-school/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "By Research Warwick Medical School"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-chemistry-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Chemistry By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-clinical-applications-psychology/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Clinical Applications Psychology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-communications-information-engineering/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Communications Information Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-computer-science/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Computer Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-computer-science-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Computer Science By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-cyber-security-engineering/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Cyber Security Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-cyber-security-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Cyber Security Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-e-business-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "E Business Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-economics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-economics-and-health-economics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Economics and Health Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-economics-data-science/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Economics Data Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-economics-environmental-policy/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Economics Environmental Policy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-electrical-electronic-engineering/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Electrical Electronic Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-electrical-power-engineering/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Electrical Power Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-engineering-business-leadership/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Engineering Business Leadership"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-engineering-business-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Engineering Business Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-engineering-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Engineering By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-engineering-design-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Engineering Design Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-environmental-bioscience/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Environmental Bioscience"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-finance/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Finance"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-finance-economics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Finance Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-financial-technology/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Financial Technology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-food-security/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Food Security"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-games-engineering/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Games Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-healthcare-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Healthcare Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-humanitarian-engineering-sustainability/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Humanitarian Engineering Sustainability"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-innovation-entrepreneurship/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Innovation Entrepreneurship"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-intercultural-communication-business/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Intercultural Communication Business"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-interdisciplinary-biomedical-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Interdisciplinary Biomedical Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-international-business/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "International Business"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-international-economics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "International Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-international-trade/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "International Trade"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-life-sciences-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Life Sciences By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-management-business-excellence/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Management Business Excellence"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-management-digital-innovation/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Management Digital Innovation"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-marketing-strategy/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Marketing Strategy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-mathematical-finance/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Mathematical Finance"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-mathematics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Mathematics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-medical-biotechnology-business-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Medical Biotechnology Business Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-mental-health-wellbeing/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Mental Health Wellbeing"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-physics-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Physics By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-polymer-chemistry/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Polymer Chemistry"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-polymer-science/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Polymer Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-project-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Project Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-psychological-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Psychological Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-psychology-by-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Psychology By Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-renewable-energy/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Renewable Energy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-reproductive-science/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Reproductive Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-smart-connected-autonomous-vehicles/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Smart Connected Autonomous Vehicles"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-social-inequalities-and-research-methods/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Social Inequalities and Research Methods"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-statistics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Statistics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-statistics-data-science/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Statistics Data Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-statistics-finance/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Statistics Finance"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-statistics-probability/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Statistics Probability"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-supply-chain-leadership/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Supply Chain Leadership"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-supply-chain-logistics-management/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Supply Chain Logistics Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/msc-sustainable-automotive-electrification/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSc",
+      "name": "Sustainable Automotive Electrification"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-primary-education-with-iqts/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Primary Education with Iqts"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-qts-primary/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Qts Primary"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-qts-primary-early-years/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Qts Primary Early Years"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-career-development/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Career Development"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-career-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Career Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-coaching/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Coaching"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-in-professional-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "In Professional Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-mres-healthresearch-care/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Mres Healthresearch Care"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-pgdip-mmeded-medical-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Pgdip Mmeded Medical Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-pgdip-mph-public-health/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Pgdip Mph Public Health"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-pgdip-msc-clinical-research-iheed/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Pgdip Msc Clinical Research Iheed"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-pgdip-msc-diagnostics-data-digital-health/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Pgdip Msc Diagnostics Data Digital Health"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-pgdip-msc-diagnostics-data-digital-health-medical-imgaging/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Pgdip Msc Diagnostics Data Digital Health Medical Imgaging"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-pgdip-msc-healthcare-leadership-iheed/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Pgdip Msc Healthcare Leadership Iheed"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-pgdip-msc-medical-education-ideed/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Pgdip Msc Medical Education Ideed"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgcert-pgdip-msc-neuroscience-psychology-mental-health-iheed/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCert",
+      "name": "Pgdip Msc Neuroscience Psychology Mental Health Iheed"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-education-with-iqts/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Education with Iqts"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-art-design/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Art Design"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-biology/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Biology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-business-study-economics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Business Study Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-chemistry/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Chemistry"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-computer-science/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Computer Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-design-technology/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Design Technology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-drama/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Drama"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-english/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts English"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-geography/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Geography"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-history/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts History"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-mathematics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Mathematics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-modern-foreign-languages/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Modern Foreign Languages"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-music/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Music"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-physical-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Physical Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-physics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Physics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-religious-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Religious Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgce-secondary-qts-social-sciences/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGCE",
+      "name": "Secondary Qts Social Sciences"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgdip-career-development/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGDip",
+      "name": "Career Development"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgdip-career-education/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGDip",
+      "name": "Career Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgdip-coaching/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGDip",
+      "name": "Coaching"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgdip-masc-data-visualisation/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGDip",
+      "name": "Masc Data Visualisation"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgdip-msc-big-data-digital-futures/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGDip",
+      "name": "Msc Big Data Digital Futures"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/pgdip-msc-diabetes-care-iheed/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PGDip",
+      "name": "Msc Diabetes Care Iheed"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-applied-screen-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Applied Screen Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-biomedical-ai/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Biomedical Ai"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-by-published-work/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "By Published Work"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-by-published-work-warwick-medical-school/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "By Published Work Warwick Medical School"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-chemistry/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Chemistry"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-computer-science/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Computer Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-data-visualisation/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Data Visualisation"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-employment-research/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Employment Research"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-lifelong-learning/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Lifelong Learning"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-life-sciences/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Life Sciences"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-literary-practice/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Literary Practice"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-modelling-heterogeneous-systems/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Modelling Heterogeneous Systems"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-open-professional-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Open Professional Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-philosophy/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Philosophy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-philosophy-literature/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Philosophy Literature"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-physics/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Physics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-politics-international-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Politics International Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-social-policy-social-work/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Social Policy Social Work"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-sociology/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Sociology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-translation-transcultural-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Translation Transcultural Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-warwick-medical-school/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Warwick Medical School"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/postgraduate/courses/phd-women-gender-studies/",
+      "level": "masters",
+      "year": null,
+      "courseCode": null,
+      "degree": "PhD",
+      "name": "Women Gender Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses-2024/ba-classics-pt/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Classics Pt"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-ancient-history-classical-archaeology/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Ancient History Classical Archaeology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-ancient-history-classical-archaeology-study-in-europe/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Ancient History Classical Archaeology Study in Europe"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-bsc-economics-politics-international-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Bsc Economics Politics International Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-bsc-economics-psychology-philosophy/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Bsc Economics Psychology Philosophy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-bsc-mathematics-philosophy/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Bsc Mathematics Philosophy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-bsc-philosophy-politics-economics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Bsc Philosophy Politics Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-child-and-family-mental-health/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Child and Family Mental Health"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-classical-civilisation/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Classical Civilisation"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-classical-civilisation-study-in-europe/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Classical Civilisation Study in Europe"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-classics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Classics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-classics-ancient-greek-study-in-europe/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Classics Ancient Greek Study in Europe"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-classics-english/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Classics English"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-classics-latin-study-in-europe/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Classics Latin Study in Europe"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-counselling-psychotherapeutic-relationship/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Counselling Psychotherapeutic Relationship"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-early-childhood/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Early Childhood"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-early-childhood-top-up/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Early Childhood Top Up"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-education/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-english-classical-civilisation/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English Classical Civilisation"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-english-cultural-studies-part-time/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English Cultural Studies Part Time"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-english-french/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English French"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-english-german/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English German"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-english-hispanic-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English Hispanic Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-english-history/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English History"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-english-italian/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English Italian"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-english-language-linguistics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English Language Linguistics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-english-literature/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English Literature"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-english-literature-creative-writing/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English Literature Creative Writing"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-english-theatre-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "English Theatre Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-film-literature/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Film Literature"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-film-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Film Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-french-economics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "French Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-french-history/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "French History"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-french-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "French Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-french-theatre-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "French Theatre Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-german-economics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "German Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-german-history/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "German History"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-german-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "German Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-german-theatre/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "German Theatre"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-global-politics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Global Politics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-hispanic-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Hispanic Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-hispanic-studies-economics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Hispanic Studies Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-hispanic-studies-history/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Hispanic Studies History"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-hispanic-studies-theatre-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Hispanic Studies Theatre Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-history/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "History"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-history-art/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "History Art"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-history-art-italian/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "History Art Italian"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-history-italian/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "History Italian"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-history-part-time/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "History Part Time"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-history-philosophy/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "History Philosophy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-history-politics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "History Politics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-history-sociology/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "History Sociology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-human-social-political-sciences/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Human Social Political Sciences"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-italian-classics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Italian Classics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-italian-economics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Italian Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-italian-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Italian Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-italian-theatre-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Italian Theatre Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-law-humanities/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Law Humanities"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-law-sociology/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Law Sociology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-liberal-arts/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Liberal Arts"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-linguistics-with-modern-language-intercalated-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Linguistics with Modern Language Intercalated Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-media-creative/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Media Creative"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-modern-languages/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Modern Languages"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-modern-languages-and-linguistics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Modern Languages and Linguistics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-modern-languages-economics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Modern Languages Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-modern-languages-translation-transcultural-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Modern Languages Translation Transcultural Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-modern-languages-with-linguistics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Modern Languages with Linguistics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-philosophy/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Philosophy"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-philosophy-literature/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Philosophy Literature"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-philosophy-literature-classics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Philosophy Literature Classics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-philosophy-politics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Philosophy Politics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-philosophy-psychology/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Philosophy Psychology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-politics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Politics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-politics-international-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Politics International Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-politics-international-studies-chinese/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Politics International Studies Chinese"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-politics-international-studies-french/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Politics International Studies French"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-politics-international-studies-german/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Politics International Studies German"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-politics-international-studies-hispanic-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Politics International Studies Hispanic Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-politics-international-studies-italian/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Politics International Studies Italian"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-politics-philosophy-law/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Politics Philosophy Law"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-politics-sociology/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Politics Sociology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-professional-and-intercultural-communication-intercalated-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Professional and Intercultural Communication Intercalated Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-psychology-global-sustainable-development/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Psychology Global Sustainable Development"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-social-sciences-with-data-science/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Social Sciences with Data Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-social-work/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Social Work"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-sociology/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Sociology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-sociology-criminology/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Sociology Criminology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-sociology-global-sustainable-development/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Sociology Global Sustainable Development"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/ba-theatre-performance-studies/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BA",
+      "name": "Theatre Performance Studies"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/beng-automotive-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BEng",
+      "name": "Automotive Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/beng-biomedical-systems-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BEng",
+      "name": "Biomedical Systems Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/beng-civil-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BEng",
+      "name": "Civil Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/beng-computer-systems-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BEng",
+      "name": "Computer Systems Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/beng-electrical-electronic-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BEng",
+      "name": "Electrical Electronic Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/beng-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BEng",
+      "name": "Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/beng-engineering-business-management/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BEng",
+      "name": "Engineering Business Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/beng-manufacturing-mechanical-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BEng",
+      "name": "Manufacturing Mechanical Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/beng-mechanical-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BEng",
+      "name": "Mechanical Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/beng-robotics-engineering-artificial-intelligence/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BEng",
+      "name": "Robotics Engineering Artificial Intelligence"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/beng-systems-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BEng",
+      "name": "Systems Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-accounting-finance/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Accounting Finance"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-accounting-finance-foundation-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Accounting Finance Foundation Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-accounting-finance-placement-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Accounting Finance Placement Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-biochemistry/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Biochemistry"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-biochemistry-placement-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Biochemistry Placement Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-biological-sciences/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Biological Sciences"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-biological-sciences-placement-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Biological Sciences Placement Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-biomedical-sciences/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Biomedical Sciences"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-biomedical-sciences-placement-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Biomedical Sciences Placement Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-business-management/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Business Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-business-management-foundation-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Business Management Foundation Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-business-management-marketing/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Business Management Marketing"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-business-management-marketing-placement-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Business Management Marketing Placement Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-business-management-placement-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Business Management Placement Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-chemistry/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Chemistry"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-chemistry-medicinal/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Chemistry Medicinal"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-computer-science/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Computer Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-computer-science-business/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Computer Science Business"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-cyber-security/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Cyber Security"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-data-science/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Data Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-discrete-mathematics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Discrete Mathematics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-economics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Economics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-economics-management/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Economics Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-health-medical-sciences/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Health Medical Sciences"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-integrated-natural-sciences/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Integrated Natural Sciences"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-international-business-management/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "International Business Management"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-international-business-management-foundation-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "International Business Management Foundation Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-international-business-management-marketing/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "International Business Management Marketing"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-mathematics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Mathematics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-mathematics-physics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Mathematics Physics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-mathematics-statistics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Mathematics Statistics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-morse/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Morse"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-neuroscience/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Neuroscience"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-neuroscience-placement-year/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Neuroscience Placement Year"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-physics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Physics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-physics-astrophysics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Physics Astrophysics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-psychology/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Psychology"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-psychology-education/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Psychology Education"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/bsc-psychology-linguistics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "BSc",
+      "name": "Psychology Linguistics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/llb-law/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLB",
+      "name": "Law"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/llb-law-4-years/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLB",
+      "name": "Law 4 Years"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/llb-law-french/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLB",
+      "name": "Law French"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/llb-law-german/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLB",
+      "name": "Law German"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/llb-law-study-abroad-english/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "LLB",
+      "name": "Law Study Abroad English"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/mchem-chemistry/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MChem",
+      "name": "Chemistry"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/mchem-chemistry-industrial-placement/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MChem",
+      "name": "Chemistry Industrial Placement"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/mchem-chemistry-international-placement/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MChem",
+      "name": "Chemistry International Placement"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/mchem-chemistry-medicinal/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MChem",
+      "name": "Chemistry Medicinal"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/meng-automotive-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MEng",
+      "name": "Automotive Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/meng-biomedical-systems-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MEng",
+      "name": "Biomedical Systems Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/meng-civil-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MEng",
+      "name": "Civil Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/meng-computer-science/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MEng",
+      "name": "Computer Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/meng-computer-systems-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MEng",
+      "name": "Computer Systems Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/meng-discrete-mathematics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MEng",
+      "name": "Discrete Mathematics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/meng-electrical-electronic-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MEng",
+      "name": "Electrical Electronic Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/meng-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MEng",
+      "name": "Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/meng-manufacturing-mechanical-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MEng",
+      "name": "Manufacturing Mechanical Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/meng-mechanical-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MEng",
+      "name": "Mechanical Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/meng-systems-engineering/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MEng",
+      "name": "Systems Engineering"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/mmath-mathematics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MMath",
+      "name": "Mathematics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/mmathphys-mathematics-physics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MMathPhys",
+      "name": "Mathematics Physics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/mmathstat-mathematics-statistics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MMathStat",
+      "name": "Mathematics Statistics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/mphys-physics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhys",
+      "name": "Physics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/mphys-physics-astrophysics/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MPhys",
+      "name": "Physics Astrophysics"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/msci-data-science/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSci",
+      "name": "Data Science"
+    },
+    {
+      "url": "https://warwick.ac.uk/study/undergraduate/courses/msci-integrated-natural-sciences/",
+      "level": "undergraduate",
+      "year": null,
+      "courseCode": null,
+      "degree": "MSci",
+      "name": "Integrated Natural Sciences"
+    }
+  ]
+}
