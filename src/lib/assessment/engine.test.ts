@@ -37,28 +37,53 @@ describe('normalizeGpa', () => {
   })
 
   /**
-   * ⚠️ 这几个数字是在**钉住当前实现**,不是在确认它是对的。
+   * ⚠️ 这一组守的是「不能高估」。
    *
-   *    函数上方的注释写的是「3.0≈80, 3.5≈87, 4.0≈95」,但公式
-   *    `60 + (gpa / 4.0) * 35` 实际算出来是 3.0→86、3.5→91、4.0→95 ——
-   *    只有 4.0 对得上,3.0 和 3.5 分别高了 6 分和 4 分。
+   *    原来的公式是 `Math.round(60 + (gpa / 4.0) * 35)`,而它的注释写着
+   *    「3.0≈80, 3.5≈87, 4.0≈95」—— 实际算出 3.0→86、3.5→91,只有满绩对得上。
+   *    gpa100 会拿去匹配 AdmissionRule 的 [gpaMin, gpaMax) 区间,偏高 4~6 分
+   *    就命中更高 GPA 段的规则,给 4 分制学生高估录取概率。
    *
-   *    影响不只是显示:gpa100 会拿去查 AdmissionRule 的 [gpaMin, gpaMax) 区间,
-   *    偏高就会命中更高 GPA 段的规则 → **给 4.0 制学生高估录取概率**。
-   *    对一个明令「不承诺录取」的产品,往高了估是最糟的方向。
-   *
-   *    改与不改是产品决策(会改变所有 4.0 制用户的评估结果),先钉住行为。
+   *    现按国内通用绩点表各档中值分段插值。下面这几个点同时也是分段的锚点,
+   *    改动插值表会立刻在这里转红。
    */
-  it('4.0 制当前实现:3.0 → 86(注释声称 80)', () => {
-    expect(normalizeGpa(3.0, '4.0')).toBe(86)
+  it.each([
+    [1.0, 62],
+    [2.0, 70],
+    [2.3, 73],
+    [2.7, 76],
+    [3.0, 80],
+    [3.3, 83],
+    [3.7, 87],
+    [4.0, 95],
+  ])('4 分制 %s → %s', (gpa, expected) => {
+    expect(normalizeGpa(gpa, '4.0')).toBe(expected)
   })
 
-  it('4.0 制当前实现:3.5 → 91(注释声称 87)', () => {
-    expect(normalizeGpa(3.5, '4.0')).toBe(91)
+  it('锚点之间线性插值', () => {
+    expect(normalizeGpa(3.5, '4.0')).toBe(85) // 3.3(83) 与 3.7(87) 的中间
+    expect(normalizeGpa(2.5, '4.0')).toBe(75) // 2.3(73) 与 2.7(76) 之间
   })
 
-  it('4.0 制满绩 → 95(与注释一致)', () => {
-    expect(normalizeGpa(4.0, '4.0')).toBe(95)
+  /**
+   * ⚠️ 换算结果不能超过 100。表单允许 4 分制填到 4.5(部分学校用 4.3/4.5 制),
+   *    旧公式对 4.3 会外推出 98,对 4.5 是 99 —— 再高就溢出百分制了。
+   */
+  it('超过 4.0 一律按满绩算,不外推', () => {
+    expect(normalizeGpa(4.3, '4.0')).toBe(95)
+    expect(normalizeGpa(4.5, '4.0')).toBe(95)
+  })
+
+  it('负数按 0 处理', () => {
+    expect(normalizeGpa(-1, '4.0')).toBe(0)
+  })
+
+  /** 换算只能压低、不能抬高 —— 这是这次修改的方向,反了就是回到高估 */
+  it('全程不高于旧公式(旧公式系统性偏高)', () => {
+    const legacy = (g: number) => Math.round(60 + (g / 4.0) * 35)
+    for (let g = 0.5; g <= 4.0; g += 0.1) {
+      expect(normalizeGpa(g, '4.0')).toBeLessThanOrEqual(legacy(g))
+    }
   })
 })
 
@@ -68,10 +93,18 @@ describe('isDifficultCase', () => {
     expect(isDifficultCase(INPUT({ gpa: 80, gpaScale: '100' }))).toBe(false)
   })
 
-  /** 换算偏高的直接后果:4.0 制下要低到 2.28 才会被识别成疑难 case */
-  it('4.0 制下 2.5 分不算疑难 case(换算成 82)', () => {
-    expect(normalizeGpa(2.5, '4.0')).toBe(82)
-    expect(isDifficultCase(INPUT({ gpa: 2.5, gpaScale: '4.0' }))).toBe(false)
+  /**
+   * ⚠️ 旧换算把 80 分阈值架空了:要低到 2.28/4.0 才触发,
+   *    2.5 会被算成 82 分 —— 一个真正需要人工会诊的学生被判成不需要。
+   */
+  it('4 分制 2.5 算疑难 case(换算成 75)', () => {
+    expect(normalizeGpa(2.5, '4.0')).toBe(75)
+    expect(isDifficultCase(INPUT({ gpa: 2.5, gpaScale: '4.0' }))).toBe(true)
+  })
+
+  it('4 分制 3.0 恰好换算成 80,不算疑难 case', () => {
+    expect(isDifficultCase(INPUT({ gpa: 3.0, gpaScale: '4.0' }))).toBe(false)
+    expect(isDifficultCase(INPUT({ gpa: 2.9, gpaScale: '4.0' }))).toBe(true)
   })
 })
 
