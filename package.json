@@ -20,7 +20,8 @@
     "admin:create": "tsx scripts/create-admin.ts",
     "demo:seed": "tsx --tsconfig scripts/tsconfig.json scripts/seed-demo-user.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "fix:deadlines": "tsx scripts/apply-deadline-corrections.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

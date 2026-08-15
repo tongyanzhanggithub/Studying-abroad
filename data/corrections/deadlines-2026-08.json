@@ -1,0 +1,75 @@
+{
+  "_readme": [
+    "截止日人工核查修正表 —— 2026-08 那轮核查的结论(见 docs/数据核查-2026-08.md)。",
+    "每一条都必须带 official_quote(官网原文)和 source_url,理由和排名一样:",
+    "改动学生用来做决定的日期,必须能追溯到官网原话,不能只留一个数字。",
+    "用 npm run fix:deadlines 应用;脚本幂等,重复跑不会重复改。",
+    "match 按 (school_name_en, program_name_en) 精确匹配,匹配不上会报错不会新建。"
+  ],
+  "reviewed_at": "2026-08-15",
+  "corrections": [
+    {
+      "school_name_en": "University College London",
+      "programs": [
+        "MSc Management",
+        "MSc Finance",
+        "MSc Marketing Science",
+        "MSc Business Analytics",
+        "MSc Entrepreneurship",
+        "Financial Technology MSc"
+      ],
+      "current_final_deadline": "2026-08-28",
+      "new_final_deadline": null,
+      "reason": "库里存的是「不需要签证」那一档。需签证申请人的 2026 入学截止日是 2026-06-26,已过期两个月 —— 中国学生已无法申请该入学季,页面却显示「还有 13 天截止」。2027 入学季日期官网尚未公布,故置空。",
+      "official_quote": "Applicants who require a visa: 20 Oct 2025 – 26 Jun 2026 / Applicants who do not require a visa: 20 Oct 2025 – 28 Aug 2026",
+      "source_url": "https://www.ucl.ac.uk/prospective-students/graduate/taught-degrees/management-msc",
+      "note_append": "核查 2026-08-15:UCL 分两档,需签证申请人 2026 入学截止 2026-06-26(已过),不需签证 2026-08-28。中国学生适用前者。2027 入学季日期待官网公布。"
+    },
+    {
+      "school_name_en": "University of Birmingham",
+      "programs": ["MSc Accounting and Finance", "MSc Management"],
+      "current_final_deadline": "2026-08-28",
+      "new_final_deadline": null,
+      "reason": "官网 2026-08-28 这个日期原文明确写着只适用于「UK and non visa requiring applicants」,并未公布需签证申请人的截止日(只说招满即止)。按红线不能编日期,置空。",
+      "official_quote": "28 August 2026 - Application deadline for UK and non visa requiring applicants. We will close applications as soon as the programme is full. Early applications are encouraged.",
+      "source_url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/accounting-and-finance-courses/accounting-and-finance-msc",
+      "note_append": "核查 2026-08-15:官网仅公布非签证申请人截止日 2026-08-28(9 月入学),需签证申请人档未公布,招满即止,建议尽早申请。"
+    },
+    {
+      "school_name_en": "University of Birmingham",
+      "programs": ["MSc Financial Management", "MSc International Business", "MSc Marketing"],
+      "current_final_deadline": "2026-12-18",
+      "new_final_deadline": null,
+      "reason": "同上,且这个日期是 2027 年 1 月入学季的,与库里其余项目(9 月入学)不是同一个入学季 —— 在没有入学季字段的情况下并排显示会误导。",
+      "official_quote": "18 December 2026 - Application deadline for UK and non visa requiring applicants to apply to start in January 2027.",
+      "source_url": "https://www.birmingham.ac.uk/study/postgraduate/subjects/accounting-and-finance-courses/financial-management-msc",
+      "note_append": "核查 2026-08-15:官网 2026-12-18 是「2027 年 1 月入学」且仅适用非签证申请人;需签证档未公布。9 月入学档为 2026-08-28(同样仅非签证)。"
+    },
+    {
+      "school_name_en": "University of Sheffield",
+      "programs": ["Finance MSc", "Business Analytics MSc"],
+      "current_final_deadline": "2026-09-04",
+      "new_final_deadline": "2026-09-01",
+      "reason": "库里取的是「其他申请人」档 09-04。需要签证的申请人截止日是 09-01,早 3 天。",
+      "official_quote": "Last date to apply for a postgraduate course if you'll need a visa to study in the UK: Tuesday 1 September 2026 / (all other applicants) Friday 4 September 2026 (17:00 British Summer Time)",
+      "source_url": "https://www.sheffield.ac.uk/postgraduate/deadlines",
+      "note_append": "核查 2026-08-15:需签证申请人 2026-09-01,其他申请人 2026-09-04。此处取需签证档。"
+    },
+    {
+      "school_name_en": "University of Bath",
+      "programs": [
+        "MSc Accounting and Finance",
+        "MSc Finance",
+        "MSc Management",
+        "MSc Marketing",
+        "MSc Business Analytics"
+      ],
+      "current_final_deadline": "2026-06-30",
+      "new_final_deadline": "2026-07-31",
+      "reason": "库里的 06-30 与它自己引用的来源页对不上。官方招生时间线写的是 Overseas 07-31、Home 08-31。方向上偏早(安全),仍应改正。",
+      "official_quote": "If you're an Overseas student, you must apply for your course before 31 July 2026. / If you're a Home student, you must apply for your course before 31 August 2026.",
+      "source_url": "https://www.bath.ac.uk/corporate-information/taught-postgraduate-admissions-timeline/",
+      "note_append": "核查 2026-08-15:Overseas 2026-07-31,Home 2026-08-31。此处取 Overseas 档。"
+    }
+  ]
+}

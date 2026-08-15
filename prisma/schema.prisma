@@ -145,6 +145,18 @@ enum Confidence {
   unknown
 }
 
+/// 截止日适用于哪类申请人。详见 Program.deadlineAudience 上的注释。
+enum DeadlineAudience {
+  /// 需签证 / 海外申请人 —— 我们的用户全部属于这一档
+  overseas
+  /// 本地 / 无需签证申请人 —— 对我们的用户**无效**,不该单独展示
+  home
+  /// 官网只有一个日期,不分档
+  all
+  /// 未标注(存量数据默认)。UI 应按「口径不明」处理,不要默认成 overseas
+  unspecified
+}
+
 enum BarChangeFlag {
   up
   down
@@ -684,6 +696,30 @@ model Program {
   /// 便于排序与倒计时查询的冗余字段
   finalDeadline DateTime? @map("final_deadline")
   isRolling     Boolean   @default(false) @map("is_rolling")
+
+  /**
+   * 这个截止日属于哪个**入学季**,如 "2027-09"(2027 年 9 月入学)。
+   *
+   * ⚠️ 2026-08 的核查发现:库里英国院校采的是 2026 入学季,港/新/荷/德/加/澳
+   *    采的是 2027 入学季,而两者在选校列表里**并排显示**,页面上无从区分 ——
+   *    学生会看到「UCL 还有 13 天截止」和「港中大 2027-03-31 截止」挨在一起,
+   *    以为是同一批可申请的项目。见 docs/数据核查-2026-08.md。
+   *
+   * 留空表示未标注(存量数据的默认状态),UI 应当把未标注的当作「口径不明」处理,
+   * 而不是默认成当前季。
+   */
+  intakeTerm String? @map("intake_term")
+
+  /**
+   * 这个截止日适用于哪类申请人。
+   *
+   * ⚠️ 英国院校普遍公布两个日期:需签证 / 海外申请人一档,本地或无需签证一档,
+   *    最多能差两个多月。压成一个字段的代价是**事后完全看不出取的是哪一档** ——
+   *    UCL 那 6 个项目就是这么把「已关闭两个月的通道」显示成「还有 13 天」的。
+   *
+   * 我们的用户全部需要签证,所以 overseas 才是对他们有效的那一档。
+   */
+  deadlineAudience DeadlineAudience @default(unspecified) @map("deadline_audience")
 
   /**
    * 纯线上 / 远程授课项目。

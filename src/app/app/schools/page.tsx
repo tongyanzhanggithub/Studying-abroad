@@ -28,7 +28,7 @@ import { qsSubjectOf } from '@/lib/programs/qs-subjects'
 import { ShortlistControls } from './Controls'
 import { ProgramCard } from './ProgramCard'
 import { SchoolFilters } from './SchoolFilters'
-import type { Direction, Region } from '@prisma/client'
+import type { DeadlineAudience, Direction, Region } from '@prisma/client'
 
 /**
  * 选校管理(PRD 4.2 / 4.4)。
@@ -102,9 +102,36 @@ function shortTuition(raw: string | null): string | null {
   return max.text
 }
 
-function deadlineText(days: number | null, hasDeadline: boolean): string {
-  if (!hasDeadline) return '截止日待公布'
-  if (days === null) return '截止日待公布'
+/**
+ * 截止日文案。
+ *
+ * ⚠️ 倒计时只有在**这个日期确实适用于我们的用户**时才能说得这么肯定。
+ *
+ *    2026-08 的核查发现:英国院校普遍公布两个截止日(需签证 / 本地),
+ *    库里一度存的是本地那一档 —— UCL 的需签证通道其实已经关闭两个月,
+ *    页面却显示「还有 13 天截止」。学生照着它赶材料,然后被拒收。
+ *    见 docs/数据核查-2026-08.md。
+ *
+ *    所以:只有 audience=overseas(需签证/海外档)或 all(官网不分档)
+ *    才给倒计时;home 档对我们的用户根本无效,unspecified 是口径不明的存量数据 ——
+ *    这两种一律降级成「以官网为准」,宁可少说,不能把一个不适用的日期说成倒计时。
+ */
+function deadlineText(
+  days: number | null,
+  hasDeadline: boolean,
+  audience: DeadlineAudience,
+): string {
+  if (!hasDeadline || days === null) return '截止日待公布'
+
+  if (audience === 'home') {
+    // 官网只给了本地/无需签证档,对需要签证的中国学生无效
+    return '本档次不适用,以官网为准'
+  }
+  if (audience === 'unspecified') {
+    // 存量数据没标口径 —— 不知道取的是哪一档,不能拿它做倒计时
+    return days < 0 ? '本轮已截止(口径待核)' : '截止日以官网为准'
+  }
+
   if (days < 0) return '本轮已截止'
   if (days === 0) return '今天截止'
   return `还有 ${days} 天截止`
@@ -456,7 +483,7 @@ export default async function SchoolsPage({
                     freshnessLabel: FRESHNESS_LABEL[freshness],
                     isOnlineOnly: p.isOnlineOnly,
                     facts: factsOf(p),
-                    deadlineText: deadlineText(days, Boolean(p.finalDeadline)),
+                    deadlineText: deadlineText(days, Boolean(p.finalDeadline), p.deadlineAudience),
                     daysLeft: days,
                     isRolling: p.isRolling,
                     chosen: chosenIds.has(p.id),
