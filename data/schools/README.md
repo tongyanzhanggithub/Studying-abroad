@@ -93,20 +93,21 @@ UI 取每所学校年份最大的那条,并把年份一起显示出来 ——
 54 / 57 所有数据。没有的三所是真的没上榜:**KAIST**(理工院校,四个商科榜都没有)、
 **澳门科技大学**、以及下面的爱丁堡。Marketing 榜 QS 只发前 100,所以缺得最多。
 
-### ⚠️ 爱丁堡商学院:两个条目,数字差 5~7 倍,**待你决定**
+### ⚠️ 爱丁堡商学院:取**整校**名次(已决策)
 
 QS 同时收录了两个条目:
 
-| QS 条目 | 会计与金融 | 商科与管理 |
-|---|---|---|
-| The University of Edinburgh | 42 | =109 |
-| University of Edinburgh Business School | 301-375 | 401-450 |
+| QS 条目 | 会计与金融 | 商科与管理 | 经济学 |
+|---|---|---|---|
+| **The University of Edinburgh**(采用) | **42** | **=109** | **=80** |
+| University of Edinburgh Business School(不采用) | 301-375 | 401-450 | 未收录 |
 
-我们库里那条恰好叫 `University of Edinburgh Business School`。用它自己的条目在字面上
-最准确,但会把爱丁堡商科显示成 400 名开外;用整校的又和条目名对不上。
+我们库里那条恰好叫 `University of Edinburgh Business School`,但后者是 QS 侧的重复条目,
+数字差 5~7 倍。**取整校**,与牛津 Saïd / 剑桥 Judge 的处理一致 ——
+QS 只排整所大学,不单列商学院。
 
-**暂时整条不收**,等你定。牛津/剑桥不存在这个问题 —— QS 没有单列 Saïd / Judge,
-只能用整校名次,和综合排名的处理一致。
+⚠️ 日后回官网核对这三个数时,要找的行是 **The University of Edinburgh**,
+   不是同名的商学院条目。
 
 ### 收数据的方法(下次要补别的学科时用)
 
