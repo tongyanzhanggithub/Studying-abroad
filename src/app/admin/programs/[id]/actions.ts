@@ -5,7 +5,7 @@ import { CACHE_TAGS } from '@/lib/cache-tags'
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 import { notifyProgramChange } from '@/lib/notifications/send'
-import { qsRankingSyncOps } from '@/lib/programs/qs-ranking-sync'
+import { syncQsRanking } from '@/lib/programs/qs-ranking-sync'
 import { readDeadlines, readRequirements } from '@/lib/programs/types'
 import type { ProgramDeadlines, ProgramRequirements } from '@/lib/programs/types'
 import type { BarChangeFlag } from '@prisma/client'
@@ -178,6 +178,19 @@ export async function saveProgram(
     return { ok: false as const, error: '日期格式要写成 2026-01-15 这样,没保存。' }
   }
 
+  /**
+   * ⚠️ 填了排名就必须填年份。
+   *    排名每年都变,一个不知道是哪一届的名次没法安放进按年份分的 SchoolRanking,
+   *    也没法在页面上诚实地标注(「QS #4」和「QS 2027 #4」对用户是两回事)。
+   *    库里现在同时存着 QS 2026 与 2027 两届,这一条更不能省。
+   */
+  if (int(input.qsRank) !== null && int(input.qsRankYear) === null) {
+    return {
+      ok: false as const,
+      error: '填了 QS 排名就必须填年份 —— 排名每年都变,不写年份没法展示给用户。没保存。',
+    }
+  }
+
   const ieltsOverall = num(input.ieltsOverall)
   const toeflOverall = num(input.toeflOverall)
 
@@ -210,28 +223,20 @@ export async function saveProgram(
     notes: nn(input.deadlineNotes),
   }
 
-  await db.$transaction([
-    db.school.update({
-      where: { id: before.schoolId },
-      data: {
-        qsRank: int(input.qsRank),
-        qsRankYear: int(input.qsRankYear),
-        qsRankSourceUrl: nn(input.qsRankSourceUrl),
-      },
-    }),
+  await db.$transaction(async (tx) => {
     /**
-     * ⚠️ 排名必须同时写进 SchoolRanking(权威表),不能只写 School 上的冗余字段。
-     *    用户侧优先读 SchoolRanking —— 只写这边的话,运营在后台把排名改对了、
+     * ⚠️ 排名必须写进 SchoolRanking(权威表),不能只写 School 上的冗余字段。
+     *    用户侧优先读 SchoolRanking —— 只写冗余字段的话,运营在后台把排名改对了、
      *    后台列表也显示改后的值,但用户看到的还是旧数字,而且没有任何地方会报错。
-     *    详见 qsRankingSyncOps 的注释。
+     *    syncQsRanking 会写权威表并把冗余字段对齐到年份最大的那条,详见它的注释。
      */
-    ...qsRankingSyncOps(db, {
+    await syncQsRanking(tx, {
       schoolId: before.schoolId,
       qsRank: int(input.qsRank),
       qsRankYear: int(input.qsRankYear),
       qsRankSourceUrl: nn(input.qsRankSourceUrl),
-    }),
-    db.program.update({
+    })
+    await tx.program.update({
       where: { id: programId },
       data: {
         nameZh: nn(input.nameZh),
@@ -255,8 +260,8 @@ export async function saveProgram(
         lastVerifiedAt: new Date(),
         verifiedBy: admin.adminId,
       },
-    }),
-  ])
+    })
+  })
 
   // ── 算出用户能看见的字段有哪些变了 ──────────────────────
   const fmt = (v: unknown): string => {

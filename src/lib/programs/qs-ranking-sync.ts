@@ -1,7 +1,9 @@
 import type { Prisma, PrismaClient } from '@prisma/client'
 
+type Db = PrismaClient | Prisma.TransactionClient
+
 /**
- * 把 School 上冗余的 QS 字段同步进 SchoolRanking 表。
+ * 把后台/导入写的 QS 排名同步进 SchoolRanking(权威表),并回写 School 上的冗余字段。
  *
  * ── 为什么必须有这个 ────────────────────────────────────
  * 排名有两处存储:
@@ -18,70 +20,83 @@ import type { Prisma, PrismaClient } from '@prisma/client'
  *      · 后台列表显示的是改后的值(它读 School.qsRank)→ 运营以为改好了
  *      · 用户看到的还是旧值(它读 SchoolRanking)→ 谁都不会发现
  *
- *    这正是「不报错、只是结果悄悄是错的」那类问题,而排名恰恰是本产品
- *    最不能出错的数据(PRD 4.2)。跑完 schools:import 之后 126 所学校
- *    都会有 SchoolRanking 记录,这个坑就从「潜在」变成「必然」。
+ * ── 多年份并存是**刻意保留**的 ──────────────────────────
+ * 库里同时有 QS 2026 和 QS 2027 的数据(前者来自多国扩展清单,后者是已有院校的回填)。
+ * 已决定**按年份分开存**,不强行统一到一版:UI 取每所学校年份最大的那条,
+ * 并把年份一起显示出来(「QS 2026 综合 #113」),用户看得见自己在比什么。
  *
- * 所以这三条路径写完 School.qsRank 之后,都要调一次本函数把权威表一起写掉。
+ * ⚠️ 所以这里**只动被指定的那一年**,绝不删其它年份 ——
+ *    早先版本会把非本年的 QS 记录一并删掉,那等于把历年榜单抹平成一条,
+ *    和「按年份分」的决定正相反。
  *
  * ── 语义 ────────────────────────────────────────────────
- *   有名次 + 有年份 → upsert 这一年的 QS 记录(名次、来源一并写)
- *   名次为空       → 删掉该校所有 QS 记录(运营主动清空 = 没有可信名次,
- *                    按红线宁可不显示,也不能让旧数字继续挂着)
- *   有名次 + 无年份 → 不写 SchoolRanking(建不出记录),但删掉旧的 QS 记录,
- *                    让 UI 回落到 School.qsRank —— 否则编辑照样看不见
+ *   三个字段都是 undefined  → 本次不打算改排名(CSV 留空 / 导入没这几列),什么都不做
+ *   有名次 + 有年份         → upsert 这一年的 QS 记录
+ *   名次为空 + 有年份       → 删掉这一年的记录(撤回这一年的数字);
+ *                             若还有更早年份的记录,它自然成为当前展示的那条
+ *   有名次 + 无年份         → 调用方应当先拦住(见 saveProgram 的校验)。
+ *                             真走到这里就只写冗余字段、不碰权威表 ——
+ *                             年份不明的名次没法在多年份表里安放,但也不能凭空丢掉。
  *
- * 返回的是未 await 的 Prisma 操作,调用方可以塞进自己的 $transaction 一起提交。
+ * 最后把 School 的冗余字段对齐到**年份最大的那条**记录;一条记录都没有时,
+ * 才落回调用方传进来的值。这样冗余字段永远等于 UI 实际展示的那个数。
  */
-export function qsRankingSyncOps(
-  db: PrismaClient | Prisma.TransactionClient,
+export async function syncQsRanking(
+  db: Db,
   input: {
     schoolId: string
     qsRank: number | null | undefined
     qsRankYear: number | null | undefined
     qsRankSourceUrl: string | null | undefined
   },
-): Prisma.PrismaPromise<unknown>[] {
+): Promise<void> {
   const { schoolId, qsRank, qsRankYear, qsRankSourceUrl } = input
 
-  // undefined = 本次没打算改这几个字段(CSV 留空 / 导入没这一列),什么都不做
   if (qsRank === undefined && qsRankYear === undefined && qsRankSourceUrl === undefined) {
-    return []
+    return
   }
 
-  if (qsRank === null || qsRank === undefined) {
-    return [db.schoolRanking.deleteMany({ where: { schoolId, provider: 'qs' } })]
+  if (typeof qsRankYear === 'number') {
+    if (typeof qsRank === 'number') {
+      await db.schoolRanking.upsert({
+        where: { schoolId_provider_year: { schoolId, provider: 'qs', year: qsRankYear } },
+        create: {
+          schoolId,
+          provider: 'qs',
+          year: qsRankYear,
+          rank: qsRank,
+          sourceUrl: qsRankSourceUrl ?? null,
+        },
+        update: { rank: qsRank, sourceUrl: qsRankSourceUrl ?? null },
+      })
+    } else if (qsRank === null) {
+      // 撤回这一年的名次。只删这一年 —— 其它年份是独立的事实,不该被连坐
+      await db.schoolRanking.deleteMany({
+        where: { schoolId, provider: 'qs', year: qsRankYear },
+      })
+    }
   }
 
-  if (qsRankYear === null || qsRankYear === undefined) {
-    return [db.schoolRanking.deleteMany({ where: { schoolId, provider: 'qs' } })]
-  }
+  /**
+   * 冗余字段对齐到年份最大的那条 —— 它就是 UI 会展示的那条(latestRanking 按年份倒序取第一)。
+   * 不这么做的话,后台列表(读冗余字段)和用户侧(读权威表)会显示两个不同的数字,
+   * 而这正是本文件开头那个 bug 的形态。
+   */
+  const latest = await db.schoolRanking.findFirst({
+    where: { schoolId, provider: 'qs' },
+    orderBy: { year: 'desc' },
+    select: { year: true, rank: true, sourceUrl: true },
+  })
 
-  return [
-    /**
-     * 只删**其它年份**的 QS 记录,不是整表清空 —— 否则下面的 upsert
-     * 会把自己刚建的那条也删掉(数组事务按顺序执行)。
-     *
-     * 为什么要删其它年份:UI 取的是「年份最大的那条」。如果库里还留着一条更新的
-     * 年份,运营这次改的值就永远显示不出来,又回到本文件开头那个问题。
-     * 后台表单本来就只建模「当前这一届 QS」,不是历年榜单编辑器。
-     */
-    db.schoolRanking.deleteMany({
-      where: { schoolId, provider: 'qs', year: { not: qsRankYear } },
-    }),
-    db.schoolRanking.upsert({
-      where: { schoolId_provider_year: { schoolId, provider: 'qs', year: qsRankYear } },
-      create: {
-        schoolId,
-        provider: 'qs',
-        year: qsRankYear,
-        rank: qsRank,
-        sourceUrl: qsRankSourceUrl ?? null,
-      },
-      update: {
-        rank: qsRank,
-        sourceUrl: qsRankSourceUrl ?? null,
-      },
-    }),
-  ]
+  await db.school.update({
+    where: { id: schoolId },
+    data: latest
+      ? { qsRank: latest.rank, qsRankYear: latest.year, qsRankSourceUrl: latest.sourceUrl }
+      : {
+          // 权威表里一条都没有 —— 只能用调用方给的值(可能是年份不明的名次)
+          qsRank: qsRank ?? null,
+          qsRankYear: qsRankYear ?? null,
+          qsRankSourceUrl: qsRankSourceUrl ?? null,
+        },
+  })
 }

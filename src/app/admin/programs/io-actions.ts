@@ -4,7 +4,7 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 import { db } from '@/lib/db'
 import { CACHE_TAGS } from '@/lib/cache-tags'
 import { requireAdmin } from '@/lib/auth/session'
-import { qsRankingSyncOps } from '@/lib/programs/qs-ranking-sync'
+import { syncQsRanking } from '@/lib/programs/qs-ranking-sync'
 import { REGION_LABEL, DIRECTION_LABEL } from '@/lib/programs/types'
 import {
   PROGRAM_COLUMNS,
@@ -234,16 +234,15 @@ export async function importPrograms(csvText: string) {
 
       /**
        * ⚠️ 同步权威表。用户侧优先读 SchoolRanking,只写 School.qsRank 的话
-       *    CSV 里改的排名对用户不可见(详见 qsRankingSyncOps 的注释)。
+       *    CSV 里改的排名对用户不可见(详见 syncQsRanking 的注释)。
        *    单元格留空 → undefined → 本次不动排名,和上面 upsert 的语义一致。
        */
-      const qsOps = qsRankingSyncOps(db, {
+      await syncQsRanking(db, {
         schoolId: school.id,
         qsRank: qsRank ?? undefined,
         qsRankYear: qsRankYear ?? undefined,
         qsRankSourceUrl: qsRankSourceUrl || undefined,
       })
-      if (qsOps.length) await db.$transaction(qsOps)
 
       // 过期截止日兜底
       let finalDeadline = parseDateOrNull(cell(row, 'finalDeadline'))

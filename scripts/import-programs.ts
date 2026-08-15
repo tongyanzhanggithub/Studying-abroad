@@ -17,7 +17,7 @@
 import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { PrismaClient, type Confidence, type Direction, type Region } from '@prisma/client'
-import { qsRankingSyncOps } from '../src/lib/programs/qs-ranking-sync'
+import { syncQsRanking } from '../src/lib/programs/qs-ranking-sync'
 
 const db = new PrismaClient()
 const RAW_DIR = join(process.cwd(), 'data', 'raw')
@@ -520,13 +520,12 @@ async function importFile(path: string, fileName: string, today: Date): Promise<
      *    只写后者的话,这里导入的排名对已有 SchoolRanking 记录的学校完全不生效。
      *    详见 src/lib/programs/qs-ranking-sync.ts 的注释。
      */
-    const qsOps = qsRankingSyncOps(db, {
+    await syncQsRanking(db, {
       schoolId: school.id,
       qsRank: row.school_qs_rank ?? undefined,
       qsRankYear: row.school_qs_rank_year ?? undefined,
       qsRankSourceUrl: row.school_qs_rank_source_url ?? undefined,
     })
-    if (qsOps.length) await db.$transaction(qsOps)
 
     const { deadlines, finalDeadline, downgraded } = sanitizeDeadlines(row.deadlines, today)
     if (downgraded) stats.cycleDowngraded += 1
