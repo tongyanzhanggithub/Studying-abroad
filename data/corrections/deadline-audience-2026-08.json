@@ -1,0 +1,79 @@
+{
+  "_readme": [
+    "截止日「申请人档次」标注表 —— 2026-08 那轮核查逐校查证的结论。",
+    "",
+    "为什么需要单独一份:Program.deadlineAudience 默认是 unspecified,而 UI 对",
+    "unspecified 一律不给倒计时(见 lib/programs/deadline.ts)。这道闸是必要的 ——",
+    "口径不明的日期做倒计时正是 UCL 那次事故的成因。但代价是**倒计时整个失效了**,",
+    "而它是 PRD 4.3 的核心功能。",
+    "",
+    "所以:凡是逐校回官网查证过档次的,在这里标出来,倒计时就恢复;",
+    "没查证过的继续留 unspecified,宁可不显示。",
+    "",
+    "audience 取值:",
+    "  overseas = 官网分档,这里存的是需签证/海外那一档",
+    "  all      = 官网不分档,同一个日期适用所有申请人",
+    "  home     = 存的是本地/无需签证档(对我们的用户无效,UI 会明说不适用)",
+    "",
+    "用 npm run fix:deadlines 应用(与日期修正共用同一个脚本)。"
+  ],
+  "reviewed_at": "2026-08-15",
+  "audiences": [
+    {
+      "school_name_en": "University of Exeter",
+      "audience": "overseas",
+      "intake_term": "2026-09",
+      "official_quote": "International Applicants: 23:59 Friday 11 September 2026 / UK Applicants: 23:59 Wednesday 16 September 2026",
+      "source_url": "https://www.exeter.ac.uk/study/postgraduate/applying/applicationdeadlines/"
+    },
+    {
+      "school_name_en": "University of Liverpool",
+      "audience": "overseas",
+      "intake_term": "2026-09",
+      "official_quote": "International Students: Apply for this course by 21 August 2026 / UK Students: 11 September 2026",
+      "source_url": "https://www.liverpool.ac.uk/courses/accounting-and-finance-msc"
+    },
+    {
+      "school_name_en": "University of Southampton",
+      "audience": "overseas",
+      "intake_term": "2026-09",
+      "official_quote": "International Students: Wednesday 19 August 2026, midday UK time / UK Students: Wednesday 2 September 2026, midday UK time",
+      "source_url": "https://www.southampton.ac.uk/courses/accounting-finance-masters-msc"
+    },
+    {
+      "school_name_en": "University of Sheffield",
+      "audience": "overseas",
+      "intake_term": "2026-09",
+      "official_quote": "Last date to apply for a postgraduate course if you'll need a visa to study in the UK: Tuesday 1 September 2026",
+      "source_url": "https://www.sheffield.ac.uk/postgraduate/deadlines"
+    },
+    {
+      "school_name_en": "University of Glasgow",
+      "audience": "all",
+      "intake_term": "2026-09",
+      "official_quote": "International & EU applicants: 24 August 2026 / Home applicants: 24 August 2026",
+      "source_url": "https://www.gla.ac.uk/postgraduate/taught/investmentbankingfinance/"
+    },
+    {
+      "school_name_en": "University of Warwick",
+      "audience": "all",
+      "intake_term": "2026-09",
+      "official_quote": "The on-time deadline for taught postgraduate courses starting in September/October 2026 is 2 August 2026.",
+      "source_url": "https://warwick.ac.uk/study/postgraduate/courses/msc-finance/"
+    },
+    {
+      "school_name_en": "The University of Manchester",
+      "audience": "all",
+      "intake_term": "2026-09",
+      "official_quote": "the final application deadline for the 2026/27 academic year is 5 July 2026",
+      "source_url": "https://www.alliancembs.manchester.ac.uk/study/masters/how-to-apply/"
+    },
+    {
+      "school_name_en": "University of Bristol",
+      "audience": "overseas",
+      "intake_term": "2026-09",
+      "official_quote": "Overseas applicants: 13 August 2026. Home applicants: 10 September 2026.",
+      "source_url": "https://www.bristol.ac.uk/study/postgraduate/taught/msc-accounting-and-finance/"
+    }
+  ]
+}

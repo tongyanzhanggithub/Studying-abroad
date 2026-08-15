@@ -23,10 +23,12 @@
 
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, type DeadlineAudience } from '@prisma/client'
 
 const db = new PrismaClient()
-const FILE = join(process.cwd(), 'data', 'corrections', 'deadlines-2026-08.json')
+const DIR = join(process.cwd(), 'data', 'corrections')
+const FILE = join(DIR, 'deadlines-2026-08.json')
+const AUDIENCE_FILE = join(DIR, 'deadline-audience-2026-08.json')
 const WRITE = process.argv.includes('--write')
 
 interface Correction {
@@ -115,9 +117,56 @@ async function main() {
     }
   }
 
+  // ── 申请人档次标注 ──────────────────────────────────
+  /**
+   * ⚠️ 这一段和上面的日期修正同样重要,方向相反。
+   *
+   *    deadlineAudience 默认 unspecified,而 UI 对 unspecified 一律不给倒计时 ——
+   *    这道闸是必要的(口径不明的日期做倒计时正是 UCL 那次事故的成因),
+   *    但代价是**倒计时整个失效**,而它是 PRD 4.3 的核心功能。
+   *
+   *    所以逐校查证过档次的要在这里标出来,把倒计时还回去。没查证的继续留空。
+   */
+  const audienceRaw = JSON.parse(await readFile(AUDIENCE_FILE, 'utf8')) as {
+    audiences: Array<{
+      school_name_en: string
+      audience: DeadlineAudience
+      intake_term: string
+      official_quote: string
+      source_url: string
+    }>
+  }
+
+  console.log('')
+  console.log('── 申请人档次标注 ──────────────────────────')
+  let labelled = 0
+  for (const a of audienceRaw.audiences) {
+    if (!a.official_quote?.trim() || !a.source_url?.trim()) {
+      rejected.push(`${a.school_name_en}(档次标注):缺 official_quote 或 source_url`)
+      continue
+    }
+    const where = {
+      school: { nameEn: a.school_name_en },
+      // 已经标好的不重复写 —— 保证幂等
+      OR: [{ deadlineAudience: { not: a.audience } }, { intakeTerm: { not: a.intake_term } }],
+    }
+    const n = await db.program.count({ where })
+    if (n === 0) continue
+    console.log(`${a.school_name_en}  →  ${a.audience} / ${a.intake_term}  (${n} 个)`)
+    if (WRITE) {
+      await db.program.updateMany({
+        where: { school: { nameEn: a.school_name_en } },
+        data: { deadlineAudience: a.audience, intakeTerm: a.intake_term },
+      })
+    }
+    labelled += n
+  }
+  if (labelled === 0) console.log('(全部已标注)')
+
   console.log('')
   console.log('──────────────────────────────────────────')
-  console.log(`需要修改 ${changed} 个,已经是目标值 ${already} 个`)
+  console.log(`日期:需要修改 ${changed} 个,已经是目标值 ${already} 个`)
+  console.log(`档次:需要标注 ${labelled} 个`)
   if (notFound.length) {
     console.log(`\n⚠️ 匹配不到 ${notFound.length} 个(**没有新建**,请核对项目名):`)
     notFound.forEach((x) => console.log('   ' + x))
@@ -126,7 +175,7 @@ async function main() {
     console.log(`\n⚠️ 拒绝执行 ${rejected.length} 条:`)
     rejected.forEach((x) => console.log('   ' + x))
   }
-  if (!WRITE && changed > 0) {
+  if (!WRITE && (changed > 0 || labelled > 0)) {
     console.log('\n这是预演,没有写库。确认无误后执行:npm run fix:deadlines -- --write')
   }
 
