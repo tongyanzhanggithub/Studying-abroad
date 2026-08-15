@@ -1,409 +1,13 @@
 [
   {
-    "name_en": "University of Oxford, Saïd Business School",
-    "region": "UK",
+    "name_en": "Australian National University",
+    "region": "AU",
     "rankings": [
       {
         "provider": "qs",
         "year": 2027,
-        "rank": 4,
-        "source_url": "https://xuanxiao.org/en/universities/university-of-oxford"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Cambridge, Judge Business School",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 6,
-        "source_url": "https://xuanxiao.org/en/universities/university-of-cambridge"
-      }
-    ]
-  },
-  {
-    "name_en": "Imperial College London",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 2,
-        "source_url": "https://xuanxiao.org/en/universities/imperial-college-london"
-      }
-    ]
-  },
-  {
-    "name_en": "University College London",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 8,
-        "source_url": "https://xuanxiao.org/en/universities/university-college-london"
-      }
-    ]
-  },
-  {
-    "name_en": "King's College London",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 37,
-        "source_url": "https://xuanxiao.org/en/universities/kings-college-london"
-      }
-    ]
-  },
-  {
-    "name_en": "The University of Manchester",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 40,
-        "source_url": "https://xuanxiao.org/en/universities/university-of-manchester"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Bristol",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 57,
-        "source_url": "https://xuanxiao.org/en/universities/university-of-bristol"
-      }
-    ]
-  },
-  {
-    "name_en": "The London School of Economics and Political Science",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 62,
-        "source_url": "https://www.qs-topuniversities.cn/en/universities/london-school-economics-political-science-lse"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Warwick",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 68,
-        "source_url": "https://warwick.ac.uk/news/pressreleases/university-of-warwick-rises-to-68th-in-qs-world-university-rankings1/"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Birmingham",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 68,
-        "source_url": "https://xuanxiao.org/en/universities/university-of-birmingham"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Leeds",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 77,
-        "source_url": "https://www.leeds.ac.uk/news-global/news/article/5980/leeds-strengthens-global-top-100-position"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Glasgow",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 80,
-        "source_url": "https://www.gla.ac.uk/news/headline_1278197_en.html"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Sheffield",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 82,
-        "source_url": "https://sheffield.ac.uk/news/university-sheffield-strengthens-top-100-global-standing-10-place-rise-qs-world-university-rankings"
-      }
-    ]
-  },
-  {
-    "name_en": "Durham University",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 85,
-        "source_url": "https://xuanxiao.org/en/universities/durham-university"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Nottingham",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 97,
-        "source_url": "https://www.nottingham.ac.uk/news/nottingham-named-once-again-among-worlds-top-100-universities"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Southampton",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 111,
-        "source_url": "https://xuanxiao.org/en/universities/university-of-southampton"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Bath",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 125,
-        "source_url": "https://xuanxiao.org/en/universities/university-of-bath"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Exeter",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 136,
-        "source_url": "https://news.exeter.ac.uk/staff-news/exeter-achieves-highest-ever-position-in-qs-world-university-rankings/"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Liverpool",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 139,
-        "source_url": "https://news.liverpool.ac.uk/2026/06/18/university-breaks-into-top-140-in-qs-world-rankings-2027/"
-      }
-    ]
-  },
-  {
-    "name_en": "Lancaster University",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 164,
-        "source_url": "https://xuanxiao.org/en/universities/lancaster-university"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Edinburgh Business School",
-    "region": "UK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 35,
-        "source_url": "https://xuanxiao.org/en/universities/university-of-edinburgh"
-      }
-    ]
-  },
-  {
-    "name_en": "Trinity College Dublin",
-    "region": "IE",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 75,
-        "source_url": "https://www.tcd.ie/news_events/articles/2026/trinityholds-75thpositionin-qs-world-university-rankings/"
-      }
-    ]
-  },
-  {
-    "name_en": "University College Dublin",
-    "region": "IE",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 100,
-        "source_url": "https://www.ucd.ie/newsandopinion/news/2026/june/18/ucdjoinsworldstop100universitiesinlatestqsrankings/"
-      }
-    ]
-  },
-  {
-    "name_en": "The University of Hong Kong",
-    "region": "HK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 11,
-        "source_url": "https://www.hku.hk/press/press-releases/detail/29178.html"
-      }
-    ]
-  },
-  {
-    "name_en": "The Chinese University of Hong Kong",
-    "region": "HK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 18,
-        "source_url": "https://www.cpr.cuhk.edu.hk/en/press/cuhk-ranks-18th-in-qs-world-university-rankings-2027-advancement-in-international-reputation-employer-reputation-and-global-engagement/"
-      }
-    ]
-  },
-  {
-    "name_en": "The Hong Kong University of Science and Technology",
-    "region": "HK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 33,
-        "source_url": "https://hkust.edu.hk/news/hkust-leaps-11-places-rank-33rd-globally-qs-world-university-rankings-2027"
-      }
-    ]
-  },
-  {
-    "name_en": "The Hong Kong Polytechnic University",
-    "region": "HK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 50,
-        "source_url": "https://www.polyu.edu.hk/media/media-releases/2026/0618_polyu-rises-steadily-in-the-latest-qs-world-university-rankings-global-top-50/"
-      }
-    ]
-  },
-  {
-    "name_en": "City University of Hong Kong",
-    "region": "HK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 52,
-        "source_url": "https://www.cityu.edu.hk/media/press-release/2026/06/18/cityuhk-leaps-to-52nd-globally-in-qs-world-university-rankings-2027"
-      }
-    ]
-  },
-  {
-    "name_en": "Hong Kong Baptist University",
-    "region": "HK",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 216,
-        "source_url": "https://collegedunia.com/hong-kong/university/719-hong-kong-baptist-university-kowloon-tong/ranking"
-      }
-    ]
-  },
-  {
-    "name_en": "National University of Singapore",
-    "region": "SG",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 10,
-        "source_url": "https://www.ntu.edu.sg/sss/news-events/news/detail/nus-remains-in-top-ten-of-2027-qs-world-university-rankings"
-      }
-    ]
-  },
-  {
-    "name_en": "Nanyang Technological University",
-    "region": "SG",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 12,
-        "source_url": "https://www.ntu.edu.sg/news/detail/ntu-singapore-ranks-12th-in-qs-world-university-rankings-2027"
-      }
-    ]
-  },
-  {
-    "name_en": "Singapore Management University",
-    "region": "SG",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 411,
-        "source_url": "https://qs-topuniversities.cn/en/universities/singapore-management-university"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Macau",
-    "region": "MO",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 267,
-        "source_url": "https://qs-topuniversities.cn/en/universities/university-macau"
-      }
-    ]
-  },
-  {
-    "name_en": "Macau University of Science and Technology",
-    "region": "MO",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 398,
-        "source_url": "https://qs-topuniversities.cn/en/universities/macau-university-science-technology"
+        "rank": 29,
+        "source_url": "https://www.anu.edu.au/news/all-news/anu-climbs-in-qs-world-university-rankings"
       }
     ]
   },
@@ -432,18 +36,6 @@
     ]
   },
   {
-    "name_en": "Australian National University",
-    "region": "AU",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 29,
-        "source_url": "https://www.anu.edu.au/news/all-news/anu-climbs-in-qs-world-university-rankings"
-      }
-    ]
-  },
-  {
     "name_en": "McGill University",
     "region": "CA",
     "rankings": [
@@ -456,14 +48,14 @@
     ]
   },
   {
-    "name_en": "University of Toronto",
+    "name_en": "McMaster University",
     "region": "CA",
     "rankings": [
       {
         "provider": "qs",
         "year": 2027,
-        "rank": 32,
-        "source_url": "https://academica.ca/top-ten/qs-world-university-rankings-2027-released/"
+        "rank": 174,
+        "source_url": "https://www.narcity.com/university-of-toronto-best-universities-world-ranking-2027-mcgill-ubc"
       }
     ]
   },
@@ -475,6 +67,18 @@
         "provider": "qs",
         "year": 2027,
         "rank": 45,
+        "source_url": "https://academica.ca/top-ten/qs-world-university-rankings-2027-released/"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Toronto",
+    "region": "CA",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 32,
         "source_url": "https://academica.ca/top-ten/qs-world-university-rankings-2027-released/"
       }
     ]
@@ -492,18 +96,6 @@
     ]
   },
   {
-    "name_en": "McMaster University",
-    "region": "CA",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 174,
-        "source_url": "https://www.narcity.com/university-of-toronto-best-universities-world-ranking-2027-mcgill-ubc"
-      }
-    ]
-  },
-  {
     "name_en": "York University",
     "region": "CA",
     "rankings": [
@@ -516,88 +108,9 @@
     ]
   },
   {
-    "name_en": "Seoul National University",
-    "region": "KR",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 38,
-        "source_url": "https://www.topuniversities.com/universities/seoul-national-university"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Tokyo",
-    "region": "JP",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 39,
-        "source_url": "https://www.topuniversities.com/universities/university-tokyo"
-      }
-    ]
-  },
-  {
-    "name_en": "Yonsei University",
-    "region": "KR",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 42,
-        "source_url": "https://www.topuniversities.com/universities/yonsei-university"
-      }
-    ]
-  },
-  {
-    "name_en": "Korea University",
-    "region": "KR",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 52,
-        "source_url": "https://www.topuniversities.com/universities/korea-university"
-      }
-    ]
-  },
-  {
-    "name_en": "KAIST",
-    "region": "KR",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 65,
-        "source_url": "https://www.topuniversities.com/universities/kaist-korea-advanced-institute-science-technology"
-      }
-    ]
-  },
-  {
-    "name_en": "Waseda University",
-    "region": "JP",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 201,
-        "source_url": "https://www.topuniversities.com/universities/waseda-university"
-      }
-    ]
-  },
-  {
-    "name_en": "Keio University",
-    "region": "JP",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 213,
-        "source_url": "https://www.topuniversities.com/universities/keio-university"
-      }
-    ]
+    "name_en": "Frankfurt School of Finance & Management",
+    "region": "DE",
+    "rankings": []
   },
   {
     "name_en": "Technical University of Munich",
@@ -608,42 +121,6 @@
         "year": 2027,
         "rank": 25,
         "source_url": "https://www.topuniversities.com/universities/technical-university-munich"
-      }
-    ]
-  },
-  {
-    "name_en": "Delft University of Technology",
-    "region": "NL",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 48,
-        "source_url": "https://www.topuniversities.com/universities/delft-university-technology"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Amsterdam",
-    "region": "NL",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 60,
-        "source_url": "https://www.topuniversities.com/universities/university-amsterdam"
-      }
-    ]
-  },
-  {
-    "name_en": "Erasmus University Rotterdam",
-    "region": "NL",
-    "rankings": [
-      {
-        "provider": "qs",
-        "year": 2027,
-        "rank": 148,
-        "source_url": "https://www.topuniversities.com/universities/erasmus-university-rotterdam"
       }
     ]
   },
@@ -660,6 +137,234 @@
     ]
   },
   {
+    "name_en": "City University of Hong Kong",
+    "region": "HK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 52,
+        "source_url": "https://www.cityu.edu.hk/media/press-release/2026/06/18/cityuhk-leaps-to-52nd-globally-in-qs-world-university-rankings-2027"
+      }
+    ]
+  },
+  {
+    "name_en": "Hong Kong Baptist University",
+    "region": "HK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 216,
+        "source_url": "https://collegedunia.com/hong-kong/university/719-hong-kong-baptist-university-kowloon-tong/ranking"
+      }
+    ]
+  },
+  {
+    "name_en": "The Chinese University of Hong Kong",
+    "region": "HK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 18,
+        "source_url": "https://www.cpr.cuhk.edu.hk/en/press/cuhk-ranks-18th-in-qs-world-university-rankings-2027-advancement-in-international-reputation-employer-reputation-and-global-engagement/"
+      }
+    ]
+  },
+  {
+    "name_en": "The Hong Kong Polytechnic University",
+    "region": "HK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 50,
+        "source_url": "https://www.polyu.edu.hk/media/media-releases/2026/0618_polyu-rises-steadily-in-the-latest-qs-world-university-rankings-global-top-50/"
+      }
+    ]
+  },
+  {
+    "name_en": "The Hong Kong University of Science and Technology",
+    "region": "HK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 33,
+        "source_url": "https://hkust.edu.hk/news/hkust-leaps-11-places-rank-33rd-globally-qs-world-university-rankings-2027"
+      }
+    ]
+  },
+  {
+    "name_en": "The University of Hong Kong",
+    "region": "HK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 11,
+        "source_url": "https://www.hku.hk/press/press-releases/detail/29178.html"
+      }
+    ]
+  },
+  {
+    "name_en": "Trinity College Dublin",
+    "region": "IE",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 75,
+        "source_url": "https://www.tcd.ie/news_events/articles/2026/trinityholds-75thpositionin-qs-world-university-rankings/"
+      }
+    ]
+  },
+  {
+    "name_en": "University College Dublin",
+    "region": "IE",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 100,
+        "source_url": "https://www.ucd.ie/newsandopinion/news/2026/june/18/ucdjoinsworldstop100universitiesinlatestqsrankings/"
+      }
+    ]
+  },
+  {
+    "name_en": "Keio University",
+    "region": "JP",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 213,
+        "source_url": "https://www.topuniversities.com/universities/keio-university"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Tokyo",
+    "region": "JP",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 39,
+        "source_url": "https://www.topuniversities.com/universities/university-tokyo"
+      }
+    ]
+  },
+  {
+    "name_en": "Waseda University",
+    "region": "JP",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 201,
+        "source_url": "https://www.topuniversities.com/universities/waseda-university"
+      }
+    ]
+  },
+  {
+    "name_en": "KAIST",
+    "region": "KR",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 65,
+        "source_url": "https://www.topuniversities.com/universities/kaist-korea-advanced-institute-science-technology"
+      }
+    ]
+  },
+  {
+    "name_en": "Korea University",
+    "region": "KR",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 52,
+        "source_url": "https://www.topuniversities.com/universities/korea-university"
+      }
+    ]
+  },
+  {
+    "name_en": "Seoul National University",
+    "region": "KR",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 38,
+        "source_url": "https://www.topuniversities.com/universities/seoul-national-university"
+      }
+    ]
+  },
+  {
+    "name_en": "Yonsei University",
+    "region": "KR",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 42,
+        "source_url": "https://www.topuniversities.com/universities/yonsei-university"
+      }
+    ]
+  },
+  {
+    "name_en": "Macau University of Science and Technology",
+    "region": "MO",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 398,
+        "source_url": "https://qs-topuniversities.cn/en/universities/macau-university-science-technology"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Macau",
+    "region": "MO",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 267,
+        "source_url": "https://qs-topuniversities.cn/en/universities/university-macau"
+      }
+    ]
+  },
+  {
+    "name_en": "Delft University of Technology",
+    "region": "NL",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 48,
+        "source_url": "https://www.topuniversities.com/universities/delft-university-technology"
+      }
+    ]
+  },
+  {
+    "name_en": "Erasmus University Rotterdam",
+    "region": "NL",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 148,
+        "source_url": "https://www.topuniversities.com/universities/erasmus-university-rotterdam"
+      }
+    ]
+  },
+  {
     "name_en": "Tilburg University",
     "region": "NL",
     "rankings": [
@@ -672,8 +377,303 @@
     ]
   },
   {
-    "name_en": "Frankfurt School of Finance & Management",
-    "region": "DE",
-    "rankings": []
+    "name_en": "University of Amsterdam",
+    "region": "NL",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 60,
+        "source_url": "https://www.topuniversities.com/universities/university-amsterdam"
+      }
+    ]
+  },
+  {
+    "name_en": "Nanyang Technological University",
+    "region": "SG",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 12,
+        "source_url": "https://www.ntu.edu.sg/news/detail/ntu-singapore-ranks-12th-in-qs-world-university-rankings-2027"
+      }
+    ]
+  },
+  {
+    "name_en": "National University of Singapore",
+    "region": "SG",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 10,
+        "source_url": "https://www.ntu.edu.sg/sss/news-events/news/detail/nus-remains-in-top-ten-of-2027-qs-world-university-rankings"
+      }
+    ]
+  },
+  {
+    "name_en": "Singapore Management University",
+    "region": "SG",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 411,
+        "source_url": "https://qs-topuniversities.cn/en/universities/singapore-management-university"
+      }
+    ]
+  },
+  {
+    "name_en": "Durham University",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 85,
+        "source_url": "https://xuanxiao.org/en/universities/durham-university"
+      }
+    ]
+  },
+  {
+    "name_en": "Imperial College London",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 2,
+        "source_url": "https://xuanxiao.org/en/universities/imperial-college-london"
+      }
+    ]
+  },
+  {
+    "name_en": "King's College London",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 37,
+        "source_url": "https://xuanxiao.org/en/universities/kings-college-london"
+      }
+    ]
+  },
+  {
+    "name_en": "Lancaster University",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 164,
+        "source_url": "https://xuanxiao.org/en/universities/lancaster-university"
+      }
+    ]
+  },
+  {
+    "name_en": "The London School of Economics and Political Science",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 62,
+        "source_url": "https://www.qs-topuniversities.cn/en/universities/london-school-economics-political-science-lse"
+      }
+    ]
+  },
+  {
+    "name_en": "The University of Edinburgh",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 35,
+        "source_url": "https://xuanxiao.org/en/universities/university-of-edinburgh"
+      }
+    ]
+  },
+  {
+    "name_en": "The University of Manchester",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 40,
+        "source_url": "https://xuanxiao.org/en/universities/university-of-manchester"
+      }
+    ]
+  },
+  {
+    "name_en": "University College London",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 8,
+        "source_url": "https://xuanxiao.org/en/universities/university-college-london"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Bath",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 125,
+        "source_url": "https://xuanxiao.org/en/universities/university-of-bath"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Birmingham",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 68,
+        "source_url": "https://xuanxiao.org/en/universities/university-of-birmingham"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Bristol",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 57,
+        "source_url": "https://xuanxiao.org/en/universities/university-of-bristol"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Cambridge, Judge Business School",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 6,
+        "source_url": "https://xuanxiao.org/en/universities/university-of-cambridge"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Exeter",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 136,
+        "source_url": "https://news.exeter.ac.uk/staff-news/exeter-achieves-highest-ever-position-in-qs-world-university-rankings/"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Glasgow",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 80,
+        "source_url": "https://www.gla.ac.uk/news/headline_1278197_en.html"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Leeds",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 77,
+        "source_url": "https://www.leeds.ac.uk/news-global/news/article/5980/leeds-strengthens-global-top-100-position"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Liverpool",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 139,
+        "source_url": "https://news.liverpool.ac.uk/2026/06/18/university-breaks-into-top-140-in-qs-world-rankings-2027/"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Nottingham",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 97,
+        "source_url": "https://www.nottingham.ac.uk/news/nottingham-named-once-again-among-worlds-top-100-universities"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Oxford, Saïd Business School",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 4,
+        "source_url": "https://xuanxiao.org/en/universities/university-of-oxford"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Sheffield",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 82,
+        "source_url": "https://sheffield.ac.uk/news/university-sheffield-strengthens-top-100-global-standing-10-place-rise-qs-world-university-rankings"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Southampton",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 111,
+        "source_url": "https://xuanxiao.org/en/universities/university-of-southampton"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Warwick",
+    "region": "UK",
+    "rankings": [
+      {
+        "provider": "qs",
+        "year": 2027,
+        "rank": 68,
+        "source_url": "https://warwick.ac.uk/news/pressreleases/university-of-warwick-rises-to-68th-in-qs-world-university-rankings1/"
+      }
+    ]
   }
 ]

@@ -1237,6 +1237,33 @@
     ]
   },
   {
+    "name_en": "The University of Edinburgh",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 42,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 109,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 80,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
     "name_en": "The University of Manchester",
     "region": "UK",
     "subject_rankings": [
@@ -1428,33 +1455,6 @@
         "subject": "Marketing",
         "rank": 4,
         "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
-      }
-    ]
-  },
-  {
-    "name_en": "University of Edinburgh Business School",
-    "region": "UK",
-    "subject_rankings": [
-      {
-        "provider": "qs",
-        "year": 2026,
-        "subject": "Accounting & Finance",
-        "rank": 42,
-        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
-      },
-      {
-        "provider": "qs",
-        "year": 2026,
-        "subject": "Business & Management Studies",
-        "rank": 109,
-        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
-      },
-      {
-        "provider": "qs",
-        "year": 2026,
-        "subject": "Economics & Econometrics",
-        "rank": 80,
-        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
       }
     ]
   },

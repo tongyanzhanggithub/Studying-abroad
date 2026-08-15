@@ -38,7 +38,7 @@
     {
       "school_name_en": "University of Birmingham",
       "programs": ["MSc Financial Management", "MSc International Business", "MSc Marketing"],
-      "current_final_deadline": "2026-12-18",
+      "current_final_deadline": "2026-08-28(库里实际值;采集原始数据里是 2026-12-18,导入时被归一成 9 月入学档)",
       "new_final_deadline": null,
       "reason": "同上,且这个日期是 2027 年 1 月入学季的,与库里其余项目(9 月入学)不是同一个入学季 —— 在没有入学季字段的情况下并排显示会误导。",
       "official_quote": "18 December 2026 - Application deadline for UK and non visa requiring applicants to apply to start in January 2027.",
@@ -64,12 +64,12 @@
         "MSc Marketing",
         "MSc Business Analytics"
       ],
-      "current_final_deadline": "2026-06-30",
-      "new_final_deadline": "2026-07-31",
-      "reason": "库里的 06-30 与它自己引用的来源页对不上。官方招生时间线写的是 Overseas 07-31、Home 08-31。方向上偏早(安全),仍应改正。",
+      "current_final_deadline": "2026-06-30 / 2026-08-31 / 已置空(库里三种状态都有)",
+      "new_final_deadline": null,
+      "reason": "官方招生时间线:Overseas 2026-07-31、Home 2026-08-31。库里有两个问题——部分项目存的是 Home 档 08-31(对我们的用户无效),部分存的 06-30 与来源页对不上。⚠️ 但**不能改成 07-31**:今天已是 2026-08-15,那个海外档早已过期,填回去等于把一个过期日期重新摆到学生面前,而项目原则是「过期日期比没有日期更危险」。2027 入学季日期官网尚未公布,故与 UCL 同样置空。",
       "official_quote": "If you're an Overseas student, you must apply for your course before 31 July 2026. / If you're a Home student, you must apply for your course before 31 August 2026.",
       "source_url": "https://www.bath.ac.uk/corporate-information/taught-postgraduate-admissions-timeline/",
-      "note_append": "核查 2026-08-15:Overseas 2026-07-31,Home 2026-08-31。此处取 Overseas 档。"
+      "note_append": "核查 2026-08-15:Overseas 2026-07-31(已过期),Home 2026-08-31(对需签证申请人无效)。2026 入学季已结束,2027 季待官网公布,故置空。"
     }
   ]
 }

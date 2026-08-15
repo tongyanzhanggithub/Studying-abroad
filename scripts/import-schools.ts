@@ -109,6 +109,16 @@ interface Stats {
   file: string
   read: number
   created: number
+  /**
+   * 新建学校的名字。
+   *
+   * ⚠️ 只报数量不行 —— 实测踩过:qs-2027-existing.json 本该全部命中已有学校,
+   *    结果「新建 1」被当成噪音略过,而那 1 所是 name_en 拼法和库里不一致造成的**空壳**
+   *    (库里叫 The University of Edinburgh,文件里写的是 University of Edinburgh
+   *    Business School)。后果是排名全落到空壳上,真正带 6 个项目的那所什么都没拿到,
+   *    页面上照样不显示排名,而导入日志一切正常。名字打出来才看得见。
+   */
+  createdNames: string[]
   updated: number
   ranksWritten: number
   subjectRanksWritten: number
@@ -119,7 +129,7 @@ interface Stats {
 async function importFile(path: string, fileName: string): Promise<Stats> {
   const stats: Stats = {
     file: fileName, read: 0, created: 0, updated: 0,
-    ranksWritten: 0, subjectRanksWritten: 0, skipped: 0, reasons: [],
+    ranksWritten: 0, subjectRanksWritten: 0, skipped: 0, reasons: [], createdNames: [],
   }
 
   let rows: unknown

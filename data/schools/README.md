@@ -24,10 +24,16 @@
 |---|---|
 | `University of Oxford` | `University of Oxford, Saïd Business School` |
 | `University of Cambridge` | `University of Cambridge, Judge Business School` |
-| `University of Edinburgh` | `University of Edinburgh Business School` |
+| `University of Edinburgh Business School` | `The University of Edinburgh` |
 
 这三所挂的是**整所大学**的 QS 名次(QS 只排大学,不排商学院),`source_url` 也指向整校页面。
 加新条目前先确认库里叫什么:后台 `/admin/programs` 或直接查 `schools.name_en`。
+
+⚠️ 爱丁堡这条是**踩出来的**:文件里原本写 `University of Edinburgh Business School`
+(那是采集原始数据里的写法),而库里实际叫 `The University of Edinburgh`
+(中文名却是「爱丁堡大学商学院」)。导入时因此新建了一所 0 项目的空壳,
+排名全落在空壳上,真正带 6 个项目的那所什么都没拿到 —— **而导入日志一切正常**,
+只有一行不起眼的「新建 1」。现在导入脚本会把新建学校的**名字**打出来。
 
 **二、榜单版本按年份分开存,不强行统一。**(已决策)
 
