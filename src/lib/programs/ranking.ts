@@ -45,6 +45,15 @@ export function latestRanking<T extends RankingLike>(
   return list[0] ?? null
 }
 
+/**
+ * 排名文案。
+ *
+ * ⚠️ 学科排名必须写出**是哪个学科**。
+ *    早先统一渲染成「QS 2027 专业 #12」—— 用户没法判断这个 12 是
+ *    「会计与金融第 12」还是「工程与技术大类第 12」,而这两者含金量差很远。
+ *    学科名由调用方通过 subjectName 传入(见 lib/programs/qs-subjects.ts 的映射),
+ *    传不进来才退回「专业」两个字。
+ */
 export function formatRanking(
   provider: RankingProviderCode,
   ranking: RankingLike | null,
@@ -54,7 +63,8 @@ export function formatRanking(
   const value = ranking.rankText?.trim() || (ranking.rank ? `#${ranking.rank}` : '')
   if (!value) return null
   const label = RANKING_PROVIDER_LABEL[provider]
-  const scopeLabel = scope === 'subject' ? '专业' : '综合'
+  const scopeLabel =
+    scope === 'subject' ? (ranking.subjectName?.trim() || '专业') : '综合'
   return ranking.year
     ? `${label} ${ranking.year} ${scopeLabel} ${value}`
     : `${label} ${scopeLabel} ${value}`

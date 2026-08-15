@@ -44,6 +44,44 @@ UI 取每所学校年份最大的那条,并把年份一起显示出来 ——
 仍然存在的取舍:「综合排名优先」排序会跨版本比大小。相邻两届 QS 名次通常只差几位,
 而且年份就摆在卡片上,可接受;等 126 所补齐 2027 数据后自然消失。
 
+## 学科排名(`subject_rankings`)
+
+综合排名回答不了学生真正的问题(「这学校商科强不强」),所以另有一份学科排名。
+
+```json
+{
+  "name_en": "The University of Manchester",
+  "region": "UK",
+  "rankings": [{ "provider": "qs", "year": 2027, "rank": 40, "source_url": "https://..." }],
+  "subject_rankings": [
+    { "provider": "qs", "year": 2027, "subject": "Accounting & Finance", "rank": 27, "source_url": "https://..." },
+    { "provider": "qs", "year": 2027, "subject": "Business & Management Studies", "rank": 22, "source_url": "https://..." }
+  ]
+}
+```
+
+**挂在学校上,不挂在项目上。** QS 学科榜是按「大学 × 学科」发布的,曼大商学院下面
+十几个授课型硕士共用同一个 Business & Management 名次。项目按自己的 `direction`
+映射到学科自动继承,不用逐个填(映射表见
+[`src/lib/programs/qs-subjects.ts`](../../src/lib/programs/qs-subjects.ts))。
+
+### ⚠️ `subject` 必须和 QS 榜单英文原文一模一样
+
+大小写、`&`、空格都要一致。拼成 `Accounting and Finance` 不会报错,
+但项目按 direction **查不到自己的名次** —— 悄悄查不到。
+导入脚本会拿映射表比对并告警(不拦,因为 QS 每年会调整学科划分)。
+
+### 大类 vs 细分学科
+
+有些方向 QS 只有**大类**(faculty area)没有细分榜,如工程、自然科学、人文。
+映射表里这些标了 `broad: true`,页面上会额外标一个「大类」——
+「工程与技术大类第 20」和「机械工程第 20」含金量差很远,不能都写成「专业排名」。
+
+### 现状
+
+**目前一条学科排名数据都没有。** 通路已经打通(导入 → 存储 → 选校卡片 → 院校详情页
+→「专业排名优先」排序),缺的是联网核实过的数据。按红线,一个数字都不能凭印象填。
+
 ## 数据红线(PRD 4.2)
 
 早先库里的 QS 排名是凭记忆填的,抽查 6 所错了 5 所,已全部清空重来。

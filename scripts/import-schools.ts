@@ -26,13 +26,22 @@
  *     "name_zh": "牛津大学",                  // 选填
  *     "short_name": "Oxford",                // 选填
  *     "region": "UK",                        // 必填,支持别名(见 REGION_ALIASES)
- *     "rankings": [                          // 选填,可多条(多年 + 多榜)
+ *     "rankings": [                          // 综合排名,选填,可多条(多年 + 多榜)
  *       { "provider": "qs",      "year": 2026, "rank": 3,    "rank_text": "3",  "source_url": "https://..." },
  *       { "provider": "us_news", "year": 2025, "rank": 5,    "rank_text": "5",  "source_url": "https://..." },
  *       { "provider": "qs",      "year": 2022, "rank": null, "rank_text": "range", "source_url": "https://..." }
+ *     ],
+ *     "subject_rankings": [                  // 学科排名,选填
+ *       { "provider": "qs", "year": 2026, "subject": "Accounting & Finance", "rank": 12, "source_url": "https://..." },
+ *       { "provider": "qs", "year": 2026, "subject": "Business & Management Studies", "rank": 8, "source_url": "https://..." }
  *     ]
  *   }
  * ]
+ *
+ * ⚠️ subject 写 QS 榜单上的**英文原文**,大小写和 & 都要一致。
+ *    拼错(如 "Accounting and Finance")不会报错,但项目按 direction 查不到自己的
+ *    名次 —— 悄悄查不到。所以脚本会拿 lib/programs/qs-subjects.ts 的映射表比对,
+ *    不在表里的会告警(但不拦,QS 每年会调整学科划分)。
  *
  * 幂等:可重复执行。School 按 (name_en, region) 去重,排名按 (school, provider, year) 去重。
  */
@@ -40,6 +49,7 @@
 import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { PrismaClient, type Region, type RankingProvider } from '@prisma/client'
+import { KNOWN_QS_SUBJECTS } from '../src/lib/programs/qs-subjects'
 
 const db = new PrismaClient()
 
@@ -81,12 +91,18 @@ interface RankingInput {
   rank_text?: string | null
   source_url?: string | null
 }
+/** 学科排名比综合排名多一个 subject —— 存 QS 榜单上的英文原文 */
+interface SubjectRankingInput extends RankingInput {
+  subject?: string
+}
+
 interface SchoolInput {
   name_en?: string
   name_zh?: string | null
   short_name?: string | null
   region?: string
   rankings?: RankingInput[]
+  subject_rankings?: SubjectRankingInput[]
 }
 
 interface Stats {
@@ -95,12 +111,16 @@ interface Stats {
   created: number
   updated: number
   ranksWritten: number
+  subjectRanksWritten: number
   skipped: number
   reasons: string[]
 }
 
 async function importFile(path: string, fileName: string): Promise<Stats> {
-  const stats: Stats = { file: fileName, read: 0, created: 0, updated: 0, ranksWritten: 0, skipped: 0, reasons: [] }
+  const stats: Stats = {
+    file: fileName, read: 0, created: 0, updated: 0,
+    ranksWritten: 0, subjectRanksWritten: 0, skipped: 0, reasons: [],
+  }
 
   let rows: unknown
   try {
@@ -199,6 +219,69 @@ async function importFile(path: string, fileName: string): Promise<Stats> {
       })
       stats.ranksWritten += 1
     }
+
+    // ── 学科排名 ────────────────────────────────────────
+    for (const r of raw.subject_rankings ?? []) {
+      const provider = r.provider?.toLowerCase() as RankingProvider | undefined
+      const subject = r.subject?.trim()
+      if (!provider || !VALID_PROVIDERS.includes(provider)) {
+        stats.reasons.push(`学科排名 provider 非法(${r.provider})跳过:${nameEn}`)
+        continue
+      }
+      if (!subject) {
+        stats.reasons.push(`学科排名缺 subject 跳过:${nameEn} / ${provider}`)
+        continue
+      }
+      if (typeof r.year !== 'number') {
+        stats.reasons.push(`学科排名缺 year 跳过:${nameEn} / ${subject}`)
+        continue
+      }
+      // ⚠️ 红线同上:有名次数字就必须带来源
+      if (typeof r.rank === 'number' && !r.source_url?.trim()) {
+        stats.reasons.push(
+          `学科排名有数字但无 source_url,已丢弃(数据红线):${nameEn} / ${subject} ${r.year} = ${r.rank}`,
+        )
+        continue
+      }
+      /**
+       * ⚠️ 学科名不在已知清单里只告警、不拦。
+       *    QS 每年会调整学科划分,拦下来等于新学科一条都进不来;
+       *    但拼错(如 "Accounting and Finance" vs "Accounting & Finance")会让
+       *    项目按 direction 查不到自己的名次 —— 悄悄查不到,所以必须提示。
+       */
+      if (!KNOWN_QS_SUBJECTS.includes(subject)) {
+        stats.reasons.push(
+          `学科名不在映射表里,项目可能匹配不上:${nameEn} / 「${subject}」` +
+            `(已知:${KNOWN_QS_SUBJECTS.slice(0, 3).join('、')}…)`,
+        )
+      }
+
+      await db.schoolSubjectRanking.upsert({
+        where: {
+          schoolId_provider_year_subject: {
+            schoolId: school.id,
+            provider,
+            year: r.year,
+            subject,
+          },
+        },
+        create: {
+          schoolId: school.id,
+          provider,
+          year: r.year,
+          subject,
+          rank: typeof r.rank === 'number' ? r.rank : null,
+          rankText: r.rank_text?.trim() || null,
+          sourceUrl: r.source_url?.trim() || null,
+        },
+        update: {
+          rank: typeof r.rank === 'number' ? r.rank : null,
+          rankText: r.rank_text?.trim() || null,
+          sourceUrl: r.source_url?.trim() || null,
+        },
+      })
+      stats.subjectRanksWritten += 1
+    }
   }
 
   return stats
@@ -227,7 +310,8 @@ async function main() {
     all.push(s)
     console.log(
       `${f.padEnd(28)} 读取 ${String(s.read).padStart(3)} · 新建 ${String(s.created).padStart(3)} · ` +
-      `更新 ${String(s.updated).padStart(3)} · 排名 ${String(s.ranksWritten).padStart(3)} · 跳过 ${String(s.skipped).padStart(2)}`,
+      `更新 ${String(s.updated).padStart(3)} · 综合排名 ${String(s.ranksWritten).padStart(3)} · ` +
+      `学科排名 ${String(s.subjectRanksWritten).padStart(4)} · 跳过 ${String(s.skipped).padStart(2)}`,
     )
     for (const r of s.reasons.slice(0, 8)) console.log(`    ↳ ${r}`)
     if (s.reasons.length > 8) console.log(`    ↳ …另有 ${s.reasons.length - 8} 条`)
@@ -236,12 +320,16 @@ async function main() {
   const sum = all.reduce(
     (a, s) => ({
       read: a.read + s.read, created: a.created + s.created,
-      updated: a.updated + s.updated, ranks: a.ranks + s.ranksWritten, skipped: a.skipped + s.skipped,
+      updated: a.updated + s.updated, ranks: a.ranks + s.ranksWritten,
+      subjectRanks: a.subjectRanks + s.subjectRanksWritten, skipped: a.skipped + s.skipped,
     }),
-    { read: 0, created: 0, updated: 0, ranks: 0, skipped: 0 },
+    { read: 0, created: 0, updated: 0, ranks: 0, subjectRanks: 0, skipped: 0 },
   )
   console.log('──────────────────────────────────────────')
-  console.log(`共读取 ${sum.read} 所,新建 ${sum.created},更新 ${sum.updated},写入排名 ${sum.ranks} 条,跳过 ${sum.skipped}`)
+  console.log(
+    `共读取 ${sum.read} 所,新建 ${sum.created},更新 ${sum.updated},` +
+      `写入综合排名 ${sum.ranks} 条、学科排名 ${sum.subjectRanks} 条,跳过 ${sum.skipped}`,
+  )
   console.log('')
   console.log('下一步:这些学校还没有任何项目。到 /admin/collect 用采集流水线逐校采项目,')
   console.log('AI 抽取 → 人工核对 → 达标后在 /admin/regions 开放对应地区。')

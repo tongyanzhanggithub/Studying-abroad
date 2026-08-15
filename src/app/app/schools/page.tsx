@@ -24,6 +24,7 @@ import {
   rankingSortValue,
   type RankingLike,
 } from '@/lib/programs/ranking'
+import { qsSubjectOf } from '@/lib/programs/qs-subjects'
 import { ShortlistControls } from './Controls'
 import { ProgramCard } from './ProgramCard'
 import { SchoolFilters } from './SchoolFilters'
@@ -156,12 +157,14 @@ export default async function SchoolsPage({
    * 「带全部关联的完整行」都能用同一套比较逻辑,不必写两份。
    */
   type RankBearing = {
+    direction: Direction
     rankings: RankingLike[]
     school: {
       qsRank: number | null
       qsRankYear: number | null
       qsRankSourceUrl: string | null
       rankings: RankingLike[]
+      subjectRankings: Array<RankingLike & { subject: string }>
     }
   }
   const overallRankingOf = (p: RankBearing): RankingLike | null => {
@@ -179,9 +182,31 @@ export default async function SchoolsPage({
     }
     return null
   }
+  /**
+   * 学科排名。
+   *
+   * ⚠️ 取值有先后:**项目自己挂的排名优先,没有才用所在学校的学科排名**。
+   *    ProgramRanking 是给个别项目开小灶用的(某个项目上了细分榜单);
+   *    绝大多数情况下学生看到的应该是学校的学科名次 —— 学科榜本来就是
+   *    按「大学 × 学科」发布的,曼大商学院十几个硕士共用同一个名次。
+   *
+   * ⚠️ 学科名要一路带到文案里。「QS 2027 会计与金融 #12」和
+   *    「QS 2027 工程与技术 #12」含金量差很远(后者是大类),
+   *    统一渲染成「专业 #12」等于把这个区别抹掉。
+   */
   const subjectRankingOf = (p: RankBearing): RankingLike | null => {
     if (!rankingProvider) return null
-    return latestRanking(p.rankings, rankingProvider)
+
+    const own = latestRanking(p.rankings, rankingProvider)
+    if (own) return own
+
+    const qs = qsSubjectOf(p.direction)
+    if (!qs) return null
+    const bySubject = p.school.subjectRankings.filter((r) => r.subject === qs.subject)
+    const stored = latestRanking(bySubject, rankingProvider)
+    if (!stored) return null
+    // 大类名次标注出来,不让它冒充细分学科名次
+    return { ...stored, subjectName: qs.broad ? `${qs.label}(大类)` : qs.label }
   }
   const byRanking = (a: RankBearing, b: RankBearing): number => {
     if (sort === 'overall_rank') {
@@ -197,7 +222,7 @@ export default async function SchoolsPage({
   const isRankingSort = sort === 'overall_rank' || sort === 'subject_rank'
 
   const fullInclude = {
-    school: { include: { rankings: true } },
+    school: { include: { rankings: true, subjectRankings: true } },
     rankings: true,
   } as const
 
@@ -247,6 +272,11 @@ export default async function SchoolsPage({
       where: { provider },
       select: { provider: true, year: true, rank: true },
     } as const
+    /** 学科排名要多带一个 subject,才能按项目方向挑出对应那条 */
+    const subjectRankSelect = {
+      where: { provider },
+      select: { provider: true, year: true, rank: true, subject: true },
+    } as const
 
     /**
      * ⚠️ 学校排名**单独查一次**,不要跟着 program 一起 include。
@@ -263,7 +293,7 @@ export default async function SchoolsPage({
      */
     const lite = await db.program.findMany({
       where: programWhere,
-      select: { id: true, schoolId: true, rankings: rankSelect },
+      select: { id: true, schoolId: true, direction: true, rankings: rankSelect },
     })
 
     const schoolRows = await db.school.findMany({
@@ -274,14 +304,26 @@ export default async function SchoolsPage({
         qsRankYear: true,
         qsRankSourceUrl: true,
         rankings: rankSelect,
+        subjectRankings: subjectRankSelect,
       },
     })
     const bySchool = new Map(schoolRows.map((s) => [s.id, s]))
     /** 理论上不会走到(program.schoolId 是外键),留个安全兜底而不是 ! 断言 */
-    const NO_SCHOOL = { qsRank: null, qsRankYear: null, qsRankSourceUrl: null, rankings: [] }
+    const NO_SCHOOL = {
+      qsRank: null,
+      qsRankYear: null,
+      qsRankSourceUrl: null,
+      rankings: [],
+      subjectRankings: [],
+    }
 
     const topIds = lite
-      .map((p) => ({ id: p.id, rankings: p.rankings, school: bySchool.get(p.schoolId) ?? NO_SCHOOL }))
+      .map((p) => ({
+        id: p.id,
+        direction: p.direction,
+        rankings: p.rankings,
+        school: bySchool.get(p.schoolId) ?? NO_SCHOOL,
+      }))
       .sort(byRanking)
       .slice(0, PAGE_SIZE)
       .map((p) => p.id)

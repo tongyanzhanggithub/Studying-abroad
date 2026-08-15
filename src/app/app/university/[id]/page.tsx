@@ -18,6 +18,7 @@ import {
   latestRanking,
   type RankingProviderCode,
 } from '@/lib/programs/ranking'
+import { qsSubjectByName } from '@/lib/programs/qs-subjects'
 
 /**
  * 学校总览页。
@@ -46,7 +47,7 @@ export default async function UniversityPage({
 
   const school = await db.school.findUnique({
     where: { id },
-    include: { rankings: true },
+    include: { rankings: true, subjectRankings: true },
   })
   if (!school) notFound()
 
@@ -88,6 +89,36 @@ export default async function UniversityPage({
     }
     return null
   }).filter((r): r is NonNullable<typeof r> => r !== null && Boolean(r.text))
+
+  /**
+   * 学科排名。
+   *
+   * ⚠️ 同一学科只展示**年份最新**的那一条。库里刻意保留多年份数据
+   *    (见 data/schools/README.md 的「按年份分」),但页面上把
+   *    2026 和 2027 两行并排列出来只会让人以为数据重复了。
+   *    年份就写在文案里,取最新是诚实的。
+   */
+  const latestBySubject = new Map<string, (typeof school.subjectRankings)[number]>()
+  for (const r of school.subjectRankings) {
+    const key = `${r.provider}|${r.subject}`
+    const seen = latestBySubject.get(key)
+    if (!seen || r.year > seen.year) latestBySubject.set(key, r)
+  }
+
+  const subjectRows = [...latestBySubject.values()]
+    .map((r) => {
+      const known = qsSubjectByName(r.subject)
+      return {
+        key: `${r.provider}|${r.subject}`,
+        provider: r.provider,
+        broad: known?.broad ?? false,
+        // 映射表里没有的学科原样显示英文 —— 总比不显示或瞎翻好
+        text: formatRanking(r.provider, { ...r, subjectName: known?.label ?? r.subject }, 'subject'),
+        sourceUrl: r.sourceUrl,
+      }
+    })
+    .filter((r) => Boolean(r.text))
+    .sort((a, b) => (a.text ?? '').localeCompare(b.text ?? '', 'zh-CN'))
 
   return (
     <div className="space-y-6">
@@ -135,6 +166,50 @@ export default async function UniversityPage({
             ))}
           </ul>
         )}
+        {/*
+          ── 学科排名 ──────────────────────────────
+          比综合排名更贴近学生真正要问的问题(「这个学校的商科强不强」)。
+          没数据就整块不出现 —— 空标题比不显示更让人以为系统坏了。
+        */}
+        {subjectRows.length > 0 && (
+          <div className="mt-5 border-t border-ink-100 pt-4">
+            <h3 className="mb-3 text-sm font-medium text-ink-900">学科排名</h3>
+            <ul className="space-y-2">
+              {subjectRows.map((r) => (
+                <li key={r.key} className="flex flex-wrap items-center gap-2 text-sm">
+                  <span className="inline-flex min-w-16 justify-center rounded-full bg-ink-100 px-2 py-0.5 text-xs font-medium text-ink-700">
+                    {RANKING_PROVIDER_LABEL[r.provider]}
+                  </span>
+                  <span className="text-ink-800">{r.text}</span>
+                  {/*
+                    ⚠️ 大类必须标出来。QS 既发「工程与技术」这样的大类,也发
+                       「机械工程」这样的细分学科,两者含金量差很远。
+                       都写成「学科排名」等于把这个区别抹掉。
+                  */}
+                  {r.broad && (
+                    <span
+                      className="rounded bg-amber-50 px-1 py-0.5 text-[10px] text-amber-700"
+                      title="这是 QS 的学科大类名次,不是细分专业名次"
+                    >
+                      大类
+                    </span>
+                  )}
+                  {r.sourceUrl && (
+                    <a
+                      href={r.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-brand-600 hover:underline"
+                    >
+                      查看来源 →
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <p className="mt-3 text-xs leading-relaxed text-ink-400">
           排名仅供参考,不代表录取难度。同一所学校不同专业的竞争程度可能差很多。
         </p>

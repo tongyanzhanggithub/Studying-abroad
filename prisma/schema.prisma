@@ -601,8 +601,9 @@ model School {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  programs Program[]
-  rankings SchoolRanking[]
+  programs         Program[]
+  rankings         SchoolRanking[]
+  subjectRankings  SchoolSubjectRanking[]
 
   @@unique([nameEn, region])
   @@index([region])
@@ -627,6 +628,37 @@ model SchoolRanking {
   @@unique([schoolId, provider, year])
   @@index([provider, year, rank])
   @@map("school_rankings")
+}
+
+/// 院校**学科**排名,如 QS World University Rankings by Subject。
+///
+/// ⚠️ 为什么挂在 School 而不是 Program:
+///    学科榜是按「大学 × 学科」发布的,不是按具体项目。曼大商学院下面十几个
+///    授课型硕士共用同一个 Business & Management 名次 —— 存在 ProgramRanking 上
+///    等于同一个数字连同来源链接重复十几遍,而且每新采一个项目都要再填一次。
+///    存在这里,项目按 direction 映射到学科(见 lib/programs/qs-subjects.ts)自动继承。
+///
+/// ⚠️ subject 存 QS 榜单上的**英文原文**(如 "Accounting & Finance"),
+///    不存我们自己的 direction 枚举 —— 榜单怎么写就怎么存,便于核对来源。
+///    中文展示名由代码映射,榜单改了名字不用动数据。
+model SchoolSubjectRanking {
+  id       String @id @default(cuid())
+  schoolId String @map("school_id")
+  school   School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  provider  RankingProvider
+  year      Int
+  subject   String
+  rank      Int?
+  rankText  String? @map("rank_text")
+  sourceUrl String? @map("source_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([schoolId, provider, year, subject])
+  @@index([provider, year, subject, rank])
+  @@map("school_subject_rankings")
 }
 
 model Program {
