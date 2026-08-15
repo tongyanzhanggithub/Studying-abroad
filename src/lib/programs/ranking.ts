@@ -70,7 +70,21 @@ export function formatRanking(
     : `${label} ${scopeLabel} ${value}`
 }
 
+/**
+ * 排序用的名次数值。
+ *
+ * ⚠️ 区间名次要按**区间下界**参与排序,不能一律丢到最后。
+ *    QS 学科榜过了前 100 名就只给区间(「101-150」「201-250」),我们库里
+ *    192 条学科名次里有 48 条是区间。全按「无名次」处理的话,一所 101-150 的学校
+ *    会排在 601-650 的后面(两者都是 MAX),用户选了「专业排名优先」却看到
+ *    乱序 —— 又是那种不报错、结果悄悄是错的情形。
+ *
+ * 真正没有名次(既没数字也没区间)才排到最后。
+ */
 export function rankingSortValue(ranking: RankingLike | null): number {
-  if (!ranking?.rank) return Number.MAX_SAFE_INTEGER
-  return ranking.rank
+  if (!ranking) return Number.MAX_SAFE_INTEGER
+  if (ranking.rank) return ranking.rank
+  const range = ranking.rankText?.trim().match(/^(\d+)\s*-\s*\d+$/)
+  if (range) return Number(range[1])
+  return Number.MAX_SAFE_INTEGER
 }

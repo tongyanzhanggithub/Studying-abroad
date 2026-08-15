@@ -7,7 +7,8 @@
 |---|---|---|
 | `qs-verified-top300.json` | 90 所**新增**院校(多国扩展) | QS 2026 |
 | `verified-extra-targets.json` | 36 所**新增**院校(中段目标校) | QS 2026 |
-| `qs-2027-existing.json` | 57 所**库里已有**院校的排名回填 | QS 2027 |
+| `qs-2027-existing.json` | 57 所**库里已有**院校的综合排名回填 | QS 2027 |
+| `qs-subjects-2026.json` | 54 所已有院校的**学科**排名(192 条) | QS by Subject 2026 |
 
 三份清单**校名互不重合**,可以一起导入。
 
@@ -77,10 +78,48 @@ UI 取每所学校年份最大的那条,并把年份一起显示出来 ——
 映射表里这些标了 `broad: true`,页面上会额外标一个「大类」——
 「工程与技术大类第 20」和「机械工程第 20」含金量差很远,不能都写成「专业排名」。
 
-### 现状
+### 现状:已收 192 条(`qs-subjects-2026.json`)
 
-**目前一条学科排名数据都没有。** 通路已经打通(导入 → 存储 → 选校卡片 → 院校详情页
-→「专业排名优先」排序),缺的是联网核实过的数据。按红线,一个数字都不能凭印象填。
+取自 QS by Subject 2026(2026-03-25 发布)。只收了 4 个学科,因为库里 310 个项目
+**全是商科**,用到的方向只映射到这 4 个:
+
+| 学科 | 覆盖方向 | 项目数 |
+|---|---|---|
+| Accounting & Finance | finance + accounting | 101 |
+| Business & Management Studies | management + business_analytics + international_business + supply_chain + hr | 132 |
+| Marketing | marketing | 36 |
+| Economics & Econometrics | economics | 15 |
+
+54 / 57 所有数据。没有的三所是真的没上榜:**KAIST**(理工院校,四个商科榜都没有)、
+**澳门科技大学**、以及下面的爱丁堡。Marketing 榜 QS 只发前 100,所以缺得最多。
+
+### ⚠️ 爱丁堡商学院:两个条目,数字差 5~7 倍,**待你决定**
+
+QS 同时收录了两个条目:
+
+| QS 条目 | 会计与金融 | 商科与管理 |
+|---|---|---|
+| The University of Edinburgh | 42 | =109 |
+| University of Edinburgh Business School | 301-375 | 401-450 |
+
+我们库里那条恰好叫 `University of Edinburgh Business School`。用它自己的条目在字面上
+最准确,但会把爱丁堡商科显示成 400 名开外;用整校的又和条目名对不上。
+
+**暂时整条不收**,等你定。牛津/剑桥不存在这个问题 —— QS 没有单列 Saïd / Judge,
+只能用整校名次,和综合排名的处理一致。
+
+### 收数据的方法(下次要补别的学科时用)
+
+topuniversities.com 挡裸抓取(403),但用应用内浏览器打开后,页面自己的接口可以直接调:
+
+```
+/rankings/endpoint?nid=<学科nid>&page=0&items_per_page=100&sort_by=rank&order_by=asc
+```
+
+nid 在各学科页面的 HTML 里。⚠️ **匹配校名时必须关掉模糊匹配**:实测模糊匹配把
+`Hong Kong Baptist University` 配成了 `The University of Hong Kong`、把
+`Saïd Business School` 配成了 `Oxford Brookes University` —— 两个都是完全不同的学校。
+现在用的是「显式别名表 + 国家必须一致」。
 
 ## 数据红线(PRD 4.2)
 

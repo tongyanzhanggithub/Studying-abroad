@@ -5,7 +5,7 @@ import {
   qsSubjectByName,
   qsSubjectOf,
 } from './qs-subjects'
-import { formatRanking } from './ranking'
+import { formatRanking, rankingSortValue } from './ranking'
 import type { Direction } from '@prisma/client'
 
 /** schema 里 Direction 的全部取值 —— 少一个就说明映射表漏了 */
@@ -154,5 +154,41 @@ describe('formatRanking —— 学科名要写出来', () => {
 
   it('既没有名次也没有原文时不产出文案', () => {
     expect(formatRanking('qs', { provider: 'qs', year: 2026, rank: null }, 'subject')).toBeNull()
+  })
+})
+
+describe('rankingSortValue —— 区间名次也要参与排序', () => {
+  it('确切名次按名次排', () => {
+    expect(rankingSortValue({ provider: 'qs', rank: 21 })).toBe(21)
+  })
+
+  /**
+   * ⚠️ QS 学科榜过了前 100 名只给区间。库里 192 条学科名次有 48 条是区间,
+   *    全按「无名次」处理的话,101-150 的学校会排在 601-650 后面(两者都是 MAX),
+   *    用户选了「专业排名优先」却看到乱序 —— 不报错、结果悄悄是错的。
+   */
+  it('区间按下界排', () => {
+    expect(rankingSortValue({ provider: 'qs', rank: null, rankText: '101-150' })).toBe(101)
+    expect(rankingSortValue({ provider: 'qs', rank: null, rankText: '601-650' })).toBe(601)
+  })
+
+  it('区间之间的相对次序正确', () => {
+    const a = rankingSortValue({ provider: 'qs', rank: null, rankText: '101-150' })
+    const b = rankingSortValue({ provider: 'qs', rank: null, rankText: '601-650' })
+    expect(a).toBeLessThan(b)
+  })
+
+  it('确切名次仍然排在区间前面', () => {
+    const exact = rankingSortValue({ provider: 'qs', rank: 99 })
+    const range = rankingSortValue({ provider: 'qs', rank: null, rankText: '101-150' })
+    expect(exact).toBeLessThan(range)
+  })
+
+  it('真的没有名次才排到最后', () => {
+    expect(rankingSortValue(null)).toBe(Number.MAX_SAFE_INTEGER)
+    expect(rankingSortValue({ provider: 'qs', rank: null })).toBe(Number.MAX_SAFE_INTEGER)
+    expect(rankingSortValue({ provider: 'qs', rank: null, rankText: '未收录' })).toBe(
+      Number.MAX_SAFE_INTEGER,
+    )
   })
 })

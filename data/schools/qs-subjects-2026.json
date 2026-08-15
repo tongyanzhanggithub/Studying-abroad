@@ -1,0 +1,1718 @@
+[
+  {
+    "name_en": "Australian National University",
+    "region": "AU",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 47,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 85,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 38,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "University of New South Wales",
+    "region": "AU",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 29,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 48,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 56,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 43,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Sydney",
+    "region": "AU",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 27,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 54,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 48,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "McGill University",
+    "region": "CA",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 54,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 44,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 93,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 48,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "McMaster University",
+    "region": "CA",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies",
+        "rank_text": "251-300"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics",
+        "rank_text": "251-300"
+      }
+    ]
+  },
+  {
+    "name_en": "University of British Columbia",
+    "region": "CA",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 32,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 42,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 22,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Toronto",
+    "region": "CA",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 15,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 28,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 21,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 38,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "Western University",
+    "region": "CA",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "101-150"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 76,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 149,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "York University",
+    "region": "CA",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "101-150"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 144,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics",
+        "rank_text": "301-350"
+      }
+    ]
+  },
+  {
+    "name_en": "Frankfurt School of Finance & Management",
+    "region": "DE",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "101-150"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies",
+        "rank_text": "351-400"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics",
+        "rank_text": "251-300"
+      }
+    ]
+  },
+  {
+    "name_en": "Technical University of Munich",
+    "region": "DE",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "101-150"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 91,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 139,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Mannheim",
+    "region": "DE",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 92,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 104,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 56,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "City University of Hong Kong",
+    "region": "HK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 52,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 73,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 74,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "Hong Kong Baptist University",
+    "region": "HK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "151-200"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies",
+        "rank_text": "201-250"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics",
+        "rank_text": "201-250"
+      }
+    ]
+  },
+  {
+    "name_en": "The Chinese University of Hong Kong",
+    "region": "HK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 34,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 53,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 44,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "The Hong Kong Polytechnic University",
+    "region": "HK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 51,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 52,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 139,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 36,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "The Hong Kong University of Science and Technology",
+    "region": "HK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 33,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 30,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 37,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 36,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "The University of Hong Kong",
+    "region": "HK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 26,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 32,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 31,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 30,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "Trinity College Dublin",
+    "region": "IE",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 60,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 134,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 127,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "University College Dublin",
+    "region": "IE",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "101-150"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies",
+        "rank_text": "201-250"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 180,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "Keio University",
+    "region": "JP",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "101-150"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 138,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 99,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Tokyo",
+    "region": "JP",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 39,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 72,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 31,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "Waseda University",
+    "region": "JP",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 90,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 109,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 84,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "Korea University",
+    "region": "KR",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 57,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 50,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 90,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 33,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "Seoul National University",
+    "region": "KR",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 35,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 49,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 45,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 49,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "Yonsei University",
+    "region": "KR",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 55,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 51,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 74,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 41,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Macau",
+    "region": "MO",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies",
+        "rank_text": "601-650"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics",
+        "rank_text": "551-700"
+      }
+    ]
+  },
+  {
+    "name_en": "Delft University of Technology",
+    "region": "NL",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "301-375"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies",
+        "rank_text": "151-200"
+      }
+    ]
+  },
+  {
+    "name_en": "Erasmus University Rotterdam",
+    "region": "NL",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 45,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 24,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 54,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 20,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "Tilburg University",
+    "region": "NL",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 77,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 117,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 76,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Amsterdam",
+    "region": "NL",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 53,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 93,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 61,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "Nanyang Technological University",
+    "region": "SG",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 14,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 14,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 42,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 13,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "National University of Singapore",
+    "region": "SG",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 10,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 8,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 14,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 6,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "Singapore Management University",
+    "region": "SG",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 50,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 39,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 52,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "Durham University",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 58,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 101,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 146,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "Imperial College London",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 15,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 22,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 29,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 31,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "King's College London",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 66,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 66,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 119,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 45,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "Lancaster University",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 84,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 96,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics",
+        "rank_text": "201-250"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "The London School of Economics and Political Science",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 8,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 11,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 6,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 10,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "The University of Manchester",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 21,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 41,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 68,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 26,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "University College London",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 44,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 68,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 17,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Bath",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "101-150"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 82,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics",
+        "rank_text": "201-250"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Birmingham",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 74,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 126,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 154,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Bristol",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 93,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies",
+        "rank_text": "151-200"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 108,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Cambridge, Judge Business School",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 7,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 6,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 10,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 4,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Exeter",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "101-150"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies",
+        "rank_text": "201-250"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 180,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Glasgow",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 66,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies",
+        "rank_text": "151-200"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 109,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Leeds",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 85,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 77,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 145,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Liverpool",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "101-150"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 141,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics",
+        "rank_text": "251-300"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Nottingham",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "101-150"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 144,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 96,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing",
+        "rank_text": "51-100"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Oxford, Saïd Business School",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 4,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 5,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 8,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Sheffield",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance",
+        "rank_text": "101-150"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies",
+        "rank_text": "201-250"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics",
+        "rank_text": "201-250"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Southampton",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 87,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": null,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies",
+        "rank_text": "251-300"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 163,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      }
+    ]
+  },
+  {
+    "name_en": "University of Warwick",
+    "region": "UK",
+    "subject_rankings": [
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Accounting & Finance",
+        "rank": 39,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/accounting-finance"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Business & Management Studies",
+        "rank": 35,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/business-management-studies"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Economics & Econometrics",
+        "rank": 25,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/economics-econometrics"
+      },
+      {
+        "provider": "qs",
+        "year": 2026,
+        "subject": "Marketing",
+        "rank": 25,
+        "source_url": "https://www.topuniversities.com/university-subject-rankings/marketing"
+      }
+    ]
+  }
+]
