@@ -3,6 +3,7 @@ import { requireAdmin } from '@/lib/auth/session'
 import { Card } from '@/components/ui'
 import { formatCents, formatDate } from '@/lib/utils'
 import { previewSettlement, getSettledRows, toSettlementMonth } from '@/lib/services/settlement'
+import { formatRatioPercent } from '@/lib/services/settlement-math'
 import { SettleButton } from './SettleButton'
 import { PayoutCell } from './PayoutCell'
 import { ExportButton } from './ExportButton'
@@ -197,8 +198,24 @@ export default async function AdminSettlementPage({
                     </td>
                     <td className="px-4 py-2 text-right">{r.orderCount}</td>
                     <td className="px-4 py-2 text-right">{formatCents(r.grossCents)}</td>
+                    {/*
+                      显示的是**这一行的实际比例**(应付 ÷ 流水),不是交付人档案上的比例。
+                      月中调过比例时两者会不同,那时按档案比例显示会让
+                      「流水 × 比例 ≠ 应付」—— 财务会当成我们算错了钱。
+                      调过比例的行额外标出来,否则运营会以为比例被改成了一个没见过的数。
+                    */}
                     <td className="px-4 py-2 text-right text-xs text-ink-600">
-                      {Math.round(r.splitRatio * 100)}%
+                      {formatRatioPercent(r.effectiveRatio)}
+                      {r.ratios.length > 1 && (
+                        <span
+                          className="ml-1 rounded bg-amber-50 px-1 py-0.5 text-[10px] text-amber-700"
+                          title={`当月这笔账里出现了 ${r.ratios.length} 种分成比例:${r.ratios
+                            .map(formatRatioPercent)
+                            .join(' / ')}。左侧是按金额加权的实际比例。`}
+                        >
+                          含 {r.ratios.length} 档
+                        </span>
+                      )}
                     </td>
                     <td className="px-4 py-2 text-right font-semibold text-ink-900">
                       {formatCents(r.payoutCents)}

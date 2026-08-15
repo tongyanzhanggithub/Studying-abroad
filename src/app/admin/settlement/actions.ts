@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 import { executeSettlement, previewSettlement, getSettledRows } from '@/lib/services/settlement'
+import { formatRatioPercent } from '@/lib/services/settlement-math'
 
 /**
  * 执行月结。
@@ -142,8 +143,13 @@ export async function exportSettlement(month: string) {
   const rows = [...settledRows, ...pendingRows.filter((r) => !settledIds.has(r.delivererId))]
   const paidBy = new Map(payouts.map((p) => [p.delivererId, p]))
 
+  /**
+   * ⚠️「分成比例」是**实际比例**(应付 ÷ 流水),不是交付人档案上的那个数。
+   *    月中调过比例时两者不同,用档案比例会让财务算出「流水 × 比例 ≠ 应付」。
+   *    另起一列列出当月实际用过的所有档位,对账时能一眼看出为什么是个零头数。
+   */
   const header = [
-    '结算月份', '交付人', '角色', '微信', '分成比例',
+    '结算月份', '交付人', '角色', '微信', '分成比例', '比例档位',
     '订单数', '订单总额(元)', '应付(元)', '平台留存(元)',
     '是否已打款', '打款时间', '备注',
   ]
@@ -157,7 +163,8 @@ export async function exportSettlement(month: string) {
         r.delivererName,
         r.role,
         r.wxContact ?? '',
-        `${Math.round(r.splitRatio * 100)}%`,
+        formatRatioPercent(r.effectiveRatio),
+        r.ratios.map(formatRatioPercent).join(' / '),
         r.orderCount,
         (r.grossCents / 100).toFixed(2),
         (r.payoutCents / 100).toFixed(2),

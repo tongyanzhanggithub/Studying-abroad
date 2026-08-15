@@ -44,7 +44,25 @@ export interface SettlementRow {
   delivererName: string
   role: string
   wxContact: string | null
-  splitRatio: number
+  /**
+   * 展示用的分成比例 = 应付 ÷ 流水。
+   *
+   * ⚠️ 不是「这个人的分成比例」,是**这一行的实际比例**。区别只在月中调过比例时
+   *    才显现,但那时区别很要命:原来这里放的是该交付人当月**第一笔**订单的比例,
+   *    于是表格里「流水 × 比例 ≠ 应付」—— 财务对账时会当成我们算错了钱,
+   *    而金额本身是逐笔算的、一分不差,错的只是这个展示用的比例。
+   *    改成实际比例后,这一行的三个数字永远自洽。
+   *
+   * 当月只有一种比例时,它就精确等于那个比例(见测试)。
+   */
+  effectiveRatio: number
+  /**
+   * 这一行实际用到的分成比例,去重后从小到大。
+   *
+   * 长度 > 1 表示当月调过比例 —— 此时 effectiveRatio 是个加权平均值,
+   * 界面要把这件事说出来,否则运营会以为我们把他的比例改成了一个没见过的数。
+   */
+  ratios: number[]
   orderCount: number
   grossCents: number
   payoutCents: number
@@ -83,6 +101,17 @@ export function ratioOf(order: SettlementOrderLike): number {
 }
 
 /**
+ * 比例转百分比字符串。整数不带小数位,加权平均出来的带一位。
+ *
+ * ⚠️ 不能用 `Number.isInteger(ratio * 100)` 判整数 —— 浮点下
+ *    `0.65 * 100 === 65.00000000000001`,65% 会被渲染成「65.000000000000014%」。
+ *    先四舍五入到一位小数再除,整数自然落回整数。
+ */
+export function formatRatioPercent(ratio: number): string {
+  return `${Math.round(ratio * 1000) / 10}%`
+}
+
+/**
  * 按交付人聚合。
  *
  * @param useLockedPayout 结算**之后**的展示要用订单上已锁定的 payoutCents,
@@ -95,7 +124,9 @@ export function aggregateSettlement(
   orders: SettlementOrderLike[],
   { useLockedPayout = false }: { useLockedPayout?: boolean } = {},
 ): SettlementRow[] {
-  const byDeliverer = new Map<string, SettlementRow>()
+  /** 先按交付人累加金额,比例最后统一由「应付 ÷ 流水」反算 */
+  type Acc = Omit<SettlementRow, 'effectiveRatio' | 'ratios'> & { ratios: Set<number> }
+  const byDeliverer = new Map<string, Acc>()
 
   for (const o of orders) {
     // 没有交付人的订单不参与分成(理论上查询已过滤,这里再兜一层)
@@ -110,21 +141,14 @@ export function aggregateSettlement(
       delivererName: o.deliverer.name,
       role: o.deliverer.role,
       wxContact: o.deliverer.wxContact,
-      /**
-       * ⚠️ 这里取的是该交付人**第一笔**订单的比例。
-       *    绝大多数情况下一个月内比例不变,显示没问题;但如果月中改过交付人的
-       *    分成比例(DelivererEditor 可以改),同一个人当月就会有多种比例,
-       *    此时表格里的「流水 × 比例 ≠ 应付」—— 财务对账会当成算错了。
-       *    金额本身是逐笔算的、没有错,错的只是这个展示用的比例。
-       *    见 settlement-math.test.ts 里对应的用例。
-       */
-      splitRatio: ratio,
+      ratios: new Set<number>(),
       orderCount: 0,
       grossCents: 0,
       payoutCents: 0,
       platformCents: 0,
     }
 
+    row.ratios.add(ratio)
     row.orderCount += 1
     row.grossCents += o.amountCents
     row.payoutCents += payout
@@ -133,5 +157,16 @@ export function aggregateSettlement(
     byDeliverer.set(o.deliverer.id, row)
   }
 
-  return [...byDeliverer.values()].sort((a, b) => b.payoutCents - a.payoutCents)
+  return [...byDeliverer.values()]
+    .map(({ ratios, ...row }) => ({
+      ...row,
+      /**
+       * 反算而不是取某一笔的比例 —— 这样「流水 × 比例 = 应付」在表格上永远成立。
+       * 流水为 0 时不做除法(理论上不会有 0 元订单,但除零会得到 NaN,
+       * 而 NaN% 会原样渲染到财务看的表格里)。
+       */
+      effectiveRatio: row.grossCents === 0 ? 0 : row.payoutCents / row.grossCents,
+      ratios: [...ratios].sort((a, b) => a - b),
+    }))
+    .sort((a, b) => b.payoutCents - a.payoutCents)
 }

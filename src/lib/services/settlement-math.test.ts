@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import {
   aggregateSettlement,
   payoutOf,
+  formatRatioPercent,
   ratioOf,
   settlementRange,
   toSettlementMonth,
@@ -196,26 +197,88 @@ describe('aggregateSettlement —— 结算后用锁定金额', () => {
   })
 })
 
-describe('aggregateSettlement —— 已知缺陷:同一人多种比例时展示的比例对不上', () => {
+describe('aggregateSettlement —— 展示比例', () => {
   /**
-   * ⚠️ 这条不是在验证「正确」,是在**钉住当前行为**,免得改动时误以为已经修好了。
+   * ⚠️ 这一组守的是「表格上的三个数字自洽」。
    *
-   *    月中在后台改过某位交付人的分成比例,当月就会同时存在两种比例。
-   *    金额是逐笔算的、没有错;但结算表显示的比例取自**第一笔**订单,
-   *    于是财务看到的一行是「流水 2000 × 60% = 应付 1300」—— 对不上,
-   *    会被当成系统算错了。
-   *
-   *    修法(待定):把展示比例改成实际比例 payoutCents / grossCents。
+   *    早先 effectiveRatio 的位置放的是该交付人**第一笔**订单的比例。
+   *    月中在后台改过分成比例时当月会同时存在两种比例,于是财务看到
+   *    「流水 2000 × 60% = 应付 1300」—— 对不上,会被当成系统算错了钱。
+   *    金额一直是逐笔算的、一分不差,错的只是那个展示用的比例。
    */
-  it('展示比例取第一笔,导致 流水 × 比例 ≠ 应付', () => {
+  it('只有一种比例时,实际比例就等于它', () => {
+    const rows = aggregateSettlement([
+      order({ amountCents: 100_000, splitRatio: 0.6 }),
+      order({ amountCents: 30_000, splitRatio: 0.6 }),
+    ])
+    expect(rows[0].effectiveRatio).toBeCloseTo(0.6, 10)
+    expect(rows[0].ratios).toEqual([0.6])
+  })
+
+  it('多种比例时按金额加权,流水 × 比例 = 应付', () => {
     const rows = aggregateSettlement([
       order({ amountCents: 100_000, splitRatio: 0.6 }),
       order({ amountCents: 100_000, splitRatio: 0.7 }),
     ])
     const r = rows[0]
     expect(r.grossCents).toBe(200_000)
-    expect(r.payoutCents).toBe(130_000) // 金额逐笔算,是对的
-    expect(r.splitRatio).toBe(0.6) // 展示的比例只是第一笔的
-    expect(Math.round(r.grossCents * r.splitRatio)).not.toBe(r.payoutCents)
+    expect(r.payoutCents).toBe(130_000)
+    expect(r.effectiveRatio).toBeCloseTo(0.65, 10)
+    expect(Math.round(r.grossCents * r.effectiveRatio)).toBe(r.payoutCents)
+  })
+
+  it('金额不等时加权向大额那笔倾斜,不是简单平均', () => {
+    const rows = aggregateSettlement([
+      order({ amountCents: 900_000, splitRatio: 0.6 }),
+      order({ amountCents: 100_000, splitRatio: 0.7 }),
+    ])
+    // 简单平均是 0.65,加权是 0.61
+    expect(rows[0].effectiveRatio).toBeCloseTo(0.61, 10)
+  })
+
+  /** 界面要能说出「这一行掺了几档」,否则运营会以为比例被改成了没见过的数 */
+  it('ratios 去重并从小到大排', () => {
+    const rows = aggregateSettlement([
+      order({ splitRatio: 0.7 }),
+      order({ splitRatio: 0.6 }),
+      order({ splitRatio: 0.7 }),
+    ])
+    expect(rows[0].ratios).toEqual([0.6, 0.7])
+  })
+
+  /** 已锁定的行同样要自洽:比例由锁定的应付反算,而不是拿档案比例 */
+  it('已结算的行用锁定金额反算比例', () => {
+    const rows = aggregateSettlement(
+      [order({ amountCents: 100_000, splitRatio: 0.6, payoutCents: 50_000 })],
+      { useLockedPayout: true },
+    )
+    expect(rows[0].payoutCents).toBe(50_000)
+    expect(rows[0].effectiveRatio).toBeCloseTo(0.5, 10)
+  })
+
+  /** 除零会渲染成「NaN%」,而这张表是给财务看的 */
+  it('流水为 0 时比例是 0,不是 NaN', () => {
+    const rows = aggregateSettlement([order({ amountCents: 0, splitRatio: 0.6 })])
+    expect(rows[0].effectiveRatio).toBe(0)
+  })
+})
+
+describe('formatRatioPercent', () => {
+  /**
+   * ⚠️ 浮点下 `0.65 * 100 === 65.00000000000001`。
+   *    直接判整数会让 65% 渲染成「65.000000000000014%」出现在结算表里。
+   */
+  it('整数比例不带小数位', () => {
+    expect(formatRatioPercent(0.65)).toBe('65%')
+    expect(formatRatioPercent(0.6)).toBe('60%')
+    expect(formatRatioPercent(0.07)).toBe('7%')
+    expect(formatRatioPercent(1)).toBe('100%')
+    expect(formatRatioPercent(0)).toBe('0%')
+  })
+
+  it('加权出来的零头保留一位小数', () => {
+    expect(formatRatioPercent(0.61)).toBe('61%')
+    expect(formatRatioPercent(0.6125)).toBe('61.3%')
+    expect(formatRatioPercent(1 / 3)).toBe('33.3%')
   })
 })
