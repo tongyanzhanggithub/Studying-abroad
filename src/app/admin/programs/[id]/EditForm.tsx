@@ -2,9 +2,9 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Card, Field } from '@/components/ui'
+import { Button, Card, Field, Select } from '@/components/ui'
 import { saveProgram, unverifyProgram, type ProgramEditInput } from './actions'
-import type { BarChangeFlag } from '@prisma/client'
+import type { BarChangeFlag, DeadlineAudience } from '@prisma/client'
 
 const input =
   'w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500'
@@ -236,6 +236,35 @@ export function EditForm({
           value={f.finalDeadline}
           onChange={(v) => set('finalDeadline', v)}
           placeholder="2026-01-15"
+        />
+        {/*
+          ⚠️ 这两项决定前台**要不要显示倒计时**,不是可填可不填的补充信息。
+             deadlineAudience 不填(unspecified)时,前台一律显示「截止日以官网为准」
+             而不给倒计时 —— 因为口径不明的日期做倒计时正是 UCL 那次事故的成因
+             (库里存了「无需签证」档的 08-28,而需签证的通道 06-26 就关了,
+             页面却显示「还有 13 天」)。见 docs/数据核查-2026-08.md。
+             填对了倒计时才会回来。
+        */}
+        <Field
+          label="截止日适用于谁"
+          hint="不填=前台不显示倒计时。中国学生全部需要签证,只有「需签证/海外」这一档对他们有效"
+        >
+          <Select
+            value={f.deadlineAudience}
+            onChange={(e) => set('deadlineAudience', e.target.value as DeadlineAudience)}
+          >
+            <option value="unspecified">未标注(前台不显示倒计时)</option>
+            <option value="overseas">需签证 / 海外申请人</option>
+            <option value="all">官网不分档,所有人同一天</option>
+            <option value="home">本地 / 无需签证(对我们的用户无效)</option>
+          </Select>
+        </Field>
+        <Text
+          label="入学季"
+          value={f.intakeTerm}
+          onChange={(v) => set('intakeTerm', v)}
+          placeholder="2027-09"
+          hint="哪一届入学。库里英国是 2026 季、港新荷德是 2027 季,不标注会并排显示误导学生"
         />
         <label className="flex items-center gap-2">
           <input

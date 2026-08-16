@@ -15,6 +15,18 @@ export interface ProgramRow {
   direction: string
   verifiedLabel: string
   confidence: string
+  /**
+   * 前台**实际显示**给学生的那句截止日文案。
+   *
+   * ⚠️ 刻意用 lib/programs/deadline.ts 里前台同一个函数算出来,而不是在这里
+   *    自己格式化日期 —— 后台看到的必须就是用户看到的那句话。
+   *    这轮核查栽的两个跟头都是「后台显示一套、前端显示另一套」:
+   *    排名(后台读冗余字段、前台读权威表)、截止日(后台没有、前台在倒计时)。
+   *    运营核对的是自己看到的东西,看不到用户看到的东西就核不出问题。
+   */
+  deadlineLabel: string
+  /** 截止日口径 —— 未标注时前台不给倒计时,列表上要能一眼看出还有多少没标 */
+  audienceLabel: string | null
 }
 
 /**
@@ -127,6 +139,17 @@ export function ProgramList({ rows }: { rows: ProgramRow[] }) {
               <span>{p.region}</span>
               <span className="text-ink-300">·</span>
               <span>{p.direction}</span>
+              <span className="text-ink-300">·</span>
+              <span title="前台实际显示给学生的截止日文案">{p.deadlineLabel}</span>
+              {/* 未标口径的高亮出来 —— 这些项目前台一律不显示倒计时,是待办 */}
+              {p.audienceLabel && (
+                <span
+                  className="rounded bg-amber-50 px-1 py-0.5 text-[10px] text-amber-700"
+                  title="截止日没标适用人群,前台不会显示倒计时。到编辑页把「截止日适用于谁」填上即可"
+                >
+                  {p.audienceLabel}
+                </span>
+              )}
             </div>
 
             <div className="flex flex-wrap items-center gap-2 md:block md:space-y-1">

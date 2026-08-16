@@ -2,9 +2,10 @@ import Link from 'next/link'
 import { db } from '@/lib/db'
 import { requireAdmin } from '@/lib/auth/session'
 import { Card } from '@/components/ui'
-import { formatDate } from '@/lib/utils'
+import { daysUntil, formatDate } from '@/lib/utils'
 import { REGION_LABEL, DIRECTION_LABEL, VERIFY_STALE_DAYS } from '@/lib/programs/types'
 import { formatQsRank } from '@/lib/programs/ranking'
+import { deadlineText } from '@/lib/programs/deadline'
 import { ProgramList } from './ProgramList'
 import { ImportExport } from './ImportExport'
 
@@ -194,6 +195,14 @@ export default async function AdminProgramsPage({
               direction: DIRECTION_LABEL[p.direction] ?? p.direction,
               verifiedLabel: p.lastVerifiedAt ? `核对于 ${formatDate(p.lastVerifiedAt)}` : '未核对',
               confidence: p.confidence,
+              // ⚠️ 用前台同一个函数,保证后台看到的就是用户看到的那句话
+              deadlineLabel: deadlineText(
+                daysUntil(p.finalDeadline),
+                Boolean(p.finalDeadline),
+                p.deadlineAudience,
+              ),
+              audienceLabel:
+                p.finalDeadline && p.deadlineAudience === 'unspecified' ? '口径未标' : null,
             }))}
           />
 

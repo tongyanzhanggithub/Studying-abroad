@@ -6,7 +6,8 @@ import { Card } from '@/components/ui'
 import { formatDate } from '@/lib/utils'
 import { readDeadlines, readRequirements, REGION_LABEL } from '@/lib/programs/types'
 import { getPublicRegions } from '@/lib/regions/gate'
-import { formatQsRank } from '@/lib/programs/ranking'
+import { formatQsRank, formatRanking, type RankingProviderCode } from '@/lib/programs/ranking'
+import { qsSubjectByName, qsSubjectOf } from '@/lib/programs/qs-subjects'
 import { EditForm } from './EditForm'
 import type { ProgramEditInput } from './actions'
 
@@ -28,7 +29,10 @@ export default async function AdminProgramDetail({
   const [program, publicRegions] = await Promise.all([
     db.program.findUnique({
       where: { id },
-      include: { school: true, changeLogs: { orderBy: { createdAt: 'desc' }, take: 10 } },
+      include: {
+        school: { include: { subjectRankings: true } },
+        changeLogs: { orderBy: { createdAt: 'desc' }, take: 10 },
+      },
     }),
     getPublicRegions(),
   ])
@@ -37,6 +41,35 @@ export default async function AdminProgramDetail({
   const req = readRequirements(program)
   const dl = readDeadlines(program)
   const qsRankLabel = formatQsRank(program.school.qsRank, program.school.qsRankYear)
+
+  /**
+   * 该校的学科排名(只读)。同一学科只取年份最新的一条 —— 和前台一致
+   * (latestRanking 取 max(year)),把历年都列出来只会让人以为数据重复了。
+   */
+  const thisSubject = qsSubjectOf(program.direction)
+  const latestBySubject = new Map<string, (typeof program.school.subjectRankings)[number]>()
+  for (const r of program.school.subjectRankings) {
+    const key = `${r.provider}|${r.subject}`
+    const seen = latestBySubject.get(key)
+    if (!seen || r.year > seen.year) latestBySubject.set(key, r)
+  }
+  const subjectRows = [...latestBySubject.values()]
+    .map((r) => {
+      const known = qsSubjectByName(r.subject)
+      return {
+        key: `${r.provider}|${r.subject}`,
+        text: formatRanking(
+          r.provider as RankingProviderCode,
+          { ...r, subjectName: known?.label ?? r.subject },
+          'subject',
+        ),
+        sourceUrl: r.sourceUrl,
+        // 本项目的 direction 映射到的就是这个学科 —— 前台卡片上显示的正是它
+        matchesThisProgram: thisSubject?.subject === r.subject,
+      }
+    })
+    .filter((r) => Boolean(r.text))
+    .sort((a, b) => Number(b.matchesThisProgram) - Number(a.matchesThisProgram))
 
   const initial: ProgramEditInput = {
     nameZh: program.nameZh ?? '',
@@ -70,6 +103,8 @@ export default async function AdminProgramDetail({
     rolling: dl.rolling ?? program.isRolling,
     finalDeadline: dl.final_deadline ?? '',
     deadlineNotes: dl.notes ?? '',
+    deadlineAudience: program.deadlineAudience,
+    intakeTerm: program.intakeTerm ?? '',
   }
 
   return (
@@ -121,6 +156,52 @@ export default async function AdminProgramDetail({
                 <span className="text-ink-400">待补</span>
               )}
             </p>
+
+            {/*
+              ⚠️ 学科排名此前后台**完全看不到**,而前台的选校卡片和院校详情页都在显示 ——
+                 全库 265 个项目属于这种情况。运营核对的是自己看到的东西,
+                 看不到用户看到的东西就核不出问题。这是这轮排查里最大的一处后台/前端不对等。
+
+                 只读展示:学科排名挂在 School 上、按「大学 × 学科」发布,不是逐个项目维护的,
+                 改动应当走 data/schools/*.json 重新导入,而不是在单个项目页上改。
+            */}
+            <div className="mt-3 border-t border-ink-100 pt-3">
+              <p className="mb-1.5 text-xs font-medium text-ink-500">
+                学科排名(前台会显示给学生)
+              </p>
+              {subjectRows.length === 0 ? (
+                <p className="text-sm text-ink-400">
+                  该校暂无学科排名数据。补充方式:data/schools/*.json 里加 subject_rankings
+                  后跑 npm run schools:import。
+                </p>
+              ) : (
+                <ul className="space-y-1 text-sm text-ink-700">
+                  {subjectRows.map((r) => (
+                    <li key={r.key} className="flex flex-wrap items-center gap-1.5">
+                      <span className={r.matchesThisProgram ? 'font-medium text-ink-900' : ''}>
+                        {r.text}
+                      </span>
+                      {/* 标出「本项目按 direction 匹配到的就是这一条」,其余仅供参考 */}
+                      {r.matchesThisProgram && (
+                        <span className="rounded bg-brand-50 px-1 py-0.5 text-[10px] text-brand-700">
+                          本项目取这条
+                        </span>
+                      )}
+                      {r.sourceUrl && (
+                        <a
+                          href={r.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-brand-600 hover:underline"
+                        >
+                          来源
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </Card>
 
           <Card>

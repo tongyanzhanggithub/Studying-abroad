@@ -160,12 +160,6 @@ async function importFile(path: string, fileName: string): Promise<Stats> {
       continue
     }
 
-    // 先算出这条学校最新一届 QS 排名,回填到 School 的冗余字段(UI 用它显示)
-    const qsRankings = (raw.rankings ?? [])
-      .filter((r) => r.provider?.toLowerCase() === 'qs' && typeof r.rank === 'number' && r.source_url)
-      .sort((a, b) => (b.year ?? 0) - (a.year ?? 0))
-    const latestQs = qsRankings[0]
-
     const existing = await db.school.findUnique({
       where: { nameEn_region: { nameEn, region } },
       select: { id: true },
@@ -178,18 +172,22 @@ async function importFile(path: string, fileName: string): Promise<Stats> {
         nameZh: raw.name_zh?.trim() || null,
         shortName: raw.short_name?.trim() || null,
         region,
-        qsRank: latestQs?.rank ?? null,
-        qsRankYear: latestQs?.year ?? null,
-        qsRankSourceUrl: latestQs?.source_url ?? null,
       },
       update: {
         // 只在提供了新值时覆盖,不用空值冲掉已有内容
         nameZh: raw.name_zh?.trim() || undefined,
         shortName: raw.short_name?.trim() || undefined,
-        ...(latestQs
-          ? { qsRank: latestQs.rank, qsRankYear: latestQs.year, qsRankSourceUrl: latestQs.source_url }
-          : {}),
       },
+      /**
+       * ⚠️ 这里**不写** qsRank 等冗余字段 —— 它们在下面所有排名都落库之后,
+       *    统一从**库里**按年份最大的那条回算(见文件末尾 syncQsMirror)。
+       *
+       *    早先是在这里用「当前文件里年份最大的那条」回填,只看这一个文件、
+       *    不看库里已有的。于是同一所学校先后被 2027 和 2026 两个文件覆盖时,
+       *    School.qsRank 会被**旧年份覆写**,而用户侧的 latestRanking 仍取 2027 ——
+       *    后台列表显示 2026、前端显示 2027,两边都不报错。
+       *    这正是 qs-ranking-sync.ts 存在的那类分歧,不能在这里再造一个。
+       */
     })
     if (existing) stats.updated += 1
     else stats.created += 1
@@ -297,6 +295,49 @@ async function importFile(path: string, fileName: string): Promise<Stats> {
   return stats
 }
 
+/**
+ * 把 School 上的 QS 冗余字段对齐到**库里**年份最大的那条 SchoolRanking。
+ *
+ * ⚠️ 必须在所有文件都导完之后再跑,而不是逐条 upsert 时顺手写 ——
+ *    逐条写只能看见当前这一个文件,看不见库里已有的其它年份(见上面的注释)。
+ *
+ * 与 src/lib/programs/qs-ranking-sync.ts 的语义保持一致:冗余字段永远等于
+ * 用户侧实际展示的那个数(latestRanking 取年份最大的一条)。
+ */
+async function syncQsMirror(): Promise<{ aligned: number; drifted: string[] }> {
+  const schools = await db.school.findMany({
+    where: { rankings: { some: { provider: 'qs' } } },
+    select: {
+      id: true,
+      nameEn: true,
+      qsRank: true,
+      qsRankYear: true,
+      rankings: {
+        where: { provider: 'qs' },
+        orderBy: { year: 'desc' },
+        take: 1,
+        select: { year: true, rank: true, sourceUrl: true },
+      },
+    },
+  })
+
+  let aligned = 0
+  const drifted: string[] = []
+  for (const s of schools) {
+    const latest = s.rankings[0]
+    if (!latest) continue
+    if (s.qsRank === latest.rank && s.qsRankYear === latest.year) continue
+    // 记下来打出去 —— 冗余字段和权威表不一致本身就是个该被看见的信号
+    drifted.push(`${s.nameEn}:冗余 ${s.qsRankYear ?? '—'}#${s.qsRank ?? '—'} → 权威 ${latest.year}#${latest.rank ?? '—'}`)
+    await db.school.update({
+      where: { id: s.id },
+      data: { qsRank: latest.rank, qsRankYear: latest.year, qsRankSourceUrl: latest.sourceUrl },
+    })
+    aligned += 1
+  }
+  return { aligned, drifted }
+}
+
 async function main() {
   let files: string[]
   try {
@@ -335,11 +376,17 @@ async function main() {
     }),
     { read: 0, created: 0, updated: 0, ranks: 0, subjectRanks: 0, skipped: 0 },
   )
+  // 所有文件导完之后再统一对齐冗余字段 —— 逐条写看不见其它文件已经写进去的年份
+  const mirror = await syncQsMirror()
+
   console.log('──────────────────────────────────────────')
   console.log(
     `共读取 ${sum.read} 所,新建 ${sum.created},更新 ${sum.updated},` +
       `写入综合排名 ${sum.ranks} 条、学科排名 ${sum.subjectRanks} 条,跳过 ${sum.skipped}`,
   )
+  console.log(`冗余字段对齐:${mirror.aligned} 所`)
+  for (const d of mirror.drifted.slice(0, 10)) console.log(`    ↳ ${d}`)
+  if (mirror.drifted.length > 10) console.log(`    ↳ …另有 ${mirror.drifted.length - 10} 所`)
   console.log('')
   console.log('下一步:这些学校还没有任何项目。到 /admin/collect 用采集流水线逐校采项目,')
   console.log('AI 抽取 → 人工核对 → 达标后在 /admin/regions 开放对应地区。')

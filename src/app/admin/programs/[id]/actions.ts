@@ -8,7 +8,7 @@ import { notifyProgramChange } from '@/lib/notifications/send'
 import { syncQsRanking } from '@/lib/programs/qs-ranking-sync'
 import { readDeadlines, readRequirements } from '@/lib/programs/types'
 import type { ProgramDeadlines, ProgramRequirements } from '@/lib/programs/types'
-import type { BarChangeFlag } from '@prisma/client'
+import type { BarChangeFlag, DeadlineAudience } from '@prisma/client'
 
 /**
  * 批量标记已核对 —— 只作用于运营在列表里手动勾选的那些行。
@@ -87,6 +87,10 @@ export interface ProgramEditInput {
   rolling: boolean
   finalDeadline: string
   deadlineNotes: string
+  /** 截止日适用于谁 —— 决定前台要不要显示倒计时,见 lib/programs/deadline.ts */
+  deadlineAudience: DeadlineAudience
+  /** 这个截止日属于哪一届入学,如 2027-09 */
+  intakeTerm: string
 }
 
 /** 空串一律存成 null —— 空字符串和「没有这项要求」在展示层是两回事。 */
@@ -142,6 +146,8 @@ const FIELD_LABEL: Record<string, string> = {
   'school.qsRank': 'QS 排名',
   'school.qsRankYear': 'QS 年份',
   'school.qsRankSourceUrl': 'QS 来源',
+  deadlineAudience: '截止日适用人群',
+  intakeTerm: '入学季',
 }
 
 /**
@@ -256,6 +262,8 @@ export async function saveProgram(
         deadlines: deadlines as object,
         finalDeadline: finalDeadline.value,
         isRolling: input.rolling,
+        deadlineAudience: input.deadlineAudience,
+        intakeTerm: nn(input.intakeTerm),
         confidence: 'verified',
         lastVerifiedAt: new Date(),
         verifiedBy: admin.adminId,
@@ -302,6 +310,13 @@ export async function saveProgram(
   cmp('requirements.ielts', beforeReq.ielts, requirements.ielts)
   cmp('requirements.toefl', beforeReq.toefl, requirements.toefl)
   cmp('deadlines.final_deadline', beforeDl.final_deadline, deadlines.final_deadline)
+  /**
+   * ⚠️ 这两项也要进变更记录。它们不改日期本身,却决定前台**要不要把这个日期
+   *    当成倒计时说出去** —— 从 unspecified 改成 overseas,用户看到的东西
+   *    就从「以官网为准」变成「还有 13 天截止」。这种改动必须留痕。
+   */
+  cmp('deadlineAudience', before.deadlineAudience, input.deadlineAudience)
+  cmp('intakeTerm', before.intakeTerm, nn(input.intakeTerm))
   cmp('deadlines.opens_at', beforeDl.opens_at, deadlines.opens_at)
   cmp('deadlines.rolling', beforeDl.rolling ?? false, input.rolling)
 
