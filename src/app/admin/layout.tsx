@@ -14,6 +14,7 @@ const NAV_GROUPS = [
     items: [
       { href: '/admin/regions', label: '地区开放', minRole: 'super_admin' },
       { href: '/admin/programs', label: '院校库', minRole: 'data_entry' },
+      { href: '/admin/rules', label: '录取概率规则', minRole: 'operator' },
       { href: '/admin/collect', label: 'AI 采集', minRole: 'operator' },
     ],
   },
