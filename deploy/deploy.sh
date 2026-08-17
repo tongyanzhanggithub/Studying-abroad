@@ -25,6 +25,21 @@ if [[ ! -f .env ]]; then
   exit 1
 fi
 
+# ⚠️ 运行用户必须在**开工前**就检查,不能等到构建完再说。
+#    compass.service 里写死了 User=compass,这个用户不存在的话服务根本起不来。
+#    原来这个检查在 build 之后(交出目录属主那一步),于是要先白等 51 秒构建、
+#    再看着 systemctl restart 失败,才发现少跑了一个初始化脚本。
+#    起不来的原因在第一秒就已经确定了,没有理由让人等到最后。
+if ! id compass >/dev/null 2>&1; then
+  echo "系统用户 compass 不存在 —— 服务以它运行(见 deploy/compass.service 的 User=compass),
+不创建的话构建完也起不来。先跑一次初始化(幂等,已装过的会跳过,不动 .env):
+
+    sudo bash deploy/setup-server.sh
+
+然后重新执行本脚本。"
+  exit 1
+fi
+
 # ── 1. 依赖 ────────────────────────────────────────────────
 log "安装依赖"
 npm ci --no-audit --no-fund
