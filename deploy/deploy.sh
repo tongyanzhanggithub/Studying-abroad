@@ -50,6 +50,28 @@ if [[ "${SKIP_DATA:-0}" != "1" ]]; then
        注意:data/raw/*.json 在 .gitignore 里,git clone 不会带上它们,
        需要单独上传(scp -r data/raw root@服务器:${APP_DIR}/data/)。"
   fi
+
+  # ── 院校排名 ─────────────────────────────────────────
+  # data/schools/*.json 在 git 里,git pull 就有,不需要 scp。
+  # 幂等:按 (name_en, region) upsert,重复跑只更新不新建。
+  if compgen -G "data/schools/*.json" > /dev/null; then
+    log "导入院校综合排名与学科排名"
+    npm run schools:import
+  fi
+
+  # ── 人工核查的截止日修正 ─────────────────────────────
+  # ⚠️ 必须在 data:import 之后跑。data:import 会用 data/raw 的原值覆盖截止日,
+  #    而 data/raw 里存的正是核查中发现取错档次的那些日期(如 UCL 存了
+  #    「无需签证」档的 08-28,而需签证的通道 06-26 就关了)。
+  #    顺序反了,等于把已经修对的又改回错的。见 docs/数据核查-2026-08.md。
+  #
+  # ⚠️ 脚本匹配不到项目会**以非 0 退出**,从而中断整个部署 —— 这是有意的:
+  #    对不上说明服务器上的数据和修正表不一致,那时宁可不发布,
+  #    也不要让一个已经关闭的申请通道在页面上显示「还有 13 天截止」。
+  if compgen -G "data/corrections/*.json" > /dev/null; then
+    log "应用截止日修正与申请人档次标注"
+    npm run fix:deadlines -- --write
+  fi
 fi
 
 # ── 3. 构建 ────────────────────────────────────────────────
