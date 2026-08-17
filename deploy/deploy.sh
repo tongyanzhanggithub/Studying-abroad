@@ -32,7 +32,30 @@ npm ci --no-audit --no-fund
 # ── 2. 数据库 ──────────────────────────────────────────────
 log "同步数据库结构"
 npx prisma generate
-npx prisma db push --skip-generate
+# ⚠️ 刻意**不加** --accept-data-loss。
+#    加上它,以后任何一次「删列 / 改类型」都会在生产库上悄悄执行 ——
+#    部署脚本是最不该有这种默认行为的地方。宁可在这里停下来让人看一眼。
+#
+#    但停下来时不要只把 prisma 的原始报错甩出去(它只说「加 --accept-data-loss」,
+#    不说该不该加),下面把该做的判断写清楚。
+if ! npx prisma db push --skip-generate; then
+  warn "数据库结构同步失败。
+
+  如果上面写的是「There might be data loss / 要删掉某一列」,先确认那一列真的没数据:
+
+      sudo -u postgres psql -tAc \\
+        \"SELECT DISTINCT <列名> FROM <表名>;\" compass
+
+  只有全是默认值(如 0 / NULL)才说明删掉不丢东西。确认后单独执行一次:
+
+      npx prisma db push --skip-generate --accept-data-loss
+
+  然后重新跑本脚本。**不要**把 --accept-data-loss 写进这个脚本 ——
+  那等于以后每次部署都默许在生产库上删数据。
+
+  如果报的是连不上数据库,检查 .env 里的 DATABASE_URL 和 postgres 服务状态。"
+  exit 1
+fi
 
 if [[ "${SKIP_DATA:-0}" != "1" ]]; then
   log "写入种子数据"
