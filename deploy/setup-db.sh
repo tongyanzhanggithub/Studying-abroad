@@ -53,6 +53,14 @@ if [[ "${SKIP_ENV:-0}" != "1" ]]; then
   log "生成 .env"
 
   AUTH_SECRET=$(openssl rand -base64 32)
+  # ⚠️ CRON_SECRET 必须单独生成,不能省。
+  #    src/lib/env.ts 的 assertProductionConfig() 把「生产环境缺 CRON_SECRET」
+  #    列为**致命**并抛错 —— 而 instrumentation.ts 在启动时就调它。
+  #    这里不生成,就等于本脚本产出一份应用拒绝启动的 .env:
+  #    进程起得来(nginx 不报 502),但每个请求都是 500,
+  #    错误只在 journalctl 里,页面上只有一句 Internal Server Error。
+  #    (这正是 2026-08 那次部署卡住的原因:检查是后加的,没同步改这里。)
+  CRON_SECRET=$(openssl rand -base64 32)
   PUBLIC_IP=$(curl -fsS --max-time 5 https://api.ipify.org || echo "你的服务器IP")
 
   cat > "$APP_DIR/.env" <<EOF
@@ -61,8 +69,12 @@ if [[ "${SKIP_ENV:-0}" != "1" ]]; then
 
 DATABASE_URL="postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}?schema=public"
 
-# 会话与定时任务共享密钥
+# 会话签名密钥
 AUTH_SECRET="${AUTH_SECRET}"
+
+# 定时任务接口密钥。故意与 AUTH_SECRET 不同:它会明文进 /etc/cron.d/compass,
+# 泄露面大得多;共用的话,cron 密钥泄露 = 能伪造任意用户登录态。
+CRON_SECRET="${CRON_SECRET}"
 
 # ── 外部依赖:资质到位前先用 mock ──────────────────────
 PAYMENT_PROVIDER="mock"

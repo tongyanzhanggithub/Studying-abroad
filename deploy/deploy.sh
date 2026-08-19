@@ -149,11 +149,21 @@ nginx -t && systemctl reload nginx
 
 # ── 6. 定时任务 ────────────────────────────────────────────
 log "配置定时任务"
-# cron 接口的密钥:优先用 CRON_SECRET,没配才退回 AUTH_SECRET。
-# 这个值会明文进 cron 文件,单独配一个就不会把签会话的 AUTH_SECRET 也暴露出去。
+# cron 接口的密钥。这个值会明文进 cron 文件,所以必须独立于签会话的 AUTH_SECRET。
+#
+# ⚠️ 缺失时**补一个新的**,不再退回 AUTH_SECRET。
+#    退回看着是「宽容」,实际是把故障藏起来:src/lib/env.ts 的
+#    assertProductionConfig() 把生产环境缺 CRON_SECRET 判为致命并抛错,
+#    而 instrumentation.ts 启动时就调它 —— 结果是 cron 文件写得好好的,
+#    应用却每个请求都 500,部署脚本还一路绿灯跑完。
+#    (2026-08 就是这样卡住的:setup-db.sh 生成的 .env 从来没有这一项。)
 CRON_SECRET=$(grep '^CRON_SECRET=' .env | cut -d'"' -f2)
 if [ -z "$CRON_SECRET" ]; then
-  CRON_SECRET=$(grep '^AUTH_SECRET=' .env | cut -d'"' -f2)
+  CRON_SECRET=$(openssl rand -base64 32)
+  printf '\n# 定时任务专用密钥(由 deploy.sh 补写,独立于 AUTH_SECRET)\nCRON_SECRET="%s"\n' \
+    "$CRON_SECRET" >> .env
+  warn ".env 里缺 CRON_SECRET,已生成并补写 —— 应用启动自检要求它必须存在。
+       补写后需要重启服务才生效(本脚本后面会重启)。"
 fi
 CRON_FILE=/etc/cron.d/compass
 cat > "$CRON_FILE" <<EOF
