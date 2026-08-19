@@ -3,6 +3,13 @@ Description=Compass 留学申请系统
 After=network.target postgresql.service
 Requires=postgresql.service
 
+# ⚠️ 这两项必须在 [Unit] 里,放 [Service] 会被 systemd 忽略。
+#    作用:崩溃重启太频繁时不再无限重试,停在 failed 状态 ——
+#    既避免刷爆日志,也让「配置错误导致起不来」这类问题在
+#    systemctl status 里一眼可见,而不是无休止重启看着像在运行。
+StartLimitBurst=5
+StartLimitIntervalSec=120
+
 [Service]
 Type=simple
 WorkingDirectory=__APP_DIR__
@@ -34,10 +41,6 @@ Environment=NODE_OPTIONS=--max-old-space-size=1024
 ExecStart=/usr/bin/npm run start
 Restart=always
 RestartSec=5
-
-# 崩溃重启太频繁时不再无限重试,避免刷爆日志
-StartLimitBurst=5
-StartLimitIntervalSec=120
 
 StandardOutput=journal
 StandardError=journal
