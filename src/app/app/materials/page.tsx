@@ -4,6 +4,7 @@ import { requireUser } from '@/lib/auth/session'
 import { Card } from '@/components/ui'
 import { regenerateMaterials, getMaterialProgress } from '@/lib/materials/generate'
 import { daysUntil } from '@/lib/utils'
+import { countdownDeadline } from '@/lib/programs/deadline'
 import { MaterialRow, type MaterialWarning } from './MaterialRow'
 
 /**
@@ -61,9 +62,16 @@ export default async function MaterialsPage() {
    */
   function warningFor(m: (typeof materials)[number]): MaterialWarning {
     if (m.status === 'completed') return { level: 'done' }
+    /**
+     * ⚠️ 只拿**档次已核**的截止日算「来不及」。
+     *
+     *    这一页会写「有 N 项按常规办理周期已经赶不上最近的截止日」——
+     *    那是一句会让人连夜跑公证处的话。建立在一个没核过是哪一档的日期上,
+     *    等于凭一个可能根本不适用的日期制造恐慌。见 lib/programs/deadline.ts。
+     */
     const deadlines = choices
       .filter((c) => m.programIds.includes(c.programId))
-      .map((c) => daysUntil(c.program.finalDeadline))
+      .map((c) => daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience)))
       .filter((d): d is number => d !== null && d >= 0)
     if (deadlines.length === 0) return { level: 'none' }
 

@@ -9,6 +9,7 @@ import { buildActionPlan } from '@/lib/planner/engine'
 import { getMaterialProgress, syncApplicationStatuses } from '@/lib/materials/generate'
 import { daysUntil, deadlineUrgency, formatDate, cn } from '@/lib/utils'
 import { APPLICATION_STATUS_LABEL, TIER_TAG_LABEL, programFreshness } from '@/lib/programs/types'
+import { countdownDeadline, isCountdownable, deadlineText } from '@/lib/programs/deadline'
 
 /**
  * 学生工作台总览(PRD 4.3)。
@@ -58,13 +59,31 @@ export default async function DashboardPage() {
     ['submitted', 'interview_invited', 'admitted', 'rejected', 'waitlisted'].includes(c.status),
   ).length
 
+  /**
+   * ⚠️ 「最近截止 N 天」是这一页说得最肯定的一句话,所以它只能建立在
+   *    **档次已核、确实适用于我们用户**的截止日上 —— 用 countdownDeadline
+   *    过一道闸,口径不明的当作没有。见 lib/programs/deadline.ts。
+   *
+   *    此前这里是裸的 finalDeadline:院校库对同一个项目写「截止日以官网为准」,
+   *    仪表盘却把它算进「最近截止 12 天」,两页自相矛盾,而用户更信仪表盘。
+   */
   const upcoming = choices
-    .map((c) => ({ choice: c, days: daysUntil(c.program.finalDeadline) }))
+    .map((c) => ({
+      choice: c,
+      days: daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience)),
+    }))
     .filter((x): x is { choice: (typeof choices)[number]; days: number } => x.days !== null && x.days >= 0)
     .sort((a, b) => a.days - b.days)
 
   const nearest = upcoming[0]
-  const hasAnyDeadline = choices.some((c) => c.program.finalDeadline)
+  /** 有没有**能拿来倒计时**的截止日 —— 存了日期但口径不明的不算 */
+  const hasUsableDeadline = choices.some((c) =>
+    countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience),
+  )
+  /** 存了日期、但档次没核过的项目数 —— 用于把上面那个「没有」说清楚是哪一种 */
+  const unverifiedDeadlines = choices.filter(
+    (c) => c.program.finalDeadline && !isCountdownable(c.program.deadlineAudience),
+  ).length
 
   /**
    * 一件事都还没做的时候,不要给他看四个 0。
@@ -140,13 +159,31 @@ export default async function DashboardPage() {
         />
       </div>
 
-      {/* 截止日期数据尚未开放时的诚实提示 */}
-      {choices.length > 0 && !hasAnyDeadline && (
+      {/*
+        截止日期不可用时的诚实提示。
+
+        ⚠️ 「没有截止日」其实是两种完全不同的情况,不能混成一句话:
+           · 官网还没公布 —— 等就行了,我们会推送
+           · 库里有日期,但没核过是哪一档 —— 学生得自己去官网确认,
+             因为英国院校普遍分「需签证 / 本地」两档,取错档会差两个月
+           后者说成「还没公布」等于让他安心等一个永远不会来的推送。
+      */}
+      {choices.length > 0 && !hasUsableDeadline && (
         <Card className="border-dashed">
           <p className="text-sm leading-relaxed text-ink-600">
-            你选的院校目前都还没有公布 2027 入学的申请截止日期 ——
-            多数学校会在 9-10 月陆续放出。我们不会拿上一届的日期充数,
-            一旦官网更新,系统会自动推送给你。
+            {unverifiedDeadlines > 0 ? (
+              <>
+                你选的院校里有 <strong>{unverifiedDeadlines}</strong> 个项目,官网公布了截止日,
+                但我们还没核实那个日期针对的是哪一类申请人 —— 英国院校普遍分「需签证」和「本地」
+                两档,时间常常差一两个月。在核完之前我们不做倒计时,
+                <strong>请以项目官网为准</strong>。
+              </>
+            ) : (
+              <>
+                你选的院校目前都还没有公布申请截止日期 —— 多数学校会在 9-10 月陆续放出。
+                我们不会拿上一届的日期充数,一旦官网更新,系统会自动推送给你。
+              </>
+            )}
           </p>
         </Card>
       )}
@@ -173,8 +210,14 @@ export default async function DashboardPage() {
         ) : (
           <div className="overflow-hidden rounded-xl border border-ink-200 bg-white">
             {choices.map((c, i) => {
-              const days = daysUntil(c.program.finalDeadline)
-              const urgency = deadlineUrgency(days)
+              const rawDays = daysUntil(c.program.finalDeadline)
+              /**
+               * 紧急度着色(红/橙)也是一种断言 —— 口径不明的日期不参与,
+               * 否则一个可能根本不适用的日期会把这一行标成红色。
+               */
+              const urgency = deadlineUrgency(
+                isCountdownable(c.program.deadlineAudience) ? rawDays : null,
+              )
               const freshness = programFreshness(c.program)
               return (
                 <div
@@ -202,11 +245,19 @@ export default async function DashboardPage() {
                     {APPLICATION_STATUS_LABEL[c.status]}
                   </span>
 
+                  {/*
+                    ⚠️ 文案统一走 lib/programs/deadline.ts 的 deadlineText,
+                       不要在这里自己拼 —— 院校库和这里各写一套,正是
+                       同一个项目在两页出现两种说法的原因。
+                       传**未经闸门**的 rawDays:deadlineText 内部按 audience
+                       自己决定说不说得出口(说不出口时降级成「以官网为准」)。
+                  */}
                   <span className={cn('shrink-0 text-sm', URGENCY_STYLE[urgency])}>
                     {c.program.finalDeadline
-                      ? days !== null && days >= 0
-                        ? `${days} 天后截止`
-                        : `已过 ${formatDate(c.program.finalDeadline)}`
+                      ? rawDays !== null && rawDays < 0
+                        ? // 已过期的日期不是断言,把具体日期留着 —— 用户要据此决定还申不申
+                          `${deadlineText(rawDays, true, c.program.deadlineAudience)} · ${formatDate(c.program.finalDeadline)}`
+                        : deadlineText(rawDays, true, c.program.deadlineAudience)
                       : freshness === 'unverified'
                         ? '截止日待公布'
                         : '—'}

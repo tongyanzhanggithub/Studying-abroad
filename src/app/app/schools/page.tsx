@@ -25,6 +25,9 @@ import {
   type RankingLike,
 } from '@/lib/programs/ranking'
 import { qsSubjectOf } from '@/lib/programs/qs-subjects'
+// ⚠️ 这一页原本自己复制了一份一模一样的 deadlineText。安全相关的规则复制两份,
+//    等于以后改一处、另一处悄悄保持旧行为 —— 统一从 lib 引。
+import { deadlineText, countdownDeadline, isCountdownable } from '@/lib/programs/deadline'
 import { ShortlistControls } from './Controls'
 import { ProgramCard } from './ProgramCard'
 import { SchoolFilters } from './SchoolFilters'
@@ -100,41 +103,6 @@ function shortTuition(raw: string | null): string | null {
     Number(a.text.replace(/\D/g, '')) > Number(best.text.replace(/\D/g, '')) ? a : best,
   )
   return max.text
-}
-
-/**
- * 截止日文案。
- *
- * ⚠️ 倒计时只有在**这个日期确实适用于我们的用户**时才能说得这么肯定。
- *
- *    2026-08 的核查发现:英国院校普遍公布两个截止日(需签证 / 本地),
- *    库里一度存的是本地那一档 —— UCL 的需签证通道其实已经关闭两个月,
- *    页面却显示「还有 13 天截止」。学生照着它赶材料,然后被拒收。
- *    见 docs/数据核查-2026-08.md。
- *
- *    所以:只有 audience=overseas(需签证/海外档)或 all(官网不分档)
- *    才给倒计时;home 档对我们的用户根本无效,unspecified 是口径不明的存量数据 ——
- *    这两种一律降级成「以官网为准」,宁可少说,不能把一个不适用的日期说成倒计时。
- */
-function deadlineText(
-  days: number | null,
-  hasDeadline: boolean,
-  audience: DeadlineAudience,
-): string {
-  if (!hasDeadline || days === null) return '截止日待公布'
-
-  if (audience === 'home') {
-    // 官网只给了本地/无需签证档,对需要签证的中国学生无效
-    return '本档次不适用,以官网为准'
-  }
-  if (audience === 'unspecified') {
-    // 存量数据没标口径 —— 不知道取的是哪一档,不能拿它做倒计时
-    return days < 0 ? '本轮已截止(口径待核)' : '截止日以官网为准'
-  }
-
-  if (days < 0) return '本轮已截止'
-  if (days === 0) return '今天截止'
-  return `还有 ${days} 天截止`
 }
 
 export default async function SchoolsPage({
@@ -417,7 +385,16 @@ export default async function SchoolsPage({
                               ? formatDate(c.program.finalDeadline)
                               : '待公布'
                           }
-                          daysLeft={daysUntil(c.program.finalDeadline)}
+                          deadlineLabel={deadlineText(
+                            daysUntil(c.program.finalDeadline),
+                            Boolean(c.program.finalDeadline),
+                            c.program.deadlineAudience,
+                          )}
+                          // ⚠️ 着色用过闸门的天数,文案用 deadlineText —— 两者必须同源,
+                          //    否则会出现「文案说以官网为准、字却是红的」这种自相矛盾
+                          daysLeft={daysUntil(
+                            countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience),
+                          )}
                           // 地区被撤下 / 项目下架时,详情页会 404 —— 先在这里标出来
                           unavailable={
                             !c.program.active || !publicRegionSet.has(c.program.region)
@@ -484,7 +461,8 @@ export default async function SchoolsPage({
                     isOnlineOnly: p.isOnlineOnly,
                     facts: factsOf(p),
                     deadlineText: deadlineText(days, Boolean(p.finalDeadline), p.deadlineAudience),
-                    daysLeft: days,
+                    // 同上:文案已降级成「以官网为准」时,不能还按剩余天数标红
+                    daysLeft: isCountdownable(p.deadlineAudience) ? days : null,
                     isRolling: p.isRolling,
                     chosen: chosenIds.has(p.id),
                   }}

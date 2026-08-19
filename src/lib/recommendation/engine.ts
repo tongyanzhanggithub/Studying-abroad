@@ -2,6 +2,7 @@ import 'server-only'
 import { db } from '@/lib/db'
 import { track } from '@/lib/analytics'
 import { renderTemplate, daysUntil } from '@/lib/utils'
+import { countdownDeadline } from '@/lib/programs/deadline'
 import { normalizeGpa } from '@/lib/assessment/engine'
 import type {
   RecommendationCard,
@@ -41,8 +42,13 @@ export async function buildContext(userId: string): Promise<RecommendationContex
   const tierCounts = { reach: 0, match: 0, safe: 0 }
   for (const c of choices) tierCounts[c.tierTag] += 1
 
+  /**
+   * ⚠️ 只算**档次已核**的截止日。daysToNearestDeadline 会驱动
+   *    「最近的截止日只剩 N 天」这类推荐话术,拿口径不明的日期去说
+   *    等于用一个可能不适用的日期催单。见 lib/programs/deadline.ts。
+   */
   const deadlineDays = choices
-    .map((c) => daysUntil(c.program.finalDeadline))
+    .map((c) => daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience)))
     .filter((d): d is number => d !== null && d >= 0)
 
   const interviewChoice = choices.find((c) => c.status === 'interview_invited')

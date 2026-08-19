@@ -2,6 +2,7 @@ import 'server-only'
 import { db } from '@/lib/db'
 import { track } from '@/lib/analytics'
 import { renderTemplate, daysUntil, formatDate } from '@/lib/utils'
+import { COUNTDOWNABLE_AUDIENCES } from '@/lib/programs/deadline'
 import type { NotificationChannel } from '@prisma/client'
 
 /**
@@ -278,7 +279,21 @@ export async function runDeadlineReminders(): Promise<{ sent: number; errors: st
   const choices = await db.userSchoolChoice.findMany({
     where: {
       status: { notIn: ['submitted', 'admitted', 'rejected', 'waitlisted'] },
-      program: { OR: windows.map((w) => ({ finalDeadline: w })) },
+      program: {
+        OR: windows.map((w) => ({ finalDeadline: w })),
+        /**
+         * ⚠️ 只提醒**档次核过、确实适用于我们用户**的截止日。
+         *
+         *    这是整条链路里唯一会**主动推给学生**的地方 —— 页面写错了他可能
+         *    看一眼就过去,推送写错了他会照着它熬夜赶材料、交申请费。
+         *    而 UCL 那种情况(需签证通道 6 月就关了,库里存的是 8 月的本地档)
+         *    推出去就是「还有 3 天截止」,学生赶完发现根本递不进去。
+         *
+         *    下推到 SQL 而不是在下面的循环里 continue:这个任务本来就是为了
+         *    别把全库选校记录拉进内存才改成按区间查的,不该再把过滤挪回 JS。
+         */
+        deadlineAudience: { in: [...COUNTDOWNABLE_AUDIENCES] },
+      },
     },
     select: {
       id: true,

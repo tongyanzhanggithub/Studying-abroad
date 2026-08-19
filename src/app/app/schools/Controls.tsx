@@ -20,6 +20,7 @@ export function ShortlistControls({
   programName,
   programId,
   deadline,
+  deadlineLabel,
   daysLeft,
   unavailable = false,
 }: {
@@ -29,7 +30,20 @@ export function ShortlistControls({
   schoolName: string
   programName: string
   programId: string
+  /** 原始日期,只用于 hover 提示 —— 不做任何断言,所以不过闸门 */
   deadline: string
+  /**
+   * 要显示的截止日文案,由服务端用 lib/programs/deadline.ts 的 deadlineText 生成。
+   *
+   * ⚠️ 刻意不在这里自己拼「还有 N 天」。这个组件此前有一份自己的倒计时逻辑,
+   *    加上院校库卡片和仪表盘,同一句话在三个地方各写了一遍 ——
+   *    结果是档次闸门只加在其中一处,另外两处照旧对着口径不明的日期倒计时。
+   */
+  deadlineLabel: string
+  /**
+   * 剩余天数,**仅用于紧急度着色**,已过闸门(不可用的档次传 null)。
+   * 着色也是一种断言:一个可能不适用的日期不该把这一行标成红色。
+   */
   daysLeft: number | null
   /**
    * 该项目已下架、或所属地区被撤下(通常是数据有问题、正在重新核对)。
@@ -73,15 +87,6 @@ export function ShortlistControls({
     })
   }
 
-  const countdown =
-    daysLeft === null
-      ? deadline
-      : daysLeft < 0
-        ? '本轮已截止'
-        : daysLeft === 0
-          ? '今天截止'
-          : `还有 ${daysLeft} 天`
-
   /**
    * ⚠️ 移动端优先的两行布局。
    *
@@ -122,7 +127,7 @@ export function ShortlistControls({
           )}
           title={deadline}
         >
-          {countdown}
+          {deadlineLabel}
         </span>
       </div>
 

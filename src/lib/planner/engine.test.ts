@@ -16,7 +16,16 @@ function inDays(n: number): Date {
 }
 
 let seq = 0
-function choice(over: Partial<PlannerChoice> = {}): PlannerChoice {
+/**
+ * ⚠️ 入参不能写成 Partial<PlannerChoice> —— 那只让 program 这个**字段**可选,
+ *    一旦传了就必须是完整对象。于是「只想覆盖 deadlineAudience」也得把
+ *    isRolling / requirements / school 抄一遍。
+ *    (而且 vitest 不做类型检查,这个错只有 tsc 才会报出来。)
+ */
+type ChoiceOverride = Partial<Omit<PlannerChoice, 'program'>> & {
+  program?: Partial<PlannerChoice['program']>
+}
+function choice(over: ChoiceOverride = {}): PlannerChoice {
   const { program, ...rest } = over
   return {
     programId: 'prog' + ++seq,
@@ -25,6 +34,12 @@ function choice(over: Partial<PlannerChoice> = {}): PlannerChoice {
     ...rest,
     program: {
       finalDeadline: inDays(120),
+      /**
+       * 默认取 overseas(需签证档)—— 这批用例测的是「有一个确实能用的截止日时,
+       * 排序和文案对不对」,所以默认必须是能倒计时的那一档。
+       * 闸门本身由下面「截止日档次闸门」那一组单独测。
+       */
+      deadlineAudience: 'overseas',
       isRolling: false,
       requirements: {},
       school: { nameZh: '示例大学', nameEn: 'Example University' },
@@ -218,6 +233,7 @@ describe('planActions —— 语言成绩', () => {
           choice({
             program: {
               finalDeadline: inDays(days),
+              deadlineAudience: 'overseas',
               isRolling: false,
               requirements: { ielts: { overall: 7, subscores: null } },
               school: { nameZh: '示例大学', nameEn: 'Example University' },
@@ -435,5 +451,95 @@ describe('planActions —— 一次最多 3 条', () => {
     })
     const scores = p.actions.map((a) => a.score)
     expect([...scores].sort((a, b) => b - a)).toEqual(scores)
+  })
+})
+
+describe('planActions —— 截止日档次闸门', () => {
+  /**
+   * 行动计划里的天数会变成「最近的截止日还有 N 天」这类催办文案。
+   * 只有档次核过、确实适用于我们用户的截止日才配得上这句话。
+   *
+   * ⚠️ 2026-08-19 线上:87 个未来截止日里 67 个是 unspecified。
+   *    不加闸门的话,四分之三的催办都建立在一个不知道针对谁的日期上。
+   *    见 lib/programs/deadline.ts 与 docs/数据核查-2026-08.md。
+   */
+
+  it('口径不明的截止日不参与 nearestDays', () => {
+    const p = planActions({
+      choices: [choice({ program: { finalDeadline: inDays(10), deadlineAudience: 'unspecified' } })],
+      materials: [],
+      essays: [],
+      profile: null,
+    })
+    expect(p.nearestDays).toBeNull()
+  })
+
+  it('本地档(home)同样不参与 —— 对需要签证的学生无效', () => {
+    const p = planActions({
+      choices: [choice({ program: { finalDeadline: inDays(10), deadlineAudience: 'home' } })],
+      materials: [],
+      essays: [],
+      profile: null,
+    })
+    expect(p.nearestDays).toBeNull()
+  })
+
+  it('需签证档正常参与', () => {
+    const p = planActions({
+      choices: [choice({ program: { finalDeadline: inDays(10), deadlineAudience: 'overseas' } })],
+      materials: [],
+      essays: [],
+      profile: null,
+    })
+    expect(p.nearestDays).toBe(10)
+  })
+
+  /**
+   * ⚠️ 这条最要紧:一个口径不明的过期日期,不该让用户看到
+   *    「1 所学校本轮已过截止」并被劝去把学校移出选校单 ——
+   *    万一那是本地档的日期,需签证通道其实还开着,劝退就是实打实的损失。
+   */
+  it('口径不明的过期日期不判定「本轮已过截止」', () => {
+    const p = planActions({
+      choices: [choice({ program: { finalDeadline: inDays(-30), deadlineAudience: 'unspecified' } })],
+      materials: [],
+      essays: [],
+      profile: null,
+    })
+    expect(p.actions.map((a) => a.kind)).not.toContain('expired')
+  })
+
+  it('档次已核的过期日期照旧判定「本轮已过截止」', () => {
+    const p = planActions({
+      choices: [choice({ program: { finalDeadline: inDays(-30), deadlineAudience: 'overseas' } })],
+      materials: [],
+      essays: [],
+      profile: null,
+    })
+    expect(p.actions.map((a) => a.kind)).toContain('expired')
+  })
+
+  /**
+   * 闸门只降低紧迫度,不该让材料这类事**整个消失** ——
+   * 「因为日期存疑所以不提醒你办成绩单」是另一种伤害。
+   * 走 effectiveDays 的宽松默认值(120 天),仍然出现在列表里,只是不排最前。
+   */
+  it('闸门拦下日期后,材料仍然会被提醒,只是不再显得紧急', () => {
+    const mk = (audience: 'overseas' | 'unspecified') =>
+      planActions({
+        choices: [choice({ programId: 'p1', program: { finalDeadline: inDays(5), deadlineAudience: audience } })],
+        materials: [{ status: 'pending', programIds: ['p1'], template: { name: '成绩单', leadTimeDays: 30 } }],
+        essays: [],
+        profile: null,
+      })
+    const gated = mk('unspecified')
+    const open = mk('overseas')
+
+    const scoreOf = (p: ReturnType<typeof planActions>) =>
+      p.actions.find((a) => a.kind === 'material')?.score
+    expect(scoreOf(gated)).toBeDefined()
+    expect(scoreOf(open)).toBeDefined()
+    // 同一份材料:日期可信时更急(分数更高)
+    expect(scoreOf(open)!).toBeGreaterThan(scoreOf(gated)!)
   })
 })

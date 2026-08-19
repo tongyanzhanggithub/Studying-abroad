@@ -1,7 +1,8 @@
 import 'server-only'
-import type { Prisma } from '@prisma/client'
+import type { Prisma, DeadlineAudience } from '@prisma/client'
 import { db } from '@/lib/db'
 import { daysUntil } from '@/lib/utils'
+import { countdownDeadline } from '@/lib/programs/deadline'
 import { readRequirements } from '@/lib/programs/types'
 
 /**
@@ -81,6 +82,12 @@ export interface PlannerChoice {
   tierTag: string
   program: {
     finalDeadline: Date | string | null
+    /**
+     * 截止日适用于哪类申请人。**必填**,不给默认值 ——
+     * 给了默认值就等于允许调用方「忘了传」,而忘了传的后果是
+     * 拿一个可能不适用的日期去催学生。见 lib/programs/deadline.ts。
+     */
+    deadlineAudience: DeadlineAudience
     isRolling: boolean
     requirements: Prisma.JsonValue
     school: { nameZh: string | null; nameEn: string }
@@ -157,7 +164,15 @@ export function planActions({
     }
   }
 
-  const withDays = choices.map((c) => ({ c, days: daysUntil(c.program.finalDeadline) }))
+  /**
+   * ⚠️ 全部经 countdownDeadline 过闸:口径不明 / 只适用本地申请人的日期
+   *    一律当作「没有截止日」,于是走下面 effectiveDays 的宽松默认值(120 天),
+   *    而不是拿它去催人或判定「本轮已过截止」。见 lib/programs/deadline.ts。
+   */
+  const withDays = choices.map((c) => ({
+    c,
+    days: daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience)),
+  }))
   const future = withDays.filter((x) => x.days !== null && x.days >= 0)
   const nearestDays = future.length ? Math.min(...future.map((x) => x.days!)) : null
 
@@ -190,7 +205,11 @@ export function planActions({
         .map((c) => languageGap(profile.languageType, profile.languageScore, readRequirements(c.program))!)
         .sort((a, b) => a - b)
       const minGap = gaps[0]
-      const near = Math.min(...blocked.map((c) => effectiveDays(daysUntil(c.program.finalDeadline))))
+      const near = Math.min(
+        ...blocked.map((c) =>
+          effectiveDays(daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience))),
+        ),
+      )
 
       actions.push({
         kind: 'language_gap',
@@ -219,7 +238,11 @@ export function planActions({
     // 这份材料挡住的学校里,最早的截止日
     const affected = choices.filter((c) => m.programIds.includes(c.programId))
     const days = affected.length
-      ? Math.min(...affected.map((c) => effectiveDays(daysUntil(c.program.finalDeadline))))
+      ? Math.min(
+          ...affected.map((c) =>
+            effectiveDays(daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience))),
+          ),
+        )
       : effectiveDays(nearestDays)
 
     const lead = m.template.leadTimeDays
@@ -258,7 +281,11 @@ export function planActions({
   )
   const needEssay = choices.filter((c) => !essayDone.has(c.programId))
   if (needEssay.length > 0) {
-    const days = Math.min(...needEssay.map((c) => effectiveDays(daysUntil(c.program.finalDeadline))))
+    const days = Math.min(
+      ...needEssay.map((c) =>
+        effectiveDays(daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience))),
+      ),
+    )
     const started = essays.filter((e) => e.status !== 'final').length
     actions.push({
       kind: 'essay',
