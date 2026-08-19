@@ -29,7 +29,7 @@ import { NextResponse, type NextRequest } from 'next/server'
  * ⚠️ 开发环境要额外放开 'unsafe-eval'(webpack 热更新依赖 eval)与 ws:
  *    (HMR 的 WebSocket)。生产环境都不放开。
  */
-function buildCsp(nonce: string, isDev: boolean): string {
+function buildCsp(nonce: string, isDev: boolean, isHttps: boolean): string {
   const scriptSrc = [
     "'self'",
     `'nonce-${nonce}'`,
@@ -60,7 +60,21 @@ function buildCsp(nonce: string, isDev: boolean): string {
     "form-action 'self'",
     "frame-ancestors 'none'",
     "frame-src 'none'",
-    'upgrade-insecure-requests',
+    /**
+     * ⚠️ 只在**真的跑在 HTTPS 上**时才下这一条。
+     *
+     * upgrade-insecure-requests 会把页面上所有子资源的 http 请求改写成 https。
+     * 站点只有 80、没有证书时,这等于把自己全部静态资源指向一个不存在的 443 ——
+     * CSS 和 JS 全部 ERR_CONNECTION_CLOSED,用户看到一页没有样式、点不动的纯文字,
+     * 而服务端一切正常(HTML 确实返回 200,日志里没有任何错误)。
+     * 2026-08 的测试机就是这么「打不开」的:排查完 502(服务没起)、500(CRON_SECRET
+     * 缺失)之后,页面还是坏的,最后才定位到这一行。
+     *
+     * 而 env.ts 的 assertProductionConfig 明确把「跑在 HTTP 上」当作演示阶段可接受的
+     * 过渡态(只告警、不拒绝启动)。这条无条件下发,等于让那个过渡态根本不成立 ——
+     * 两处必须一致。
+     */
+    ...(isHttps ? ['upgrade-insecure-requests'] : []),
   ].join('; ')
 }
 
@@ -68,7 +82,17 @@ export function middleware(request: NextRequest) {
   // Web Crypto —— Edge 运行时里没有 node:crypto
   const nonce = btoa(crypto.randomUUID())
   const isDev = process.env.NODE_ENV !== 'production'
-  const csp = buildCsp(nonce, isDev)
+  /**
+   * 当前请求是否真的走 HTTPS。取 nginx 传来的 X-Forwarded-Proto
+   * (deploy/nginx-compass.conf 里有 proxy_set_header),直连时退回请求自身协议。
+   *
+   * ⚠️ 不用 NEXT_PUBLIC_SITE_URL 来判断 —— 那是「声明的地址」。把它配成 https
+   *    但证书还没装好的那段时间,会再次触发整站白屏。这里要的是**这个请求**
+   *    的真实协议,配错了也不会把站点打死。
+   */
+  const proto =
+    request.headers.get('x-forwarded-proto') ?? request.nextUrl.protocol.replace(':', '')
+  const csp = buildCsp(nonce, isDev, proto === 'https')
 
   const headers = new Headers(request.headers)
   headers.set('x-pathname', request.nextUrl.pathname)
