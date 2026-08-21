@@ -176,8 +176,29 @@ export function planActions({
   const future = withDays.filter((x) => x.days !== null && x.days >= 0)
   const nearestDays = future.length ? Math.min(...future.map((x) => x.days!)) : null
 
-  /** 没有截止日的按一个较宽松的默认值参与计算,避免它们永远排最后 */
-  const effectiveDays = (d: number | null) => (d === null ? 120 : d)
+  /**
+   * 没有可用截止日时,**排序**按一个较宽松的默认值参与计算,
+   * 避免这些项目永远排在最后。
+   *
+   * ⚠️ 这个数只能进 score,**绝不能进 why / detail 的文案**。
+   *    它在库里和官网上都不存在 —— 说出口就是编数字。
+   *    2026-08-19 实测踩到:选校单里只有口径不明的截止日时,
+   *    页面写「2 所学校都要这一份……最近的截止日还有 120 天」,
+   *    而那 2 所的截止日其实是 2 天后、只是档次没核过。
+   *    120 既不是真的,也不是保守的,纯属凭空。
+   */
+  const FALLBACK_DAYS = 120
+  const effectiveDays = (d: number | null) => (d === null ? FALLBACK_DAYS : d)
+
+  /** 一组截止日里最近的那个;全都不可用时返回 null —— 不编数字 */
+  const nearestOf = (list: Array<number | null>): number | null => {
+    const real = list.filter((d): d is number => d !== null)
+    return real.length ? Math.min(...real) : null
+  }
+
+  /** 「最近的截止日还有 N 天」这句话,只在真有可用截止日时才说得出口 */
+  const deadlineClause = (d: number | null) =>
+    d === null ? '这几所的截止日我们还没核实档次,请以项目官网为准。' : `最近的截止日还有 ${d} 天。`
 
   // ── 已过截止:先清理,否则后面的排序全被它带偏 ──────────
   const expired = withDays.filter(
@@ -205,16 +226,22 @@ export function planActions({
         .map((c) => languageGap(profile.languageType, profile.languageScore, readRequirements(c.program))!)
         .sort((a, b) => a - b)
       const minGap = gaps[0]
-      const near = Math.min(
-        ...blocked.map((c) =>
-          effectiveDays(daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience))),
+      const nearReal = nearestOf(
+        blocked.map((c) =>
+          daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience)),
         ),
       )
+      const near = effectiveDays(nearReal)
 
       actions.push({
         kind: 'language_gap',
         title: `语言成绩差 ${minGap.toFixed(1)} 分,卡着 ${blocked.length} 所学校`,
-        why: `重考一次从报名到出分通常要两个月,而这几所里最近的截止日还有 ${near} 天。要么现在就约考试,要么把这几所换成分数够的项目。`,
+        why:
+          `重考一次从报名到出分通常要两个月,` +
+          (nearReal === null
+            ? '而这几所的截止日我们还没核实档次,请以项目官网为准。'
+            : `而这几所里最近的截止日还有 ${nearReal} 天。`) +
+          '要么现在就约考试,要么把这几所换成分数够的项目。',
         href: '/app/schools',
         cta: '看是哪几所',
         // 周期最长的事必须最早开始,给高权重
@@ -237,13 +264,14 @@ export function planActions({
   for (const m of pendingMaterials) {
     // 这份材料挡住的学校里,最早的截止日
     const affected = choices.filter((c) => m.programIds.includes(c.programId))
-    const days = affected.length
-      ? Math.min(
-          ...affected.map((c) =>
-            effectiveDays(daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience))),
+    const realDays = affected.length
+      ? nearestOf(
+          affected.map((c) =>
+            daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience)),
           ),
         )
-      : effectiveDays(nearestDays)
+      : nearestDays
+    const days = effectiveDays(realDays)
 
     const lead = m.template.leadTimeDays
     /** 留给这件事的余量:剩余天数 - 办理周期。负数就是已经来不及了 */
@@ -253,21 +281,26 @@ export function planActions({
       kind: 'material',
       title: `办${m.template.name}`,
       why:
-        affected.length > 1
-          ? `${affected.length} 所学校都要这一份,办一次就够。${lead >= 14 ? `通常要 ${lead} 天,` : ''}最近的截止日还有 ${days} 天。`
-          : `${lead >= 14 ? `通常要 ${lead} 天,` : ''}最近的截止日还有 ${days} 天。`,
+        (affected.length > 1 ? `${affected.length} 所学校都要这一份,办一次就够。` : '') +
+        (lead >= 14 ? `通常要 ${lead} 天,` : '') +
+        deadlineClause(realDays),
       href: '/app/materials',
       cta: '去处理',
       // 余量越小越急;挡住的学校越多越优先
       score: 600 - slack * 2 + affected.length * 5,
     })
 
-    // 余量为负 = 按常规周期已经赶不上,这才是「提前预警」的意义
-    if (slack < 0 && affected.length > 0) {
+    /**
+     * 余量为负 = 按常规周期已经赶不上,这才是「提前预警」的意义。
+     *
+     * ⚠️ 必须 realDays !== null。「赶不上」是一句斩钉截铁的话,
+     *    建立在兜底值上就成了凭空吓人 —— 而且下面的文案要写出具体天数。
+     */
+    if (slack < 0 && affected.length > 0 && realDays !== null) {
       risks.push({
         level: 'warn',
         title: `${m.template.name}可能赶不上`,
-        detail: `${affected[0].program.school.nameZh ?? affected[0].program.school.nameEn}还有 ${days} 天截止,而${m.template.name}通常要 ${lead} 天才能办下来。现在就去办还有机会走加急,再等就只能放弃这一所了。`,
+        detail: `${affected[0].program.school.nameZh ?? affected[0].program.school.nameEn}还有 ${realDays} 天截止,而${m.template.name}通常要 ${lead} 天才能办下来。现在就去办还有机会走加急,再等就只能放弃这一所了。`,
       })
     }
   }
@@ -281,16 +314,19 @@ export function planActions({
   )
   const needEssay = choices.filter((c) => !essayDone.has(c.programId))
   if (needEssay.length > 0) {
-    const days = Math.min(
-      ...needEssay.map((c) =>
-        effectiveDays(daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience))),
+    const realDays = nearestOf(
+      needEssay.map((c) =>
+        daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience)),
       ),
     )
+    const days = effectiveDays(realDays)
     const started = essays.filter((e) => e.status !== 'final').length
     actions.push({
       kind: 'essay',
       title: started > 0 ? `还有 ${needEssay.length} 篇文书没定稿` : `开始写文书(${needEssay.length} 篇)`,
-      why: `每所学校的题目和字数都不一样,不能直接复用。写好一篇通常要改三四稿,最近的截止日还有 ${days} 天。`,
+      why:
+        '每所学校的题目和字数都不一样,不能直接复用。写好一篇通常要改三四稿,' +
+        deadlineClause(realDays),
       href: '/app/essays',
       cta: started > 0 ? '继续写' : '开始写',
       score: 500 - Math.min(days, 200) + needEssay.length * 3,
@@ -308,9 +344,15 @@ export function planActions({
     actions.push({
       kind: 'submit',
       title: '该递交了',
-      why: `${soonest.c.program.school.nameZh ?? soonest.c.program.school.nameEn}还有 ${soonest.days} 天截止。${
-        soonest.c.program.isRolling ? '这所是滚动录取,越早交名额越多。' : ''
-      }`,
+      /**
+       * ⚠️ soonest.days 可能是 null —— ready 的第一个条件是
+       *    status === 'ready_to_submit',它和截止日无关。
+       *    原来直接插值,这种情况下页面上会出现「XX还有 null 天截止」。
+       */
+      why:
+        `${soonest.c.program.school.nameZh ?? soonest.c.program.school.nameEn}` +
+        (soonest.days === null ? '的材料齐了,可以递交了。' : `还有 ${soonest.days} 天截止。`) +
+        (soonest.c.program.isRolling ? '这所是滚动录取,越早交名额越多。' : ''),
       href: '/app/schools',
       cta: '去确认',
       score: 950 - effectiveDays(soonest.days) * 3,

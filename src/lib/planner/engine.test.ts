@@ -543,3 +543,115 @@ describe('planActions —— 截止日档次闸门', () => {
     expect(scoreOf(open)!).toBeGreaterThan(scoreOf(gated)!)
   })
 })
+
+describe('planActions —— 兜底值不许出现在文案里', () => {
+  /**
+   * 排序用的 FALLBACK_DAYS(120)是个内部默认值,库里和官网上都不存在。
+   *
+   * ⚠️ 这两条是**跑真实页面才发现的**,单元测试原本全绿:
+   *    选校单里只有口径不明的截止日时,页面写
+   *      「2 所学校都要这一份……最近的截止日还有 120 天」
+   *    而那 2 所其实是 2 天后截止、只是档次没核过。
+   *    120 既不是真的也不是保守的,纯属凭空 —— 比说错日期更糟,
+   *    因为它连个来源都没有。
+   */
+  /** 两所都有截止日,但档次都不可用 —— 带雅思要求,好让语言那条也能触发 */
+  const REQ = { ielts: { overall: 7, subscores: null } }
+  const onlyUngated = () => [
+    choice({ programId: 'p1', program: { finalDeadline: inDays(2), deadlineAudience: 'unspecified', requirements: REQ } }),
+    choice({ programId: 'p2', program: { finalDeadline: inDays(2), deadlineAudience: 'home', requirements: REQ } }),
+  ]
+
+  const allText = (p: ReturnType<typeof planActions>) =>
+    [...p.actions.map((a) => `${a.title} ${a.why}`), ...p.risks.map((r) => `${r.title} ${r.detail}`)].join('\n')
+
+  it('材料文案不会冒出「还有 120 天」', () => {
+    const p = planActions({
+      choices: onlyUngated(),
+      materials: [{ status: 'pending', programIds: ['p1', 'p2'], template: { name: '成绩单', leadTimeDays: 30 } }],
+      essays: [],
+      profile: null,
+    })
+    /**
+     * ⚠️ 断言要盯准「凭空的那个数」,不能一刀切 /\d+ 天/ ——
+     *    「通常要 30 天」是材料的办理周期,是真实且必要的信息。
+     *    我第一版就是这么写的,把正确的文案也判红了。
+     */
+    expect(allText(p)).not.toContain('120')
+    expect(allText(p)).not.toMatch(/最近的截止日还有/)
+    expect(allText(p)).toContain('还没核实档次')
+  })
+
+  it('文书文案同样不会', () => {
+    const p = planActions({
+      choices: onlyUngated(),
+      materials: [],
+      essays: [],
+      profile: null,
+    })
+    const essay = p.actions.find((a) => a.kind === 'essay')
+    expect(essay?.why).toContain('还没核实档次')
+    expect(essay?.why).not.toContain('120')
+  })
+
+  it('语言成绩文案同样不会', () => {
+    const p = planActions({
+      choices: onlyUngated(),
+      materials: [],
+      essays: [],
+      profile: { languageType: 'ielts', languageScore: 6 },
+    })
+    const lang = p.actions.find((a) => a.kind === 'language_gap')
+    expect(lang?.why).toContain('还没核实档次')
+    expect(lang?.why).not.toContain('120')
+  })
+
+  /**
+   * 「赶不上」是一句斩钉截铁的话。没有可用截止日时不能说 ——
+   * 办理周期 > 兜底值(120)的材料原来会凭空触发这条预警。
+   */
+  it('没有可用截止日时不报「赶不上」', () => {
+    const p = planActions({
+      choices: onlyUngated(),
+      materials: [{ status: 'pending', programIds: ['p1'], template: { name: '签证', leadTimeDays: 200 } }],
+      essays: [],
+      profile: null,
+    })
+    expect(p.risks.map((r) => r.title)).not.toContain('签证可能赶不上')
+  })
+
+  it('有可用截止日时照旧报「赶不上」', () => {
+    const p = planActions({
+      choices: [choice({ programId: 'p1', program: { finalDeadline: inDays(2), deadlineAudience: 'overseas' } })],
+      materials: [{ status: 'pending', programIds: ['p1'], template: { name: '签证', leadTimeDays: 200 } }],
+      essays: [],
+      profile: null,
+    })
+    expect(p.risks.map((r) => r.title)).toContain('签证可能赶不上')
+  })
+
+  /**
+   * ⚠️ 这条和闸门无关,是顺带发现的老 bug:
+   *    ready 的第一个条件是 status === 'ready_to_submit',它**和截止日无关**。
+   *    一个没有截止日、但材料齐了的项目会走到这里,而 why 直接插值 soonest.days，
+   *    于是页面上出现「XX还有 null 天截止」。
+   */
+  it('材料齐了但没有截止日时,不会渲染出「还有 null 天截止」', () => {
+    const p = planActions({
+      choices: [
+        choice({
+          programId: 'p1',
+          status: 'ready_to_submit',
+          program: { finalDeadline: null, deadlineAudience: 'unspecified' },
+        }),
+      ],
+      materials: [],
+      essays: [],
+      profile: null,
+    })
+    const submit = p.actions.find((a) => a.kind === 'submit')
+    expect(submit).toBeDefined()
+    expect(submit!.why).not.toContain('null')
+    expect(submit!.why).toContain('可以递交了')
+  })
+})
