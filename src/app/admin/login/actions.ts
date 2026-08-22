@@ -65,7 +65,7 @@ export async function adminLogin(email: string, password: string) {
   }
 
   // 登录成功:清计数,顺手把旧哈希升级到 scrypt
-  await db.adminUser.update({
+  const fresh = await db.adminUser.update({
     where: { id: admin.id },
     data: {
       failedAttempts: 0,
@@ -76,9 +76,15 @@ export async function adminLogin(email: string, password: string) {
   })
 
   await createAdminSession({
-    adminId: admin.id,
-    role: admin.role,
-    delivererId: admin.delivererId,
+    adminId: fresh.id,
+    role: fresh.role,
+    delivererId: fresh.delivererId,
+    /**
+     * ⚠️ 必须带上当前版本号。不带的话签出来的 token 里 sv 是 undefined,
+     *    getAdminSession 按 `?? 0` 当成 0 —— 对一个 sessionVersion 已经
+     *    +1 过的账号,他**刚登录就会被判失效**,陷进登录死循环。
+     */
+    sv: fresh.sessionVersion,
   })
 
   // 顾问不进运营后台,直接去自己的工作台

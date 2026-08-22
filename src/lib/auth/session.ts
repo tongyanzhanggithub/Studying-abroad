@@ -29,6 +29,14 @@ export interface AdminSessionPayload {
   role: 'super_admin' | 'operator' | 'data_entry' | 'advisor'
   /** role = advisor 时带上他对应的交付人 id,用于过滤「只看自己的单」 */
   delivererId?: string | null
+  /**
+   * 会话版本号,和 AdminUser.sessionVersion 比对。
+   *
+   * ⚠️ 可选是为了兼容**这个字段上线之前签发的旧 token** ——
+   *    它们没有 sv,而 DB 里默认是 0,下面用 `?? 0` 让两边对上,
+   *    所以这次改动不会把所有在线的后台用户一次性踢下线。
+   */
+  sv?: number
 }
 
 async function sign(payload: Record<string, unknown>): Promise<string> {
@@ -174,14 +182,25 @@ export const getAdminSession = cache(async (): Promise<AdminSessionPayload | nul
    */
   const admin = await db.adminUser.findUnique({
     where: { id: payload.adminId },
-    select: { active: true, role: true, delivererId: true },
+    select: { active: true, role: true, delivererId: true, sessionVersion: true },
   })
   if (!admin || !admin.active) return null
+
+  /**
+   * ⚠️ 版本号对不上 = 这个 token 是改密码之前签发的,作废。
+   *
+   *    没有这一步的话,「改密码」对后台来说只是换了个登录口令 ——
+   *    已经签发出去的 token 还能再活 30 天。号被盗时改密码是第一反应,
+   *    而它此前对攻击者手里那个 token 毫无作用。学生端一直有这道校验
+   *    (见上面 getSession),后台是这次才补上的。
+   */
+  if ((payload.sv ?? 0) !== admin.sessionVersion) return null
 
   return {
     adminId: payload.adminId,
     role: admin.role,
     delivererId: admin.delivererId,
+    sv: admin.sessionVersion,
   }
 })
 

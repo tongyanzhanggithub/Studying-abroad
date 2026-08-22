@@ -148,3 +148,82 @@ describe('选校单写入只有一份实现', () => {
     expect(route).toContain('statusManuallySet: true')
   })
 })
+
+/**
+ * 后台改密码要让**别的设备**立刻失效,而当前这台留着。
+ *
+ * ── 为什么这半边是必须的 ────────────────────────────
+ *
+ * 后台会话是 30 天有效的 JWT、服务端不存 session。只改 passwordHash
+ * 对已经签发出去的 token 毫无影响 —— 号被盗、改了密码,攻击者手里
+ * 那个 token 照样能再用 30 天。而后台 token 的权限比学生端大得多。
+ *
+ * 学生端(User.sessionVersion)一直有这道校验,后台一直没有。
+ *
+ * ── 为什么当前设备不能一起踢 ────────────────────────
+ *
+ * 他刚刚用旧密码验证过身份,没有理由把他也踢掉 —— 那只会让人
+ * 每改一次密码就得重登一次。学生端 setMyPassword 就是这么做的:
+ * 版本号 +1 之后,用新版本号给当前设备重新签一次。
+ *
+ * 本地真实验证过(2026-08-19):
+ *   设备 A(改密码这台)   还在登录态,角色正常
+ *   设备 B(改之前的 token) 和「完全没有 cookie」一模一样,被踢
+ *   新签发的 token         正常进后台
+ */
+describe('后台会话版本号', () => {
+  const session = codeOnly(readFileSync(join(ROOT, 'src/lib/auth/session.ts'), 'utf8'))
+  const accounts = codeOnly(readFileSync(join(ROOT, 'src/app/admin/accounts/actions.ts'), 'utf8'))
+  const login = codeOnly(readFileSync(join(ROOT, 'src/app/admin/login/actions.ts'), 'utf8'))
+
+  it('getAdminSession 比对版本号', () => {
+    expect(session.replace(/\s+/g, ' ')).toContain('(payload.sv ?? 0) !== admin.sessionVersion')
+  })
+
+  /**
+   * ⚠️ `?? 0` 不能省。这个字段上线之前签发的 token 里没有 sv,
+   *    而 DB 默认值是 0 —— 少了它,所有存量后台登录会在上线那一刻被一次性踢光。
+   */
+  it('对旧 token 兜底到 0,不会一上线就把所有人踢下线', () => {
+    expect(session).toContain('payload.sv ?? 0')
+  })
+
+  it('登录时把当前版本号签进 token', () => {
+    expect(login.replace(/\s+/g, ' ')).toContain('sv: fresh.sessionVersion')
+  })
+
+  it('改自己的密码:版本号 +1', () => {
+    expect(accounts.replace(/\s+/g, ' ')).toMatch(
+      /changeOwnPassword[\s\S]*sessionVersion: \{ increment: 1 \}/,
+    )
+  })
+
+  /** 别把这条改掉来「简化」—— 少了它,人每改一次密码就得重登一次 */
+  it('改自己的密码:当前设备用新版本号重新签,不把自己踢掉', () => {
+    expect(accounts.replace(/\s+/g, ' ')).toMatch(
+      /changeOwnPassword[\s\S]*createAdminSession\([\s\S]*sv: updated\.sessionVersion/,
+    )
+  })
+
+  /**
+   * 超管重置**别人**的密码是相反的意图:那时候就是要把对方踢下线
+   * (号可能出问题了 / 人离职了),所以不重新签。
+   */
+  it('超管重置别人密码:版本号 +1,且不重新签会话', () => {
+    /**
+     * ⚠️ 只截 resetAccountPassword 这一个函数的正文。
+     *    第一版用 indexOf('\n}\n') 找结尾,在剥过注释的文本上切出来只剩一个字符 'e' ——
+     *    断言拿一个空串去比,红得毫无信息量,而且它「红」的原因和被测行为无关。
+     *    改成切到**下一个 export** 为止,并先断言截出来的长度合理。
+     */
+    const from = accounts.indexOf('export async function resetAccountPassword')
+    expect(from, '找不到 resetAccountPassword').toBeGreaterThan(-1)
+    const rest = accounts.slice(from + 'export async function'.length)
+    const to = rest.indexOf('export async function')
+    const body = to === -1 ? rest : rest.slice(0, to)
+    expect(body.length, '截出来的函数体不该是空的').toBeGreaterThan(200)
+
+    expect(body.replace(/\s+/g, ' ')).toContain('sessionVersion: { increment: 1 }')
+    expect(body).not.toContain('createAdminSession')
+  })
+})

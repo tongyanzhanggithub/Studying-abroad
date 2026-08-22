@@ -1592,6 +1592,20 @@ model AdminUser {
   lastLoginAt    DateTime? @map("last_login_at")
 
   /**
+   * 会话版本号 —— 改密码 / 被重置密码时 +1,让已经签发出去的旧 token 立刻失效。
+   *
+   * ⚠️ 学生端(User.sessionVersion)早就有这个,后台一直没有,是个真空档:
+   *    后台会话是 30 天有效的 JWT、服务端不存 session,所以只改 passwordHash
+   *    对已签发的 token 毫无影响 —— 号被盗、改了密码,攻击者手里那个 token
+   *    照样能再用 30 天。而后台 token 的权限比学生端大得多。
+   *
+   * ⚠️ getAdminSession 里用 `(payload.sv ?? 0) !== admin.sessionVersion` 比对。
+   *    `?? 0` 不能省:这个字段上线前签发的旧 token 里没有 sv,
+   *    默认值又是 0,两边对上,存量登录不会被这次改动一次性全踢下线。
+   */
+  sessionVersion Int @default(0) @map("session_version")
+
+  /**
    * role = advisor 时指向他对应的交付人记录。
    * 为什么复用 AdminUser 而不是给 Deliverer 单独做一套登录:
    * 密码哈希、失败限流、会话签发这些都已经在这里了,再开一套

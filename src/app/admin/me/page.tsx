@@ -26,9 +26,9 @@ export default async function MyAccountPage() {
 
       <Card>
         <p className="text-xs leading-relaxed text-ink-600">
-          改密码不会把已登录的其它设备踢下线 —— 后台会话是 30 天有效的 token。
-          如果怀疑账号被别人拿到了,除了改密码,还要找超级管理员在
-          「账号」页把你停用再启用一次。
+          改完密码,<strong>其它设备上已登录的会话会立刻失效</strong>,需要用新密码重新登录;
+          你正在用的这台不受影响 —— 你刚刚已经用旧密码验证过了。
+          所以怀疑号被别人拿到时,改密码就够了。
         </p>
       </Card>
     </div>
