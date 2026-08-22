@@ -39,6 +39,39 @@ export function canTransition(from: OrderStatus, to: OrderStatus): boolean {
   return ALLOWED_TRANSITIONS[from]?.includes(to) ?? false
 }
 
+/**
+ * 「这个服务学生已经买下了」—— 钱已经付了,而且还没退回去。
+ *
+ * ⚠️ 判据不是拍脑袋列的,是**从状态机推导**出来的:
+ *    一个状态只要还能走到 confirmed(或它本身就是 confirmed),
+ *    这笔钱就还在我们这边。测试会拿 ALLOWED_TRANSITIONS 重算一遍比对,
+ *    以后改状态机而忘了改这里,立刻红。
+ *
+ * ⚠️ **disputed 必须在内。** 它此前被漏掉了,而它的三条出路里有两条
+ *    (delivering / confirmed)仍然是「买了」,只有 refunding 才是退钱。
+ *    漏掉的后果实测有三处:
+ *      · /app/services 上那个服务重新显示出「购买」按钮而不是「已购买」——
+ *        而 checkoutService **没有任何重复下单检查**,这个按钮是唯一的闸门。
+ *        学生正在为这单申诉,却被引导着再买一次同样的服务。
+ *      · 推荐引擎的 purchasedServiceCount 把他算成 0,继续推销同一个服务
+ *      · 后台 metrics 的加购率少算了这批人
+ *
+ * ⚠️ refunding 刻意不在内:钱正在退回去的路上,它只能走到 refunded。
+ *    万一退款失败,调用方会把状态放回原值,那时自然又算「已购买」。
+ */
+export const PURCHASED_ORDER_STATUSES = [
+  'paid',
+  'assigned',
+  'delivering',
+  'delivered',
+  'disputed',
+  'confirmed',
+] as const satisfies readonly OrderStatus[]
+
+export function isPurchased(status: OrderStatus | string): boolean {
+  return (PURCHASED_ORDER_STATUSES as readonly string[]).includes(status)
+}
+
 export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
   pending_payment: '待付款',
   paid: '待派单',

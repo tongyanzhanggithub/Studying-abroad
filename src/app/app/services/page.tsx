@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { db } from '@/lib/db'
 import { requireUser } from '@/lib/auth/session'
+import { PURCHASED_ORDER_STATUSES } from '@/lib/services/dispatch'
 import { Disclaimer } from '@/components/ui'
 import { RecommendationCard } from '@/components/RecommendationCard'
 import { selectCard } from '@/lib/recommendation/engine'
@@ -136,7 +137,9 @@ export default async function ServicesPage({
     db.serviceOrder.findMany({
       where: {
         userId: user.id,
-        status: { in: ['paid', 'assigned', 'delivering', 'delivered', 'confirmed'] },
+        // ⚠️ 含 disputed —— 申诉中的订单仍然是「已购买」,否则购买按钮会重新出现,
+        //    而 checkoutService 没有重复下单检查,这个按钮就是唯一的闸门。
+        status: { in: [...PURCHASED_ORDER_STATUSES] },
       },
       select: { skuId: true },
     }),

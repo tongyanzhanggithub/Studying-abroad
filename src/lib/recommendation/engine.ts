@@ -3,6 +3,7 @@ import { db } from '@/lib/db'
 import { track } from '@/lib/analytics'
 import { renderTemplate, daysUntil } from '@/lib/utils'
 import { countdownDeadline } from '@/lib/programs/deadline'
+import { PURCHASED_ORDER_STATUSES } from '@/lib/services/dispatch'
 import { normalizeGpa } from '@/lib/assessment/engine'
 import type {
   RecommendationCard,
@@ -35,7 +36,8 @@ export async function buildContext(userId: string): Promise<RecommendationContex
     }),
     db.essay.findMany({ where: { userId } }),
     db.serviceOrder.count({
-      where: { userId, status: { in: ['paid', 'assigned', 'delivering', 'delivered', 'confirmed'] } },
+      // 含 disputed:正在申诉的学生不该被当成「没买过」再推销一遍同样的服务
+      where: { userId, status: { in: [...PURCHASED_ORDER_STATUSES] } },
     }),
   ])
 
@@ -242,7 +244,7 @@ async function similarUserPurchaseRate(skuId: string): Promise<number> {
   const [totalSubscribers, buyers] = await Promise.all([
     db.subscription.count({ where: { status: 'active' } }),
     db.serviceOrder.count({
-      where: { skuId, status: { in: ['paid', 'assigned', 'delivering', 'delivered', 'confirmed'] } },
+      where: { skuId, status: { in: [...PURCHASED_ORDER_STATUSES] } },
     }),
   ])
   if (totalSubscribers < MIN_SAMPLE) return 0

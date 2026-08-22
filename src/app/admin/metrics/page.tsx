@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { db } from '@/lib/db'
+import { PURCHASED_ORDER_STATUSES } from '@/lib/services/dispatch'
 import { requireAdmin } from '@/lib/auth/session'
 import { Card } from '@/components/ui'
 import { countDistinctUsers, countEvents } from '@/lib/analytics'
@@ -73,7 +74,7 @@ export default async function AdminMetricsPage() {
     db.serviceOrder.groupBy({
       by: ['userId'],
       where: {
-        status: { in: ['paid', 'assigned', 'delivering', 'delivered', 'confirmed'] },
+        status: { in: [...PURCHASED_ORDER_STATUSES] },
         /**
          * ⚠️ 必须排除已注销的。
          *
