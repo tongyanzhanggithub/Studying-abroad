@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { getAdminSession } from '@/lib/auth/session'
 import { logoutAdmin } from './login/actions'
+import { ROLE_LABEL } from '@/lib/auth/roles'
 
 /**
  * 后台导航按职能分组 —— 13 个入口平铺时找一个功能得逐个扫,
@@ -44,15 +45,16 @@ const NAV_GROUPS = [
     items: [
       { href: '/admin/settings', label: 'AI 设置', minRole: 'super_admin' },
       { href: '/admin/accounts', label: '账号', minRole: 'super_admin' },
+      /**
+       * ⚠️ 门槛是 data_entry,不是 super_admin。
+       *    上面那个「账号」页是**管别人的账号**,只有超管进得去;
+       *    改自己的密码所有人都得能做。此前 changeOwnPassword 写好了却
+       *    没有任何入口,等于谁都改不了自己的密码。
+       */
+      { href: '/admin/me', label: '我的账号', minRole: 'data_entry' },
     ],
   },
 ]
-
-const ROLE_LABEL: Record<string, string> = {
-  super_admin: '超级管理员',
-  operator: '运营管理员',
-  data_entry: '数据核对',
-}
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   // 登录页本身不校验,否则会无限重定向

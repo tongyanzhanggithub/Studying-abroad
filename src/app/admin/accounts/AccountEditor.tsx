@@ -11,20 +11,12 @@ import {
   type AccountInput,
 } from './actions'
 import type { AdminRole } from '@prisma/client'
+import { ROLE_LABEL, ROLE_DESC } from '@/lib/auth/roles'
 
-export const ROLE_LABEL: Record<AdminRole, string> = {
-  super_admin: '超级管理员',
-  operator: '运营',
-  data_entry: '数据录入',
-  advisor: '交付顾问',
-}
-
-const ROLE_DESC: Record<AdminRole, string> = {
-  super_admin: '全部权限,含价格、AI key、账号管理',
-  operator: '日常运营:派单、核对、通知、线索',
-  data_entry: '只能核对院校数据',
-  advisor: '只看派给自己的单,进不了运营后台',
-}
+// 两份标签已合并到 lib/auth/roles.ts —— 原来 layout 那份把 operator 写成
+// 「运营管理员」、data_entry 写成「数据核对」,还漏了 advisor。原样再导出,
+// 引这个文件的地方不用改。
+export { ROLE_LABEL }
 
 /** 新密码只显示一次,必须让管理员看清并转交 */
 function PasswordOnce({ email, password }: { email: string; password: string }) {

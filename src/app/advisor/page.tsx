@@ -4,6 +4,7 @@ import { Card } from '@/components/ui'
 import { formatCents, formatDate } from '@/lib/utils'
 import { ORDER_STATUS_LABEL } from '@/lib/services/dispatch'
 import { OrderActions } from './OrderActions'
+import { ChangePassword } from '@/components/ChangePassword'
 
 /**
  * 顾问工作台:只看派给自己的单。
@@ -224,6 +225,13 @@ export default async function AdvisorPage() {
           </div>
         </section>
       )}
+
+      {/*
+        ⚠️ 顾问尤其需要这个:账号是运营建的,初始密码是运营生成并转交的 ——
+           想换成只有自己知道的,此前没有任何地方能做。
+           /admin/accounts 要 super_admin,顾问连运营后台都进不去。
+      */}
+      <ChangePassword />
     </div>
   )
 }
