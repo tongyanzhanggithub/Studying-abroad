@@ -1,6 +1,10 @@
 import 'server-only'
 import { db } from '@/lib/db'
-import { readDeadlines, readRequirements } from '@/lib/programs/types'
+import { readDeadlines, readRequirements, parseMinBandRequirement } from '@/lib/programs/types'
+
+// 解析器已移到 lib/programs/types.ts —— 行动计划也要用它,而本文件是 server-only
+// 且 import 了 db,拽进 planner 的测试里不合适。原样再导出,老的 import 不用改。
+export { parseMinBandRequirement }
 import { getPublicRegions } from '@/lib/regions/gate'
 import { localDay } from '@/lib/utils'
 import type { Direction, Region, UndergradTier } from '@prisma/client'
@@ -309,35 +313,6 @@ export function classifyTestRequirement(text: string | null | undefined): TestRe
   return 'unspecified'
 }
 
-/**
- * 从「单项要求」原文里解析出最低单项分。
- *
- * 院校库里 61% 的项目写了这一项,常见写法(中英混杂):
- *   「单项不低于6.0」「各项不低于 6.5」「no subtest below 5.5」
- *   「No band below 6.5 (…)」「minimum 6.0 in each component」
- * 明确写「未列明」的返回 null —— 解析不出来时**不猜**,宁可不判。
- */
-export function parseMinBandRequirement(subscores: string | null | undefined): number | null {
-  if (!subscores) return null
-  const t = subscores.toLowerCase()
-  if (/未列明|not specified|no specific|未说明/.test(t)) return null
-
-  const patterns = [
-    /(?:no\s+(?:band|subtest|component|section)\s+(?:below|lower than)\s*)(\d(?:\.\d)?)/,
-    /(?:minimum|min\.?|at least)\s*(?:of\s*)?(\d(?:\.\d)?)\s*(?:in\s+each|per\s+(?:band|component))/,
-    /(?:单项|各项|各单项|每项)[^0-9]{0,6}(\d(?:\.\d)?)/,
-    /(?:each\s+(?:band|component|subtest)[^0-9]{0,10})(\d(?:\.\d)?)/,
-  ]
-  for (const re of patterns) {
-    const m = t.match(re)
-    if (m) {
-      const n = Number(m[1])
-      // 雅思单项区间 4–9;超出范围说明匹配到了别的数字(如年份),丢弃
-      if (Number.isFinite(n) && n >= 4 && n <= 9) return n
-    }
-  }
-  return null
-}
 
 /** 用户语言成绩 vs 项目要求。导出仅为可测 —— 「总分够但单项不够」是最需要守住的一条 */
 export function compareLanguage(

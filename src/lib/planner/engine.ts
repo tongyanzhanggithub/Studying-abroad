@@ -3,7 +3,7 @@ import type { Prisma, DeadlineAudience } from '@prisma/client'
 import { db } from '@/lib/db'
 import { daysUntil } from '@/lib/utils'
 import { countdownDeadline } from '@/lib/programs/deadline'
-import { readRequirements } from '@/lib/programs/types'
+import { readRequirements, parseMinBandRequirement } from '@/lib/programs/types'
 
 /**
  * 行动引擎:把「一堆数字和列表」变成「今天该做的三件事」。
@@ -70,6 +70,53 @@ export function languageGap(
   return null
 }
 
+export interface LanguageShortfall {
+  /** 差多少分 —— 总分缺口与单项缺口里更大的那个 */
+  gap: number
+  /** 缺口来自单项(而不是总分)。文案必须说出来,否则学生会以为刷总分就行 */
+  fromBand: boolean
+}
+
+/**
+ * 这所学校的语言要求,学生差多少。**总分和单项都要看。**
+ *
+ * ⚠️ 只比总分会给出错误的「达标」结论:总分 7.0 但写作 5.5 的学生,
+ *    申请「单项不低于 6.0」的项目一定被拒。schema 在
+ *    Profile.languageMinBand 上就写着这句话,测评引擎也照做了并注明
+ *    「这是最需要修的一类错误」—— 但行动计划此前只比 overall,
+ *    连 languageMinBand 都没进 PlannerProfile。
+ *    结果是同一个学生:测评页说不达标,工作台一句不提、不催他重考。
+ *    院校库里 61% 的项目写明了单项要求,这不是边角情况。
+ *
+ * ⚠️ 单项只对雅思生效,和测评引擎保持一致 —— 托福单项要求的写法差异太大,
+ *    硬套会解析出错误的门槛,那比不判更糟。
+ *
+ * 返回 null = 没有可判定的缺口(要求没写、学生没成绩、或已达标)。
+ */
+export function languageShortfall(
+  userType: string | null,
+  userScore: number | null,
+  userMinBand: number | null,
+  req: ReturnType<typeof readRequirements>,
+): LanguageShortfall | null {
+  const overallGap = languageGap(userType, userScore, req)
+
+  let bandGap: number | null = null
+  if (userType === 'ielts' && userMinBand != null) {
+    const required = parseMinBandRequirement(req.ielts?.subscores)
+    // 解析不出要求、或学生没填单项时都不判 —— 不猜
+    if (required != null) bandGap = required - userMinBand
+  }
+
+  const candidates: Array<{ gap: number; fromBand: boolean }> = []
+  if (overallGap != null && overallGap > 0) candidates.push({ gap: overallGap, fromBand: false })
+  if (bandGap != null && bandGap > 0) candidates.push({ gap: bandGap, fromBand: true })
+  if (!candidates.length) return null
+
+  // 缺口大的那个决定「差多少」;两边一样大时算作单项,因为那更难补
+  return candidates.reduce((a, b) => (b.gap > a.gap || (b.gap === a.gap && b.fromBand) ? b : a))
+}
+
 /**
  * planActions 需要的最小输入形状。
  *
@@ -105,6 +152,12 @@ export interface PlannerEssay {
 export interface PlannerProfile {
   languageType: string | null
   languageScore: number | null
+  /**
+   * 学生的**最低单项**(雅思小分)。
+   * 必填(可为 null),不给默认值 —— 默认值等于允许调用方忘了传,
+   * 而忘了传的后果是又退回「只比总分」那个错误结论。
+   */
+  languageMinBand: number | null
 }
 
 export async function buildActionPlan(userId: string): Promise<ActionPlan> {
@@ -217,15 +270,22 @@ export function planActions({
 
   // ── 语言成绩:周期最长,拖不起 ────────────────────────
   if (profile?.languageType && profile.languageScore != null) {
-    const blocked = choices.filter((c) => {
-      const gap = languageGap(profile.languageType, profile.languageScore, readRequirements(c.program))
-      return gap !== null && gap > 0
-    })
+    const shortfallOf = (c: PlannerChoice) =>
+      languageShortfall(
+        profile.languageType,
+        profile.languageScore,
+        profile.languageMinBand,
+        readRequirements(c.program),
+      )
+    const blocked = choices.filter((c) => shortfallOf(c) !== null)
     if (blocked.length > 0) {
-      const gaps = blocked
-        .map((c) => languageGap(profile.languageType, profile.languageScore, readRequirements(c.program))!)
-        .sort((a, b) => a - b)
-      const minGap = gaps[0]
+      const shortfalls = blocked.map((c) => shortfallOf(c)!).sort((a, b) => a.gap - b.gap)
+      const minGap = shortfalls[0].gap
+      /**
+       * 只要有一所是被单项卡住的,标题就得点出「单项」——
+       * 说「差 0.5 分」而不说是哪种分,学生会去刷总分,而总分本来就够了。
+       */
+      const anyBand = shortfalls.some((s) => s.fromBand)
       const nearReal = nearestOf(
         blocked.map((c) =>
           daysUntil(countdownDeadline(c.program.finalDeadline, c.program.deadlineAudience)),
@@ -235,8 +295,13 @@ export function planActions({
 
       actions.push({
         kind: 'language_gap',
-        title: `语言成绩差 ${minGap.toFixed(1)} 分,卡着 ${blocked.length} 所学校`,
+        title: anyBand
+          ? `语言单项差 ${minGap.toFixed(1)} 分,卡着 ${blocked.length} 所学校`
+          : `语言成绩差 ${minGap.toFixed(1)} 分,卡着 ${blocked.length} 所学校`,
         why:
+          (anyBand
+            ? '你的总分够了,但有学校要求每一个单项都到线,而你的最低单项没到 —— 这种情况只能重考。'
+            : '') +
           `重考一次从报名到出分通常要两个月,` +
           (nearReal === null
             ? '而这几所的截止日我们还没核实档次,请以项目官网为准。'

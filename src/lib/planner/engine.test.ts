@@ -1,10 +1,15 @@
 import { describe, it, expect } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { codeOnly } from '@/lib/source-scan'
 import {
   languageGap,
+  languageShortfall,
   planActions,
   type PlannerChoice,
   type PlannerEssay,
   type PlannerMaterial,
+  type PlannerProfile,
 } from './engine'
 
 /** 相对今天偏移 n 天(中午,避开边界抖动) */
@@ -61,13 +66,13 @@ const plan = (over: {
   choices?: PlannerChoice[]
   materials?: PlannerMaterial[]
   essays?: PlannerEssay[]
-  profile?: { languageType: string | null; languageScore: number | null } | null
+  profile?: PlannerProfile | null
 } = {}) =>
   planActions({
     choices: over.choices ?? [],
     materials: over.materials ?? [],
     essays: over.essays ?? [],
-    profile: over.profile ?? { languageType: 'ielts', languageScore: 7.5 },
+    profile: over.profile ?? { languageType: 'ielts', languageScore: 7.5, languageMinBand: null },
   })
 
 const kinds = (p: ReturnType<typeof plan>) => p.actions.map((a) => a.kind)
@@ -198,7 +203,7 @@ describe('planActions —— 语言成绩', () => {
   it('没填语言成绩时提示去补', () => {
     const p = plan({
       choices: [choice()],
-      profile: { languageType: null, languageScore: null },
+      profile: { languageType: null, languageScore: null, languageMinBand: null },
     })
     const a = p.actions.find((x) => x.kind === 'language_gap')
     expect(a?.href).toBe('/app/settings')
@@ -210,7 +215,7 @@ describe('planActions —— 语言成绩', () => {
         choice({ program: { requirements: { ielts: { overall: 7, subscores: null } } } as never }),
         choice({ program: { requirements: { ielts: { overall: 7.5, subscores: null } } } as never }),
       ],
-      profile: { languageType: 'ielts', languageScore: 6.5 },
+      profile: { languageType: 'ielts', languageScore: 6.5, languageMinBand: null },
     })
     const a = p.actions.find((x) => x.kind === 'language_gap')
     expect(a?.title).toContain('0.5')
@@ -220,7 +225,7 @@ describe('planActions —— 语言成绩', () => {
   it('分数够了就不提语言', () => {
     const p = plan({
       choices: [choice({ program: { requirements: { ielts: { overall: 6.5, subscores: null } } } as never })],
-      profile: { languageType: 'ielts', languageScore: 7 },
+      profile: { languageType: 'ielts', languageScore: 7, languageMinBand: null },
     })
     expect(kinds(p)).not.toContain('language_gap')
   })
@@ -242,7 +247,7 @@ describe('planActions —— 语言成绩', () => {
         ],
         materials: [],
         essays: [],
-        profile: { languageType: 'ielts', languageScore: 6 },
+        profile: { languageType: 'ielts', languageScore: 6, languageMinBand: null },
       }).actions.find((a) => a.kind === 'language_gap')!.score
     expect(mk(30)).toBeGreaterThan(mk(150))
   })
@@ -435,7 +440,7 @@ describe('planActions —— 一次最多 3 条', () => {
       materials: cs.map((c, i) =>
         material({ programIds: [c.programId], template: { name: `材料${i}`, leadTimeDays: 60 } }),
       ),
-      profile: { languageType: 'ielts', languageScore: 5 },
+      profile: { languageType: 'ielts', languageScore: 5, languageMinBand: null },
     })
     expect(p.actions.length).toBeLessThanOrEqual(3)
     expect(p.risks.length).toBeLessThanOrEqual(3)
@@ -599,7 +604,7 @@ describe('planActions —— 兜底值不许出现在文案里', () => {
       choices: onlyUngated(),
       materials: [],
       essays: [],
-      profile: { languageType: 'ielts', languageScore: 6 },
+      profile: { languageType: 'ielts', languageScore: 6, languageMinBand: null },
     })
     const lang = p.actions.find((a) => a.kind === 'language_gap')
     expect(lang?.why).toContain('还没核实档次')
@@ -653,5 +658,175 @@ describe('planActions —— 兜底值不许出现在文案里', () => {
     expect(submit).toBeDefined()
     expect(submit!.why).not.toContain('null')
     expect(submit!.why).toContain('可以递交了')
+  })
+})
+
+describe('planActions —— 单项不达标', () => {
+  /**
+   * schema 在 Profile.languageMinBand 上写着:
+   *   「只比总分会给出错误的『达标』结论:总分 7.0 但写作 5.5 的学生,
+   *     申请『单项不低于 6.0』的项目一定被拒,而我们会告诉他达标 ——
+   *     这是直接违背产品承诺的错误。院校库里 61% 的项目写明了单项要求。」
+   *
+   * 测评引擎(lib/assessment/engine.ts)照做了,而且注释里写明
+   * 「这是最需要修的一类错误」。但**行动计划没有** ——
+   * languageGap 只比 overall,PlannerProfile 里甚至没有 languageMinBand 这个字段。
+   *
+   * 于是同一个学生:测评页说他不达标,工作台却一句不提,
+   * 不会催他重考,「今天该做的三件事」里没有这件最要紧的事。
+   * 和截止日那个 bug 一模一样的形状:规则实现在一处,另一处绕过去了。
+   */
+  const REQ_WITH_BAND = {
+    ielts: { overall: 6.5, subscores: '单项不低于 6.0' },
+  }
+
+  it('总分够、单项不够 —— 必须算作卡住', () => {
+    const p = planActions({
+      choices: [choice({ program: { requirements: REQ_WITH_BAND } })],
+      materials: [],
+      essays: [],
+      // 总分 7.0 过了 6.5,但写作只有 5.5,差单项要求 0.5
+      profile: { languageType: 'ielts', languageScore: 7.0, languageMinBand: 5.5 },
+    })
+    expect(kinds(p)).toContain('language_gap')
+  })
+
+  it('文案要说清是**单项**不够,不能让他以为刷总分就行', () => {
+    const p = planActions({
+      choices: [choice({ program: { requirements: REQ_WITH_BAND } })],
+      materials: [],
+      essays: [],
+      profile: { languageType: 'ielts', languageScore: 7.0, languageMinBand: 5.5 },
+    })
+    const lang = p.actions.find((a) => a.kind === 'language_gap')
+    expect(lang?.title).toContain('单项')
+  })
+
+  it('总分和单项都够 —— 不该报', () => {
+    const p = planActions({
+      choices: [choice({ program: { requirements: REQ_WITH_BAND } })],
+      materials: [],
+      essays: [],
+      profile: { languageType: 'ielts', languageScore: 7.0, languageMinBand: 6.5 },
+    })
+    expect(kinds(p)).not.toContain('language_gap')
+  })
+
+  /** 学生没填单项时不能瞎猜「不达标」—— 只按总分判,和以前一样 */
+  it('学生没填单项 → 只按总分判', () => {
+    const p = planActions({
+      choices: [choice({ program: { requirements: REQ_WITH_BAND } })],
+      materials: [],
+      essays: [],
+      profile: { languageType: 'ielts', languageScore: 7.0, languageMinBand: null },
+    })
+    expect(kinds(p)).not.toContain('language_gap')
+  })
+
+  /** 官网没写单项要求时同样只按总分判 —— 解析不出来就不判,不猜 */
+  it('官网没写单项要求 → 只按总分判', () => {
+    const p = planActions({
+      choices: [choice({ program: { requirements: { ielts: { overall: 6.5, subscores: null } } } })],
+      materials: [],
+      essays: [],
+      profile: { languageType: 'ielts', languageScore: 7.0, languageMinBand: 5.5 },
+    })
+    expect(kinds(p)).not.toContain('language_gap')
+  })
+})
+
+describe('languageShortfall —— 总分与单项一起看', () => {
+  const withBand = (overall: number, subscores: string | null) => ({
+    ielts: { overall, subscores },
+  })
+
+  it('只有总分不够', () => {
+    expect(languageShortfall('ielts', 6.0, 6.0, withBand(6.5, null))).toEqual({
+      gap: 0.5,
+      fromBand: false,
+    })
+  })
+
+  it('只有单项不够 —— 这正是此前漏掉的情形', () => {
+    expect(languageShortfall('ielts', 7.0, 5.5, withBand(6.5, '单项不低于 6.0'))).toEqual({
+      gap: 0.5,
+      fromBand: true,
+    })
+  })
+
+  /** 两边都不够时报大的那个 —— 只报小的会让学生以为补完就行 */
+  it('两边都不够,报缺口大的那个', () => {
+    // 总分差 1.0,单项差 0.5
+    expect(languageShortfall('ielts', 5.5, 5.5, withBand(6.5, '单项不低于 6.0'))).toEqual({
+      gap: 1.0,
+      fromBand: false,
+    })
+    // 总分差 0.5,单项差 1.5
+    expect(languageShortfall('ielts', 6.0, 5.0, withBand(6.5, '各项不低于 6.5'))).toEqual({
+      gap: 1.5,
+      fromBand: true,
+    })
+  })
+
+  /** 缺口一样大时算单项 —— 单项更难补,文案该往难的说 */
+  it('缺口一样大时算作单项', () => {
+    const r = languageShortfall('ielts', 6.0, 6.0, withBand(6.5, '单项不低于 6.5'))
+    expect(r).toEqual({ gap: 0.5, fromBand: true })
+  })
+
+  it('都达标 → null', () => {
+    expect(languageShortfall('ielts', 7.0, 6.5, withBand(6.5, '单项不低于 6.0'))).toBeNull()
+  })
+
+  it('学生没填单项 → 退回只比总分', () => {
+    expect(languageShortfall('ielts', 7.0, null, withBand(6.5, '单项不低于 6.0'))).toBeNull()
+  })
+
+  it('官网没写单项要求 → 退回只比总分', () => {
+    expect(languageShortfall('ielts', 7.0, 4.0, withBand(6.5, null))).toBeNull()
+  })
+
+  /** 解析不出来的写法不能当成 0 分门槛,否则人人「达标」或人人「不达标」 */
+  it('单项写「未列明」→ 不判', () => {
+    expect(languageShortfall('ielts', 7.0, 4.0, withBand(6.5, '未列明'))).toBeNull()
+  })
+
+  /**
+   * ⚠️ 托福不判单项,和测评引擎保持一致 ——
+   *    托福单项要求写法差异太大,硬套会解析出错误门槛,那比不判更糟。
+   */
+  it('托福不判单项', () => {
+    expect(
+      languageShortfall('toefl', 100, 15, { toefl: { overall: 100, subscores: '每项不低于 22' } }),
+    ).toBeNull()
+  })
+})
+
+describe('源码守卫:判「语言达标」的地方必须看单项', () => {
+  /**
+   * 这个 bug 的根因不是某个函数写错了,是**同一条规则只实现在一个引擎里**。
+   * 测评引擎判单项、行动计划不判,于是同一个学生在两个页面得到相反结论。
+   *
+   * 解析器现在住在 lib/programs/types.ts,两边都从那里引。
+   * 谁再在别处自己拿 overall 判达标,这条就该被扩充 ——
+   * 但至少能挡住「解析器被搬回某一个引擎里私有化」这种回退。
+   */
+  it('测评引擎和行动计划用的是同一个解析器', () => {
+    const ROOT = process.cwd()
+    const src = (rel: string) => codeOnly(readFileSync(join(ROOT, rel), 'utf8'))
+
+    // 解析器的唯一实现在 types.ts
+    expect(src('src/lib/programs/types.ts')).toContain('export function parseMinBandRequirement')
+
+    // 两个引擎都引它,而不是各写一份
+    for (const rel of ['src/lib/assessment/engine.ts', 'src/lib/planner/engine.ts']) {
+      expect(src(rel), `${rel} 没有引用 parseMinBandRequirement`).toContain(
+        'parseMinBandRequirement',
+      )
+      expect(
+        src(rel).includes('export function parseMinBandRequirement'),
+        `${rel} 又自己实现了一份解析器 —— 两份一定会漂移`,
+      ).toBe(false)
+    }
   })
 })
