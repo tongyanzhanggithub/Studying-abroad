@@ -18,6 +18,7 @@ import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { PrismaClient, type Confidence, type Direction, type Region } from '@prisma/client'
 import { syncQsRanking } from '../src/lib/programs/qs-ranking-sync'
+import { sanitizeDeadlines } from '../src/lib/programs/deadline-sanitize'
 
 const db = new PrismaClient()
 const RAW_DIR = join(process.cwd(), 'data', 'raw')
@@ -363,76 +364,9 @@ function detectOnlineOnly(row: RawProgram): boolean {
   )
 }
 
-/**
- * 过期周期兜底。返回清洗后的 deadlines 与是否发生降级。
- */
-function sanitizeDeadlines(
-  raw: RawProgram['deadlines'],
-  today: Date,
-): { deadlines: Record<string, unknown>; finalDeadline: Date | null; downgraded: boolean } {
-  const d = raw ?? {}
-  const rounds = (d.rounds ?? []).filter((r): r is RawRound => !!r)
-
-  const finalDate = parseDate(d.final_deadline)
-  const roundDates = rounds.map((r) => parseDate(r.deadline)).filter((x): x is Date => !!x)
-  const allDates = [finalDate, ...roundDates].filter((x): x is Date => !!x)
-  const latest = allDates.sort((a, b) => b.getTime() - a.getTime())[0]
-
-  // 所有已知日期都在今天之前 → 这是上一届的周期,整条不能用
-  const isStaleCycle = !!latest && latest < today
-
-  if (!isStaleCycle) {
-    /**
-     * 即便整体周期没过期,单个日期仍可能是上一届残留
-     * (常见于官网轮次表已更新、但 final deadline 那一行没同步)。
-     *
-     * `finalDeadline` 这一列是前端倒计时的数据源,**绝不能是过去的日期** ——
-     * 否则用户会看到「还有 -20 天」。取所有已知日期里最早的那个**未来**日期;
-     * 一个都没有就置 null,前端会显示「截止日待公布」。
-     */
-    const upcoming = allDates
-      .filter((x) => x >= today)
-      .sort((a, b) => a.getTime() - b.getTime())[0]
-
-    const finalIsStale = !!finalDate && finalDate < today
-
-    return {
-      deadlines: {
-        opens_at: d.opens_at ?? null,
-        rolling: d.rolling ?? false,
-        rounds,
-        final_deadline: finalIsStale ? null : (d.final_deadline ?? null),
-        notes: finalIsStale
-          ? `【最终截止日期 ${d.final_deadline} 已过期,已置空】该日期可能是上一届残留,轮次表中仍有未来日期。${d.notes ?? ''}`
-          : (d.notes ?? null),
-      },
-      finalDeadline: upcoming ?? null,
-      downgraded: finalIsStale,
-    }
-  }
-
-  const archived = [
-    d.opens_at ? `开放:${d.opens_at}` : null,
-    d.final_deadline ? `最终截止:${d.final_deadline}` : null,
-    ...rounds.map((r) => (r.deadline ? `${r.name ?? '轮次'}:${r.deadline}` : null)),
-  ]
-    .filter(Boolean)
-    .join(' / ')
-
-  return {
-    deadlines: {
-      opens_at: null,
-      rolling: d.rolling ?? false,
-      rounds: [],
-      final_deadline: null,
-      notes:
-        `【上一届周期,日期已置空】采集到的申请周期已过期,不可用于规划。` +
-        `原始日期存档:${archived}。${d.notes ?? ''}`,
-    },
-    finalDeadline: null,
-    downgraded: true,
-  }
-}
+// sanitizeDeadlines 已移到 src/lib/programs/deadline-sanitize.ts ——
+// 它决定全站每一个倒计时的数据源,却因为埋在这个脚本里(顶层 main() 一 import 就跑批)
+// 连单独调一次都做不到,一条测试都没有。搬出去之后才测得了。逻辑一行没改。
 
 function normalizeConfidence(raw: string | undefined, downgraded: boolean): Confidence {
   // 无论采集端标了什么,导入后一律是「待人工核对」。
