@@ -219,17 +219,65 @@ function AssessForm() {
     ? directionGroups
     : directionGroups.filter((group) => group.title !== '跨学科 / 其他方向')
 
-  const canNext =
+  /**
+   * 这一步还差什么 —— 用**名字**列出来,不是只给一个布尔值。
+   *
+   * ⚠️ 原来这里是 `const canNext = A && B && C`,按钮 disabled={!canNext},
+   *    没有任何地方说缺的是哪一项。用户点不动,只能自己从头扫一遍表单找空格 ——
+   *    第 3 步有四个条件(地区、方向、手机号、隐私勾选),更难找。
+   *    实际反馈:「我开始以为是 bug」。
+   *
+   *    这个模式项目里本来就有,在 /app/assessments 上:
+   *    「还差 本科院校层级、均分 / GPA 没填 —— 补齐后才能用『按我现在的资料重算』」,
+   *    旁边的注释还写着「别让用户点了『重算』才知道缺什么」。
+   *    免费评估这一页只是没跟上。
+   *
+   * ⚠️ 顺序要和表单里从上到下的顺序一致 —— 用户是照着这个列表回去找的,
+   *    顺序对不上等于让他再扫一遍。
+   */
+  const missing: string[] =
     step === 1
-      ? !!d.undergradTier && !!d.undergradMajor
+      ? [!d.undergradTier && '本科院校层级', !d.undergradMajor && '本科专业'].filter(
+          (x): x is string => typeof x === 'string',
+        )
       : step === 2
-        ? d.gpa != null && !!d.languageType && (d.languageType === 'none' || d.languageScore != null)
-        : !!d.targetRegions?.length &&
-          !!d.targetDirection &&
-          d.phone?.length === 11 &&
-          d.agreedPrivacy
+        ? [
+            d.gpa == null && '均分 / GPA',
+            !d.languageType && '语言成绩(考了哪个,或选「还没考」)',
+            // 选了雅思/托福就必须填总分;选「还没考」不需要
+            !!d.languageType &&
+              d.languageType !== 'none' &&
+              d.languageScore == null &&
+              '语言总分',
+          ].filter((x): x is string => typeof x === 'string')
+        : [
+            !d.targetRegions?.length && '目标地区',
+            !d.targetDirection && '申请方向',
+            d.phone?.length !== 11 && '手机号(11 位)',
+            !d.agreedPrivacy && '勾选同意隐私政策',
+          ].filter((x): x is string => typeof x === 'string')
 
-  const progress = Math.round((step / 3) * 100)
+  const canNext = missing.length === 0
+
+  /**
+   * 「地图完成度」按**真填了多少项**算,不按走到第几步。
+   *
+   * ⚠️ 原来是 `Math.round((step / 3) * 100)` —— 一进第 3 步就显示 100%,
+   *    而旁边那张地图上明明还写着「还没选地区」「还没圈定方向」。
+   *    同一屏里一个说做完了、一个说没做,而且做完了的那个是错的。
+   *
+   *    这几项和 missing 的判定口径必须一致:进度条说 100%,
+   *    「继续」按钮却点不动,同样是自相矛盾。所以直接从同一批条件推。
+   */
+  const FIELDS: boolean[] = [
+    !!d.undergradTier,
+    !!d.undergradMajor,
+    d.gpa != null,
+    !!d.languageType && (d.languageType === 'none' || d.languageScore != null),
+    !!d.targetRegions?.length,
+    !!d.targetDirection,
+  ]
+  const progress = Math.round((FIELDS.filter(Boolean).length / FIELDS.length) * 100)
   const selectedRegions =
     d.targetRegions?.map((region) => REGION_LABEL[region] ?? region).join(' / ') || '还没选地区'
   const languageSummary =
@@ -608,6 +656,16 @@ function AssessForm() {
               {error && (
                 <p className="mt-5 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
                   {error}
+                </p>
+              )}
+
+              {/*
+                ⚠️ 放在按钮**正上方**,不是页面顶部 —— 用户是在这里点不动的,
+                   解释就得出现在他视线落点上。放顶部等于又要他自己去找。
+              */}
+              {missing.length > 0 && (
+                <p className="mt-6 rounded-lg bg-amber-50 px-3 py-2 text-sm leading-relaxed text-amber-900">
+                  还差 <strong>{missing.join('、')}</strong> 没填,填完就能继续。
                 </p>
               )}
 
