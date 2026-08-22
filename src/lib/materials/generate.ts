@@ -2,6 +2,7 @@ import 'server-only'
 import { Prisma, type ApplicationStatus, type EnrollmentStatus } from '@prisma/client'
 import { db } from '@/lib/db'
 import { classifyTestRequirement } from '@/lib/assessment/engine'
+import { nextApplicationStatus } from '@/lib/materials/status'
 
 /**
  * 根据选校单自动生成/合并材料清单(PRD 4.4)。
@@ -202,10 +203,29 @@ export async function getMaterialProgress(userId: string) {
 export async function syncApplicationStatuses(userId: string) {
   const [choices, materials] = await Promise.all([
     db.userSchoolChoice.findMany({ where: { userId, statusManuallySet: false } }),
-    db.userMaterial.findMany({ where: { userId } }),
+    /**
+     * ⚠️ 必须把 template.optional 取出来。
+     *    原来这里是裸的 findMany,拿不到 optional —— 于是下面判「材料是不是全齐了」
+     *    时把获奖证书、论文这类加分项也算了进去,没得过奖的学生永远进不了
+     *    「可以递交」。而 getMaterialProgress 明确把它们排除在分母外,
+     *    同一批数据算出「进度 100%」和「还没做完」两个互相打架的结论。
+     */
+    db.userMaterial.findMany({
+      where: { userId },
+      select: { programIds: true, status: true, template: { select: { optional: true } } },
+    }),
   ])
 
-  const essays = await db.essay.findMany({ where: { userId } })
+  const essays = await db.essay.findMany({
+    where: { userId },
+    select: { programId: true, status: true },
+  })
+
+  const materialInputs = materials.map((m) => ({
+    programIds: m.programIds,
+    status: m.status,
+    optional: m.template.optional,
+  }))
 
   /**
    * 目标状态 → 需要改成该状态的选校记录 id。
@@ -217,36 +237,13 @@ export async function syncApplicationStatuses(userId: string) {
   const toUpdate = new Map<string, string[]>()
 
   for (const choice of choices) {
-    // 已递交及之后的状态不回退
-    if (
-      ['submitted', 'interview_invited', 'admitted', 'rejected', 'waitlisted'].includes(
-        choice.status,
-      )
-    ) {
-      continue
-    }
+    // 判定规则全在 lib/materials/status.ts —— 纯函数,可直接写测试
+    const next = nextApplicationStatus(choice.status, choice.programId, materialInputs, essays)
+    if (!next) continue
 
-    const relevant = materials.filter((m) => m.programIds.includes(choice.programId))
-    if (!relevant.length) continue
-
-    const allDone = relevant.every((m) => m.status === 'completed')
-    const anyStarted = relevant.some((m) => m.status !== 'not_started')
-    const essayFinal = essays
-      .filter((e) => e.programId === choice.programId)
-      .every((e) => e.status === 'final')
-    const hasEssay = essays.some((e) => e.programId === choice.programId)
-
-    let next = choice.status
-    if (allDone && (!hasEssay || essayFinal)) next = 'ready_to_submit'
-    else if (hasEssay && !essayFinal) next = 'writing_essay'
-    else if (anyStarted) next = 'preparing_materials'
-    else next = 'not_started'
-
-    if (next !== choice.status) {
-      const bucket = toUpdate.get(next)
-      if (bucket) bucket.push(choice.id)
-      else toUpdate.set(next, [choice.id])
-    }
+    const bucket = toUpdate.get(next)
+    if (bucket) bucket.push(choice.id)
+    else toUpdate.set(next, [choice.id])
   }
 
   if (toUpdate.size === 0) return
