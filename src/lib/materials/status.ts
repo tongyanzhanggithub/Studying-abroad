@@ -9,15 +9,8 @@
  *
  * (planner/engine.ts 的 planActions 当初也是同样的理由抽出来的。)
  */
+import { isSubmittedOrLater } from '@/lib/programs/types'
 
-/** 已经递交及之后的状态,不再自动回退 */
-export const TERMINAL_STATUSES = [
-  'submitted',
-  'interview_invited',
-  'admitted',
-  'rejected',
-  'waitlisted',
-] as const
 
 export interface StatusMaterial {
   programIds: string[]
@@ -59,7 +52,8 @@ export function nextApplicationStatus(
   materials: StatusMaterial[],
   essays: StatusEssay[],
 ): string | null {
-  if ((TERMINAL_STATUSES as readonly string[]).includes(current)) return null
+  // 已经递交出去的不再自动推进 —— 名单只有 lib/programs/types.ts 一份
+  if (isSubmittedOrLater(current)) return null
 
   const relevant = materials.filter((m) => m.programIds.includes(programId))
   if (!relevant.length) return null

@@ -3,7 +3,11 @@ import type { Prisma, DeadlineAudience } from '@prisma/client'
 import { db } from '@/lib/db'
 import { daysUntil } from '@/lib/utils'
 import { countdownDeadline } from '@/lib/programs/deadline'
-import { readRequirements, parseMinBandRequirement } from '@/lib/programs/types'
+import {
+  readRequirements,
+  parseMinBandRequirement,
+  isSubmittedOrLater,
+} from '@/lib/programs/types'
 
 /**
  * 行动引擎:把「一堆数字和列表」变成「今天该做的三件事」。
@@ -255,7 +259,7 @@ export function planActions({
 
   // ── 已过截止:先清理,否则后面的排序全被它带偏 ──────────
   const expired = withDays.filter(
-    (x) => x.days !== null && x.days < 0 && !['submitted', 'admitted', 'rejected', 'waitlisted', 'interview_invited'].includes(x.c.status),
+    (x) => x.days !== null && x.days < 0 && !isSubmittedOrLater(x.c.status),
   )
   if (expired.length > 0) {
     actions.push({
@@ -436,7 +440,12 @@ export function planActions({
 
   // 滚动录取的学校单独提一句 —— 学生普遍不知道「早交」在这里意味着什么
   const rolling = choices.filter(
-    (x) => x.program.isRolling && !['submitted', 'admitted', 'rejected'].includes(x.status),
+    /**
+     * ⚠️ 这里原来手写的是 ['submitted','admitted','rejected'] ——
+     *    漏了 interview_invited 和 waitlisted。这两种状态下申请早已递交,
+     *    再劝人家「早交比交得完美更重要」是句废话。
+     */
+    (x) => x.program.isRolling && !isSubmittedOrLater(x.status),
   )
   if (rolling.length > 0) {
     risks.push({

@@ -1,4 +1,4 @@
-import type { Confidence, Program, School } from '@prisma/client'
+import type { ApplicationStatus, Confidence, Program, School } from '@prisma/client'
 
 // 本科专业分类已迁到 @/lib/programs/undergrad-catalog(教育部《本科专业目录》国标),
 // 由 @/components/MajorPicker 消费。原来那份手拼的海外 subject area 列表已废弃。
@@ -225,4 +225,39 @@ export function parseMinBandRequirement(subscores: string | null | undefined): n
     }
   }
   return null
+}
+
+/**
+ * 「这份申请已经递交出去了」—— 学生在这些状态下不该再被催交、
+ * 不该被判成「本轮已过截止」、也不该被劝「早点交」。
+ *
+ * ⚠️ 这份名单**必须只有一处**。
+ *
+ *    此前它在四个地方各写了一遍,而且**两处漏了 interview_invited**:
+ *
+ *      dashboard「已递交」计数        5 个,齐
+ *      planner 已过截止判定           5 个,齐
+ *      planner 滚动录取提示           3 个,漏 interview_invited / waitlisted
+ *      每日截止提醒的 SQL             4 个,漏 interview_invited
+ *
+ *    最后那处是**会发短信的**。deadline_3d 是 mandatory 短信,文案写着
+ *    「{school} 申请将于 {date} 截止,请尽快递交」——
+ *    于是一个已经递交、并且拿到面试邀请的学生,会收到催他赶紧递交的短信。
+ *    2026-08-19 本地实测复现:四种「已递交及之后」的状态里,
+ *    只有 interview_invited 那一条真的发了出去。
+ *
+ *    interview_invited 在枚举里排在 submitted **之后** —— 它的含义是
+ *    「已经交了,而且学校约了面试」,不是「还没交」。漏掉它不是口径之争,是写错了。
+ */
+export const SUBMITTED_OR_LATER = [
+  'submitted',
+  'interview_invited',
+  'admitted',
+  'rejected',
+  'waitlisted',
+] as const satisfies readonly ApplicationStatus[]
+
+/** 判断某个状态是否属于「已经递交出去了」 */
+export function isSubmittedOrLater(status: string): boolean {
+  return (SUBMITTED_OR_LATER as readonly string[]).includes(status)
 }

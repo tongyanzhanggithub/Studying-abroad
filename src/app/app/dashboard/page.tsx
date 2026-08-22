@@ -8,7 +8,12 @@ import { selectCard } from '@/lib/recommendation/engine'
 import { buildActionPlan } from '@/lib/planner/engine'
 import { getMaterialProgress, syncApplicationStatuses } from '@/lib/materials/generate'
 import { daysUntil, deadlineUrgency, formatDate, cn } from '@/lib/utils'
-import { APPLICATION_STATUS_LABEL, TIER_TAG_LABEL, programFreshness } from '@/lib/programs/types'
+import {
+  APPLICATION_STATUS_LABEL,
+  TIER_TAG_LABEL,
+  programFreshness,
+  isSubmittedOrLater,
+} from '@/lib/programs/types'
 import { countdownDeadline, isCountdownable, deadlineText } from '@/lib/programs/deadline'
 
 /**
@@ -55,9 +60,7 @@ export default async function DashboardPage() {
   ])
 
   const essaysFinal = essays.filter((e) => e.status === 'final').length
-  const submitted = choices.filter((c) =>
-    ['submitted', 'interview_invited', 'admitted', 'rejected', 'waitlisted'].includes(c.status),
-  ).length
+  const submitted = choices.filter((c) => isSubmittedOrLater(c.status)).length
 
   /**
    * ⚠️ 「最近截止 N 天」是这一页说得最肯定的一句话,所以它只能建立在

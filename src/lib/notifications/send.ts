@@ -3,6 +3,7 @@ import { db } from '@/lib/db'
 import { track } from '@/lib/analytics'
 import { renderTemplate, daysUntil, formatDate } from '@/lib/utils'
 import { COUNTDOWNABLE_AUDIENCES } from '@/lib/programs/deadline'
+import { SUBMITTED_OR_LATER } from '@/lib/programs/types'
 import type { NotificationChannel } from '@prisma/client'
 
 /**
@@ -278,7 +279,13 @@ export async function runDeadlineReminders(): Promise<{ sent: number; errors: st
 
   const choices = await db.userSchoolChoice.findMany({
     where: {
-      status: { notIn: ['submitted', 'admitted', 'rejected', 'waitlisted'] },
+      /**
+       * ⚠️ 用共享名单,不要在这里手写。
+       *    原来手写的是 ['submitted','admitted','rejected','waitlisted'] ——
+       *    **漏了 interview_invited**,于是已经递交、并且拿到面试邀请的学生
+       *    仍然会收到「请尽快递交」的 mandatory 短信。见 SUBMITTED_OR_LATER。
+       */
+      status: { notIn: [...SUBMITTED_OR_LATER] },
       program: {
         OR: windows.map((w) => ({ finalDeadline: w })),
         /**
