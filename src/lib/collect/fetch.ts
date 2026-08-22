@@ -2,7 +2,30 @@ import 'server-only'
 import { lookup } from 'node:dns/promises'
 import { lookup as dnsLookupCb } from 'node:dns'
 import { isIP } from 'node:net'
-import { Agent } from 'undici'
+/**
+ * ⚠️ fetch 必须和 Agent **来自同一个 undici**,不能用全局 fetch。
+ *
+ *    全局 fetch 是 Node 内置的那份 undici(Node 24.15 内置 7.24.4),
+ *    而这个包依赖的是 undici 8.9.0。把 8 的 Dispatcher 交给 7 的 fetch,
+ *    拦截器接口对不上,报 `invalid onRequestStart method` ——
+ *    表现是**每一个页面都抓不到**。
+ *
+ *    更糟的是它被下面那段 catch 包装成「连不上 xxx(网络层失败)。常见原因:
+ *    该网站从当前服务器所在网络访问不通……用『粘贴正文采集』最省事」——
+ *    于是运营会以为是大学官网墙了我们,然后一直手工粘贴,
+ *    而真实原因是两个 undici 版本打架。curl 同一批 URL 全部 200。
+ *
+ *    2026-08-19 实测:
+ *      裸 fetch(无 dispatcher)          → 200   ← 但那样就没有 SSRF 防护
+ *      全局 fetch + undici 8 的 Agent    → invalid onRequestStart method
+ *      undici 8 的 fetch + 它自己的 Agent → 200   ← 就是这个
+ */
+import {
+  Agent,
+  fetch as undiciFetch,
+  type RequestInit as UndiciRequestInit,
+  type Response as UndiciResponse,
+} from 'undici'
 import { awaitPoliteSlot } from './politeness'
 
 /**
@@ -104,11 +127,8 @@ export function isPrivateIp(ip: string): boolean {
  *    TOCTOU):第一次返回公网 IP 过校验,第二次返回 100.100.100.200。
  *    把校验放进连接回调、卡在真正要连的 IP 上,rebinding 第二次拿到的私网 IP 一样被拒。
  */
-/**
- * 全局 fetch 的 RequestInit 类型(来自 DOM lib)不含 `dispatcher`,但 Node 运行时
- * 的 fetch 底层就是 undici、会接受它。这里补一个类型让调用处不用逐个断言。
- */
-type FetchInit = RequestInit & { dispatcher?: Agent }
+/** undici 自己的 RequestInit 本来就带 dispatcher,不用再补类型 */
+type FetchInit = UndiciRequestInit
 
 const ssrfAgent = new Agent({
   connect: {
@@ -218,9 +238,10 @@ export async function fetchPageText(raw: string): Promise<FetchedPage> {
   const ctrl = new AbortController()
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS)
 
-  let res: Response
+  // undici 的 Response,不是 DOM lib 那个 —— 两者的 headers 迭代器类型不兼容
+  let res: UndiciResponse
   try {
-    res = await fetch(url, {
+    res = await undiciFetch(url, {
       signal: ctrl.signal,
       // 在实际建连 IP 上做 SSRF 校验(防 DNS rebinding)
       dispatcher: ssrfAgent,
@@ -241,7 +262,11 @@ export async function fetchPageText(raw: string): Promise<FetchedPage> {
       if (++hops > 3) throw new Error('跳转次数过多')
       const next = await assertPublicUrl(new URL(res.headers.get('location')!, current).toString())
       current = next
-      res = await fetch(next, { signal: ctrl.signal, dispatcher: ssrfAgent, redirect: 'manual' } as FetchInit)
+      res = await undiciFetch(next, {
+        signal: ctrl.signal,
+        dispatcher: ssrfAgent,
+        redirect: 'manual',
+      } as FetchInit)
     }
   } catch (e) {
     clearTimeout(timer)
