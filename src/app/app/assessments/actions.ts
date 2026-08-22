@@ -84,43 +84,17 @@ export async function recomputeAssessment(baseLeadId: string) {
   }
 }
 
-/** 新建一份方案(换地区 / 换方向),用于并排对比 */
-export async function createAssessmentVariant(input: {
-  baseLeadId: string
-  targetRegions: string[]
-  targetDirection: string
-}) {
-  const user = await requireUser()
-
-  const sub = await getActiveSubscription(user.id)
-  if (!sub) return { ok: false as const, error: '这是季票功能,先购买季票。' }
-
-  const base = await db.lead.findUnique({ where: { id: input.baseLeadId } })
-  if (!base || base.phone !== user.phone) {
-    return { ok: false as const, error: '找不到这份评估,或它不属于当前账号。' }
-  }
-
-  if (input.targetRegions.length === 0) {
-    return { ok: false as const, error: '至少选一个地区。' }
-  }
-
-  const old = base.assessPayload as unknown as AssessmentInput
-  const next: AssessmentInput = {
-    ...old,
-    targetRegions: input.targetRegions as Region[],
-    targetDirection: input.targetDirection as AssessmentInput['targetDirection'],
-  }
-
-  const result = await runAssessment(next)
-  const lead = await db.lead.create({
-    data: {
-      phone: user.phone,
-      assessPayload: next as unknown as object,
-      assessResult: result as unknown as object,
-      sourceChannel: 'variant',
-    },
-  })
-
-  revalidatePath('/app/assessments')
-  return { ok: true as const, leadId: lead.id, total: result.totalMatched }
-}
+/**
+ * ⚠️ 这里原来还有一个 createAssessmentVariant(换地区 / 换方向新建一份方案)。
+ *
+ *    它写完了、能跑,但**从来没有任何入口** —— 全项目只有它自己的定义那一行。
+ *    而 /app/assessments 顶部当时写着「换个地区或方向再算一次」,
+ *    页面中部又把目标做成只读并解释「换了就不是同一件事的对比」。
+ *    2026-08-19 定了口径:**这一页不提供换目标**,想比较不同组合就去
+ *    /assess 新做一份(列表按手机号查,新做的会自动并排列进来)。
+ *
+ *    既然决定不提供,就不留一个没有 UI 的 server action 在这里 ——
+ *    这个文件是 `'use server'`,而它的其它导出确实在用,所以整个模块会进构建。
+ *    留着等于挂一个没人看得见、也没人限流的建库 + 跑评估引擎的入口。
+ *    要恢复的话 git 里有:见删除它的那个提交。
+ */

@@ -68,8 +68,22 @@ export default async function AssessmentsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold text-ink-900">我的评估方案</h1>
+        {/*
+          ⚠️ 这句原来写的是「换个地区或方向再算一次,就能并排看哪个组合更稳」——
+             而这一页的目标地区/方向是**只读**的,下面那段旁注还专门解释了为什么
+             (换了目标就不是同一件事的对比)。顶部承诺的事,页面中部明确拒绝提供。
+
+             真实的做法这一页自己已经写了:去 /assess 新做一份。列表按手机号查
+             (见上面 db.lead.findMany 的 where),所以新做的那份会自动并排列在下面。
+             把顶部改成描述这条真实路径,而不是描述一个不存在的按钮。
+        */}
         <p className="mt-1 text-sm leading-relaxed text-ink-600">
-          每做一次评估就存一份。换个地区或方向再算一次,就能并排看哪个组合更稳。
+          每做一次评估就存一份,按手机号归到这里。背景变了就用下面的「重算」;
+          想比较不同地区或方向,去{' '}
+          <Link href="/assess" className="text-brand-600 hover:underline">
+            新做一份评估
+          </Link>
+          ,两份会并排列在下面。
         </p>
       </div>
 

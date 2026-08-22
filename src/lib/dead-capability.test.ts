@@ -20,7 +20,9 @@ import { codeOnly } from '@/lib/source-scan'
  *   createAssessmentVariant  写好了、没有任何入口 —— 而评估页顶部写着
  *                            「换个地区或方向再算一次,就能并排看哪个组合更稳」
  *
- * 前者这次接上了(/admin/me 与 /advisor 两处),后者需要产品决定,先留着。
+ * 两个的处置方向相反,因为「哪一边是对的」不一样:
+ *   changeOwnPassword       文案是对的(人本来就该能改密码)→ 补上入口
+ *   createAssessmentVariant 文案是错的(这一页刻意不提供换目标)→ 改文案、删实现
  *
  * ⚠️ 这组守卫只盯**已知的、明确许诺过的**那几个,不做全量扫描。
  *    全量扫「导出但没人调用」误报太多(server action、测试专用导出、
@@ -83,6 +85,42 @@ describe('许诺过的能力必须真的接得上', () => {
     const layout = codeOnly(readFileSync(join(ROOT, 'src/app/admin/layout.tsx'), 'utf8'))
     expect(layout).toContain("'/admin/me'")
     expect(layout).toMatch(/'\/admin\/me'[^}]*minRole:\s*'data_entry'/)
+  })
+})
+
+/**
+ * 评估页不提供「在本页换地区/方向」。
+ *
+ * 顶部原来承诺「换个地区或方向再算一次」,而中部把目标做成只读并解释
+ * 「换了地区或方向就不是同一件事的对比了」—— 同一页自相矛盾。
+ * 2026-08-19 定:文案是错的那一方。真实路径是去 /assess 新做一份,
+ * 列表按手机号查,新做的会自动并排列进来。
+ */
+describe('评估页的文案和它实际提供的能力一致', () => {
+  const page = codeOnly(
+    readFileSync(join(ROOT, 'src/app/app/assessments/page.tsx'), 'utf8'),
+  ).replace(/\s+/g, ' ')
+
+  /**
+   * ⚠️ 盯的是「再算一次」这个动词,不是「换个地区」这几个字 ——
+   *    页面里正当地提到过地区/方向(展示当前目标、解释为什么只读),
+   *    一刀切会误报。错的是暗示**在这一页**能换了重算。
+   */
+  it('顶部不再承诺「换个地区或方向再算一次」', () => {
+    expect(page).not.toMatch(/换个地区或方向再算一次/)
+  })
+
+  it('指向的是真实路径:去 /assess 新做一份', () => {
+    expect(page).toContain('新做一份评估')
+    expect(page).toContain('href="/assess"')
+  })
+
+  /** 决定不提供了,就不该再留一个没有 UI 的 server action 挂在那儿 */
+  it('createAssessmentVariant 已经删掉,没有悬空的入口', () => {
+    const actions = codeOnly(
+      readFileSync(join(ROOT, 'src/app/app/assessments/actions.ts'), 'utf8'),
+    )
+    expect(actions).not.toContain('export async function createAssessmentVariant')
   })
 })
 
