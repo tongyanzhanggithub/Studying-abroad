@@ -174,10 +174,17 @@ describe('接入位置', () => {
    */
   it('awaitPoliteSlot 在 fetch 之前调用', () => {
     const polite = fetchSrc.indexOf('awaitPoliteSlot(')
-    const doFetch = fetchSrc.indexOf('await fetch(url')
-    expect(polite).toBeGreaterThan(-1)
-    expect(doFetch).toBeGreaterThan(-1)
-    expect(polite).toBeLessThan(doFetch)
+    /**
+     * ⚠️ 别把函数名写死。原来这里找的是字面量 'await fetch(url',
+     *    2026-08-19 修 undici 版本不匹配时把调用改名成了 undiciFetch ——
+     *    这条立刻红了。**它红得对**:代码确实和断言对不上了。
+     *    但它红的原因是「名字变了」,不是「顺序错了」,而它想守的是顺序。
+     *    改成匹配任意 *fetch(url 的调用形式,名字再变也照样守得住顺序。
+     */
+    const m = /await \w*[fF]etch\(url/.exec(fetchSrc)
+    expect(polite, '找不到 awaitPoliteSlot 调用').toBeGreaterThan(-1)
+    expect(m, '找不到对 url 发起的 fetch 调用').not.toBeNull()
+    expect(polite).toBeLessThan(m!.index)
   })
 
   it('被 robots 拒绝时抛错,不继续抓', () => {
