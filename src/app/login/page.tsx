@@ -130,29 +130,15 @@ function LoginForm() {
           ))}
         </div>
 
-        {/* 两步指示 —— 让用户知道「填手机号 → 填验证码」是两步,不是缺了直接登录 */}
-        {mode === 'code' && (
-        <ol className="mb-5 flex items-center gap-2 text-xs">
-          <li className={codeSent ? 'text-ink-400' : 'font-medium text-brand-600'}>
-            <span className="mr-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-600 text-[10px] text-white">
-              1
-            </span>
-            填手机号
-          </li>
-          <li className="text-ink-300">→</li>
-          <li className={codeSent ? 'font-medium text-brand-600' : 'text-ink-400'}>
-            <span
-              className={`mr-1 inline-flex h-4 w-4 items-center justify-center rounded-full text-[10px] text-white ${
-                codeSent ? 'bg-brand-600' : 'bg-ink-300'
-              }`}
-            >
-              2
-            </span>
-            填验证码登录
-          </li>
-        </ol>
-        )}
-
+        {/*
+          ⚠️ 这里原来有一条「1 填手机号 → 2 填验证码登录」的步骤指示。
+             它的本意是「别以为缺了直接登录」,但副作用更大:一个两个输入框的
+             小表单被画成了多步流程,看起来像还要跳页。
+             实际上手机号和验证码就在同一张卡片上,发完码验证码框直接长出来 ——
+             本来就是一页,不需要用步骤条解释。
+             「缺了直接登录」那个担心由按钮文案自己承担:没发码时按钮是
+             「获取验证码」,发完才变成「登录」。
+        */}
         <div className="space-y-4">
           <Field label="手机号">
             <input
@@ -181,9 +167,32 @@ function LoginForm() {
                 placeholder="登录密码"
                 className="w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
               />
-              <p className="mt-1.5 text-xs leading-relaxed text-ink-400">
-                密码在「设置」里自行设定。没设过就用验证码登录,进去之后再设。
-              </p>
+              {/*
+                ⚠️ 原来这里只有一句说明:「没设过就用验证码登录,进去之后再设」——
+                   它其实已经写出了找回路径,但那是**一句提示,不是一个按钮**。
+                   用户忘了密码时在找「忘记密码?」这四个字,找不到就以为没救了。
+
+                   本系统没有邮箱重置那条路:账号本来就是手机号 + 验证码建的,
+                   验证码登录**就是**找回方式。所以这里不做「重置密码」流程,
+                   直接给一个切到验证码登录的按钮 —— 一步到位,而不是发一封
+                   什么都做不了的邮件。
+              */}
+              <div className="mt-1.5 flex items-start justify-between gap-3">
+                <p className="text-xs leading-relaxed text-ink-400">
+                  密码在「设置」里自行设定,没设过就用验证码登录。
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode('code')
+                    setError(null)
+                    setPassword('')
+                  }}
+                  className="shrink-0 text-xs text-brand-600 hover:underline"
+                >
+                  忘记密码?
+                </button>
+              </div>
             </Field>
           )}
 
