@@ -11,8 +11,9 @@
  * 这和 planActions、settlement-math、refund-math 当初抽出来是同一个理由:
  * 影响面越大的纯逻辑,越不该只能靠人眼看。
  *
- * ⚠️ 从脚本里**原样搬过来的,一行逻辑都没改**。搬动本身不该改变任何行为,
- *    下面的测试就是用来钉住这一点的。
+ * ⚠️ 抽出来时是**原样搬的,一行逻辑没改**(用 git 逐字比对确认过),
+ *    测试补齐之后才动的口径 —— 见下面 sanitizeDeadlines 上的说明。
+ *    顺序是刻意的:先有测试,再改行为,否则改完没人知道改动了什么。
  */
 
 /** 一轮申请。字段可空 —— 采集到的数据经常缺项 */
@@ -48,22 +49,10 @@ function parseDate(v: string | null | undefined): Date | null {
 /**
  * 过期周期兜底。返回清洗后的 deadlines 与是否发生降级。
  *
- * ⚠️ 已知的口径分歧,**这次没有改**,只是用测试钉住现状:
+ * ── 口径(2026-08-19 定)────────────────────────────
  *
- *    `finalDeadline` 取的是「所有已知日期里最早的那个**未来**日期」,
- *    而 allDates 同时包含 final_deadline 和**各轮次的截止日**。
- *    于是一个有轮次的项目:
- *
- *      原始   第1轮 2026-10-15 / 第2轮 2027-01-10 / 最终截止 2027-03-01
- *      结果   finalDeadline 列 = 2026-10-15(卡片倒计时说「还有 N 天截止」)
- *             deadlines.final_deadline = 2027-03-01(详情页说「最终截止」)
- *
- *    也就是同一个项目两页两个日期,而 10-15 那天其实什么都不会关闭。
- *
- *    两种改法都说得通,取决于产品意图:
- *      · 倒计时想指向「下一个该动手的日期」→ 现在的取值是对的,该改的是文案
- *      · 倒计时想指向「申请通道关闭」→ 该只看 final_deadline
- *    没定之前不动。见 deadline-sanitize.test.ts 里那一组用例。
+ * `finalDeadline` = **申请通道关闭的那一天**,只认 final_deadline,
+ * 不拿轮次日期顶替。理由和实测数据见下面函数上的注释。
  */
 export function sanitizeDeadlines(
   raw: RawDeadlines | null | undefined,
@@ -86,14 +75,28 @@ export function sanitizeDeadlines(
      * (常见于官网轮次表已更新、但 final deadline 那一行没同步)。
      *
      * `finalDeadline` 这一列是前端倒计时的数据源,**绝不能是过去的日期** ——
-     * 否则用户会看到「还有 -20 天」。取所有已知日期里最早的那个**未来**日期;
-     * 一个都没有就置 null,前端会显示「截止日待公布」。
+     * 否则用户会看到「还有 -20 天」。
+     *
+     * ⚠️ 口径:倒计时表示**申请通道关闭**,所以这一列**只认 final_deadline**,
+     *    不拿轮次日期顶替。
+     *
+     *    原来取的是「所有已知日期里最早的未来日期」,而那批日期同时包含各轮次 ——
+     *    于是有轮次的项目,列里存的其实是**下一轮**的日期,卡片却写「还有 N 天截止」,
+     *    而那天什么都不会关闭。拿 data/raw 的 310 个项目实测(以 2026-09-01 为今天):
+     *    76 个有未来的最终截止日,其中 **31 个(41%)**倒计时指向的是更早的轮次。
+     *    最夸张的是 UBC 的 Master of Management:倒计时到 2026-10-06,
+     *    而申请通道 2027-05-04 才关 —— 早了七个月。学生会以为自己错过了。
+     *
+     * ⚠️ 拿不到可用的最终截止日时**置 null,不用最后一轮顶替**。
+     *    前端显示「截止日待公布」,详情页照样列出轮次表,学生看得到。
+     *    顶替等于我们替官网宣布了一个它没说过的关闭日期 —— 正是这一轮
+     *    在反复修的那类错误。实测这种情况只有 1 个项目(NUS 供应链)。
      */
-    const upcoming = allDates
-      .filter((x) => x >= today)
-      .sort((a, b) => a.getTime() - b.getTime())[0]
-
     const finalIsStale = !!finalDate && finalDate < today
+    const channelClose = finalDate && finalDate >= today ? finalDate : null
+
+    const hasFutureRound = roundDates.some((x) => x >= today)
+    const noCloseButRounds = !channelClose && hasFutureRound
 
     return {
       deadlines: {
@@ -103,9 +106,11 @@ export function sanitizeDeadlines(
         final_deadline: finalIsStale ? null : (d.final_deadline ?? null),
         notes: finalIsStale
           ? `【最终截止日期 ${d.final_deadline} 已过期,已置空】该日期可能是上一届残留,轮次表中仍有未来日期。${d.notes ?? ''}`
-          : (d.notes ?? null),
+          : noCloseButRounds
+            ? `【无可用的最终截止日】轮次表里有未来日期,但官网未给出申请通道关闭日,故不做倒计时。${d.notes ?? ''}`
+            : (d.notes ?? null),
       },
-      finalDeadline: upcoming ?? null,
+      finalDeadline: channelClose,
       downgraded: finalIsStale,
     }
   }

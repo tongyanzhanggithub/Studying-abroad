@@ -8,9 +8,10 @@ import { sanitizeDeadlines } from '@/lib/programs/deadline-sanitize'
  * 行动计划、每日提醒短信。它算错一格,上面全部跟着错 ——
  * 而它此前**一条测试都没有**,因为埋在导入脚本里根本调不到。
  *
- * ⚠️ 这一组是**行为快照**,不是「应该怎样」的主张。
- *    函数是原样搬过来的,这些用例先把现状钉死;真要改口径时,
- *    改动会在这里显形,而不是悄悄改变全站倒计时。
+ * ⚠️ 口径已定(2026-08-19):倒计时表示**申请通道关闭**,
+ *    所以这一列只认 final_deadline,不拿轮次日期顶替。
+ *    这一组用例先是行为快照(抽函数时钉现状),口径定下来之后
+ *    改成了断言新口径 —— 下面那一组的名字从「⚠️ 待定」变成了结论。
  */
 
 const TODAY = new Date('2026-09-01T00:00:00+08:00')
@@ -62,8 +63,13 @@ describe('只有最终截止日过期(轮次表已更新)', () => {
     expect(r.deadlines.final_deadline).toBeNull()
   })
 
-  it('倒计时改用轮次里那个未来日期', () => {
-    expect(day(r.finalDeadline)).toBe('2027-01-10')
+  /**
+   * ⚠️ 口径变更点。旧行为是退回轮次里那个未来日期(2027-01-10),
+   *    新口径下**不顶替** —— 官网没给出这一届的通道关闭日,我们就不宣布一个。
+   *    详情页照样列出轮次表,学生看得到 2027-01-10,只是卡片不做倒计时。
+   */
+  it('不拿轮次日期顶替,倒计时置空', () => {
+    expect(r.finalDeadline).toBeNull()
   })
 
   it('notes 说清楚为什么置空了', () => {
@@ -134,26 +140,20 @@ describe('正常周期', () => {
 })
 
 /**
- * ── 已知的口径分歧,没有改,只是钉住 ──────────────────
+ * ── 有轮次时:倒计时指向通道关闭,不是下一轮 ─────────────
  *
- * finalDeadline 取「所有已知日期里最早的未来日期」,而 allDates 同时包含
- * final_deadline 和**各轮次的截止日**。于是有轮次的项目,
- * 列里存的其实是**下一轮**的日期,而不是最终截止日。
+ * 旧行为取「所有已知日期里最早的未来日期」,而那批日期同时包含各轮次 ——
+ * 于是列里存的是**下一轮**,卡片却写「还有 N 天截止」,而那天什么都不会关闭。
  *
- * 结果是同一个项目两页两个日期:
- *   院校库卡片 / 仪表盘   「还有 44 天截止」  ← 第 1 轮 10-15
- *   详情页「最终截止」     2027-03-01
- * 而 10-15 那天其实什么都不会关闭。
+ * 拿 data/raw 的 310 个项目实测(以 2026-09-01 为今天):
+ *   76 个有未来的最终截止日,其中 **31 个(41%)**倒计时指向的是更早的轮次。
+ *   最夸张的 UBC Master of Management:倒计时到 2026-10-06,
+ *   而通道 2027-05-04 才关 —— 早了七个月,学生会以为自己错过了。
  *
- * ⚠️ 两种改法都说得通,取决于产品意图:
- *      · 倒计时想指向「下一个该动手的日期」→ 现在的取值是对的,该改的是文案
- *        (「还有 N 天截止」应改成「下一轮还有 N 天」)
- *      · 倒计时想指向「申请通道关闭」→ 该只看 final_deadline
- *    没定之前不动它 —— 这一列喂着全站所有倒计时,改错了影响面比这个歧义本身大。
- *
- * 这两条用例的作用是:谁真去改的时候,会先看到它们红,并读到上面这段。
+ * 只有 1 个项目(NUS 供应链)因为这次改动失去倒计时:
+ * 它的最终截止日缺失,只剩轮次 —— 那种情况下我们不宣布关闭日。
  */
-describe('⚠️ 待定:有轮次时,finalDeadline 存的是下一轮而不是最终截止', () => {
+describe('有轮次时,倒计时指向申请通道关闭', () => {
   const raw = {
     final_deadline: '2027-03-01',
     rounds: [
@@ -162,22 +162,33 @@ describe('⚠️ 待定:有轮次时,finalDeadline 存的是下一轮而不是�
     ],
   }
 
-  it('列里存的是第 1 轮的日期(倒计时用这个)', () => {
-    expect(day(sanitizeDeadlines(raw, TODAY).finalDeadline)).toBe('2026-10-15')
+  it('列里存的是最终截止日,不是第 1 轮', () => {
+    expect(day(sanitizeDeadlines(raw, TODAY).finalDeadline)).toBe('2027-03-01')
   })
 
-  it('JSON 里的最终截止日保持原值(详情页用这个)', () => {
-    expect(sanitizeDeadlines(raw, TODAY).deadlines.final_deadline).toBe('2027-03-01')
-  })
-
-  it('两处确实不一致 —— 这就是分歧本身', () => {
+  it('和详情页那个「最终截止」是同一天 —— 两页不再打架', () => {
     const r = sanitizeDeadlines(raw, TODAY)
-    expect(day(r.finalDeadline)).not.toBe(r.deadlines.final_deadline)
+    expect(day(r.finalDeadline)).toBe(r.deadlines.final_deadline)
   })
 
-  /** 第 1 轮过去之后,倒计时自动挪到第 2 轮 —— 不会变成负数,这部分是对的 */
-  it('第 1 轮过去后自动挪到第 2 轮', () => {
+  it('轮次表原样保留,详情页照样列得出来', () => {
+    expect(sanitizeDeadlines(raw, TODAY).deadlines.rounds).toHaveLength(2)
+  })
+
+  /** 轮次一个个过去,通道关闭日不动 —— 这正是「关闭」该有的语义 */
+  it('第 1 轮过去后倒计时不变', () => {
     const later = new Date('2026-11-01T00:00:00+08:00')
-    expect(day(sanitizeDeadlines(raw, later).finalDeadline)).toBe('2027-01-10')
+    expect(day(sanitizeDeadlines(raw, later).finalDeadline)).toBe('2027-03-01')
+  })
+
+  /**
+   * ⚠️ 没有可用的最终截止日时**不拿最后一轮顶替**。
+   *    顶替等于我们替官网宣布了一个它没说过的关闭日期。
+   */
+  it('只有轮次、没有最终截止日 → 不倒计时,并在 notes 里说明', () => {
+    const r = sanitizeDeadlines({ rounds: [{ name: '第 2 轮', deadline: '2027-02-28' }] }, TODAY)
+    expect(r.finalDeadline).toBeNull()
+    expect(r.deadlines.notes).toContain('未给出申请通道关闭日')
+    expect(r.deadlines.rounds).toHaveLength(1)
   })
 })
