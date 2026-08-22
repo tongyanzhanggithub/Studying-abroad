@@ -528,7 +528,7 @@ function AssessForm() {
 
               {step === 3 && (
                 <div className="space-y-6">
-                  <Field label="你想把申请投向哪些地方" hint="美国之外的主流英语授课地区都在这里。标「即将开放」的正在核对数据,暂不可选。右侧数字是当前收录的项目数。">
+                  <Field label="你想把申请投向哪些地方" hint="下面列的就是我们覆盖的目的地。标「即将开放」的正在核对数据,暂不可选。右侧数字是当前收录的项目数。">
                     <div className="grid grid-cols-2 gap-2">
                       {regions.map((r) => {
                         const value = r.region as NonNullable<Draft['targetRegions']>[number]

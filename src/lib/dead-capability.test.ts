@@ -227,3 +227,43 @@ describe('后台会话版本号', () => {
     expect(body).not.toContain('createAdminSession')
   })
 })
+
+/**
+ * 对外文案里不许写死地区清单。
+ *
+ * ── 为什么 ────────────────────────────────────────────
+ *
+ * 地区是在后台按核对率**逐个开放**的。而「我们覆盖哪些地区」这句话
+ * 原来写死在四个地方:首屏 chip、首页 FAQ、评估页地区选择的 hint、
+ * actions.ts 的注释 —— 全都说「美国之外」。
+ *
+ * 2026-08-19 用户开始做美国,这四处同时变成错的。漏改一处就是对外说错话,
+ * 而且没有任何机制会发现 —— 这一整轮修的正是这种形状。
+ *
+ * 改法:首屏那句从**已开放地区**算出来(和旁边那三个数字同源),
+ * FAQ 改成指向评估页(那一页是从数据渲染的),不再自己列清单。
+ */
+describe('对外文案不写死地区清单', () => {
+  const FILES = ['src/app/page.tsx', 'src/app/assess/page.tsx', 'src/app/assess/actions.ts']
+
+  it.each(FILES)('%s 里没有写死的「美国之外」', (rel) => {
+    // ⚠️ 剥注释 —— 上面那几段说明里正好引用了这句话当反例
+    const src = codeOnly(readFileSync(join(ROOT, rel), 'utf8'))
+    expect(src).not.toContain('美国之外')
+  })
+
+  it('首屏那句地区文案是算出来的,不是常量', () => {
+    const src = codeOnly(readFileSync(join(ROOT, 'src/app/page.tsx'), 'utf8'))
+    expect(src).toContain('function heroRegionCopy')
+    // 必须真的用上,而不是定义了放着
+    expect(src).toContain('heroRegionCopy(openRegions)')
+    expect(src).toContain('{regionCopy}')
+  })
+
+  /** 和旁边那三个数字同源 —— 否则会出现「文案说 3 个地区、数字写 1」 */
+  it('文案和「N 个国家/地区」那个数字来自同一份 openRegions', () => {
+    const src = codeOnly(readFileSync(join(ROOT, 'src/app/page.tsx'), 'utf8')).replace(/\s+/g, ' ')
+    expect(src).toContain('const openRegions = [...new Set(schools.map((s) => s.region))]')
+    expect(src).toContain('const openRegionCount = openRegions.length')
+  })
+})

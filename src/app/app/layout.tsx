@@ -16,7 +16,17 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   if (!user) redirect('/login?next=/app/dashboard')
 
   const subscription = await getActiveSubscription(user.id)
-  if (!subscription) redirect('/pricing')
+  /**
+   * ⚠️ 必须带上原因。原来是光秃秃的 `redirect('/pricing')` ——
+   *
+   *    用户从定价页点「进入工作台」,没有季票 → 被弹回**定价页**,
+   *    也就是他刚才那一页,页面一模一样、没有任何说明。
+   *    从他的角度看就是「点了没反应,是不是坏了」。实际反馈就是这句话。
+   *
+   *    带上 need=subscription,定价页据此说清楚「工作台要季票」。
+   *    弹回来本身没错,不告诉他为什么才是错的。
+   */
+  if (!subscription) redirect('/pricing?need=subscription')
 
   // 未读消息数 —— 导航角标用。一次 count,带 (userId, createdAt) 索引
   const unreadCount = await countUnread(user.id)

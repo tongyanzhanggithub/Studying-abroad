@@ -147,8 +147,20 @@ async function getPricingData(): Promise<{
   }
 }
 
-export default async function PricingPage() {
+export default async function PricingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ need?: string }>
+}) {
   const { plans, skus, user, usingFallback } = await getPricingData()
+  /**
+   * 是被工作台弹回来的吗。
+   *
+   * ⚠️ /app 的 layout 在没有季票时 redirect 到这一页。原来不带任何参数,
+   *    而用户很可能**本来就在这一页**点的「进入工作台」—— 弹回来页面一模一样,
+   *    看起来就是「点了没反应」。实际反馈就是这句话。
+   */
+  const bouncedFromApp = (await searchParams).need === 'subscription'
 
   /**
    * 已有生效季票的人不该再看到「购买季票」。
@@ -189,6 +201,19 @@ export default async function PricingPage() {
           </nav>
         </div>
       </header>
+
+      {/* 从工作台弹回来的,先说清楚为什么 —— 否则这一页看起来就是「点了没反应」 */}
+      {bouncedFromApp && !subscription && (
+        <div className="border-b border-amber-200 bg-amber-50">
+          <div className="mx-auto max-w-6xl px-5 py-3">
+            <p className="text-sm leading-relaxed text-amber-900">
+              <strong>工作台需要季票才能进。</strong>
+              选校单、材料清单、文书工作台和截止日提醒都在季票里 ——
+              免费评估不需要,随时可以做。
+            </p>
+          </div>
+        </div>
+      )}
 
       <section className="relative overflow-hidden border-b border-white/70 bg-white">
         <div className="absolute inset-x-0 top-0 h-28 bg-[linear-gradient(90deg,rgba(255,100,76,0.12),rgba(225,48,108,0.10),rgba(88,81,219,0.10))]" />

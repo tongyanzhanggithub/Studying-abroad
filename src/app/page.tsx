@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { db } from '@/lib/db'
 import { formatCents } from '@/lib/utils'
-import { REGION_ORDER } from '@/lib/programs/types'
+import { REGION_LABEL, REGION_ORDER } from '@/lib/programs/types'
 import { unstable_cache } from 'next/cache'
 import { readPublicRegionsFresh } from '@/lib/regions/gate'
 import { CACHE_TAGS, MARKETING_CACHE_SECONDS } from '@/lib/cache-tags'
@@ -122,8 +122,15 @@ function faqs(aiReady: boolean) {
     a: '七天内无条件全额退,不问理由。超过之后按剩下的月份退。单买的人工服务:老师还没接单全额退,接了没做完退一半,做完了不退。这些写在付款页面上,不藏在协议里。',
   },
   {
-    q: '覆盖哪些国家和专业?为什么没有美国?',
-    a: '目的地覆盖美国之外的主流英语授课地区;专业方向按海外常见 subject area 归类,从商科、计算机、工程到教育、传媒、法律、艺术设计等都会逐步收录。评估结果优先使用已经录入并有规则的数据,没有把握的方向不会硬编结论。美国暂时没做:它的申请规则差别很大(标化、文书数量、EA/ED 轮次、面试),需要一套单独的产品逻辑。',
+    q: '覆盖哪些国家和专业?',
+    /**
+     * ⚠️ 这里刻意**不列地区清单**。
+     *    原来写的是「覆盖美国之外的主流英语授课地区……美国暂时没做」,
+     *    而地区是在后台按核对率逐个开放的 —— 清单写死在 FAQ 里,
+     *    开一个地区就要记得回来改一次,漏改就是对外说错话。
+     *    改成指向「评估页看到的就是当前能选的」,那一页是从数据渲染的,永远准。
+     */
+    a: '打开免费评估就能看到当前开放的目的地 —— 那一页列的就是现在真能选的,不是宣传口径。地区是逐个开放的:一个地区的数据核对达标了才会放出来,没达标的标成「即将开放」、点不了。专业方向按海外常见 subject area 归类,从商科、计算机、工程到教育、传媒、法律、艺术设计逐步收录。评估结果只用已经录入并有规则的数据,没把握的方向不会硬编结论。',
   },
   ]
 }
@@ -194,7 +201,29 @@ const ADVISOR_GROUPS = [
   },
 ]
 
-const REGION_HERO_COPY = '美国之外主流英语授课地区'
+/**
+ * 首屏那句地区说明 —— **从真实开放的地区算出来**,不写死。
+ *
+ * ⚠️ 原来是写死的 '美国之外主流英语授课地区'。这句话散在四个地方
+ *    (首屏、FAQ、评估页地区选择的 hint、actions.ts 的注释),
+ *    美国一开放就要同步四处,漏一处就是对外说错话 ——
+ *    而这一整轮修的正是这种「同一句话写好几遍,总有一份是错的」。
+ *
+ *    首屏那三个数字本来就是从已开放地区算的(openRegionCount),
+ *    文案跟着同一份数据走,开了什么地区它自己就说什么,不需要有人记得改。
+ */
+function heroRegionCopy(openRegions: string[]): string {
+  if (openRegions.length === 0) return '主流英语授课地区'
+  const sorted = [...openRegions].sort(
+    (a, b) =>
+      REGION_ORDER.indexOf(a as never) - REGION_ORDER.indexOf(b as never),
+  )
+  const names = sorted.map((r) => REGION_LABEL[r as keyof typeof REGION_LABEL] ?? r)
+  // 三个以内直接列全;再多就列前三 + 「等 N 个地区」,否则这一行会太长
+  return names.length <= 3
+    ? names.join(' · ')
+    : `${names.slice(0, 3).join(' · ')} 等 ${names.length} 个地区`
+}
 const SUPPORTED_REGION_COUNT = REGION_ORDER.length
 
 const FALLBACK_SCHOOLS: MarketingSchool[] = [
@@ -327,8 +356,10 @@ export default async function HomePage() {
   const aiReady = await isAiAvailable()
 
   const entryPrice = plans[0]?.priceCents
-  /** 已开放的地区数 —— 由 schools 反推,和上面的项目数、院校数同源 */
-  const openRegionCount = new Set(schools.map((s) => s.region)).size
+  /** 已开放的地区 —— 由 schools 反推,和上面的项目数、院校数同源 */
+  const openRegions = [...new Set(schools.map((s) => s.region))]
+  const openRegionCount = openRegions.length
+  const regionCopy = heroRegionCopy(openRegions)
 
   return (
     <div className="marketing-page min-h-screen bg-insta-surface text-ink-800">
@@ -404,7 +435,7 @@ export default async function HomePage() {
         <div className="relative z-10 mx-auto max-w-6xl px-5 py-14 sm:py-20">
           <div className="glass-chip inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs text-ink-700">
             <span className="h-2 w-2 rounded-full bg-insta-pink shadow-[0_0_0_4px_rgba(225,48,108,0.14)]" />
-            {REGION_HERO_COPY} · 硕士申请
+            {regionCopy} · 硕士申请
           </div>
 
           <h1 className="display-heading mt-6 max-w-3xl text-4xl font-semibold text-ink-900 sm:text-6xl">
