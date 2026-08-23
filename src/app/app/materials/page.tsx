@@ -138,6 +138,24 @@ export default async function MaterialsPage() {
                 style={{ width: `${progress.percent}%` }}
               />
             </div>
+            {/*
+              ⚠️ 分母和页面上的卡片数**对不上**,必须解释。
+
+                 清单上有 13 张卡,进度却写「0 / 11」—— 因为两张「加分项」
+                 不计入完成度(见 getMaterialProgress)。逻辑是对的:
+                 加分材料不该让进度条永远满不了。但不说明的话,
+                 用户看到的就是「数字算错了」。
+
+                 getMaterialProgress 早就把 optionalTotal / optionalDone 算好了,
+                 注释里还写着「UI 可以展示成『另有 N 项加分材料』」——
+                 只是一直没人接上,白算了。
+            */}
+            {progress.optionalTotal > 0 && (
+              <p className="mt-2 text-xs text-ink-400">
+                另有 {progress.optionalTotal} 项加分材料(已完成 {progress.optionalDone} 项)不计入进度 ——
+                交了更好,不交也不影响申请。
+              </p>
+            )}
             {overdueCount > 0 && (
               <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm leading-relaxed text-red-700">
                 有 <strong>{overdueCount}</strong> 项按常规办理周期已经赶不上最近的截止日 ——
