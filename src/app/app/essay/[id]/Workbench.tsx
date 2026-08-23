@@ -19,6 +19,7 @@ import {
   finalizeEssay,
   type PolishSuggestion,
 } from '@/app/app/essays/actions'
+import { interviewHint, AI_OFF_NOTE } from '@/lib/llm/copy'
 
 /**
  * 文书工作台(PRD 4.5)。
@@ -91,6 +92,12 @@ export function EssayWorkbench(props: {
   interviewMessages: Array<{ role: string; content: string }>
   complianceCheck: ComplianceResult | null
   remainingQuota: number
+  /**
+   * 模型接没接通。⚠️ 没接通时三个 AI 入口必须**禁用**,不能只是把文案改软 ——
+   * 点下去拿到的是 mock 的开发者报错,而用户是付了钱进来的。
+   * 「合规」那一页不受影响:它是规则检查,不调模型。
+   */
+  aiReady: boolean
   recCard: RecCardData | null
 }) {
   const router = useRouter()
@@ -222,7 +229,7 @@ export function EssayWorkbench(props: {
               未保存
             </p>
           )}
-          <p className="mt-0.5">今日 AI 剩余 {props.remainingQuota} 次</p>
+          {props.aiReady && <p className="mt-0.5">今日 AI 剩余 {props.remainingQuota} 次</p>}
         </div>
       </div>
 
@@ -295,12 +302,26 @@ export function EssayWorkbench(props: {
                 <p className="mb-3 rounded bg-red-50 px-3 py-2 text-xs text-red-700">{error}</p>
               )}
 
+              {/*
+                ⚠️ 按钮灰掉了就必须说明为什么。
+                   「点不动、也不告诉你原因」是这个项目已经踩过的坑
+                   (评估页那次:某一步没填,下一步直接不可点,用户以为是 bug)。
+                   合规那一页不调模型,照常可用,所以这条提示不覆盖它。
+              */}
+              {!props.aiReady && tab !== 'compliance' && (
+                <p className="mb-3 rounded-lg border border-dashed border-ink-200 bg-ink-50 px-3 py-2 text-xs leading-relaxed text-ink-600">
+                  {AI_OFF_NOTE}这一栏暂时用不了。
+                  <span className="text-ink-400">
+                    「合规」那一栏是规则检查,不依赖模型,现在就能用。
+                  </span>
+                </p>
+              )}
+
               {/* 素材访谈 */}
               {tab === 'interview' && (
                 <div className="space-y-3">
                   <p className="text-xs leading-relaxed text-ink-400">
-                    AI 会一次问一个问题,帮你把经历讲具体。它不会替你写文书 ——
-                    要求它写整段会被拒绝。
+                    {interviewHint(props.aiReady)}
                   </p>
 
                   <div className="max-h-80 space-y-3 overflow-y-auto">
@@ -333,7 +354,7 @@ export function EssayWorkbench(props: {
                   />
                   <Button
                     size="sm"
-                    disabled={pending || !input.trim()}
+                    disabled={pending || !props.aiReady || !input.trim()}
                     className="w-full"
                     onClick={() =>
                       run(async () => {
@@ -372,7 +393,7 @@ export function EssayWorkbench(props: {
                   <Button
                     size="sm"
                     variant="secondary"
-                    disabled={pending}
+                    disabled={pending || !props.aiReady}
                     className="w-full"
                     onClick={() =>
                       run(async () => {
@@ -404,7 +425,7 @@ export function EssayWorkbench(props: {
                   <Button
                     size="sm"
                     variant="secondary"
-                    disabled={pending || isNarrow}
+                    disabled={pending || !props.aiReady || isNarrow}
                     className="w-full"
                     onClick={() =>
                       run(async () => {

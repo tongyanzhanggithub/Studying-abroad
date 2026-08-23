@@ -260,10 +260,32 @@ describe('对外文案不写死地区清单', () => {
     expect(src).toContain('{regionCopy}')
   })
 
-  /** 和旁边那三个数字同源 —— 否则会出现「文案说 3 个地区、数字写 1」 */
+  /**
+   * 和旁边那三个数字同源 —— 否则会出现「文案说 3 个地区、数字写 1」。
+   *
+   * ⚠️ 这条原来断言的是**一整行字面量**:
+   *       const openRegions = [...new Set(schools.map((s) => s.region))]
+   *    结果给这行加一个降级分支(库断了就当成「不知道」)它就红了 ——
+   *    而那个改动恰恰没有破坏它要守的东西。
+   *
+   *    字面量断言守的是「代码长什么样」,这里要守的是「两个值同源」。
+   *    改成断言这件事本身:openRegions 由 schools 的 region 去重得来,
+   *    数字和文案都从 openRegions 取。中间怎么加分支都随意。
+   */
   it('文案和「N 个国家/地区」那个数字来自同一份 openRegions', () => {
     const src = codeOnly(readFileSync(join(ROOT, 'src/app/page.tsx'), 'utf8')).replace(/\s+/g, ' ')
-    expect(src).toContain('const openRegions = [...new Set(schools.map((s) => s.region))]')
+    expect(src).toMatch(/const openRegions =.*new Set\(schools\.map\(\(s\) => s\.region\)\)/)
     expect(src).toContain('const openRegionCount = openRegions.length')
+    expect(src).toContain('heroRegionCopy(openRegions)')
+  })
+
+  /**
+   * 降级(数据库读不到)时不许报数字。
+   * 兜底原来写死 programCount: 566(真实 143)和一个 ¥1,999 的套餐(真实起价 ¥30)——
+   * 库一断首页就对外报一套假数据。详见 src/app/page.tsx 里 getMarketingData 的注释。
+   */
+  it('降级时地区数不能从兜底院校表反推', () => {
+    const src = codeOnly(readFileSync(join(ROOT, 'src/app/page.tsx'), 'utf8')).replace(/\s+/g, ' ')
+    expect(src).toContain('degraded ? [] :')
   })
 })

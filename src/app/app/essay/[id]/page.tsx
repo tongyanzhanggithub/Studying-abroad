@@ -4,6 +4,7 @@ import { db } from '@/lib/db'
 import { requireUser, getActiveSubscription } from '@/lib/auth/session'
 import { getRemainingQuota } from '@/lib/llm'
 import { selectCard } from '@/lib/recommendation/engine'
+import { isAiAvailable } from '@/lib/llm/availability'
 import { EssayWorkbench } from './Workbench'
 
 export default async function EssayPage({ params }: { params: Promise<{ id: string }> }) {
@@ -25,6 +26,7 @@ export default async function EssayPage({ params }: { params: Promise<{ id: stri
     ? await getRemainingQuota(user.id, subscription.plan.aiDailyQuota)
     : 0
 
+  const aiReady = await isAiAvailable()
   const recCard = await selectCard(user.id, 'essay_sidebar')
 
   const interviewMessages =
@@ -54,6 +56,7 @@ export default async function EssayPage({ params }: { params: Promise<{ id: stri
         interviewMessages={interviewMessages}
         complianceCheck={essay.complianceCheck as never}
         remainingQuota={remainingQuota}
+        aiReady={aiReady}
         recCard={recCard}
       />
     </div>

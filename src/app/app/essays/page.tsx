@@ -3,6 +3,8 @@ import { db } from '@/lib/db'
 import { requireUser } from '@/lib/auth/session'
 import { Card } from '@/components/ui'
 import { NewEssayForm } from './NewEssayForm'
+import { isAiAvailable } from '@/lib/llm/availability'
+import { essayIntro } from '@/lib/llm/copy'
 
 const STATUS_LABEL = {
   drafting: '写作中',
@@ -26,14 +28,13 @@ export default async function EssaysPage() {
     }),
   ])
 
+  const aiReady = await isAiAvailable()
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold text-ink-900">文书</h1>
-        <p className="mt-1 text-sm leading-relaxed text-ink-600">
-          这里的 AI 是你的写作工具,不是代笔。它会通过提问帮你挖出素材、
-          给结构建议、逐句改语法 —— 但文字必须是你自己的。
-        </p>
+        <p className="mt-1 text-sm leading-relaxed text-ink-600">{essayIntro(aiReady)}</p>
       </div>
 
       <NewEssayForm

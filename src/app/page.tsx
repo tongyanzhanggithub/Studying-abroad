@@ -263,16 +263,6 @@ const FALLBACK_SCHOOLS: MarketingSchool[] = [
   { nameZh: '圣加仑大学', nameEn: 'University of St. Gallen', shortName: 'HSG', region: 'CH' },
 ]
 
-const FALLBACK_PLANS: MarketingPlan[] = [
-  {
-    id: 'season-pass',
-    name: '申请季通行证',
-    priceCents: 199900,
-    features: {
-      items: ['选校定位与名单管理', '材料清单自动整理', '文书素材对话与语法建议', '截止日期提醒'],
-    },
-  },
-]
 
 /**
  * ⚠️ 这一段套了跨请求缓存(unstable_cache),整个文件里只有它。
@@ -327,25 +317,47 @@ const readMarketingData = unstable_cache(
   { tags: [CACHE_TAGS.publicCatalog, CACHE_TAGS.plans], revalidate: MARKETING_CACHE_SECONDS },
 )
 
+/**
+ * ⚠️ 数据库不可用时,首页**一个数字都不报**。
+ *
+ *    原来的兜底是这样的:
+ *      programCount: 566 —— 写死的,真实值是 143
+ *      FALLBACK_PLANS   —— 「申请季通行证 ¥1,999」,而真实起价是月票 ¥30
+ *
+ *    也就是说库一断,首页就会告诉访客「566 个项目、覆盖 14 个国家/地区、
+ *    ¥1,999 起」,而这三个数**没有一个是真的**,价格还错了 66 倍
+ *    (收尾 CTA 那句「再考虑要不要花 ¥1,999」也跟着一起错)。
+ *
+ *    兜底的目的是「库断了页面还能打开」,不是「库断了就编一套数据顶上」。
+ *    对一个把「每条信息都能点开官网核对」当卖点的产品,这是最不能出的错。
+ *
+ *    所以降级后:
+ *      · 院校墙照常显示(那是视觉展示,不是数据主张)
+ *      · 三个统计数字整块隐藏
+ *      · 地区那行退回中性说法(heroRegionCopy 对空数组已有这个分支)
+ *      · 套餐返回空数组 —— 价格区和 CTA 里的价格都已经是条件渲染,自动消失
+ */
 async function getMarketingData(): Promise<{
   programCount: number
   schools: MarketingSchool[]
   plans: MarketingPlan[]
+  degraded: boolean
 }> {
   try {
-    return await readMarketingData()
+    return { ...(await readMarketingData()), degraded: false }
   } catch (error) {
     console.warn('Marketing homepage is using fallback data because the database is unavailable.', error)
     return {
-      programCount: 566,
+      programCount: 0,
       schools: FALLBACK_SCHOOLS,
-      plans: FALLBACK_PLANS,
+      plans: [],
+      degraded: true,
     }
   }
 }
 
 export default async function HomePage() {
-  const { programCount, schools, plans } = await getMarketingData()
+  const { programCount, schools, plans, degraded } = await getMarketingData()
   // 已登录就把「登录/注册」换成「进入工作台」—— 否则登录用户点进来还得再找一次入口
   const session = await getSession()
   /**
@@ -356,8 +368,12 @@ export default async function HomePage() {
   const aiReady = await isAiAvailable()
 
   const entryPrice = plans[0]?.priceCents
-  /** 已开放的地区 —— 由 schools 反推,和上面的项目数、院校数同源 */
-  const openRegions = [...new Set(schools.map((s) => s.region))]
+  /**
+   * 已开放的地区 —— 由 schools 反推,和上面的项目数、院校数同源。
+   * ⚠️ 降级时必须当成「不知道」,否则会拿兜底院校表反推出 14 个地区,
+   *    而实际开放的可能只有一个。
+   */
+  const openRegions = degraded ? [] : [...new Set(schools.map((s) => s.region))]
   const openRegionCount = openRegions.length
   const regionCopy = heroRegionCopy(openRegions)
 
@@ -473,6 +489,8 @@ export default async function HomePage() {
             </span>
           </div>
 
+          {/* ⚠️ 降级时整块隐藏 —— 宁可少三个数字,也不报三个假的。见 getMarketingData */}
+          {!degraded && (
           <div className="mt-9 grid max-w-xl grid-cols-3 gap-2">
             {[
               { value: programCount, label: '硕士项目' },
@@ -493,6 +511,7 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
+          )}
         </div>
       </section>
 

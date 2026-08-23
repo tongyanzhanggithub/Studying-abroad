@@ -15,6 +15,8 @@ import {
   isSubmittedOrLater,
 } from '@/lib/programs/types'
 import { countdownDeadline, isCountdownable, deadlineText } from '@/lib/programs/deadline'
+import { isAiAvailable } from '@/lib/llm/availability'
+import { essayStepDesc } from '@/lib/llm/copy'
 
 /**
  * 学生工作台总览(PRD 4.3)。
@@ -98,10 +100,16 @@ export default async function DashboardPage() {
    */
   const isFresh = choices.length === 0 && materialProgress.total === 0 && essays.length === 0
 
+  /**
+   * ⚠️ 第 3 步的说法必须跟着模型配置走,不能写死 ——
+   *    没接通就宣传 AI,等于收了钱卖一个点下去会报错的功能。
+   */
+  const aiReady = await isAiAvailable()
+
   const STEPS = [
     { n: 1, title: '挑学校', desc: '院校库里加几所进选校单,顺手标上冲刺 / 匹配 / 保底', href: '/app/schools', cta: '去挑学校' },
     { n: 2, title: '理材料', desc: '清单会按你的选校单自动生成,成绩单这类多校共用的只列一次', href: '/app/materials', cta: '看材料清单' },
-    { n: 3, title: '写文书', desc: 'AI 通过提问帮你挖素材、给结构建议、逐句改语法 —— 文字得是你自己的', href: '/app/essays', cta: '开始写' },
+    { n: 3, title: '写文书', desc: essayStepDesc(aiReady), href: '/app/essays', cta: '开始写' },
     { n: 4, title: '盯截止', desc: '14/7/3/1 天自动提醒,学校改要求也会第一时间告诉你', href: '/app/dashboard', cta: '' },
   ]
 
