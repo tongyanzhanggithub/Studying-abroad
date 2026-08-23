@@ -3,12 +3,15 @@ import { cn } from '@/lib/utils'
 export function Card({
   className,
   children,
+  /** 页内锚点用,如 <a href="#add-referee"> 跳到这张卡 */
+  id,
 }: {
   className?: string
   children: React.ReactNode
+  id?: string
 }) {
   return (
-    <div className={cn('rounded-xl border border-ink-200 bg-white p-5', className)}>
+    <div id={id} className={cn('rounded-xl border border-ink-200 bg-white p-5', className)}>
       {children}
     </div>
   )

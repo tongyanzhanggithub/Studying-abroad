@@ -32,6 +32,49 @@ const STATUS: Array<{ v: RefereeStatus; label: string; next: string; cls: string
   { v: 'declined', label: '婉拒了', next: '尽快换人 —— 别一直等一个不会来的回复', cls: 'bg-red-50 text-red-700' },
 ]
 
+/**
+ * 每种处境下**唯一该做的那件事**。
+ *
+ * ⚠️ 改这一版之前,卡片上是 5 个状态胶囊 + 4 个文字按钮 —— 9 个同等分量的控件,
+ *    没有一个是「现在该点的」。而卡片自己其实已经算出了下一步
+ *    (STATUS[].next,「先发邮件问对方愿不愿意」),却只把它写成一句灰色小字。
+ *
+ *    也就是说:系统知道答案,却让用户在九个选项里自己找。
+ *    这和这个产品在别处的做法是反的 —— 总览页的「现在最该做的」、
+ *    派单页的「标记交付中 / 标记已交付」,都是一次只给一个动作。
+ *
+ * ⚠️ 五个状态胶囊没有删,收进「改状态」里了。
+ *    它们是**改错时用的**,不是日常推进用的 —— 日常推进是单向的。
+ */
+type Primary =
+  | { kind: 'status'; label: string; to: RefereeStatus }
+  | { kind: 'packet'; label: string }
+  | { kind: 'material'; label: string }
+  | { kind: 'add'; label: string }
+  | null
+
+function primaryFor(status: RefereeStatus, materialDone: number, materialTotal: number): Primary {
+  switch (status) {
+    case 'draft':
+      return { kind: 'status', label: '我已经发邮件问过了', to: 'invited' }
+    case 'invited':
+      return { kind: 'status', label: '他答应了', to: 'agreed' }
+    case 'agreed':
+      /**
+       * ⚠️ 素材一条没填就生成,产出的是一份只有骨架、没有事实的材料 ——
+       *    发过去等于浪费老师一次注意力,而这一环最贵的就是这个。
+       *    所以这一档先把人推回去填素材。
+       */
+      return materialDone === 0
+        ? { kind: 'material', label: `先填素材(${materialDone}/${materialTotal})` }
+        : { kind: 'packet', label: '生成素材包发给他' }
+    case 'submitted':
+      return null
+    case 'declined':
+      return { kind: 'add', label: '换一位推荐人' }
+  }
+}
+
 type SaveState = 'idle' | 'saving' | 'saved' | 'error'
 
 function AnswerBox({
@@ -105,9 +148,26 @@ function RefereeCard({ item }: { item: RefereeItem }) {
   const [tab, setTab] = useState<'material' | 'contact' | null>(null)
   const [packet, setPacket] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
+  // 五个状态胶囊默认收起 —— 它们是改错用的,不是日常推进用的
+  const [editStatus, setEditStatus] = useState(false)
   const [, startTransition] = useTransition()
 
   const meta = STATUS.find((s) => s.v === item.status) ?? STATUS[0]
+  const primary = primaryFor(item.status, item.progress.done, item.progress.total)
+
+  const setStatus = (to: RefereeStatus) =>
+    startTransition(async () => {
+      await setRefereeStatus(item.id, to)
+      setEditStatus(false)
+      router.refresh()
+    })
+
+  const makePacket = () =>
+    startTransition(async () => {
+      const r = await generatePacket(item.id)
+      setPacket(r.ok ? r.text : `生成失败:${r.error}`)
+      setCopied(false)
+    })
 
   /**
    * 「问了多久了」—— 这是催或换人的唯一依据。
@@ -147,26 +207,63 @@ function RefereeCard({ item }: { item: RefereeItem }) {
           )}
         </p>
 
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {STATUS.map((s) => (
-            <button
-              key={s.v}
-              onClick={() =>
-                startTransition(async () => {
-                  await setRefereeStatus(item.id, s.v)
-                  router.refresh()
-                })
-              }
-              className={cn(
-                'rounded-full border px-2.5 py-1 text-xs transition-colors',
-                item.status === s.v
-                  ? 'border-brand-500 bg-brand-50 text-brand-700'
-                  : 'border-ink-200 text-ink-500 hover:border-brand-300',
-              )}
-            >
-              {s.label}
-            </button>
-          ))}
+        {/* 一次只给一个动作 —— 见 primaryFor 的注释 */}
+        {primary && (
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            {primary.kind === 'add' ? (
+              <a
+                href="#add-referee"
+                className="insta-button inline-flex min-h-11 items-center rounded-full px-4 text-sm font-medium text-white"
+              >
+                {primary.label}
+              </a>
+            ) : (
+              <Button
+                size="sm"
+                onClick={() => {
+                  if (primary.kind === 'status') setStatus(primary.to)
+                  else if (primary.kind === 'packet') makePacket()
+                  else setTab('material')
+                }}
+              >
+                {primary.label}
+              </Button>
+            )}
+
+            {/* 「他婉拒了」是另一条真实分支,不该藏进「改状态」里 */}
+            {item.status === 'invited' && (
+              <Button size="sm" variant="ghost" onClick={() => setStatus('declined')}>
+                他婉拒了
+              </Button>
+            )}
+          </div>
+        )}
+
+        <div className="mt-2">
+          <button
+            onClick={() => setEditStatus((v) => !v)}
+            className="text-xs text-ink-400 hover:text-ink-700"
+          >
+            {editStatus ? '收起' : '改状态'}
+          </button>
+          {editStatus && (
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {STATUS.map((s) => (
+                <button
+                  key={s.v}
+                  onClick={() => setStatus(s.v)}
+                  className={cn(
+                    'rounded-full border px-2.5 py-1 text-xs transition-colors',
+                    item.status === s.v
+                      ? 'border-brand-500 bg-brand-50 text-brand-700'
+                      : 'border-ink-200 text-ink-500 hover:border-brand-300',
+                  )}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
@@ -182,18 +279,15 @@ function RefereeCard({ item }: { item: RefereeItem }) {
           >
             联系方式
           </button>
-          <button
-            onClick={() =>
-              startTransition(async () => {
-                const r = await generatePacket(item.id)
-                setPacket(r.ok ? r.text : `生成失败:${r.error}`)
-                setCopied(false)
-              })
-            }
-            className="text-brand-600 hover:underline"
-          >
-            生成素材包
-          </button>
+          {/*
+            ⚠️ 只在**主按钮不是它**的时候才出现在这一排。
+               否则同一个动作在卡片上出现两次,反而让人犹豫点哪个。
+          */}
+          {primary?.kind !== 'packet' && (
+            <button onClick={makePacket} className="text-brand-600 hover:underline">
+              生成素材包
+            </button>
+          )}
           <button
             onClick={() => {
               if (!confirm(`删除推荐人「${item.name}」?已填的素材会一起删掉。`)) return
@@ -281,9 +375,17 @@ function RefereeCard({ item }: { item: RefereeItem }) {
             rows={14}
             className="w-full resize-y rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 font-mono text-xs leading-relaxed"
           />
+          {/*
+            ⚠️ 这段说明必须跟着素材包的实际内容走。
+               包里现在有三块:英文固定信息 / 英文信的结构骨架 / 中文事实。
+               再说「这只是事实清单」就不准了 —— 骨架确实是信的形状。
+               准确的说法是:格式和结构我们给,评价和措辞由老师定。
+          */}
           <p className="mt-2 text-xs leading-relaxed text-ink-500">
-            这是<strong className="text-ink-700">事实清单</strong>,不是推荐信草稿 —— 信由推荐人自己写。
-            建议连同你的 CV 和成绩单一起发过去。
+            里面有三块:<strong className="text-ink-700">英文固定信息</strong>(姓名拼音、项目官方英文名、截止日,可直接照抄)、
+            <strong className="text-ink-700">英文信的结构骨架</strong>(方括号处由老师自己判断)、
+            以及你填的<strong className="text-ink-700">中文事实</strong>。
+            信里的评价和措辞由推荐人决定 —— 我们不代拟。建议连同 CV 和成绩单一起发过去。
           </p>
         </div>
       )}
@@ -304,7 +406,8 @@ export function RefereeList({ items }: { items: RefereeItem[] }) {
         <RefereeCard key={it.id} item={it} />
       ))}
 
-      <Card>
+      {/* id 是给「婉拒了 → 换一位推荐人」那个按钮跳过来用的 */}
+      <Card id="add-referee">
         <p className="mb-2 text-sm font-medium text-ink-900">添加推荐人</p>
         <div className="flex flex-wrap items-center gap-2">
           <input
