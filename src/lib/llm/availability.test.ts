@@ -99,11 +99,16 @@ describe('首页文案跟着可用性走', () => {
     expect(page).toContain('const aiReady =')
   })
 
-  it('FAQ 与工作台预览都是按可用性生成的函数', () => {
+  /**
+   * ⚠️ workspacePreviews 已经和「怎么用」那一节合并成 applicationFlow
+   *    (首页原来有两个整块讲同样四件事)。名字变了,要守的东西没变:
+   *    这两节必须是**按 aiReady 生成的函数**,不能退回写死的常量。
+   */
+  it('FAQ 与流程卡片都是按可用性生成的函数', () => {
     expect(page).toContain('function faqs(aiReady: boolean)')
-    expect(page).toContain('function workspacePreviews(aiReady: boolean)')
+    expect(page).toContain('function applicationFlow(aiReady: boolean)')
     expect(page).toContain('faqs(aiReady)')
-    expect(page).toContain('workspacePreviews(aiReady)')
+    expect(page).toContain('applicationFlow(aiReady)')
   })
 
   it('不存在写死的 FAQS / WORKSPACE_PREVIEWS 常量', () => {
@@ -111,12 +116,34 @@ describe('首页文案跟着可用性走', () => {
     expect(page).not.toContain('const WORKSPACE_PREVIEWS =')
   })
 
-  it('AI 那句话只出现在 aiReady 分支里', () => {
-    // 「AI 问问题」和「AI 能帮我把文书写出来」都必须在三元的 true 分支内
-    const idx = page.indexOf('AI 问问题,你保留真实表达')
-    expect(idx).toBeGreaterThan(-1)
-    const before = page.slice(Math.max(0, idx - 300), idx)
-    expect(before).toContain('aiReady')
+  /**
+   * ⚠️ 这条原来锚在一句具体文案上(「AI 问问题,你保留真实表达」)——
+   *    改一次文案它就红,而文案本来就是会改的。
+   *
+   *    要守的其实是:凡是只有接通模型才成立的说法,都必须落在
+   *    aiReady 三元的 **true 分支**里。所以改成按分支切开来验:
+   *    true 分支允许出现「素材追问 / 结构建议 / 逐句润色」这类词,
+   *    false 分支一个都不许有。
+   */
+  it('只有接通才成立的说法,必须落在 aiReady 的 true 分支', () => {
+    const AI_ONLY = ['素材追问', '结构建议', '逐句润色', '素材访谈']
+
+    const start = page.indexOf('function applicationFlow')
+    expect(start).toBeGreaterThan(-1)
+    const fn = page.slice(start, page.indexOf('const ADVISOR_GROUPS'))
+
+    const t = fn.indexOf('aiReady')
+    expect(t).toBeGreaterThan(-1)
+    const split = fn.indexOf(': {', t) // 三元的 false 分支起点
+    expect(split).toBeGreaterThan(-1)
+
+    const trueBranch = fn.slice(t, split)
+    const falseBranch = fn.slice(split)
+
+    // true 分支里至少讲了一条只有接通才成立的能力,否则这个分叉就没意义
+    expect(AI_ONLY.some((w) => trueBranch.includes(w))).toBe(true)
+    // false 分支一条都不许有
+    for (const w of AI_ONLY) expect(falseBranch).not.toContain(w)
   })
 
   /**

@@ -38,47 +38,41 @@ type MarketingPlan = {
   features: unknown
 }
 
-const STEPS = [
+/**
+ * 首页的亮点区 —— 「有些事我们不做」。
+ *
+ * ⚠️ 每一条都必须是**代码里真实成立**的事,不是文案。
+ *    改动前先去确认那件事还是真的:
+ *
+ *      不存学校账号密码       → schema 里没有存密码的字段
+ *      没核对过的地区不开放   → admin/regions 的核对率闸门
+ *      不代写                 → 文书工作台刻意没有「一键生成全文」按钮
+ *      不承诺录取             → 页脚 + FAQ + 评估结果页都写着
+ *      不代办签证             → 所以 /app/profile 明确不问证件号和父母信息
+ *
+ *    这一节是全站唯一一处「竞品原样抄不走」的内容 ——
+ *    因为抄了就得真做到。写虚一条,整节就废了。
+ */
+const DONT_DO = [
   {
-    n: '01',
-    title: '先看看能申哪儿',
-    body: '填本科学校、成绩、想去的地方,一分钟给你一份名单,分成冲刺、匹配、保底三档。',
+    t: '不碰你的申请账号和密码',
+    d: '申请邮箱、学校网申账号始终在你自己手里,我们不存、也不代登。想换个方式做,全部数据随时导出带走。',
   },
   {
-    n: '02',
-    title: '定下要申的学校',
-    body: '名单可以随便加减。定完之后,该准备哪些材料会自动列出来。',
+    t: '不给你没核对过的数字',
+    d: '每条录取要求旁边写着最后确认时间和官网链接,太久没确认的会标灰。一个地区的数据没核对达标,我们宁可先不开放 —— 你在评估页看到的,就是现在真能选的。',
   },
   {
-    n: '03',
-    title: '备材料、写文书',
-    // AI 文书能力尚未接入(LLM_PROVIDER=mock),先不在首页承诺 —— 接上再写回来
-    body: '每样材料都写清楚去哪儿办、怎么办,还要交给哪几所学校。文书按学校要求分开管理,写到哪一步一目了然。',
+    t: '不代写文书',
+    d: '我们帮你把经历问清楚、把每所学校的题目和字数盯住,但每一个字都得是你自己写的。院校一旦核实代写,后果是撤销录取并可能通报。',
   },
   {
-    n: '04',
-    title: '别错过截止日',
-    body: '临近截止会提前提醒你。学校要求有变动,也会第一时间告诉你。',
-  },
-]
-
-const REASONS = [
-  {
-    title: '账号和材料,始终由你掌控',
-    body: '申请邮箱、学校账号和材料进度都清清楚楚放在你手里。需要换节奏、换方案,数据也能随时导出带走。',
+    t: '不承诺录取',
+    d: '给你的是参考区间和它背后的依据 —— 哪条要求卡着你、差多少、还有没有别的路。采不采纳,你自己定。',
   },
   {
-    title: '每条信息都能点开官网核对',
-    body: '录取要求旁边写着最后确认的时间和官网链接。太久没确认的会标灰提醒你自己去看一眼 —— 我们不装作它还准。',
-  },
-  {
-    // AI 文书能力接上之前不写它 —— 讲一个还不能用的功能,等于卖不存在的东西
-    title: '文书按学校分开管,不会写串',
-    body: '每所学校的题目和字数要求不一样。这里按学校分开存,写到哪一步、还差哪几篇,一眼看得清。',
-  },
-  {
-    title: '一份材料不用交八遍',
-    body: '八所学校都要成绩单?清单里只出现一次,标好它管哪几所。不用对着八份重复清单发愁。',
+    t: '不代理申请、不做学科培训',
+    d: '不替你点提交,也不卖语言班。这也是为什么我们不问你的身份证号和父母信息 —— 那些只有签证代办才需要,而我们不做那件事。',
   },
 ]
 
@@ -143,38 +137,60 @@ const STORY_ITEMS = [
   { label: '提醒', meta: '14/7/3/1天' },
 ]
 
-function workspacePreviews(aiReady: boolean) {
+/**
+ * 「用起来大概是这样」的四步 —— 这是**两节合并**后的产物。
+ *
+ * ⚠️ 首页原来有两个整块在讲同一件事:
+ *
+ *      WORKSPACE PREVIEW「测完之后,不是只给你一张名单」→ 四张功能卡
+ *      APPLICATION FEED 「用起来大概是这样」          → 四个步骤
+ *
+ *    两边都是「选校 / 材料 / 文书 / 截止日」这四件事,一个包装成功能、
+ *    一个包装成步骤。再加上上面的圆环条和下面的「为什么值得托付」,
+ *    同样四件事全页讲了**五遍**。用户翻到第三遍不会觉得全面,只会觉得啰嗦。
+ *
+ *    合并成一节:每一步既说「你做什么」,也说「系统给你什么」。
+ *    信息一点没少,页面短了一整屏。
+ *
+ * ⚠️ 第 3 步的 rows 仍然按 aiReady 分叉 —— 见 lib/llm/availability.ts。
+ *    模型没接通时不许出现「AI 问问题」这类说法。
+ */
+function applicationFlow(aiReady: boolean) {
   return [
   {
+    n: '01',
     label: '选校定位',
-    title: '先分清冲刺、匹配、稳妥',
-    body: '评估结果不是只给一个名单,而是把每个项目放进申请档位,附上地区、语言、GMAT/GRE 和截止日信号。',
+    title: '先看看能申哪儿',
+    body: '填本科学校、成绩、想去的地方,一分钟给你一份名单,并把每个项目放进冲刺 / 匹配 / 稳妥,附上地区、语言、GMAT/GRE 和截止日信号。',
     rows: ['冲刺 3 所', '匹配 3 所', '稳妥 3 所'],
   },
   {
+    n: '02',
     label: '材料中心',
-    title: '一份材料,自动对应多所学校',
-    body: '选校单变了,材料清单会重新合并。成绩单、CV 这类共用材料只出现一次,不会让你重复对清单。',
+    title: '定下学校,材料清单自动出来',
+    body: '名单可以随便加减,清单跟着重新合并。成绩单、CV 这类共用材料只出现一次,并标好它管哪几所 —— 不用对着八份重复清单发愁。',
     rows: ['成绩单 · 8 校共用', 'CV · 6 校共用', '护照 · 14 校共用'],
   },
   aiReady
     ? {
+        n: '03',
         label: '文书工作台',
-        title: 'AI 问问题,你保留真实表达',
-        body: '文书模块做素材追问、结构建议、逐句润色和合规检查,不把代写风险转嫁给学生。',
+        title: '素材问清楚,文书按校分开写',
+        body: '每样材料都写清楚去哪儿办、怎么办。文书这边做素材追问、结构建议、逐句润色和合规检查,不把代写风险转嫁给学生。',
         rows: ['素材访谈', '结构建议', '合规检查'],
       }
     : {
-        // AI 没接通时讲**现在真的能用**的:素材库和按校分开的文书管理
+        n: '03',
         label: '素材库与文书',
         title: '经历答一次,所有学校通用',
-        body: '按学术背景、实践经历、申请动机几条线把你的经历问清楚存下来,不用每所学校重答一遍。文书按学校分开写,题目和字数各自记着,定稿前有合规检查。',
+        body: '每样材料都写清楚去哪儿办、怎么办。经历按学术背景、实践、动机几条线问清楚存下来,不用每所学校重答一遍;文书按学校分开写,题目和字数各自记着。',
         rows: ['素材库 · 各校通用', '文书 · 按校分开', '定稿前合规检查'],
       },
   {
+    n: '04',
     label: '截止提醒',
-    title: '把 14/7/3/1 天节点盯住',
-    body: '选校单里的项目有截止日后,系统会按关键节点创建提醒,材料没完成时优先提示风险。',
+    title: '别错过截止日',
+    body: '选校单里的项目有截止日之后,系统按关键节点提前提醒你,材料没完成时优先提示风险。学校要求有变动,也会第一时间告诉你。',
     rows: ['14 天预备', '7 天补漏', '3/1 天强提醒'],
   },
   ]
@@ -532,25 +548,33 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 工作台预览 ─────────────────────────────── */}
+      {/* ── 用起来大概是这样(原「工作台预览」+「怎么用」合并)──── */}
       <section className="border-t border-white/70 bg-white">
-        <div className="mx-auto max-w-6xl px-5 py-10 sm:py-14">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:py-20">
           <div className="max-w-2xl">
-            <p className="gradient-text text-sm font-semibold">WORKSPACE PREVIEW</p>
+            <p className="gradient-text text-sm font-semibold">HOW IT WORKS</p>
             <h2 className="display-heading mt-2 text-2xl font-semibold text-ink-900 sm:text-3xl">
-              测完之后,不是只给你一张名单
+              用起来大概是这样
             </h2>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink-600">
-              真正省心的是后面的申请管理:哪些学校值得申、哪些材料已经够用、哪篇文书还没收尾、哪个截止日快到了。
+              从不知道能申哪儿,到把材料按时交出去。每一步你做什么、系统给你什么,都在下面。
             </p>
           </div>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {workspacePreviews(aiReady).map((item) => (
-              <article key={item.label} className="feed-card overflow-hidden p-0 shadow-[0_12px_30px_rgba(35,42,53,0.05)]">
+          <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {applicationFlow(aiReady).map((item) => (
+              <li
+                key={item.n}
+                className="feed-card overflow-hidden p-0 shadow-[0_12px_30px_rgba(35,42,53,0.05)]"
+              >
                 <div className="px-4 py-4">
-                  <p className="text-xs font-semibold text-insta-pink">{item.label}</p>
-                  <h3 className="mt-1 text-base font-medium leading-snug text-ink-900">{item.title}</h3>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-mono text-sm text-insta-pink">{item.n}</span>
+                    <span className="text-xs font-semibold text-ink-400">{item.label}</span>
+                  </div>
+                  <h3 className="mt-2 text-base font-medium leading-snug text-ink-900">
+                    {item.title}
+                  </h3>
                   <p className="mt-2 text-xs leading-relaxed text-ink-500">{item.body}</p>
                 </div>
                 <div className="space-y-1.5 border-t border-ink-100 bg-ink-50/50 px-4 py-3">
@@ -560,15 +584,13 @@ export default async function HomePage() {
                       className="flex items-center justify-between rounded-lg bg-white px-2.5 py-2 text-xs"
                     >
                       <span className="text-ink-700">{row}</span>
-                      <span className="text-xs text-ink-400">
-                        {index === 0 ? '优先' : index === 1 ? '进行中' : '待确认'}
-                      </span>
+                      <span className="text-xs text-ink-400">{index === 0 ? '优先' : '进行中'}</span>
                     </div>
                   ))}
                 </div>
-              </article>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -618,54 +640,57 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 怎么用 ─────────────────────────────────── */}
-      <section className="soft-section border-t border-white/70">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:py-24">
-          <div className="max-w-xl">
-            <p className="gradient-text text-sm font-semibold">APPLICATION FEED</p>
-            <h2 className="display-heading mt-2 text-2xl font-semibold text-ink-900 sm:text-3xl">
-              用起来大概是这样
-            </h2>
-            <p className="mt-3 text-ink-600">
-              从不知道能申哪儿,到把材料按时交出去。
-            </p>
-          </div>
+      {/*
+        ── 有些事我们不做 ────────────────────────────
 
-          <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {STEPS.map((s) => (
-              <li key={s.n} className="feed-card p-5">
-                <span className="font-mono text-sm text-insta-pink">{s.n}</span>
-                <h3 className="mt-3 text-lg font-medium text-ink-900">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-600">{s.body}</p>
+        这一节替掉了原来的两节:
+          「几个我们比较较真的地方」(TRUST NOTES,浅色四张卡)
+          「为什么值得托付」        (WHY COMPASS,深色三条)
+
+        ⚠️ 后者是前者换成收益名词再说一遍,而且写得更差 ——
+           「要的就是确定感」「少被信息差牵着走」这种话任何 SaaS 都能贴上去,
+           却占着全页最强的视觉位置(整块深色 + 紧跟价格)。
+           前者里的「文书按学校分开管」「一份材料不用交八遍」
+           又和上面「用起来大概是这样」的卡片重复。
+
+        真正独一份的只有两条:账号在你手里、每条数据能点开官网核对 ——
+        而它们原来挂在「几个我们比较较真的地方」这个刻意压低的标题下。
+        全站最有杀伤力的牌,被自己藏起来了。
+
+        ⚠️ 为什么写成「不做什么」而不是「中介 vs 我们」对比表:
+           对比表要拿中介的报价当参照,而那个数字我们举证不了
+           (《广告法》第 28 条),拿别人的价格衬自己便宜也和
+           「每条数据都能点开核对」的立场拧着。
+           写自己不做什么,读者自己会做那道减法,我们一个字都没说别人。
+
+        ⚠️ 五条**每一条都在代码里真实成立**,不是话术:
+             不存学校账号密码 · 地区按核对率逐个开放(admin/regions) ·
+             Deliverer.showOnSite 默认 false · 网申信息页明确不问证件号和父母信息 ·
+             页脚写明不代理申请、不做学科培训。
+           改这里之前先确认那件事还是真的,否则就是虚假宣传。
+      */}
+      <section className="border-y border-ink-900 bg-ink-900 text-white">
+        <div className="mx-auto max-w-6xl px-5 py-16 sm:py-24">
+          <p className="text-sm font-semibold text-white/60">WHERE WE STOP</p>
+          <h2 className="display-heading mt-2 text-2xl font-semibold sm:text-3xl">
+            有些事我们不做
+          </h2>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/60">
+            留学这行最容易出事的地方,恰恰是「替你做」做得太多。下面几条是我们的边界 ——
+            也是你判断该不该把一个申请季交给它的依据。
+          </p>
+
+          <ul className="mt-10 grid gap-x-8 gap-y-7 sm:grid-cols-2">
+            {DONT_DO.map((x) => (
+              <li key={x.t} className="border-t border-white/15 pt-5">
+                <h3 className="font-medium">{x.t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/60">{x.d}</p>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       </section>
 
-      {/* ── 为什么是这样做的 ───────────────────────── */}
-      <section className="border-t border-white/70 bg-white">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:py-24">
-          <div className="max-w-2xl">
-            <p className="gradient-text text-sm font-semibold">TRUST NOTES</p>
-            <h2 className="display-heading mt-2 text-2xl font-semibold text-ink-900 sm:text-3xl">
-              几个我们比较较真的地方
-            </h2>
-          </div>
-
-          <div className="mt-12 grid gap-4 sm:grid-cols-2">
-            {REASONS.map((p) => (
-              <article
-                key={p.title}
-                className="feed-card p-6 transition-transform hover:-translate-y-0.5"
-              >
-                <h3 className="text-lg font-medium text-ink-900">{p.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink-600">{p.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── 价格 ───────────────────────────────────── */}
       {plans.length > 0 && (
@@ -730,42 +755,6 @@ export default async function HomePage() {
           </div>
         </section>
       )}
-
-      {/* ── 为什么值得托付 ───────────────────────────── */}
-      <section className="border-y border-ink-900 bg-ink-900 text-white">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:py-24">
-          <p className="text-sm font-semibold text-white/60">WHY COMPASS</p>
-          <h2 className="display-heading mt-2 text-2xl font-semibold sm:text-3xl">
-            专业申请季,要的就是确定感
-          </h2>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/60">
-            Compass 把最容易出错、最耗时间、最需要判断的环节做成清晰流程,让你少返工、少错过、少被信息差牵着走。
-          </p>
-
-          <ul className="mt-9 grid gap-4 sm:grid-cols-3">
-            {[
-              {
-                t: '定位更有把握',
-                d: '用公开要求和历史数据做参考,把冲刺、匹配、保底拆清楚,让每一次投递都有理由。',
-              },
-              {
-                t: '材料不重复劳动',
-                d: '成绩单、护照这类共用材料只维护一次,系统会告诉你它们分别覆盖哪几所学校。',
-              },
-              {
-                t: '进度全程可控',
-                d: '账号、材料、截止日和提交状态都在同一个看板里,关键节点提前提醒,申请节奏不掉线。',
-              },
-            ].map((x) => (
-              <li key={x.t} className="border-t border-white/15 pt-5">
-                <h3 className="font-medium">{x.t}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/60">{x.d}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
       {/* ── 常见问题 ───────────────────────────────── */}
       <section className="border-t border-white/70 bg-white">
         <div className="mx-auto max-w-3xl px-5 py-16 sm:py-24">
