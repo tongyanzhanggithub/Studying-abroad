@@ -3,7 +3,6 @@
 import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db'
 import { requireUser } from '@/lib/auth/session'
-import { formatDate } from '@/lib/utils'
 import {
   ALL_REFEREE_QUESTION_IDS,
   buildRefereePacket,
@@ -184,7 +183,7 @@ export async function generatePacket(refereeId: string) {
   const referee = await ownedReferee(user.id, refereeId)
   if (!referee) return { ok: false as const, error: '推荐人不存在。' }
 
-  const [rows, choices] = await Promise.all([
+  const [rows, choices, profile] = await Promise.all([
     db.refereeAnswer.findMany({
       where: { refereeId },
       select: { questionId: true, answer: true },
@@ -194,13 +193,34 @@ export async function generatePacket(refereeId: string) {
       include: { program: { include: { school: true } } },
       orderBy: { sort: 'asc' },
     }),
+    db.profile.findUnique({
+      where: { userId: user.id },
+      select: { passportSurname: true, passportGivenName: true },
+    }),
   ])
 
-  const targetPrograms = choices.map((c) => {
-    const school = c.program.school.nameZh ?? c.program.school.nameEn
-    const program = c.program.nameZh ?? c.program.nameEn
-    return `${school} · ${program}`
-  })
+  /**
+   * ⚠️ 用**官方英文名**,不是 nameZh。
+   *    推荐信是英文的 —— 给老师一个「巴斯大学 · 市场营销理学硕士」,
+   *    等于让他自己去查这个项目的官方英文叫什么,查错了信就对不上申请。
+   *    nameEn 在 schema 里是必填,所以这里不需要兜底。
+   */
+  const targetPrograms = choices.map((c) => ({
+    program: c.program.nameEn,
+    school: c.program.school.nameEn,
+  }))
+
+  /**
+   * ⚠️ 姓名必须是护照拼音。
+   *    schema 里 passportSurname 的注释点名列了推荐信:
+   *    拼法和成绩单不一致,学校会当成两个人。
+   *    而这里原来传的是 user.name(中文名)—— 正好是那句话说的情况。
+   *    没填时传 null,素材包里会写明「等我补好再发您」,而不是硬凑一个。
+   */
+  const passportName =
+    profile?.passportSurname && profile?.passportGivenName
+      ? `${profile.passportSurname.toUpperCase()} ${profile.passportGivenName}`
+      : null
 
   // 最早的截止日 —— 推荐人最需要知道的就是「什么时候之前要交」
   const deadlines = choices
@@ -209,10 +229,12 @@ export async function generatePacket(refereeId: string) {
     .sort((a, b) => a.getTime() - b.getTime())
 
   const text = buildRefereePacket({
+    passportName,
     studentName: user.name ?? '(请在设置里补上你的姓名)',
     referee: { name: referee.name, title: referee.title, type: referee.type },
     targetPrograms,
-    deadline: deadlines.length ? formatDate(deadlines[0]) : null,
+    // ISO 格式 —— 它印在英文区里给老师照抄,中文日期在那儿不合适
+    deadline: deadlines.length ? deadlines[0].toISOString().slice(0, 10) : null,
     answers: Object.fromEntries(rows.map((r) => [r.questionId, r.answer])),
   })
 
