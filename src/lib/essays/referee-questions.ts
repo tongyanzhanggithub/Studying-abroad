@@ -277,3 +277,75 @@ export function refereeProgress(
     percent: core.length ? Math.round((done / core.length) * 100) : 0,
   }
 }
+
+/**
+ * 生成邀请邮件 —— 「问他愿不愿意」那一步。
+ *
+ * ── 为什么要有 ────────────────────────────────────────
+ *
+ * ⚠️ 卡片上原本写着「下一步:先发邮件问对方愿不愿意」,然后给一个
+ *    「我已经发邮件问过了」的按钮 —— 也就是说,系统告诉你该做什么,
+ *    却把最难的那一步(措辞)原样留给你,只负责事后记账。
+ *
+ *    而这封信是有讲究的:要一次说清「申什么、要几封、什么时候之前、
+ *    我会给你什么」,还要给对方一个体面的拒绝出口 ——
+ *    一个爽快的「不方便」远好过三周的杳无音信,而学生往往不敢这么写。
+ *
+ * ⚠️ 纯模板 + 学生自己的数据,不调模型。输出每次都一样、可预测。
+ *    唯一留白的是「哪门课/什么关系」那一句 —— 只有学生知道,
+ *    而且正是这句让老师想起你是谁,不该由系统瞎猜。
+ */
+export function buildInviteEmail(params: {
+  studentName: string
+  referee: { name: string; title: string | null; type: RefereeType }
+  /** 中文校名 + 项目名 —— 这封信是给中国老师看的,不用英文官方名 */
+  targetPrograms: string[]
+  deadline: string | null
+}): string {
+  const { studentName, referee, targetPrograms, deadline } = params
+  const salutation = referee.title ? `${referee.name}${referee.title}` : `${referee.name}老师`
+  const out: string[] = []
+
+  out.push(`${salutation}您好:`)
+  out.push('')
+  out.push(
+    referee.type === 'academic'
+      ? '我是[哪一届、什么专业]的[你的名字]。[这里写一句你们的交集:哪个学期上过您的什么课、做过什么作业或项目 —— 老师一学期带几百人,这一句决定他能不能想起你]。'
+      : '我是[什么时间]在[哪个部门/项目]跟着您的[你的名字]。[这里写一句你们的交集:你当时负责什么、一起做过哪件事]。',
+  )
+  out.push('')
+  out.push('我正在准备今年的硕士申请,想冒昧问一下,您是否方便为我写一封推荐信?')
+  out.push('')
+
+  if (targetPrograms.length) {
+    out.push('目前打算申请的项目是:')
+    for (const p of targetPrograms.slice(0, 6)) out.push(`  · ${p}`)
+    if (targetPrograms.length > 6) out.push(`  · 等共 ${targetPrograms.length} 个项目`)
+    out.push('')
+  }
+
+  out.push(
+    deadline
+      ? `最早的一个截止日期是 ${deadline},所以希望能在那之前完成。`
+      : '截止日期学校还没公布,一旦确定我会第一时间告诉您。',
+  )
+  out.push('')
+  out.push('如果您愿意,我会把这些一并发给您,尽量不占用您太多时间:')
+  out.push('  · 我的成绩单和简历')
+  out.push('  · 申请的项目和各自的截止日期')
+  out.push('  · 一份背景材料,把我在您课上/手下做过的事整理清楚,供您参考取用')
+  out.push('')
+  /**
+   * ⚠️ 这一段不能删。
+   *    学生最怕的是被拒,所以往往把话说得没有退路,结果对方不好意思直说,
+   *    就一直不回 —— 而「等一个不会来的回复」是这一环最常见的翻车方式。
+   *    主动给出口,拿到的是更快的答复,不管答案是什么。
+   */
+  out.push('如果您时间上不方便,或者觉得由更熟悉我的老师来写更合适,请您直接告诉我,我完全理解 —— 我也好尽早另做安排,不会耽误您。')
+  out.push('')
+  out.push('谢谢您!')
+  out.push('')
+  out.push(studentName)
+
+  return out.join('\n')
+}

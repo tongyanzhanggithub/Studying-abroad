@@ -10,6 +10,7 @@ import {
   setRefereeStatus,
   deleteReferee,
   saveRefereeAnswer,
+  generateInvite,
 } from './actions'
 import type { RefereeQuestionGroup } from '@/lib/essays/referee-questions'
 import type { RefereeStatus, RefereeType } from '@prisma/client'
@@ -26,7 +27,7 @@ const TYPE_LABEL: Record<RefereeType, string> = {
 const STATUS: Array<{ v: RefereeStatus; label: string; next: string; cls: string }> = [
   { v: 'draft', label: '还没联系', next: '先发邮件问对方愿不愿意', cls: 'bg-ink-100 text-ink-600' },
   { v: 'invited', label: '已发出邀请', next: '等回复。超过一周没动静就该跟进', cls: 'bg-amber-50 text-amber-700' },
-  { v: 'agreed', label: '已答应', next: '把成绩单、简历和申请项目发给他,并说明截止日期', cls: 'bg-brand-50 text-brand-700' },
+  { v: 'agreed', label: '已答应', next: '现在开始整理要给他的信息 —— 他记不住你哪次作业做得好,细节得你递过去', cls: 'bg-brand-50 text-brand-700' },
   { v: 'submitted', label: '已提交', next: '这一封搞定了', cls: 'bg-safe/10 text-safe' },
   { v: 'declined', label: '婉拒了', next: '尽快换人 —— 别一直等一个不会来的回复', cls: 'bg-red-50 text-red-700' },
 ]
@@ -47,6 +48,7 @@ const STATUS: Array<{ v: RefereeStatus; label: string; next: string; cls: string
  */
 type Primary =
   | { kind: 'status'; label: string; to: RefereeStatus }
+  | { kind: 'invite'; label: string }
   | { kind: 'material'; label: string }
   | { kind: 'add'; label: string }
   | null
@@ -54,7 +56,13 @@ type Primary =
 function primaryFor(status: RefereeStatus, materialDone: number, materialTotal: number): Primary {
   switch (status) {
     case 'draft':
-      return { kind: 'status', label: '我已经发邮件问过了', to: 'invited' }
+      /**
+       * ⚠️ 这一步原来是「我已经发邮件问过了」—— 一个**事后记账**的按钮。
+       *    系统告诉你「下一步:先发邮件问对方愿不愿意」,却把最难的那步
+       *    (怎么措辞)原样留给你,自己只负责打勾。
+       *    改成直接把信给你,发完再标记。
+       */
+      return { kind: 'invite', label: '问他愿不愿意' }
     case 'invited':
       return { kind: 'status', label: '他答应了', to: 'agreed' }
     case 'agreed':
@@ -64,7 +72,7 @@ function primaryFor(status: RefereeStatus, materialDone: number, materialTotal: 
        *    所以这一档先把人推回去填素材。
        */
       return materialDone === 0
-        ? { kind: 'material', label: `先填素材(${materialDone}/${materialTotal})` }
+        ? { kind: 'material', label: `开始整理要给他的信息(${materialDone}/${materialTotal})` }
         : { kind: 'status', label: '他已经提交了', to: 'submitted' }
     case 'submitted':
       return null
@@ -217,6 +225,19 @@ function RefereeCard({ item }: { item: RefereeItem }) {
       router.refresh()
     })
 
+  const [invite, setInvite] = useState<string | null>(null)
+  const [inviteCopied, setInviteCopied] = useState(false)
+
+  const makeInvite = () =>
+    startTransition(async () => {
+      const r = await generateInvite(item.id)
+      setInvite(r.ok ? r.text : `生成失败:${r.error}`)
+      setInviteCopied(false)
+    })
+
+  /** 还没得到答复 —— 这之前收集信息有白做的风险 */
+  const waitingAgreement = item.status === 'draft' || item.status === 'invited'
+
   /**
    * 「问了多久了」—— 这是催或换人的唯一依据。
    * 超过 7 天没回复就该跟进,超过 14 天该考虑换人。
@@ -270,6 +291,7 @@ function RefereeCard({ item }: { item: RefereeItem }) {
                 size="sm"
                 onClick={() => {
                   if (primary.kind === 'status') setStatus(primary.to)
+                  else if (primary.kind === 'invite') makeInvite()
                   else setTab('material')
                 }}
               >
@@ -314,11 +336,25 @@ function RefereeCard({ item }: { item: RefereeItem }) {
         </div>
 
         <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+          {/*
+            ⚠️ 顺序是:先确认他同意,同意了才收集信息。
+               他还没答应就让人填 8 道题,填完人家婉拒了,这些字全白写 ——
+               而推荐信这一环最常见的结果就是「问了三个,答应两个」。
+
+               但**不禁用、也不隐藏**:有人就是想先想清楚再开口,那是他的自由。
+               只是把它调成灰色并写明原因 —— 点不动又不说为什么,
+               是这个项目已经踩过的坑(评估页那次)。
+          */}
           <button
             onClick={() => setTab(tab === 'material' ? null : 'material')}
-            className="text-brand-600 hover:underline"
+            className={cn(
+              'hover:underline',
+              waitingAgreement ? 'text-ink-400' : 'text-brand-600',
+            )}
           >
-            素材 {item.progress.done}/{item.progress.total}
+            {waitingAgreement
+              ? '要给他的信息(等他答应了再填)'
+              : `要给他的信息 ${item.progress.done}/${item.progress.total}`}
           </button>
           <button
             onClick={() => setTab(tab === 'contact' ? null : 'contact')}
@@ -394,6 +430,41 @@ function RefereeCard({ item }: { item: RefereeItem }) {
         </div>
       )}
 
+
+      {invite && (
+        <div className="border-t border-ink-100 px-4 py-4">
+          <div className="mb-2 flex items-center justify-between">
+            <p className="text-sm font-medium text-ink-900">邀请邮件(复制后发给他)</p>
+            <button
+              onClick={() => {
+                void navigator.clipboard?.writeText(invite).then(() => setInviteCopied(true))
+              }}
+              className="text-sm text-brand-600 hover:underline"
+            >
+              {inviteCopied ? '已复制' : '复制全文'}
+            </button>
+          </div>
+          <textarea
+            readOnly
+            value={invite}
+            rows={16}
+            className="w-full resize-y rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 text-xs leading-relaxed"
+          />
+          {/*
+            ⚠️ 方括号那两处必须自己改 —— 「哪门课、什么关系」只有学生知道,
+               而且正是这一句让老师想起你是谁。发出去之前不改,这封信就废了。
+          */}
+          <p className="mt-2 text-xs leading-relaxed text-ink-500">
+            <strong className="text-ink-700">发之前先把方括号里的内容换掉</strong> ——
+            尤其是「你们的交集」那一句,老师一学期带几百人,那句话决定他能不能想起你是谁。
+          </p>
+          <div className="mt-3">
+            <Button size="sm" onClick={() => setStatus('invited')}>
+              我已经发出去了
+            </Button>
+          </div>
+        </div>
+      )}
     </Card>
   )
 }

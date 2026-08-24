@@ -1,9 +1,11 @@
 'use server'
 
+import { formatDate } from '@/lib/utils'
 import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db'
 import { requireUser } from '@/lib/auth/session'
 import {
+  buildInviteEmail,
   ALL_REFEREE_QUESTION_IDS,
 } from '@/lib/essays/referee-questions'
 import type { RefereeStatus, RefereeType } from '@prisma/client'
@@ -203,4 +205,42 @@ export async function saveRefereeAnswer(
 
   revalidatePath('/app/referees')
   return { ok: true as const }
+}
+
+/**
+ * 「问他愿不愿意」—— 生成邀请邮件。
+ *
+ * ⚠️ 项目名用**中文**,和(已删除的)英文素材包相反 ——
+ *    这封信是给中国老师看的,给他一串英文项目名反而不友好。
+ */
+export async function generateInvite(refereeId: string) {
+  const user = await requireUser()
+  const referee = await ownedReferee(user.id, refereeId)
+  if (!referee) return { ok: false as const, error: '推荐人不存在。' }
+
+  const choices = await db.userSchoolChoice.findMany({
+    where: { userId: user.id },
+    include: { program: { include: { school: true } } },
+    orderBy: { sort: 'asc' },
+  })
+
+  const targetPrograms = choices.map((c) => {
+    const school = c.program.school.nameZh ?? c.program.school.nameEn
+    const program = c.program.nameZh ?? c.program.nameEn
+    return `${school} · ${program}`
+  })
+
+  const deadlines = choices
+    .map((c) => c.program.finalDeadline)
+    .filter((d): d is Date => !!d)
+    .sort((a, b) => a.getTime() - b.getTime())
+
+  const text = buildInviteEmail({
+    studentName: user.name ?? '(请在设置里补上你的姓名)',
+    referee: { name: referee.name, title: referee.title, type: referee.type },
+    targetPrograms,
+    deadline: deadlines.length ? formatDate(deadlines[0]) : null,
+  })
+
+  return { ok: true as const, text }
 }
