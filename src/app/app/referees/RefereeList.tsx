@@ -77,19 +77,40 @@ function primaryFor(status: RefereeStatus, materialDone: number, materialTotal: 
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error'
 
+/** 学生在素材库里已经写过的、和这道题相关的内容 */
+export type StoryHint = { question: string; answer: string }
+
 function AnswerBox({
   refereeId,
   q,
   initial,
 }: {
   refereeId: string
-  q: { id: string; q: string; hint?: string; core?: boolean; long?: boolean }
+  q: {
+    id: string
+    q: string
+    hint?: string
+    core?: boolean
+    long?: boolean
+    storyHints?: StoryHint[]
+  }
   initial: string
 }) {
   const [value, setValue] = useState(initial)
   const [state, setState] = useState<SaveState>('idle')
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [, startTransition] = useTransition()
+
+  /** 立刻存,不走 1.2 秒防抖 —— 点「填入」是个明确动作,不是打字 */
+  const saveNow = (next: string) => {
+    setValue(next)
+    if (timer.current) clearTimeout(timer.current)
+    setState('saving')
+    startTransition(async () => {
+      const r = await saveRefereeAnswer(refereeId, q.id, next).catch(() => null)
+      setState(r?.ok ? 'saved' : 'error')
+    })
+  }
 
   return (
     <div className="border-t border-ink-100 py-3 first:border-t-0 first:pt-0">
@@ -122,6 +143,34 @@ function AnswerBox({
           <span className="font-medium text-red-600">没保存上 —— 先复制一份再刷新</span>
         )}
       </div>
+
+      {/*
+        素材库里写过的相关内容。
+        ⚠️ 只在这一栏**还空着**的时候出现 —— 已经写了东西还在旁边挂个
+           「填入」,那是在诱导覆盖自己刚写的。
+        ⚠️ 是提示不是自动填:两边颗粒度不一样(素材库问整体成绩,
+           这里问这门课的排名),搬错了就是让教授在信里写一个不准的数字。
+           填不填、填完改不改,由学生自己定。
+      */}
+      {!value.trim() &&
+        (q.storyHints ?? []).map((h) => (
+          <div
+            key={h.question}
+            className="mt-1 rounded-lg border border-dashed border-brand-200 bg-brand-50/40 px-3 py-2"
+          >
+            <p className="text-xs leading-relaxed text-ink-500">
+              你在素材库「{h.question}」下写过:
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-ink-700">{h.answer}</p>
+            <button
+              type="button"
+              onClick={() => saveNow(h.answer)}
+              className="mt-1.5 text-xs font-medium text-brand-600 hover:underline"
+            >
+              填入这一栏(填完可以改)
+            </button>
+          </div>
+        ))}
     </div>
   )
 }
@@ -138,7 +187,17 @@ export interface RefereeItem {
   type: RefereeType
   status: RefereeStatus
   invitedAt: string | null
-  groups: RefereeQuestionGroup[]
+  /**
+   * ⚠️ 每道题带上素材库里的相关内容(storyHints)。
+   *    刻意**不写成可选** —— 写成可选的话,page.tsx 里那段映射被删掉
+   *    也不会报错,提示区就悄无声息地空了,而没人会发现。
+   *    页面上没有可提示的内容时给空数组,不是 undefined。
+   */
+  groups: Array<
+    Omit<RefereeQuestionGroup, 'questions'> & {
+      questions: Array<RefereeQuestionGroup['questions'][number] & { storyHints: StoryHint[] }>
+    }
+  >
   answers: Record<string, string>
   progress: { done: number; total: number; percent: number }
 }

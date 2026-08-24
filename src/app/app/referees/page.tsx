@@ -3,7 +3,8 @@ import { db } from '@/lib/db'
 import { requireUser } from '@/lib/auth/session'
 import { Card } from '@/components/ui'
 import { RefereeList } from './RefereeList'
-import { groupsFor, refereeProgress } from '@/lib/essays/referee-questions'
+import { groupsFor, refereeProgress, storyHintsFor } from '@/lib/essays/referee-questions'
+import { STORY_SECTIONS } from '@/lib/essays/question-bank'
 
 /**
  * 推荐人管理。
@@ -24,11 +25,32 @@ import { groupsFor, refereeProgress } from '@/lib/essays/referee-questions'
 export default async function RefereesPage() {
   const user = await requireUser()
 
-  const referees = await db.referee.findMany({
-    where: { userId: user.id },
-    orderBy: { sort: 'asc' },
-    include: { answers: { select: { questionId: true, answer: true } } },
-  })
+  const [referees, storyRows] = await Promise.all([
+    db.referee.findMany({
+      where: { userId: user.id },
+      orderBy: { sort: 'asc' },
+      include: { answers: { select: { questionId: true, answer: true } } },
+    }),
+    /**
+     * ⚠️ 素材库里已经答过的东西,这里不要再问一遍。
+     *    产品全站都在讲「经历答一次,所有学校通用」,唯独推荐人这一处
+     *    在让人重复填 —— 素材库 12 题和推荐人 8 题内容大量重叠。
+     *
+     *    只取**答过的**:没答的拿过来也没用,还会让提示区一片空。
+     */
+    db.storyAnswer.findMany({
+      where: { userId: user.id },
+      select: { questionId: true, answer: true },
+    }),
+  ])
+
+  /** 素材库题干 —— 提示里要写清楚「你在哪道题下写的」,否则学生看不懂这句话哪来的 */
+  const storyQuestionText = new Map(
+    STORY_SECTIONS.flatMap((sec) => sec.questions.map((q) => [q.id, q.q] as const)),
+  )
+  const storyAnswers = new Map(
+    storyRows.filter((r) => r.answer.trim()).map((r) => [r.questionId, r.answer] as const),
+  )
 
   const items = referees.map((r) => {
     const answers = Object.fromEntries(r.answers.map((a) => [a.questionId, a.answer]))
@@ -44,7 +66,22 @@ export default async function RefereesPage() {
       type: r.type,
       status: r.status,
       invitedAt: r.invitedAt?.toISOString() ?? null,
-      groups: groupsFor(r.type),
+      groups: groupsFor(r.type).map((g) => ({
+        ...g,
+        questions: g.questions.map((q) => ({
+          ...q,
+          /**
+           * 只带**已经答过**的素材条目;一条都没有就不渲染提示区。
+           * 这里做成数组而不是单条 —— traits.evidence 有两个可参考的来源。
+           */
+          storyHints: storyHintsFor(q.id)
+            .filter((sid) => storyAnswers.has(sid))
+            .map((sid) => ({
+              question: storyQuestionText.get(sid) ?? '',
+              answer: storyAnswers.get(sid)!,
+            })),
+        })),
+      })),
       answers,
       progress: refereeProgress(answers, r.type),
     }
