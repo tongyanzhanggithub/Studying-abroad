@@ -54,18 +54,14 @@ describe('一次只给一个主动作', () => {
     expect(src).toContain('materialDone === 0')
   })
 
-  it('同一个动作不在卡片上出现两次', () => {
-    expect(src).toContain("primary?.kind !== 'packet'")
-  })
-
   /**
-   * ⚠️ 素材包里现在有英文信的结构骨架,不再是纯粹的「事实清单」。
-   *    页面上的说明必须跟着实际内容走,否则就是在说一件不准的事。
+   * ⚠️ 素材包功能整个删掉了(用户:「去掉生成素材包这个功能」)。
+   *    这条守卫防的是它被半途捡回来 —— 留一个按钮、没有后端,
+   *    或者留一段后端、界面上进不去,都是这个项目最怕的死代码。
    */
-  it('素材包说明和它的实际内容对得上', () => {
-    expect(src).toContain('英文信的结构骨架')
-    expect(src).not.toContain('不是推荐信草稿')
-    // 立场那半句不能丢
-    expect(src).toContain('我们不代拟')
+  it('素材包已彻底移除,没有留下半截', () => {
+    for (const trace of ['生成素材包', 'generatePacket', 'buildRefereePacket', 'packet']) {
+      expect(src, `RefereeList 里还留着 ${trace}`).not.toContain(trace)
+    }
   })
 })

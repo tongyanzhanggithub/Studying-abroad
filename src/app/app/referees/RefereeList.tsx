@@ -10,7 +10,6 @@ import {
   setRefereeStatus,
   deleteReferee,
   saveRefereeAnswer,
-  generatePacket,
 } from './actions'
 import type { RefereeQuestionGroup } from '@/lib/essays/referee-questions'
 import type { RefereeStatus, RefereeType } from '@prisma/client'
@@ -27,7 +26,7 @@ const TYPE_LABEL: Record<RefereeType, string> = {
 const STATUS: Array<{ v: RefereeStatus; label: string; next: string; cls: string }> = [
   { v: 'draft', label: '还没联系', next: '先发邮件问对方愿不愿意', cls: 'bg-ink-100 text-ink-600' },
   { v: 'invited', label: '已发出邀请', next: '等回复。超过一周没动静就该跟进', cls: 'bg-amber-50 text-amber-700' },
-  { v: 'agreed', label: '已答应', next: '把素材包发给他,并说明截止日期', cls: 'bg-brand-50 text-brand-700' },
+  { v: 'agreed', label: '已答应', next: '把成绩单、简历和申请项目发给他,并说明截止日期', cls: 'bg-brand-50 text-brand-700' },
   { v: 'submitted', label: '已提交', next: '这一封搞定了', cls: 'bg-safe/10 text-safe' },
   { v: 'declined', label: '婉拒了', next: '尽快换人 —— 别一直等一个不会来的回复', cls: 'bg-red-50 text-red-700' },
 ]
@@ -48,7 +47,6 @@ const STATUS: Array<{ v: RefereeStatus; label: string; next: string; cls: string
  */
 type Primary =
   | { kind: 'status'; label: string; to: RefereeStatus }
-  | { kind: 'packet'; label: string }
   | { kind: 'material'; label: string }
   | { kind: 'add'; label: string }
   | null
@@ -67,7 +65,7 @@ function primaryFor(status: RefereeStatus, materialDone: number, materialTotal: 
        */
       return materialDone === 0
         ? { kind: 'material', label: `先填素材(${materialDone}/${materialTotal})` }
-        : { kind: 'packet', label: '生成素材包发给他' }
+        : { kind: 'status', label: '他已经提交了', to: 'submitted' }
     case 'submitted':
       return null
     case 'declined':
@@ -205,8 +203,6 @@ export interface RefereeItem {
 function RefereeCard({ item }: { item: RefereeItem }) {
   const router = useRouter()
   const [tab, setTab] = useState<'material' | 'contact' | null>(null)
-  const [packet, setPacket] = useState<string | null>(null)
-  const [copied, setCopied] = useState(false)
   // 五个状态胶囊默认收起 —— 它们是改错用的,不是日常推进用的
   const [editStatus, setEditStatus] = useState(false)
   const [, startTransition] = useTransition()
@@ -219,13 +215,6 @@ function RefereeCard({ item }: { item: RefereeItem }) {
       await setRefereeStatus(item.id, to)
       setEditStatus(false)
       router.refresh()
-    })
-
-  const makePacket = () =>
-    startTransition(async () => {
-      const r = await generatePacket(item.id)
-      setPacket(r.ok ? r.text : `生成失败:${r.error}`)
-      setCopied(false)
     })
 
   /**
@@ -281,7 +270,6 @@ function RefereeCard({ item }: { item: RefereeItem }) {
                 size="sm"
                 onClick={() => {
                   if (primary.kind === 'status') setStatus(primary.to)
-                  else if (primary.kind === 'packet') makePacket()
                   else setTab('material')
                 }}
               >
@@ -338,15 +326,6 @@ function RefereeCard({ item }: { item: RefereeItem }) {
           >
             联系方式
           </button>
-          {/*
-            ⚠️ 只在**主按钮不是它**的时候才出现在这一排。
-               否则同一个动作在卡片上出现两次,反而让人犹豫点哪个。
-          */}
-          {primary?.kind !== 'packet' && (
-            <button onClick={makePacket} className="text-brand-600 hover:underline">
-              生成素材包
-            </button>
-          )}
           <button
             onClick={() => {
               if (!confirm(`删除推荐人「${item.name}」?已填的素材会一起删掉。`)) return
@@ -415,49 +394,44 @@ function RefereeCard({ item }: { item: RefereeItem }) {
         </div>
       )}
 
-      {packet && (
-        <div className="border-t border-ink-100 px-4 py-4">
-          <div className="mb-2 flex items-center justify-between">
-            <p className="text-sm font-medium text-ink-900">给推荐人的素材(复制后发给他)</p>
-            <button
-              onClick={() => {
-                void navigator.clipboard?.writeText(packet).then(() => setCopied(true))
-              }}
-              className="text-sm text-brand-600 hover:underline"
-            >
-              {copied ? '已复制' : '复制全文'}
-            </button>
-          </div>
-          <textarea
-            readOnly
-            value={packet}
-            rows={14}
-            className="w-full resize-y rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 font-mono text-xs leading-relaxed"
-          />
-          {/*
-            ⚠️ 这段说明必须跟着素材包的实际内容走。
-               包里现在有三块:英文固定信息 / 英文信的结构骨架 / 中文事实。
-               再说「这只是事实清单」就不准了 —— 骨架确实是信的形状。
-               准确的说法是:格式和结构我们给,评价和措辞由老师定。
-          */}
-          <p className="mt-2 text-xs leading-relaxed text-ink-500">
-            里面有三块:<strong className="text-ink-700">英文固定信息</strong>(姓名拼音、项目官方英文名、截止日,可直接照抄)、
-            <strong className="text-ink-700">英文信的结构骨架</strong>(方括号处由老师自己判断)、
-            以及你填的<strong className="text-ink-700">中文事实</strong>。
-            信里的评价和措辞由推荐人决定 —— 我们不代拟。建议连同 CV 和成绩单一起发过去。
-          </p>
-        </div>
-      )}
     </Card>
   )
 }
 
 export function RefereeList({ items }: { items: RefereeItem[] }) {
   const router = useRouter()
-  const [name, setName] = useState('')
   const [type, setType] = useState<RefereeType>('academic')
   const [error, setError] = useState<string | null>(null)
   const [, startTransition] = useTransition()
+
+  /**
+   * ⚠️ 一次把联系方式收齐,不要只收一个名字。
+   *
+   *    原来这里只有「姓名 + 类型」,职称/单位/院系/邮箱/手机得事后再
+   *    展开卡片上的「联系方式」补 —— 而这几项恰恰是你**加人的那一刻**
+   *    手上就有的(你正准备给他发邮件)。隔一天再回来补,
+   *    反而想不起院系全称怎么写、邮箱是学校后缀还是私人的。
+   *
+   *    除姓名外都可留空 —— 只记得姓和职称的时候不该被拦着。
+   */
+  const [form, setForm] = useState({
+    name: '',
+    title: '',
+    institution: '',
+    department: '',
+    email: '',
+    phone: '',
+  })
+  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm((f) => ({ ...f, [k]: e.target.value }))
+
+  const FIELDS: Array<{ k: keyof typeof form; label: string; ph: string }> = [
+    { k: 'title', label: '职称', ph: '如:副教授' },
+    { k: 'institution', label: '单位', ph: '如:四川师范大学' },
+    { k: 'department', label: '院系', ph: '如:法学院' },
+    { k: 'email', label: '邮箱', ph: '优先用学校后缀邮箱' },
+    { k: 'phone', label: '手机', ph: '选填' },
+  ]
 
   return (
     <div className="space-y-3">
@@ -467,28 +441,51 @@ export function RefereeList({ items }: { items: RefereeItem[] }) {
 
       {/* id 是给「婉拒了 → 换一位推荐人」那个按钮跳过来用的 */}
       <Card id="add-referee">
-        <p className="mb-2 text-sm font-medium text-ink-900">添加推荐人</p>
-        <div className="flex flex-wrap items-center gap-2">
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="推荐人姓名"
-            className="min-w-40 flex-1 rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
-          />
-          <select
-            value={type}
-            onChange={(e) => setType(e.target.value as RefereeType)}
-            className="rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
-          >
-            <option value="academic">学术推荐人</option>
-            <option value="professional">职业推荐人</option>
-          </select>
+        <p className="mb-3 text-sm font-medium text-ink-900">添加推荐人</p>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <label className="block">
+            <span className="text-xs text-ink-500">姓名</span>
+            <input
+              value={form.name}
+              onChange={set('name')}
+              placeholder="推荐人姓名"
+              className="mt-1 w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
+            />
+          </label>
+
+          <label className="block">
+            <span className="text-xs text-ink-500">关系</span>
+            <select
+              value={type}
+              onChange={(e) => setType(e.target.value as RefereeType)}
+              className="mt-1 w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
+            >
+              <option value="academic">学术推荐人(教过你课的老师)</option>
+              <option value="professional">职业推荐人(实习或工作的上级)</option>
+            </select>
+          </label>
+
+          {FIELDS.map((f) => (
+            <label key={f.k} className="block">
+              <span className="text-xs text-ink-500">{f.label}</span>
+              <input
+                value={form[f.k]}
+                onChange={set(f.k)}
+                placeholder={f.ph}
+                className="mt-1 w-full rounded-lg border border-ink-200 px-3 py-2 text-sm outline-none focus:border-brand-500"
+              />
+            </label>
+          ))}
+        </div>
+
+        <div className="mt-3 flex items-center gap-3">
           <Button
             onClick={() =>
               startTransition(async () => {
-                const r = await createReferee({ name, type })
+                const r = await createReferee({ ...form, type })
                 if (r.ok) {
-                  setName('')
+                  setForm({ name: '', title: '', institution: '', department: '', email: '', phone: '' })
                   setError(null)
                   router.refresh()
                 } else {
@@ -499,10 +496,12 @@ export function RefereeList({ items }: { items: RefereeItem[] }) {
           >
             添加
           </Button>
+          <span className="text-xs text-ink-400">除姓名外都可以留空,之后在卡片里补</span>
         </div>
+
         {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
-        <p className="mt-2 text-xs leading-relaxed text-ink-400">
-          学术推荐人问的是课程、分数和你在课上做过的事;职业推荐人问的是岗位、项目和工作表现。
+        <p className="mt-3 text-xs leading-relaxed text-ink-400">
+          这些是推荐人的个人信息,只用于你自己填写网申表格,不会发给任何第三方,注销账号时一并删除。
         </p>
       </Card>
     </div>

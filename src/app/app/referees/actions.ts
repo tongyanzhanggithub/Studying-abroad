@@ -5,7 +5,6 @@ import { db } from '@/lib/db'
 import { requireUser } from '@/lib/auth/session'
 import {
   ALL_REFEREE_QUESTION_IDS,
-  buildRefereePacket,
 } from '@/lib/essays/referee-questions'
 import type { RefereeStatus, RefereeType } from '@prisma/client'
 
@@ -32,7 +31,25 @@ async function ownedReferee(userId: string, refereeId: string) {
   return db.referee.findFirst({ where: { id: refereeId, userId } })
 }
 
-export async function createReferee(input: { name: string; type: string }) {
+/**
+ * 新建推荐人。
+ *
+ * ⚠️ 一次把**联系方式**收齐,不要只收一个名字。
+ *    原来只有「姓名 + 类型」两个字段,职称/单位/院系/邮箱/手机要事后
+ *    再展开「联系方式」补 —— 而这几项恰恰是你**加人的那一刻**手上就有的
+ *    (你正要给他发邮件),隔一天再回来补,反而想不起院系全称怎么写。
+ *
+ *    除姓名外都可留空:很多人加的时候只记得姓和职称,不该因此拦着。
+ */
+export async function createReferee(input: {
+  name: string
+  type: string
+  title?: string
+  institution?: string
+  department?: string
+  email?: string
+  phone?: string
+}) {
   const user = await requireUser()
 
   const name = input.name.trim()
@@ -46,8 +63,24 @@ export async function createReferee(input: { name: string; type: string }) {
     return { ok: false as const, error: `最多添加 ${MAX_REFEREES} 位推荐人。` }
   }
 
+  /** 空字符串存成 null —— 否则「填过但清空了」和「从没填」在库里分不出来 */
+  const opt = (v: string | undefined) => {
+    const t = (v ?? '').trim()
+    return t.length ? t : null
+  }
+
   const referee = await db.referee.create({
-    data: { userId: user.id, name, type: input.type as RefereeType, sort: count },
+    data: {
+      userId: user.id,
+      name,
+      type: input.type as RefereeType,
+      sort: count,
+      title: opt(input.title),
+      institution: opt(input.institution),
+      department: opt(input.department),
+      email: opt(input.email),
+      phone: opt(input.phone),
+    },
   })
 
   revalidatePath('/app/referees')
@@ -170,73 +203,4 @@ export async function saveRefereeAnswer(
 
   revalidatePath('/app/referees')
   return { ok: true as const }
-}
-
-/**
- * 生成发给推荐人的素材包。
- *
- * ⚠️ 输出**不是推荐信**,是「以学生口吻整理的事实清单」。
- *    见 referee-questions.ts 里 buildRefereePacket 的注释。
- */
-export async function generatePacket(refereeId: string) {
-  const user = await requireUser()
-  const referee = await ownedReferee(user.id, refereeId)
-  if (!referee) return { ok: false as const, error: '推荐人不存在。' }
-
-  const [rows, choices, profile] = await Promise.all([
-    db.refereeAnswer.findMany({
-      where: { refereeId },
-      select: { questionId: true, answer: true },
-    }),
-    db.userSchoolChoice.findMany({
-      where: { userId: user.id },
-      include: { program: { include: { school: true } } },
-      orderBy: { sort: 'asc' },
-    }),
-    db.profile.findUnique({
-      where: { userId: user.id },
-      select: { passportSurname: true, passportGivenName: true },
-    }),
-  ])
-
-  /**
-   * ⚠️ 用**官方英文名**,不是 nameZh。
-   *    推荐信是英文的 —— 给老师一个「巴斯大学 · 市场营销理学硕士」,
-   *    等于让他自己去查这个项目的官方英文叫什么,查错了信就对不上申请。
-   *    nameEn 在 schema 里是必填,所以这里不需要兜底。
-   */
-  const targetPrograms = choices.map((c) => ({
-    program: c.program.nameEn,
-    school: c.program.school.nameEn,
-  }))
-
-  /**
-   * ⚠️ 姓名必须是护照拼音。
-   *    schema 里 passportSurname 的注释点名列了推荐信:
-   *    拼法和成绩单不一致,学校会当成两个人。
-   *    而这里原来传的是 user.name(中文名)—— 正好是那句话说的情况。
-   *    没填时传 null,素材包里会写明「等我补好再发您」,而不是硬凑一个。
-   */
-  const passportName =
-    profile?.passportSurname && profile?.passportGivenName
-      ? `${profile.passportSurname.toUpperCase()} ${profile.passportGivenName}`
-      : null
-
-  // 最早的截止日 —— 推荐人最需要知道的就是「什么时候之前要交」
-  const deadlines = choices
-    .map((c) => c.program.finalDeadline)
-    .filter((d): d is Date => !!d)
-    .sort((a, b) => a.getTime() - b.getTime())
-
-  const text = buildRefereePacket({
-    passportName,
-    studentName: user.name ?? '(请在设置里补上你的姓名)',
-    referee: { name: referee.name, title: referee.title, type: referee.type },
-    targetPrograms,
-    // ISO 格式 —— 它印在英文区里给老师照抄,中文日期在那儿不合适
-    deadline: deadlines.length ? deadlines[0].toISOString().slice(0, 10) : null,
-    answers: Object.fromEntries(rows.map((r) => [r.questionId, r.answer])),
-  })
-
-  return { ok: true as const, text }
 }
